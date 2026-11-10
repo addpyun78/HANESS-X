@@ -1,0 +1,6 @@
+name: '{{id}}'
+displayName: '{{json:displayName}}'
+description: '{{json:description}}'
+command: '/{{id}}'
+defaultEngine: auto
+pipeline: ./pipeline.yaml

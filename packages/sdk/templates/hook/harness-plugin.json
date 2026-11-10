@@ -1,0 +1,12 @@
+{
+  "id": "{{id}}",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "{{json:displayName}}",
+  "description": "{{json:description}}",
+  "main": "dist/index.js",
+  "provides": {
+    "hook": ["{{id}}"]
+  },
+  "permissions": "{{json:permissions}}"
+}

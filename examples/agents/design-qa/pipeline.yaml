@@ -1,0 +1,75 @@
+# design-qa: 계획(Claude) → 구현(Codex) → 비평(Antigravity)
+name: design-qa
+displayName: 디자인 QA
+description: 화면 요구를 계획하고 구현한 뒤 디자인 관점으로 비평한다
+version: 1
+entry: plan
+nodes:
+  - id: plan
+    type: role
+    label: 계획
+    engine: claude-code
+    mode: subscription
+    skills: [design-brief]
+    tools: [fs]
+    permission: read-only
+    checklistTemplate: checklists/plan.md
+    prompt: 요구를 화면 단위 작업 목록과 수용 기준으로 나눈다.
+    inputSchema:
+      type: object
+      properties:
+        request: { type: string }
+      required: [request]
+    outputSchema:
+      type: object
+      properties:
+        tasks: { type: array, items: { type: string } }
+        acceptance: { type: array, items: { type: string } }
+      required: [tasks, acceptance]
+  - id: build
+    type: role
+    label: 구현
+    engine: codex
+    mode: subscription
+    skills: [frontend-design]
+    tools: [fs, shell]
+    permission: workspace-write
+    checklistTemplate: checklists/build.md
+    prompt: 계획의 작업 목록을 구현한다.
+    inputSchema:
+      type: object
+      properties:
+        tasks: { type: array, items: { type: string } }
+        acceptance: { type: array, items: { type: string } }
+      required: [tasks]
+    outputSchema:
+      type: object
+      properties:
+        changedFiles: { type: array, items: { type: string } }
+      required: [changedFiles]
+  - id: critic
+    type: role
+    label: 비평
+    engine: antigravity
+    mode: subscription
+    skills: [design-critique, a11y-check]
+    tools: [fs]
+    permission: read-only
+    checklistTemplate: checklists/critic.md
+    prompt: 수용 기준과 디자인 원칙으로 결과를 비평하고 판정한다.
+    inputSchema:
+      type: object
+      properties:
+        changedFiles: { type: array, items: { type: string } }
+      required: [changedFiles]
+    outputSchema:
+      type: object
+      properties:
+        verdict: { type: string, enum: [pass, fail] }
+        issues: { type: array, items: { type: string } }
+      required: [verdict]
+edges:
+  - from: plan
+    to: build
+  - from: build
+    to: critic

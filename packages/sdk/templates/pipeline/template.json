@@ -1,0 +1,5 @@
+{
+  "kind": "pipeline",
+  "slot": "pipeline",
+  "description": "파이프라인 플러그인: pipeline.yaml + agent.yaml (에이전트로 등록)"
+}
