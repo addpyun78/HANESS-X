@@ -1,0 +1,7 @@
+name: design-qa
+displayName: 디자인 QA
+description: 계획 → 구현 → 비평 3단계 디자인 QA 에이전트
+icon: '🎨'
+command: /design-qa
+defaultEngine: claude-code
+pipeline: ./pipeline.yaml
