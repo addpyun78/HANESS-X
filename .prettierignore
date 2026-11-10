@@ -1,0 +1,7 @@
+node_modules
+dist
+pnpm-lock.yaml
+docs/PLAN-v2.md
+.harness-x-dev
+CLAUDE.md
+docs/tickets
