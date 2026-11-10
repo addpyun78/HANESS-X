@@ -159,6 +159,73 @@ export function judgeAnswerJsonSchema(question: JudgeQuestion): Record<string, u
   };
 }
 
+// ── 26.4 전송 데이터 최소화 ──────────────────────────────────────────
+export class DataMinimizationError extends Error {
+  readonly code = 'JUDGE_DATA_NOT_MINIMAL';
+  constructor(message: string) {
+    super(message);
+    this.name = 'DataMinimizationError';
+  }
+}
+
+/** 코드 블록(``` 울타리·~~~ 울타리·인라인 `코드`)을 지우고 공백을 한 줄로 접는다 */
+export function stripCodeBlocks(text: string): string {
+  return text
+    .replace(/(```|~~~)[\s\S]*?(\1|$)/g, ' ')
+    .replace(/`[^`\n]*`/g, ' ')
+    .replace(/`/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function metaPath(field: string, v: unknown): string {
+  if (typeof v !== 'string' || v.trim() === '') throw new DataMinimizationError(`${field}: 경로 문자열 필요`);
+  if (/[\r\n`]/.test(v) || v.length > 512)
+    throw new DataMinimizationError(`${field}: 경로가 아닌 값(줄바꿈·백틱·코드)은 보낼 수 없습니다`);
+  return v;
+}
+
+function baseName(p: string): string {
+  const parts = p.split(/[\\/]/).filter(Boolean);
+  return parts[parts.length - 1] ?? p;
+}
+
+/**
+ * 판정기로 보낼 상태를 최소화한다 (26.4). 허용 필드(항목 제목·경로·파일명·심볼 목록) 밖의 필드
+ * (source·content·diff 등)는 버리고, 제목의 코드 블록은 지우고, 경로에 코드가 섞이면 거부하고,
+ * 파일명은 basename만, 심볼은 식별자 형태만 남긴다. 결과는 JudgeStateSchema를 통과한다.
+ */
+export function minimizeJudgeState(input: Record<string, unknown> | JudgeState): JudgeState {
+  const i = input as Record<string, unknown>;
+  const title = stripCodeBlocks(typeof i.itemTitle === 'string' ? i.itemTitle : '')
+    .slice(0, 200)
+    .trim();
+  if (!title) throw new DataMinimizationError('itemTitle이 비었습니다');
+  const list = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
+  const uniq = <T>(xs: T[]) => [...new Set(xs)];
+  const fileNames = uniq(
+    list(i.fileNames)
+      .filter((f): f is string => typeof f === 'string' && !/[\r\n`]/.test(f))
+      .map(baseName)
+      .filter((f) => f.length > 0 && f.length <= 255),
+  ).slice(0, 50);
+  const symbols = uniq(
+    list(i.symbols).filter(
+      (s): s is string => typeof s === 'string' && SymbolNameSchema.safeParse(s).success,
+    ),
+  ).slice(0, 50);
+  return JudgeStateSchema.parse({
+    itemTitle: title,
+    expectedPath: metaPath('expectedPath', i.expectedPath),
+    ...(i.actualPath !== undefined ? { actualPath: metaPath('actualPath', i.actualPath) } : {}),
+    candidates: list(i.candidates)
+      .slice(0, 10)
+      .map((c, k) => metaPath(`candidates[${k}]`, c)),
+    fileNames,
+    symbols,
+  });
+}
+
 // ── 공통 요청 형식 (Jev·로컬 LLM·L5 엔진이 같은 질문 형식을 쓴다) ─────────
 export const JUDGE_SYSTEM_PROMPT =
   'You are a strict verification judge for a coding harness. You receive ONE typed question and metadata ' +
@@ -171,12 +238,15 @@ export interface JudgeMessages {
   user: string;
 }
 
-/** 질문 + 상태 → system/user 메시지. user는 결정적 JSON(키 순서 고정) */
-export function buildJudgeMessages(question: JudgeQuestion, state: JudgeState): JudgeMessages {
+/** 질문 + 상태 → system/user 메시지. 상태는 항상 최소화(26.4)를 거친다. user는 결정적 JSON(키 순서 고정) */
+export function buildJudgeMessages(
+  question: JudgeQuestion,
+  state: JudgeState | Record<string, unknown>,
+): JudgeMessages {
   const q: Record<string, unknown> = { id: question.id, kind: question.kind, prompt: question.prompt };
   if (question.kind === 'choice') q.choices = question.choices;
   if (question.kind === 'score') Object.assign(q, { min: question.min, max: question.max });
-  const s = JudgeStateSchema.parse(state);
+  const s = minimizeJudgeState(state);
   return {
     system: JUDGE_SYSTEM_PROMPT,
     user: JSON.stringify({ question: q, state: s, answerSchema: judgeAnswerJsonSchema(question) }),
