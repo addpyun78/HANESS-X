@@ -33,6 +33,8 @@ export class ClaudeStreamParser implements LineParser {
   private tools = new Map<string, { name: string; input: unknown }>();
   /** 마지막 assistant 메시지에 붙은 error 필드 */
   private lastErrorField: string | undefined;
+  /** rate_limit_event의 구독 한도 사용률 최댓값 (0~1) */
+  private quotaRatio: number | undefined;
   /** system/init에서 본 MCP 서버·도구 (14.4 확인용) */
   initTools: string[] = [];
   mcpServers: { name: string; status: string }[] = [];
@@ -61,6 +63,9 @@ export class ClaudeStreamParser implements LineParser {
         return this.assistant(msg);
       case 'user':
         return this.user(msg);
+      case 'rate_limit_event':
+        this.rateLimit(msg);
+        return [];
       case 'result':
         return this.result(msg);
       default:
@@ -106,6 +111,15 @@ export class ClaudeStreamParser implements LineParser {
     return out;
   }
 
+  private rateLimit(msg: Json): void {
+    const info = isObj(msg.rate_limit_info) ? msg.rate_limit_info : {};
+    const windows = isObj(info.unifiedWindows) ? Object.values(info.unifiedWindows) : [];
+    const ratios = windows
+      .map((w) => (isObj(w) && typeof w.utilization === 'number' ? w.utilization : NaN))
+      .filter((n) => Number.isFinite(n));
+    if (ratios.length) this.quotaRatio = Math.min(1, Math.max(0, ...ratios));
+  }
+
   private result(msg: Json): EventBody[] {
     const out: EventBody[] = [];
     const u = isObj(msg.usage) ? msg.usage : {};
@@ -115,6 +129,7 @@ export class ClaudeStreamParser implements LineParser {
       outputTokens: num(u.output_tokens),
       ...(u.cache_read_input_tokens !== undefined ? { cacheReadTokens: num(u.cache_read_input_tokens) } : {}),
       ...(typeof msg.total_cost_usd === 'number' ? { costUsd: Math.max(0, msg.total_cost_usd) } : {}),
+      ...(this.quotaRatio !== undefined ? { quotaRatio: this.quotaRatio } : {}),
     });
     const subtype = typeof msg.subtype === 'string' ? msg.subtype : '';
     if (subtype === 'error_max_turns') {
