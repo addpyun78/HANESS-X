@@ -1,0 +1,107 @@
+import { memo } from 'react';
+import type { ChatBlock } from './blocks.js';
+import { StopBlockCard } from './StopBlockCard.js';
+import { CollapsibleCard, formatValue, ItemTag, ToolCard, truncate } from './ToolCard.js';
+
+const CHANGE_LABEL = { create: '생성', modify: '수정', delete: '삭제', rename: '이름 변경' } as const;
+const TURN_END_LABEL = {
+  completed: '완료',
+  interrupted: '중단됨',
+  error: '오류로 종료',
+  max_turns: '최대 턴 도달',
+} as const;
+
+/** 메시지 블록 하나 렌더 */
+export const BlockView = memo(function BlockView({ block: b }: { block: ChatBlock }) {
+  switch (b.kind) {
+    case 'text':
+      return (
+        <div className="hx-msg hx-msg--assistant" data-streaming={b.streaming || undefined}>
+          <div className="hx-msg__text">{b.text}</div>
+          <ItemTag itemId={b.itemId} />
+        </div>
+      );
+    case 'tool':
+      return <ToolCard tool={b.tool} input={b.input} result={b.result} itemId={b.itemId} />;
+    case 'tool_result':
+      return (
+        <CollapsibleCard
+          className="hx-card--tool"
+          icon="↩"
+          title="도구 결과"
+          summary={b.callId}
+          status={b.ok ? 'ok' : 'fail'}
+          itemId={b.itemId}
+        >
+          <pre className="hx-pre">{formatValue(b.output)}</pre>
+        </CollapsibleCard>
+      );
+    case 'file':
+      return (
+        <CollapsibleCard
+          className={`hx-card--file hx-change--${b.change}`}
+          icon="✎"
+          title={
+            <>
+              <span className="hx-change">{CHANGE_LABEL[b.change]}</span>{' '}
+              <span className="hx-mono">{b.fromPath ? `${b.fromPath} → ${b.path}` : b.path}</span>
+            </>
+          }
+          itemId={b.itemId}
+        >
+          {b.diff ? <pre className="hx-pre hx-diff">{b.diff}</pre> : undefined}
+        </CollapsibleCard>
+      );
+    case 'usage':
+      return (
+        <div className="hx-meta" aria-label="사용량">
+          토큰 입력 {b.inputTokens.toLocaleString('ko-KR')} · 출력 {b.outputTokens.toLocaleString('ko-KR')}
+          {b.cacheReadTokens !== undefined && ` · 캐시 ${b.cacheReadTokens.toLocaleString('ko-KR')}`}
+          {b.costUsd !== undefined && ` · $${b.costUsd.toFixed(4)}`}
+          {b.quotaRatio !== undefined && ` · 쿼터 ${Math.round(b.quotaRatio * 100)}%`}
+        </div>
+      );
+    case 'error':
+      return (
+        <div className="hx-error" role="alert">
+          <strong>오류</strong> <span className="hx-mono">{b.code}</span>
+          <span className="hx-error__msg">{truncate(b.message, 2000)}</span>
+          {b.retryable && <span className="hx-error__retry">다시 시도할 수 있음</span>}
+          <ItemTag itemId={b.itemId} />
+        </div>
+      );
+    case 'turn_end':
+      return (
+        <div className="hx-turn-end" role="separator" aria-label={`턴 종료: ${TURN_END_LABEL[b.reason]}`}>
+          <span>턴 종료 · {TURN_END_LABEL[b.reason]}</span>
+        </div>
+      );
+    case 'stop_block':
+      return (
+        <StopBlockCard remaining={b.remaining} nextItemId={b.nextItemId} nextItemTitle={b.nextItemTitle} />
+      );
+    case 'approval':
+      return (
+        <div className="hx-approval" role="group" aria-label={`승인 요청: ${b.title}`}>
+          <div className="hx-approval__head">
+            <strong>승인 요청</strong> <span className="hx-mono">{b.approvalKind}</span>
+            <ItemTag itemId={b.itemId} />
+          </div>
+          <p>{b.title}</p>
+          <div className="hx-approval__options">
+            {b.options.map((o) => (
+              <button key={o} type="button" className="hx-icon-btn" data-option={o}>
+                {o}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    case 'checklist':
+      return (
+        <div className="hx-meta hx-meta--checklist">
+          ☑ 항목 <span className="hx-mono">{b.changedItemId}</span>: {b.from ?? '없음'} → {b.to}
+        </div>
+      );
+  }
+});

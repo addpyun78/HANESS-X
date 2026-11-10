@@ -1,0 +1,57 @@
+/* 기본 스타일 — 색은 모두 토큰 변수(var(--hx-*))만 사용 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--hx-bg);
+  color: var(--hx-text);
+  font-family: var(--hx-font-body);
+  font-size: var(--hx-font-14);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+code,
+pre,
+kbd,
+.hx-mono {
+  font-family: var(--hx-font-mono);
+  font-size: var(--hx-font-13);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.hx-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  cursor: pointer;
+}
+
+.hx-icon-btn:hover {
+  border-color: var(--hx-border-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--hx-accent);
+  outline-offset: 1px;
+}
