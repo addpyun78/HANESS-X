@@ -1,4 +1,8 @@
-import { createRequire } from 'node:module';
+import fs from 'node:fs';
+import { createRequire, syncBuiltinESMExports } from 'node:module';
+import { homedir } from 'node:os';
+import { basename, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /**
  * T-013 인증 비밀 관리
@@ -171,4 +175,127 @@ export function buildEngineEnv(opts: EngineEnvOptions): NodeJS.ProcessEnv {
   if (!key) throw new MissingApiKeyError(opts.engineId);
   env[varName] = key;
   return env;
+}
+
+// ── 13.6 토큰 파일 접근 금지 가드 ────────────────────────────
+
+export class TokenFileAccessError extends Error {
+  readonly code = 'HX_TOKEN_FILE_FORBIDDEN';
+  constructor(readonly path: string) {
+    super(`구독 토큰 파일 접근 금지: ${path} (하네스는 엔진 토큰을 읽지도 저장하지도 않습니다)`);
+  }
+}
+
+export interface TokenGuardOptions {
+  /** 홈 폴더 목록 (기본: os.homedir()) */
+  homes?: string[];
+  env?: NodeJS.ProcessEnv;
+  platform?: NodeJS.Platform;
+}
+
+interface TokenRule {
+  dir: string;
+  match(base: string): boolean;
+}
+
+/** 엔진 CLI가 구독 로그인 토큰을 두는 위치 */
+export function tokenFileRules(opts: TokenGuardOptions = {}): TokenRule[] {
+  const env = opts.env ?? process.env;
+  const homes = opts.homes ?? [homedir()];
+  const claudeCreds = (b: string) => b.startsWith('.credentials'); // .credentials.json 및 백업·변형
+  const codexAuth = (b: string) => b === 'auth.json';
+  const geminiCreds = (b: string) => b === 'oauth_creds.json';
+  const rules: TokenRule[] = [];
+  for (const h of homes) {
+    rules.push({ dir: resolve(h, '.claude'), match: claudeCreds });
+    rules.push({ dir: resolve(h, '.codex'), match: codexAuth });
+    rules.push({ dir: resolve(h, '.gemini'), match: geminiCreds });
+  }
+  if (env.CLAUDE_CONFIG_DIR) rules.push({ dir: resolve(env.CLAUDE_CONFIG_DIR), match: claudeCreds });
+  if (env.CODEX_HOME) rules.push({ dir: resolve(env.CODEX_HOME), match: codexAuth });
+  return rules;
+}
+
+function toPathString(p: unknown): string | undefined {
+  if (typeof p === 'string') return p;
+  if (Buffer.isBuffer(p)) return p.toString('utf8');
+  if (p instanceof URL) return p.protocol === 'file:' ? fileURLToPath(p) : undefined;
+  return undefined; // 파일 디스크립터 등
+}
+
+/** 경로가 토큰 파일인지 (내용은 읽지 않는다. 심볼릭 링크는 realpath로 확인) */
+export function isTokenFilePath(p: unknown, opts: TokenGuardOptions = {}): boolean {
+  const s = toPathString(p);
+  if (!s) return false;
+  const win = (opts.platform ?? process.platform) === 'win32';
+  const norm = (x: string) => (win ? x.toLowerCase() : x);
+  const candidates = [resolve(s)];
+  try {
+    candidates.push(fs.realpathSync.native(s));
+  } catch {
+    /* 없는 파일 */
+  }
+  const rules = tokenFileRules(opts);
+  return candidates.some((c) =>
+    rules.some((r) => norm(dirname(c)) === norm(r.dir) && r.match(norm(basename(c)))),
+  );
+}
+
+export function assertNotTokenFile(p: unknown, opts: TokenGuardOptions = {}): void {
+  if (isTokenFilePath(p, opts)) throw new TokenFileAccessError(toPathString(p) ?? String(p));
+}
+
+type AnyFn = (...args: unknown[]) => unknown;
+const READ_FNS = [
+  'readFileSync',
+  'readFile',
+  'openSync',
+  'open',
+  'createReadStream',
+  'copyFileSync',
+  'copyFile',
+];
+const PROMISE_READ_FNS = ['readFile', 'open', 'copyFile'];
+const CALLBACK_FNS = new Set(['readFile', 'open', 'copyFile']);
+let guardInstalled = false;
+
+/**
+ * 프로세스 전체의 fs 읽기 함수를 감싸 토큰 파일 접근 시 TokenFileAccessError를 던진다.
+ * 반환값을 호출하면 원래대로 되돌린다.
+ */
+export function installTokenFileGuard(opts: TokenGuardOptions = {}): () => void {
+  if (guardInstalled) return () => {};
+  guardInstalled = true;
+  const restore: (() => void)[] = [];
+  const wrap = (target: Record<string, unknown>, name: string, isPromise: boolean) => {
+    const orig = target[name] as AnyFn;
+    if (typeof orig !== 'function') return;
+    const guarded = function (this: unknown, ...args: unknown[]) {
+      if (isTokenFilePath(args[0], opts)) {
+        const err = new TokenFileAccessError(toPathString(args[0]) ?? '');
+        if (isPromise) return Promise.reject(err);
+        const cb = args[args.length - 1];
+        if (CALLBACK_FNS.has(name) && typeof cb === 'function') {
+          process.nextTick(cb as AnyFn, err);
+          return undefined;
+        }
+        throw err;
+      }
+      return orig.apply(this, args);
+    };
+    Object.defineProperty(guarded, 'name', { value: name });
+    target[name] = guarded;
+    restore.push(() => {
+      target[name] = orig;
+    });
+  };
+  const fsObj = fs as unknown as Record<string, unknown>;
+  for (const n of READ_FNS) wrap(fsObj, n, false);
+  for (const n of PROMISE_READ_FNS) wrap(fs.promises as unknown as Record<string, unknown>, n, true);
+  syncBuiltinESMExports(); // `import { readFileSync } from 'node:fs'` 에도 반영
+  return () => {
+    for (const r of restore) r();
+    syncBuiltinESMExports();
+    guardInstalled = false;
+  };
 }
