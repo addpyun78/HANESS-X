@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "terms": [
+    { "canonical": "harness", "aliases": ["하네스"] },
+    { "canonical": "mobile", "aliases": ["모바일"] },
+    { "canonical": "agent", "aliases": ["에이전트"] },
+    { "canonical": "checklist", "aliases": ["체크리스트"] },
+    { "canonical": "plugin", "aliases": ["플러그인"] },
+    { "canonical": "engine", "aliases": ["엔진"] },
+    { "canonical": "settings", "aliases": ["설정"] },
+    { "canonical": "server", "aliases": ["서버"] },
+    { "canonical": "client", "aliases": ["클라이언트"] },
+    { "canonical": "screen", "aliases": ["화면"] },
+    { "canonical": "test", "aliases": ["테스트"] },
+    { "canonical": "docs", "aliases": ["문서"] },
+    { "canonical": "verifier", "aliases": ["판정기"] },
+    { "canonical": "ledger", "aliases": ["원장"] },
+    { "canonical": "hook", "aliases": ["훅"] },
+    { "canonical": "skill", "aliases": ["스킬"] },
+    { "canonical": "pipeline", "aliases": ["파이프라인"] },
+    { "canonical": "app", "aliases": ["앱", "애플리케이션"] },
+    { "canonical": "web", "aliases": ["웹"] },
+    { "canonical": "login", "aliases": ["로그인"] }
+  ]
+}
