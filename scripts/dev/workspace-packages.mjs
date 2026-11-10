@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
-/** packages/*, packages/*\/*, apps/* 중 src/index.ts가 있는 @harness-x/* 패키지 */
+/** packages/ 아래 3단계까지, apps/* 중 src/index.ts가 있는 @harness-x/* 패키지 */
 export function listWorkspacePackages(root = process.cwd()) {
   const out = [];
   const visit = (dir, depth) => {
@@ -17,7 +17,7 @@ export function listWorkspacePackages(root = process.cwd()) {
       } else if (depth > 0) visit(d, depth - 1);
     }
   };
-  visit(join(root, 'packages'), 1);
+  visit(join(root, 'packages'), 2);
   visit(join(root, 'apps'), 0);
   return out;
 }

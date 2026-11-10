@@ -1,6 +1,7 @@
 packages:
   - 'packages/*'
   - 'packages/*/*'
+  - 'packages/plugins-core/verifiers/*'
   - 'apps/*'
 
 allowBuilds:
