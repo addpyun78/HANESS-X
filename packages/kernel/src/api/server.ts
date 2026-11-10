@@ -3,7 +3,7 @@ import { chmodSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import Fastify, { type FastifyInstance, type FastifyRequest } from 'fastify';
 import websocket from '@fastify/websocket';
-import { providedSlots } from '@harness-x/protocol';
+import { providedSlots, type AgentSummary } from '@harness-x/protocol';
 import type { EventLog, LogRecord } from '../event-log.js';
 import { harnessHome, type PluginLoader } from '../loader.js';
 
@@ -28,6 +28,8 @@ export interface ApiServerOptions {
   /** 테스트용 고정 토큰 */
   token?: string;
   logger?: boolean;
+  /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
+  agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
 }
 
 export interface ApiServer {
@@ -103,6 +105,9 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     })),
     rejected: opts.loader.rejections.map((r) => ({ id: r.id, dir: r.dir, reason: r.reason })),
   }));
+
+  // 43.5 에이전트 목록 (agent-builder가 제공)
+  app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {
