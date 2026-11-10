@@ -65,7 +65,7 @@ export class LockBusyError extends Error {
   }
 }
 
-export interface LockOptions {
+export interface FileLockOptions {
   /** 잠금 대기 최대 시간 (기본 2000ms) */
   waitMs?: number;
   /** 이보다 오래된 잠금은 죽은 프로세스의 것으로 보고 제거 (기본 30000ms) */
@@ -81,7 +81,7 @@ function sleepSync(ms: number): void {
  * O_EXCL 잠금 파일로 프로세스 간 상호 배제. read-compare-write 구간을 감싼다.
  * 동기 함수이므로 같은 프로세스 안에서는 끼어들 수 없다.
  */
-export function withFileLock<T>(lockFile: string, fn: () => T, opts: LockOptions = {}): T {
+export function withFileLock<T>(lockFile: string, fn: () => T, opts: FileLockOptions = {}): T {
   const waitMs = opts.waitMs ?? 2000;
   const staleMs = opts.staleMs ?? 30_000;
   mkdirSync(dirname(lockFile), { recursive: true });

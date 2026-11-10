@@ -1,6 +1,6 @@
 import { copyFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { readJson, withFileLock, writeFileAtomic, type LockOptions } from './fs-util.js';
+import { readJson, withFileLock, writeFileAtomic, type FileLockOptions } from './fs-util.js';
 import { CHECKLIST_SCHEMA_VERSION, ChecklistSchema, type Checklist } from './schema.js';
 
 /**
@@ -27,7 +27,7 @@ export interface ChecklistStoreOptions {
   /** checklist.json이 놓일 폴더 (예: <workspace>/.harness-x/sessions/<id>) */
   dir: string;
   fileName?: string;
-  lock?: LockOptions;
+  lock?: FileLockOptions;
   now?: () => Date;
 }
 
@@ -46,7 +46,7 @@ export class ChecklistStore {
   readonly dir: string;
   readonly file: string;
   private readonly lockFile: string;
-  private readonly lockOpts: LockOptions;
+  private readonly lockOpts: FileLockOptions;
   private readonly now: () => Date;
 
   constructor(opts: ChecklistStoreOptions) {
