@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { runAgentLoop, toEngineRun, type AgentTool, type HookBus, type ModelClient } from '@harness-x/kernel';
 import type { EngineAdapter, EngineRun, EngineRunOptions, HarnessEvent } from '@harness-x/protocol';
 import type { FetchLike } from './http.js';
+import { autoToolModeClient, jsonFallbackClient } from './json-fallback.js';
 import { OpenAIChatClient } from './openai.js';
 
 /**
@@ -31,6 +32,8 @@ export interface ApiEngineConfig {
   system?: string;
   maxIterations?: number;
   fetch?: FetchLike;
+  /** 도구 호출 방식: native(function calling), json(JSON 모드 폴백), auto(미지원 응답 시 json으로 전환, 기본) */
+  toolMode?: 'native' | 'json' | 'auto';
 }
 
 export const DEFAULT_SYSTEM_PROMPT =
@@ -40,12 +43,18 @@ export const DEFAULT_SYSTEM_PROMPT =
 export const OLLAMA_BASE_URL = 'http://127.0.0.1:11434/v1';
 
 function makeClient(cfg: ApiEngineConfig, model: string, apiKey: string | undefined): ModelClient {
-  return new OpenAIChatClient({
-    baseUrl: cfg.baseUrl ?? OLLAMA_BASE_URL,
-    model,
-    ...(apiKey ? { apiKey } : {}),
-    ...(cfg.fetch ? { fetch: cfg.fetch } : {}),
-  });
+  const openai = (jsonMode: boolean) =>
+    new OpenAIChatClient({
+      baseUrl: cfg.baseUrl ?? OLLAMA_BASE_URL,
+      model,
+      ...(apiKey ? { apiKey } : {}),
+      ...(cfg.fetch ? { fetch: cfg.fetch } : {}),
+      ...(jsonMode ? { jsonMode } : {}),
+    });
+  const mode = cfg.toolMode ?? 'auto';
+  if (mode === 'native') return openai(false);
+  if (mode === 'json') return jsonFallbackClient(openai(true));
+  return autoToolModeClient(openai(false), openai(true));
 }
 
 function failRun(opts: EngineRunOptions, engineId: string, code: string, message: string): EngineRun {
