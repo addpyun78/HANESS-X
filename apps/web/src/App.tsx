@@ -1,4 +1,4 @@
-import type { HarnessEvent } from '@harness-x/protocol';
+import type { AgentSummary, HarnessEvent } from '@harness-x/protocol';
 import { useEffect, useMemo, useState } from 'react';
 import {
   ApiError,
@@ -15,6 +15,7 @@ import { enginesFromPlugins } from './composer/engines.js';
 import type { RecentProject } from './composer/PlusMenu.js';
 import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
+import { navigate } from './router.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { SessionNav } from './shell/SessionNav.js';
@@ -46,6 +47,7 @@ export function App() {
   const [engines, setEngines] = useState<EngineOption[]>(demo ? DEMO_ENGINES : []);
   const [conn, setConn] = useState<ConnectionStatus>('closed');
   const [mode, setMode] = useState<ViewMode>('normal');
+  const [agents, setAgents] = useState<AgentSummary[]>([]);
   const sessions: SessionSummary[] = demo ? DEMO_SESSIONS : [];
   const [workspace, setWorkspace] = useState<Workspace | undefined>(demo ? DEMO_WORKSPACE : undefined);
   const [recent, setRecent] = useState<RecentProject[]>(demo ? [DEMO_WORKSPACE] : []);
@@ -72,6 +74,10 @@ export function App() {
         .plugins()
         .then((r) => setEngines(enginesFromPlugins(r)))
         .catch(() => setEngines([]));
+      client
+        .agents()
+        .then((r) => setAgents(r.agents))
+        .catch(() => setAgents([]));
       stream = client.events({ onEvent: (e) => setEvents((xs) => [...xs, e]), onStatus: setConn });
     };
     if (desktop) {
@@ -142,7 +148,13 @@ export function App() {
           .filter((e) => e.available)
           .map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
       }}
-      sidebar={<SessionNav sessions={sessions} activeSessionId={sessions[0]?.id} />}
+      sidebar={
+        <SessionNav
+          sessions={sessions}
+          activeSessionId={sessions[0]?.id}
+          onNavigate={(to) => to === 'agent-builder' && navigate('/builder/new')}
+        />
+      }
       main={
         <>
           <ChatStream events={events} mode={mode} onModeChange={setMode} />
@@ -160,6 +172,7 @@ export function App() {
               onPickRecent: (p) => void openWorkspace(p.path),
               onTogglePin: (p) => void togglePin(p),
             }}
+            agents={agents}
             onSend={() => {
               /* 턴 전송 API는 이후 티켓에서 연결 */
             }}

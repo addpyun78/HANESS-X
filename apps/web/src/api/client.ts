@@ -1,4 +1,4 @@
-import type { HarnessEvent } from '@harness-x/protocol';
+import type { AgentListResponse, HarnessEvent } from '@harness-x/protocol';
 
 /**
  * 로컬 하네스 API 클라이언트 (packages/kernel/src/api/server.ts와 짝)
@@ -166,6 +166,11 @@ export class HarnessApiClient {
       method: 'POST',
       body: JSON.stringify({ path, pinned }),
     });
+  }
+
+  /** GET /api/agents — 등록된 에이전트 요약 (빌더·/ 팔레트) */
+  agents() {
+    return this.request<AgentListResponse>('/api/agents');
   }
 
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {

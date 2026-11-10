@@ -1,0 +1,83 @@
+/* / 팔레트(컨셉 D) — 입력창 바로 위 팝오버. 색은 토큰 변수만 */
+
+.hx-composer {
+  position: relative;
+}
+
+.hx-slash {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--hx-space-1));
+  left: 0;
+  z-index: 20;
+  max-height: 320px;
+  padding: var(--hx-space-1);
+  overflow: auto;
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+}
+
+.hx-slash__empty {
+  margin: 0;
+  padding: var(--hx-space-2);
+  color: var(--hx-text-faint);
+}
+
+.hx-slash__group-title {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-slash__row {
+  display: grid;
+  grid-template-columns: 24px auto minmax(0, 1fr) auto;
+  gap: var(--hx-space-2);
+  align-items: center;
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border-radius: var(--hx-radius);
+  cursor: pointer;
+}
+
+.hx-slash__row[aria-selected='true'] {
+  background: var(--hx-accent-soft);
+}
+
+.hx-slash__desc {
+  overflow: hidden;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-slash__meta {
+  display: inline-flex;
+  gap: var(--hx-space-1);
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+}
+
+.hx-slash__engine {
+  padding: 0 var(--hx-space-1);
+  border: 1px solid var(--hx-warning);
+  border-radius: 999px;
+}
+
+.hx-agent-chip {
+  display: inline-flex;
+  gap: var(--hx-space-1);
+  align-items: center;
+  margin-bottom: var(--hx-space-1);
+  padding: 0 var(--hx-space-1) 0 var(--hx-space-2);
+  border: 1px solid var(--hx-accent);
+  border-radius: 999px;
+  background: var(--hx-accent-soft);
+}
+
+.hx-agent-chip__x {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}

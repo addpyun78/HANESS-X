@@ -1,7 +1,9 @@
+import type { AgentSummary } from '@harness-x/protocol';
 import { useCallback, useEffect, useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
 import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
+import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
 import {
   AUTH_LABEL,
   PERMISSION_DESC,
@@ -33,6 +35,10 @@ export interface ComposerProps {
   verdict?: Verdict;
   disabled?: boolean;
   placeholder?: string;
+  /** / 팔레트 목록 (GET /api/agents) */
+  agents?: readonly AgentSummary[];
+  /** / 팔레트 스킬 묶음 */
+  skills?: readonly PaletteSkill[];
 }
 
 const isEnter = (e: KeyboardEvent) => e.key === 'Enter';
@@ -58,8 +64,11 @@ export function Composer({
   verdict,
   disabled,
   placeholder = '지시를 입력하세요 (Enter 전송 · Shift+Enter 줄바꿈)',
+  agents,
+  skills,
 }: ComposerProps) {
   const [text, setText] = useState('');
+  const slash = useSlashPalette({ agents, skills, text, setText });
   const [settings, setSettings] = useState<ComposerSettings>(() => ({
     engineId: pickEngine(engines, initialSettings?.engineId),
     auth: initialSettings?.auth ?? 'subscription',
@@ -96,12 +105,18 @@ export function Composer({
   const canSend = !disabled && (text.trim().length > 0 || attachments.length > 0);
   const send = () => {
     if (!canSend) return;
-    onSend({ text: text.trim(), settings, attachments });
+    onSend({
+      text: text.trim(),
+      settings,
+      attachments,
+      ...(slash.agent ? { agent: slash.agent.command } : {}),
+    });
     setText('');
     setAttachments([]);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!e.nativeEvent.isComposing && slash.onKeyDown(e)) return;
     if (!isEnter(e)) return;
     // 한글 IME 조합 중 Enter는 글자 확정용 → 무시
     if (e.nativeEvent.isComposing || composing.current || e.keyCode === 229) return;
@@ -153,7 +168,10 @@ export function Composer({
           ))}
         </ul>
       )}
+      {slash.popover}
+      {slash.chip}
       <textarea
+        {...slash.inputProps}
         className="hx-composer__input"
         aria-label="지시 입력"
         rows={2}
