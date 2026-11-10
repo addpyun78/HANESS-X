@@ -14,6 +14,7 @@ import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
+import { useQuota } from './shell/useQuota.js';
 
 const DEMO_ENGINES: EngineOption[] = [
   { id: 'claude-code', label: 'Claude Code', available: true },
@@ -42,6 +43,7 @@ export function App() {
   const panels = usePanels({ events, client, loginEngines: engines });
   const [view, setView] = useState<'chat' | NavTarget>('chat');
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
+  const quotas = useQuota(client, events, available);
   const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
 
   useEffect(() => {
@@ -71,11 +73,9 @@ export function App() {
         topBar={{
           workspace,
           runState,
-          quotas: available.map((e) => ({
-            engineId: e.id,
-            label: e.label,
-            ...(demo ? { ratio: 0.42 } : {}),
-          })),
+          quotas:
+            quotas ??
+            available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
         }}
         sidebar={
           <SessionNav

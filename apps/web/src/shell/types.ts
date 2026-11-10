@@ -23,6 +23,11 @@ export interface QuotaMeter {
   label: string;
   /** 한도 대비 사용률 0~1 (모르면 생략 → 빈 자리) */
   ratio?: number;
+  /** 60.1 집계값 (툴팁) */
+  totalTokens?: number;
+  requests?: number;
+  costUsd?: number;
+  costEstimated?: boolean;
 }
 
 export type SessionStatus = 'running' | 'idle' | 'done' | 'blocked' | 'error';
