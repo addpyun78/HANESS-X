@@ -1,0 +1,220 @@
+{
+  "$id": "https://harness-x.local/schemas/harness-v2-checkpoint.schema.json",
+  "title": "HARNESS v2 CHECKPOINT.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "string",
+      "const": "harness-checkpoint"
+    },
+    "version": {
+      "type": "number",
+      "const": 2
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mission": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "const": "MISSION.md"
+        }
+      },
+      "required": ["title", "file"],
+      "additionalProperties": false
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "done": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "remaining": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": ["revision", "version", "total", "done", "remaining"],
+      "additionalProperties": false
+    },
+    "currentItemId": {
+      "type": ["string", "null"]
+    },
+    "nextAction": {
+      "type": ["string", "null"]
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent": {
+            "type": ["string", "null"]
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["todo", "doing", "verifying", "done", "failed", "blocked"]
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "deps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifactId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": ["string", "null"]
+          },
+          "verdict": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "verdict": {
+                    "type": "string"
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "required": ["level", "verdict", "confidence", "reason"],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastEvidence": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": ["string", "null"]
+                  },
+                  "ts": {
+                    "type": ["string", "null"]
+                  }
+                },
+                "required": ["kind", "summary", "ts"],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "parent",
+          "title",
+          "status",
+          "attempts",
+          "deps",
+          "artifactId",
+          "path",
+          "verdict",
+          "lastEvidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["file", "dir"]
+          }
+        },
+        "required": ["displayName", "path", "kind"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "createdAt",
+    "sessionId",
+    "mission",
+    "progress",
+    "currentItemId",
+    "nextAction",
+    "items",
+    "artifacts"
+  ],
+  "additionalProperties": false
+}
