@@ -93,3 +93,32 @@ describe('51.2 Forge 질문 카드 (선택지 버튼)', () => {
     expect(onAnswer).toHaveBeenCalledWith('s1:q5', { value: 'text', text: '린트 실패면 차단' });
   });
 });
+
+describe('51.3 Forge spec 확인 카드', () => {
+  it('spec 요약(종류·발동·권한·예시) + 확인/취소', () => {
+    const onAnswer = show({
+      ...base,
+      type: 'approval_request',
+      approvalId: 's1:spec',
+      kind: 'forge_spec',
+      title: 'PR 전 Kotlin 린트 가드 (hook) 이렇게 만들까요?',
+      options: ['confirm', 'cancel'],
+      detail: {
+        spec: {
+          id: 'pr-kotlin-guard',
+          kind: 'hook',
+          trigger: { hook: 'tool.before', match: 'gh pr create' },
+          permissions: { fs: [], net: [], shell: true },
+          examples: [{ name: '린트 실패 → 차단' }, { name: '린트 성공 → 허용' }],
+        },
+      },
+    });
+    const card = screen.getByRole('group', { name: /Forge spec 확인/ });
+    expect(card.textContent).toContain('pr-kotlin-guard');
+    expect(card.textContent).toContain('tool.before · gh pr create');
+    expect(card.textContent).toContain('셸 실행');
+    expect(card.textContent).toContain('린트 실패 → 차단, 린트 성공 → 허용');
+    fireEvent.click(screen.getByRole('button', { name: '확인' }));
+    expect(onAnswer).toHaveBeenCalledWith('s1:spec', { value: 'confirm' });
+  });
+});
