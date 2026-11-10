@@ -28,6 +28,7 @@ import {
 } from '@harness-x/protocol';
 import {
   MAX_CONTRACT_RETRIES,
+  assertPipelineContracts,
   contractRetryPrompt,
   extractNodeOutput,
   outputInstruction,
@@ -140,6 +141,8 @@ export class PipelineRunner {
 
   // ── 공개 API ───────────────────────────────────────────────
   async run(pipeline: Pipeline, input: unknown = {}): Promise<PipelineRunResult> {
+    // 42.4 노드 연결 스키마 호환성 정적 검사 (비호환이면 아무 노드도 실행하지 않고 PipelineContractError)
+    assertPipelineContracts(pipeline);
     this.pipeline = pipeline;
     this.byId = new Map(pipeline.nodes.map((n) => [n.id, n]));
     this.input = typeof input === 'string' ? { request: input } : input;
