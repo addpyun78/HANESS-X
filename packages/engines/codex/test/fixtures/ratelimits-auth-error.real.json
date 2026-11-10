@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": -32603,
+    "message": "failed to fetch codex rate limits: GET https://chatgpt.com/backend-api/wham/usage failed: 401 Unauthorized; content-type=text/plain; body={\n  \"error\": {\n    \"message\": \"Could not find the appropriate key in your authentication token. Please try signing in again.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_jwt\",\n    \"param\": null\n  },\n  \"status\": 401\n}"
+  }
+}
