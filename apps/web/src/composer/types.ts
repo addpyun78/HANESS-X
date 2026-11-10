@@ -48,6 +48,8 @@ export interface SendPayload {
   text: string;
   settings: ComposerSettings;
   attachments: Attachment[];
+  /** / 팔레트로 고정한 에이전트 명령 (예: /design-qa) */
+  agent?: string;
 }
 
 /** 판정 줄: 항목이 판정 사다리 몇 번째 칸에서 통과했는지 */

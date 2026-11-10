@@ -1,4 +1,4 @@
-import type { HarnessEvent } from '@harness-x/protocol';
+import type { AgentSummary, HarnessEvent } from '@harness-x/protocol';
 import { useEffect, useMemo, useState } from 'react';
 import { HarnessApiClient, resolveToken, type ConnectionStatus } from './api/client.js';
 import { ChatStream } from './chat/ChatStream.js';
@@ -30,6 +30,7 @@ export function App() {
   const [engines, setEngines] = useState<EngineOption[]>(demo ? DEMO_ENGINES : []);
   const [conn, setConn] = useState<ConnectionStatus>('closed');
   const [mode, setMode] = useState<ViewMode>('normal');
+  const [agents, setAgents] = useState<AgentSummary[]>([]);
   const sessions: SessionSummary[] = demo ? DEMO_SESSIONS : [];
   const workspace: Workspace | undefined = demo ? DEMO_WORKSPACE : undefined;
 
@@ -42,6 +43,10 @@ export function App() {
       .plugins()
       .then((r) => setEngines(enginesFromPlugins(r)))
       .catch(() => setEngines([]));
+    client
+      .agents()
+      .then((r) => setAgents(r.agents))
+      .catch(() => setAgents([]));
     const stream = client.events({ onEvent: (e) => setEvents((xs) => [...xs, e]), onStatus: setConn });
     return () => stream.close();
   }, [demo]);
@@ -75,6 +80,7 @@ export function App() {
           <ChatStream events={events} mode={mode} onModeChange={setMode} />
           <Composer
             engines={engines}
+            agents={agents}
             onSend={() => {
               /* 턴 전송 API는 이후 티켓에서 연결 */
             }}
