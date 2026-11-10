@@ -6,6 +6,10 @@ import {
   type Verdict,
 } from '@harness-x/checklist-ledger';
 import type { LadderResult } from './ladder.js';
+import type { L4Result } from './l4.js';
+
+/** L1~L3 결과 또는 L4 결과 */
+export type AnyLadderResult = LadderResult | L4Result;
 
 /**
  * 판정 결과 기록 (25.5)
@@ -17,7 +21,9 @@ export const LADDER_EVIDENCE_KIND = 'ladder_verdict';
 
 export interface LadderEvidence extends Evidence {
   kind: typeof LADDER_EVIDENCE_KIND;
-  level: LadderResult['level'];
+  level: AnyLadderResult['level'];
+  /** L4 결정 (accept/escalate/fail/skipped) */
+  decision?: L4Result['decision'];
   verdict: LadderResult['verdict'];
   confidence: number;
   reason: string;
@@ -28,7 +34,7 @@ export interface LadderEvidence extends Evidence {
   checks?: { type: string; ok: boolean; skipped?: boolean }[];
 }
 
-export function toVerdict(r: LadderResult): Verdict {
+export function toVerdict(r: AnyLadderResult): Verdict {
   return VerdictSchema.parse({
     level: r.level,
     verdict: r.verdict,
@@ -37,7 +43,7 @@ export function toVerdict(r: LadderResult): Verdict {
   });
 }
 
-export function toEvidence(r: LadderResult, opts: { now?: () => Date } = {}): LadderEvidence {
+export function toEvidence(r: AnyLadderResult, opts: { now?: () => Date } = {}): LadderEvidence {
   const ev: LadderEvidence = {
     kind: LADDER_EVIDENCE_KIND,
     ts: (opts.now ?? (() => new Date()))().toISOString(),
@@ -49,6 +55,7 @@ export function toEvidence(r: LadderResult, opts: { now?: () => Date } = {}): La
     expectedPath: r.expectedPath,
     ...(r.actualPath !== undefined ? { actualPath: r.actualPath } : {}),
     escalate: r.escalate,
+    ...('decision' in r ? { decision: r.decision } : {}),
     candidates: r.candidates.map((c) => ({ path: c.path, similarity: c.similarity })),
     ...(r.checks
       ? { checks: r.checks.map((c) => ({ type: c.type, ok: c.ok, ...(c.skipped ? { skipped: true } : {}) })) }
@@ -62,7 +69,7 @@ export function toEvidence(r: LadderResult, opts: { now?: () => Date } = {}): La
 export function recordLadderEvidence(
   ledger: Pick<ChecklistLedger, 'addEvidence'>,
   itemId: string,
-  r: LadderResult,
+  r: AnyLadderResult,
   opts: { now?: () => Date; expectedVersion?: number } = {},
 ): LadderEvidence {
   const ev = toEvidence(r, opts);
