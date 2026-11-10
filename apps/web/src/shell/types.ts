@@ -7,6 +7,9 @@ export interface Workspace {
   path: string;
   /** git 브랜치 (없으면 표시 안 함) */
   branch?: string;
+  /** AGENTS.md / CLAUDE.md 존재 표시 */
+  hasAgentsMd?: boolean;
+  hasClaudeMd?: boolean;
 }
 
 export type RunState = 'idle' | 'running' | 'blocked' | 'error';

@@ -86,6 +86,16 @@
   white-space: nowrap;
 }
 
+/* 35.3 AGENTS.md / CLAUDE.md 표시 */
+.hx-topbar__doc {
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+  white-space: nowrap;
+}
+
 .hx-topbar__empty {
   color: var(--hx-text-faint);
 }
@@ -350,4 +360,15 @@
 
 .hx-sheet > * {
   flex: 1;
+}
+
+/* 35.1 워크스페이스 검증 거부 안내 (입력창 위) */
+.hx-ws-error {
+  margin: var(--hx-space-2) var(--hx-space-4) 0;
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: 1px solid var(--hx-danger);
+  border-radius: var(--hx-radius);
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+  font-size: var(--hx-font-12);
 }
