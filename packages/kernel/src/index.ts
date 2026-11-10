@@ -6,6 +6,7 @@ export * from './hot-reload.js';
 export * from './api/server.js';
 export * from './api/terminal.js';
 export * from './api/engines-routes.js';
+export * from './api/agents-routes.js';
 export * from './api/quota-route.js';
 export * from './sandbox/index.js';
 export * from './agent-loop.js';
