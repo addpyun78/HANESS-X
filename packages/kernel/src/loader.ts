@@ -1,0 +1,498 @@
+import { createHash, randomUUID } from 'node:crypto';
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+  mkdirSync,
+  renameSync,
+} from 'node:fs';
+import { homedir } from 'node:os';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import semver from 'semver';
+import {
+  PLUGIN_SLOTS,
+  PluginManifestSchema,
+  providedSlots,
+  type PluginManifest,
+  type PluginSlot,
+} from '@harness-x/protocol';
+import type { EventLog } from './event-log.js';
+import type { BlockingHandler, HookBus, HookName, NotifyHandler, RegisterOptions } from './hooks.js';
+
+/**
+ * 플러그인 로더
+ * 탐색 → 매니페스트 검증 → lock 대조 → 의존성 위상정렬 → activate
+ */
+
+export const MANIFEST_FILE = 'harness-plugin.json';
+
+export type PluginOrigin = 'user' | 'workspace' | 'core' | 'extra';
+
+export interface PluginRoot {
+  dir: string;
+  origin: PluginOrigin;
+}
+
+export interface PluginContext {
+  manifest: PluginManifest;
+  dir: string;
+  /** 플러그인 로그 (이벤트 로그 plugin_log + 콘솔 로거) */
+  log(message: string): void;
+  hooks: {
+    onBlocking(
+      name: HookName,
+      handler: BlockingHandler,
+      opts?: Omit<RegisterOptions, 'pluginId'>,
+    ): () => void;
+    onNotify(name: HookName, handler: NotifyHandler, opts?: Omit<RegisterOptions, 'pluginId'>): () => void;
+  };
+  config: Record<string, unknown>;
+}
+
+export interface PluginModule {
+  activate?(ctx: PluginContext): void | Promise<void>;
+  deactivate?(): void | Promise<void>;
+}
+
+export type PluginState = 'discovered' | 'active' | 'inactive' | 'failed';
+
+export interface LoadedPlugin {
+  manifest: PluginManifest;
+  dir: string;
+  origin: PluginOrigin;
+  sha256: string;
+  state: PluginState;
+  error?: string;
+  module?: PluginModule;
+}
+
+export interface Rejection {
+  dir: string;
+  id?: string;
+  reason: string;
+}
+
+export interface LockEntry {
+  id: string;
+  version: string;
+  sha256: string;
+}
+
+export interface PluginLoaderOptions {
+  hooks: HookBus;
+  log?: EventLog;
+  /** 탐색 루트 (기본: defaultPluginRoots) */
+  roots?: PluginRoot[];
+  /** plugins.lock 경로 (기본 ~/.harness-x/plugins.lock) */
+  lockFile?: string;
+  /** 비워질 수 없는 슬롯 (기본 ['engine']) */
+  requiredSlots?: PluginSlot[];
+  /** 플러그인별 설정 */
+  config?: Record<string, Record<string, unknown>>;
+  /** activate/deactivate 제한 시간 (기본 10초) */
+  lifecycleTimeoutMs?: number;
+  logger?: (line: string) => void;
+}
+
+export function harnessHome(): string {
+  return process.env.HARNESS_X_HOME ?? join(homedir(), '.harness-x');
+}
+
+/** 6.1 기본 탐색 경로: ~/.harness-x/plugins, <workspace>/.harness-x/plugins, packages/plugins-core */
+export function defaultPluginRoots(
+  opts: { workspace?: string; repoRoot?: string; home?: string } = {},
+): PluginRoot[] {
+  const roots: PluginRoot[] = [];
+  if (opts.workspace) roots.push({ dir: join(opts.workspace, '.harness-x', 'plugins'), origin: 'workspace' });
+  roots.push({ dir: join(opts.home ?? harnessHome(), 'plugins'), origin: 'user' });
+  if (opts.repoRoot) roots.push({ dir: join(opts.repoRoot, 'packages', 'plugins-core'), origin: 'core' });
+  return roots;
+}
+
+export class PluginLoader {
+  readonly plugins = new Map<string, LoadedPlugin>();
+  readonly rejections: Rejection[] = [];
+  private readonly hooks: HookBus;
+  private readonly log: EventLog | undefined;
+  private readonly roots: PluginRoot[];
+  private readonly lockFile: string;
+  private readonly requiredSlots: PluginSlot[];
+  private readonly config: Record<string, Record<string, unknown>>;
+  private readonly lifecycleTimeoutMs: number;
+  private readonly logger: (line: string) => void;
+  private lock: Map<string, LockEntry>;
+
+  constructor(opts: PluginLoaderOptions) {
+    this.hooks = opts.hooks;
+    this.log = opts.log;
+    this.roots = opts.roots ?? defaultPluginRoots();
+    this.lockFile = opts.lockFile ?? join(harnessHome(), 'plugins.lock');
+    this.requiredSlots = opts.requiredSlots ?? ['engine'];
+    this.config = opts.config ?? {};
+    this.lifecycleTimeoutMs = opts.lifecycleTimeoutMs ?? 10_000;
+    this.logger = opts.logger ?? (() => {});
+    this.lock = readLock(this.lockFile);
+  }
+
+  /** 6.1 탐색: 루트 바로 아래 폴더 중 harness-plugin.json이 있는 것 */
+  discover(): { dir: string; origin: PluginOrigin }[] {
+    const found: { dir: string; origin: PluginOrigin }[] = [];
+    for (const root of this.roots) {
+      if (!existsSync(root.dir)) continue;
+      for (const name of readdirSync(root.dir).sort()) {
+        const dir = join(root.dir, name);
+        try {
+          if (statSync(dir).isDirectory() && existsSync(join(dir, MANIFEST_FILE))) {
+            found.push({ dir, origin: root.origin });
+          }
+        } catch {
+          /* 접근 불가 폴더 무시 */
+        }
+      }
+    }
+    return found;
+  }
+
+  /** 탐색 + 검증 + lock 대조 + 위상정렬 + activate. 활성화된 id 순서를 돌려준다 */
+  async loadAll(): Promise<string[]> {
+    for (const c of this.discover()) this.register(c.dir, c.origin);
+    this.checkRequires();
+    const order = this.topoSort();
+    for (const id of order) await this.activate(id);
+    this.saveLock();
+    return order.filter((id) => this.plugins.get(id)?.state === 'active');
+  }
+
+  /** 폴더 하나를 검증해 등록. 실패 시 거부 사유를 기록하고 undefined */
+  register(
+    dir: string,
+    origin: PluginOrigin,
+    opts: { acceptChanges?: boolean } = {},
+  ): LoadedPlugin | undefined {
+    let manifest: PluginManifest;
+    try {
+      const raw: unknown = JSON.parse(readFileSync(join(dir, MANIFEST_FILE), 'utf8'));
+      const r = PluginManifestSchema.safeParse(raw);
+      if (!r.success) {
+        const why = r.error.issues.map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`).join('; ');
+        const id = typeof (raw as { id?: unknown })?.id === 'string' ? (raw as { id: string }).id : undefined;
+        this.reject({ dir, id, reason: `매니페스트 검증 실패: ${why}` });
+        return undefined;
+      }
+      manifest = r.data;
+    } catch (err) {
+      this.reject({ dir, reason: `매니페스트 읽기 실패: ${errMsg(err)}` });
+      return undefined;
+    }
+    if (manifest.apiVersion !== 1) {
+      this.reject({ dir, id: manifest.id, reason: `지원하지 않는 apiVersion ${manifest.apiVersion}` });
+      return undefined;
+    }
+    const existing = this.plugins.get(manifest.id);
+    if (existing && resolve(existing.dir) !== resolve(dir)) {
+      this.reject({ dir, id: manifest.id, reason: `id 중복: ${existing.dir}에 이미 있음` });
+      return undefined;
+    }
+    const mainPath = resolve(dir, manifest.main);
+    if (!isInside(dir, mainPath)) {
+      this.reject({ dir, id: manifest.id, reason: 'main이 플러그인 폴더 밖을 가리킴' });
+      return undefined;
+    }
+    // 6.6 lock 대조
+    const sha256 = hashPluginDir(dir);
+    const locked = this.lock.get(manifest.id);
+    if (locked && !opts.acceptChanges) {
+      if (locked.version === manifest.version && locked.sha256 !== sha256) {
+        this.reject({
+          dir,
+          id: manifest.id,
+          reason: `plugins.lock 불일치: 파일이 변조됨 (${manifest.id}@${manifest.version})`,
+        });
+        return undefined;
+      }
+      if (locked.version !== manifest.version) {
+        this.reject({
+          dir,
+          id: manifest.id,
+          reason: `plugins.lock 버전 불일치: lock ${locked.version}, 실제 ${manifest.version} (신뢰하려면 trust 필요)`,
+        });
+        return undefined;
+      }
+    }
+    this.lock.set(manifest.id, { id: manifest.id, version: manifest.version, sha256 });
+    const p: LoadedPlugin = { manifest, dir, origin, sha256, state: 'discovered' };
+    this.plugins.set(manifest.id, p);
+    return p;
+  }
+
+  /** 사용자가 변경을 승인: lock을 현재 파일로 갱신 */
+  trust(id: string): void {
+    const p = this.plugins.get(id);
+    if (!p) throw new Error(`없는 플러그인: ${id}`);
+    p.sha256 = hashPluginDir(p.dir);
+    this.lock.set(id, { id, version: p.manifest.version, sha256: p.sha256 });
+    this.saveLock();
+  }
+
+  /** 6.4 activate (의존 플러그인이 active여야 함) */
+  async activate(id: string): Promise<boolean> {
+    const p = this.plugins.get(id);
+    if (!p) throw new Error(`없는 플러그인: ${id}`);
+    if (p.state === 'active') return true;
+    for (const dep of Object.keys(p.manifest.requires)) {
+      if (this.plugins.get(dep)?.state !== 'active') {
+        p.state = 'failed';
+        p.error = `의존 플러그인 비활성: ${dep}`;
+        this.emit('plugin_failed', p.manifest.id, p.error);
+        return false;
+      }
+    }
+    try {
+      const url = pathToFileURL(resolve(p.dir, p.manifest.main)).href + `?v=${p.sha256.slice(0, 12)}`;
+      const mod = (await import(url)) as PluginModule & { default?: PluginModule };
+      const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? {});
+      p.module = m;
+      await withTimeout(
+        Promise.resolve(m.activate?.(this.contextFor(p))),
+        this.lifecycleTimeoutMs,
+        'activate',
+      );
+      p.state = 'active';
+      delete p.error;
+      this.emit('plugin_activated', id, `${id}@${p.manifest.version}`);
+      return true;
+    } catch (err) {
+      this.hooks.removePlugin(id);
+      p.state = 'failed';
+      p.error = errMsg(err);
+      this.emit('plugin_failed', id, p.error);
+      return false;
+    }
+  }
+
+  /** 6.4 / 6.5 deactivate: 필수 슬롯의 마지막 제공자나 다른 플러그인이 의존 중이면 거부 */
+  async deactivate(id: string, opts: { force?: boolean } = {}): Promise<void> {
+    const p = this.plugins.get(id);
+    if (!p) throw new Error(`없는 플러그인: ${id}`);
+    if (p.state !== 'active') return;
+    if (!opts.force) {
+      for (const slot of providedSlots(p.manifest)) {
+        if (!this.requiredSlots.includes(slot)) continue;
+        const others = [...this.plugins.values()].filter(
+          (o) => o !== p && o.state === 'active' && (o.manifest.provides[slot]?.length ?? 0) > 0,
+        );
+        if (others.length === 0) {
+          const reason = `슬롯 최소 1개 규칙: '${slot}' 슬롯의 마지막 플러그인(${id})은 비활성화할 수 없습니다`;
+          this.emit('plugin_deactivate_denied', id, reason);
+          throw new Error(reason);
+        }
+      }
+      const dependents = [...this.plugins.values()].filter(
+        (o) => o.state === 'active' && id in o.manifest.requires,
+      );
+      if (dependents.length) {
+        const reason = `의존 중인 플러그인이 있음: ${dependents.map((d) => d.manifest.id).join(', ')}`;
+        this.emit('plugin_deactivate_denied', id, reason);
+        throw new Error(reason);
+      }
+    }
+    try {
+      await withTimeout(Promise.resolve(p.module?.deactivate?.()), this.lifecycleTimeoutMs, 'deactivate');
+    } catch (err) {
+      this.emit('plugin_failed', id, `deactivate: ${errMsg(err)}`);
+    } finally {
+      this.hooks.removePlugin(id);
+      p.state = 'inactive';
+      this.emit('plugin_deactivated', id, id);
+    }
+  }
+
+  /** 6.6 lock 저장 (원자적 교체) */
+  saveLock(): void {
+    const entries = [...this.lock.values()].sort((a, b) => a.id.localeCompare(b.id));
+    mkdirSync(dirname(this.lockFile), { recursive: true });
+    const tmp = `${this.lockFile}.${process.pid}.tmp`;
+    writeFileSync(tmp, JSON.stringify({ lockfileVersion: 1, plugins: entries }, null, 2) + '\n');
+    renameSync(tmp, this.lockFile);
+  }
+
+  /** 슬롯별 활성 플러그인 */
+  activeBySlot(): Record<PluginSlot, string[]> {
+    const out = Object.fromEntries(PLUGIN_SLOTS.map((s) => [s, [] as string[]])) as Record<
+      PluginSlot,
+      string[]
+    >;
+    for (const p of this.plugins.values()) {
+      if (p.state !== 'active') continue;
+      for (const s of providedSlots(p.manifest)) out[s].push(p.manifest.id);
+    }
+    return out;
+  }
+
+  /** 핫리로드용: 플러그인을 목록에서 빼고 다시 등록할 수 있게 한다 */
+  forget(id: string): LoadedPlugin | undefined {
+    const p = this.plugins.get(id);
+    this.plugins.delete(id);
+    return p;
+  }
+
+  /** 6.3 의존성: 존재·버전 범위 검사 (없으면 연쇄 거부) */
+  private checkRequires(): void {
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const p of [...this.plugins.values()]) {
+        if (p.state !== 'discovered') continue;
+        for (const [dep, range] of Object.entries(p.manifest.requires)) {
+          const d = this.plugins.get(dep);
+          let reason: string | undefined;
+          if (!d) reason = `의존 플러그인 없음: ${dep}`;
+          else if (!semver.validRange(range)) reason = `잘못된 버전 범위: ${dep}@${range}`;
+          else if (!semver.satisfies(d.manifest.version, range, { includePrerelease: true }))
+            reason = `의존 버전 불일치: ${dep}@${d.manifest.version} ∉ ${range}`;
+          if (reason) {
+            this.plugins.delete(p.manifest.id);
+            this.reject({ dir: p.dir, id: p.manifest.id, reason });
+            changed = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /** 6.3 위상정렬 (Kahn). 순환에 걸린 플러그인은 거부 */
+  private topoSort(): string[] {
+    const ids = [...this.plugins.values()].filter((p) => p.state === 'discovered').map((p) => p.manifest.id);
+    const indeg = new Map(ids.map((id) => [id, 0]));
+    const out = new Map<string, string[]>(ids.map((id) => [id, []]));
+    for (const id of ids) {
+      for (const dep of Object.keys(this.plugins.get(id)!.manifest.requires)) {
+        if (!indeg.has(dep)) continue;
+        indeg.set(id, (indeg.get(id) ?? 0) + 1);
+        out.get(dep)!.push(id);
+      }
+    }
+    const queue = ids.filter((id) => indeg.get(id) === 0).sort();
+    const order: string[] = [];
+    while (queue.length) {
+      const id = queue.shift()!;
+      order.push(id);
+      for (const next of out.get(id)!.sort()) {
+        indeg.set(next, indeg.get(next)! - 1);
+        if (indeg.get(next) === 0) queue.push(next);
+      }
+    }
+    const cyclic = ids.filter((id) => !order.includes(id));
+    for (const id of cyclic) {
+      const p = this.plugins.get(id)!;
+      this.plugins.delete(id);
+      this.reject({ dir: p.dir, id, reason: `의존성 순환: ${cyclic.join(' → ')}` });
+    }
+    return order;
+  }
+
+  private contextFor(p: LoadedPlugin): PluginContext {
+    const pluginId = p.manifest.id;
+    return {
+      manifest: p.manifest,
+      dir: p.dir,
+      config: this.config[pluginId] ?? {},
+      log: (message: string) => {
+        this.logger(`[${pluginId}] ${message}`);
+        this.emit('plugin_log', pluginId, message);
+      },
+      hooks: {
+        onBlocking: (name, handler, opts = {}) => this.hooks.onBlocking(name, handler, { ...opts, pluginId }),
+        onNotify: (name, handler, opts = {}) => this.hooks.onNotify(name, handler, { ...opts, pluginId }),
+      },
+    };
+  }
+
+  /** 6.2 거부 사유 기록 */
+  private reject(r: Rejection): void {
+    this.rejections.push(r);
+    this.logger(`plugin rejected ${r.id ?? r.dir}: ${r.reason}`);
+    this.emit('plugin_rejected', r.id, r.reason, { dir: r.dir });
+  }
+
+  private emit(
+    type: string,
+    pluginId: string | undefined,
+    message: string,
+    extra: Record<string, unknown> = {},
+  ): void {
+    if (!this.log) return;
+    try {
+      this.log.append({
+        id: randomUUID(),
+        ts: new Date().toISOString(),
+        sessionId: 'kernel',
+        type,
+        ...(pluginId ? { pluginId } : {}),
+        message,
+        ...extra,
+      });
+    } catch {
+      /* 로그 실패는 로딩을 막지 않는다 */
+    }
+  }
+}
+
+/** 플러그인 폴더 내용의 sha256 (상대 경로 + 내용, node_modules·.git 제외) */
+export function hashPluginDir(dir: string): string {
+  const h = createHash('sha256');
+  const walk = (d: string) => {
+    for (const name of readdirSync(d).sort()) {
+      if (name === 'node_modules' || name === '.git') continue;
+      const full = join(d, name);
+      const st = statSync(full);
+      if (st.isDirectory()) walk(full);
+      else if (st.isFile()) {
+        h.update(relative(dir, full).split(sep).join('/'));
+        h.update('\0');
+        h.update(readFileSync(full));
+        h.update('\0');
+      }
+    }
+  };
+  walk(dir);
+  return h.digest('hex');
+}
+
+function readLock(file: string): Map<string, LockEntry> {
+  try {
+    const data = JSON.parse(readFileSync(file, 'utf8')) as { plugins?: LockEntry[] };
+    return new Map((data.plugins ?? []).map((e) => [e.id, e]));
+  } catch {
+    return new Map();
+  }
+}
+
+function isInside(dir: string, target: string): boolean {
+  const rel = relative(resolve(dir), resolve(target));
+  return rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
+}
+
+function withTimeout<T>(p: Promise<T>, ms: number, what: string): Promise<T> {
+  return new Promise<T>((res, rej) => {
+    const t = setTimeout(() => rej(new Error(`${what} timeout after ${ms}ms`)), ms);
+    p.then(
+      (v) => {
+        clearTimeout(t);
+        res(v);
+      },
+      (e: unknown) => {
+        clearTimeout(t);
+        rej(e instanceof Error ? e : new Error(String(e)));
+      },
+    );
+  });
+}
+
+function errMsg(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
+}
