@@ -95,7 +95,15 @@ export interface PluginLoaderOptions {
   /** activate/deactivate 제한 시간 (기본 10초) */
   lifecycleTimeoutMs?: number;
   logger?: (line: string) => void;
+  /**
+   * 모듈 import 함수 (기본: 네이티브 import + ?v=<sha> 캐시 무효화).
+   * 테스트 러너처럼 query를 무시하는 환경에서 교체한다.
+   */
+  importModule?: (file: string, sha256: string) => Promise<unknown>;
 }
+
+export const defaultImportModule = (file: string, sha256: string): Promise<unknown> =>
+  import(pathToFileURL(file).href + `?v=${sha256.slice(0, 12)}`);
 
 export function harnessHome(): string {
   return process.env.HARNESS_X_HOME ?? join(homedir(), '.harness-x');
@@ -123,6 +131,7 @@ export class PluginLoader {
   private readonly config: Record<string, Record<string, unknown>>;
   private readonly lifecycleTimeoutMs: number;
   private readonly logger: (line: string) => void;
+  private readonly importModule: (file: string, sha256: string) => Promise<unknown>;
   private lock: Map<string, LockEntry>;
 
   constructor(opts: PluginLoaderOptions) {
@@ -134,6 +143,7 @@ export class PluginLoader {
     this.config = opts.config ?? {};
     this.lifecycleTimeoutMs = opts.lifecycleTimeoutMs ?? 10_000;
     this.logger = opts.logger ?? (() => {});
+    this.importModule = opts.importModule ?? defaultImportModule;
     this.lock = readLock(this.lockFile);
   }
 
@@ -251,8 +261,9 @@ export class PluginLoader {
       }
     }
     try {
-      const url = pathToFileURL(resolve(p.dir, p.manifest.main)).href + `?v=${p.sha256.slice(0, 12)}`;
-      const mod = (await import(url)) as PluginModule & { default?: PluginModule };
+      const mod = (await this.importModule(resolve(p.dir, p.manifest.main), p.sha256)) as PluginModule & {
+        default?: PluginModule;
+      };
       const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? {});
       p.module = m;
       await withTimeout(
@@ -337,6 +348,104 @@ export class PluginLoader {
     const p = this.plugins.get(id);
     this.plugins.delete(id);
     return p;
+  }
+
+  /** 폴더 경로로 등록된 플러그인 찾기 */
+  findByDir(dir: string): LoadedPlugin | undefined {
+    const want = resolve(dir);
+    return [...this.plugins.values()].find((p) => resolve(p.dir) === want);
+  }
+
+  /**
+   * 7.2 / 7.3 핫리로드: 새 매니페스트·모듈을 먼저 검증·로드하고, 이전 버전을 내린 뒤 새 버전을 올린다.
+   * 어느 단계든 실패하면 이전 버전을 그대로(또는 다시) 활성 상태로 둔다.
+   * 개발 중 변경이므로 plugins.lock은 새 내용으로 갱신한다.
+   */
+  async reload(id: string): Promise<{ ok: boolean; error?: string; version?: string }> {
+    const old = this.plugins.get(id);
+    if (!old) return { ok: false, error: `없는 플러그인: ${id}` };
+    const fail = (error: string) => {
+      this.emit('plugin_reload_failed', id, error);
+      return { ok: false, error, version: old.manifest.version };
+    };
+
+    // 1) 재검증
+    let manifest: PluginManifest;
+    try {
+      const r = PluginManifestSchema.safeParse(
+        JSON.parse(readFileSync(join(old.dir, MANIFEST_FILE), 'utf8')),
+      );
+      if (!r.success) return fail(`매니페스트 검증 실패: ${r.error.issues.map((i) => i.message).join('; ')}`);
+      manifest = r.data;
+    } catch (err) {
+      return fail(`매니페스트 읽기 실패: ${errMsg(err)}`);
+    }
+    if (manifest.id !== id) return fail(`id 변경은 핫리로드로 할 수 없음: ${id} → ${manifest.id}`);
+    for (const dep of Object.keys(manifest.requires)) {
+      if (this.plugins.get(dep)?.state !== 'active') return fail(`의존 플러그인 비활성: ${dep}`);
+    }
+    const sha256 = hashPluginDir(old.dir);
+
+    // 2) 새 모듈 로드 (문법 오류 등은 여기서 걸림)
+    let mod: PluginModule;
+    try {
+      const m = (await this.importModule(resolve(old.dir, manifest.main), sha256)) as PluginModule & {
+        default?: PluginModule;
+      };
+      mod = m.activate || m.deactivate ? m : (m.default ?? {});
+    } catch (err) {
+      return fail(`모듈 로드 실패: ${errMsg(err)}`);
+    }
+
+    // 3) 이전 버전 내리기
+    const wasActive = old.state === 'active';
+    if (wasActive) {
+      try {
+        await withTimeout(Promise.resolve(old.module?.deactivate?.()), this.lifecycleTimeoutMs, 'deactivate');
+      } catch (err) {
+        this.emit('plugin_failed', id, `deactivate: ${errMsg(err)}`);
+      }
+      this.hooks.removePlugin(id);
+    }
+
+    // 4) 새 버전 올리기
+    const next: LoadedPlugin = {
+      manifest,
+      dir: old.dir,
+      origin: old.origin,
+      sha256,
+      state: 'discovered',
+      module: mod,
+    };
+    try {
+      await withTimeout(
+        Promise.resolve(mod.activate?.(this.contextFor(next))),
+        this.lifecycleTimeoutMs,
+        'activate',
+      );
+    } catch (err) {
+      this.hooks.removePlugin(id);
+      // 이전 버전 복구
+      if (wasActive) {
+        try {
+          await withTimeout(
+            Promise.resolve(old.module?.activate?.(this.contextFor(old))),
+            this.lifecycleTimeoutMs,
+            'activate',
+          );
+        } catch (e2) {
+          old.state = 'failed';
+          old.error = `복구 실패: ${errMsg(e2)}`;
+        }
+      }
+      return fail(`activate 실패: ${errMsg(err)}`);
+    }
+    next.state = 'active';
+    this.plugins.set(id, next);
+    this.lock.set(id, { id, version: manifest.version, sha256 });
+    this.saveLock();
+    this.emit('plugin_reloaded', id, `${id}@${manifest.version}`);
+    return { ok: true, version: manifest.version };
   }
 
   /** 6.3 의존성: 존재·버전 범위 검사 (없으면 연쇄 거부) */

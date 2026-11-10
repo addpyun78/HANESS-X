@@ -1,4 +1,6 @@
 import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, relative } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EventLog } from '../src/event-log.js';
@@ -40,7 +42,16 @@ export function setup() {
     { dir: userRoot, origin: 'user' },
   ];
   const lockFile = join(home, 'plugins.lock');
-  const mk = () => new PluginLoader({ hooks, log, roots, lockFile, logger: (l) => lines.push(l) });
+  // vitest는 import URL의 query를 무시하고 캐시하므로, 로드마다 플러그인 폴더를 고유 경로로 복사해 import한다
+  let n = 0;
+  const importModule = (file: string) => {
+    const pluginDir = dirname(file);
+    const snap = join(t.dir, 'import-snapshots', String(++n));
+    cpSync(pluginDir, snap, { recursive: true });
+    return import(pathToFileURL(join(snap, relative(pluginDir, file))).href);
+  };
+  const mk = () =>
+    new PluginLoader({ hooks, log, roots, lockFile, logger: (l) => lines.push(l), importModule });
   const copyHello = (to = wsRoot) => {
     const dest = join(to, 'hello');
     cpSync(HELLO_DIR, dest, { recursive: true });
