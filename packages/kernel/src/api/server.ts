@@ -7,6 +7,7 @@ import { providedSlots, type AgentSummary } from '@harness-x/protocol';
 import type { EventLog, LogRecord } from '../event-log.js';
 import { harnessHome, type PluginLoader } from '../loader.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
+import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 
 /**
@@ -36,6 +37,8 @@ export interface ApiServerOptions {
   terminal?: TerminalOptions;
   /** T-038 설정 > 엔진 API (/api/engines…). 없으면 라우트 없음 */
   engines?: EnginesApiOptions;
+  /** T-060 GET /api/quota (엔진별 사용량 집계). 없으면 라우트 없음 */
+  quota?: QuotaApiOptions;
 }
 
 export interface ApiServer {
@@ -134,6 +137,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
+  if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {

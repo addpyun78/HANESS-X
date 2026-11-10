@@ -110,6 +110,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         adapters,
         pingCwd: workspace,
       },
+      quota: {},
     });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
