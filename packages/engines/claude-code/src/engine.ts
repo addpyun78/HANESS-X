@@ -23,7 +23,7 @@ export interface ClaudeCodeRun extends EngineRun {
  * claude-code 어댑터: 공식 claude 바이너리를 수정 없이 `-p` 자식 프로세스로 실행한다.
  * 인증은 opts.env(T-013 secrets가 만든 것)를 그대로 쓰고, 없으면 process.env. 토큰 파일은 읽지 않는다.
  */
-export function createClaudeCodeEngine(o: ClaudeCodeEngineOptions = {}): EngineAdapter & {
+export function createClaudeCodeEngine(o: ClaudeCodeEngineOptions = {}): Omit<EngineAdapter, 'run'> & {
   run(opts: EngineRunOptions): ClaudeCodeRun;
 } {
   return {
