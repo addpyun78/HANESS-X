@@ -1,0 +1,10 @@
+{
+  "id": "hello",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Hello",
+  "description": "하네스 플러그인 예제: 활성화 로그와 /hello 명령",
+  "main": "index.js",
+  "provides": { "command": ["/hello"] },
+  "permissions": { "fs": [], "net": [], "shell": false }
+}
