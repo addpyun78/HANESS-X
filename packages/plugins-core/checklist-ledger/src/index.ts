@@ -4,3 +4,6 @@ export * from './fs-util.js';
 export * from './store.js';
 export * from './ledger.js';
 export * from './lint.js';
+export * from './glossary.js';
+export * from './naming.js';
+export * from './manifest.js';
