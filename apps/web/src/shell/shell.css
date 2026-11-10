@@ -1,0 +1,331 @@
+/* 앱 셸 — 색은 토큰 변수만 */
+
+.hx-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hx-shell__body {
+  display: grid;
+  grid-template-columns: var(--hx-sidebar-w, 240px) 4px minmax(0, 1fr) 4px var(--hx-right-w, 360px);
+  min-height: 0;
+}
+
+.hx-shell--narrow .hx-shell__body {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.hx-shell__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 상단 바 */
+.hx-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-3);
+  height: 48px;
+  padding: 0 var(--hx-space-4);
+  border-bottom: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-topbar__ws {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: var(--hx-space-2);
+  min-width: 0;
+}
+
+.hx-topbar__name {
+  font-size: var(--hx-font-16);
+}
+
+.hx-topbar__path {
+  overflow: hidden;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-topbar__branch {
+  padding: 0 var(--hx-space-2);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+  white-space: nowrap;
+}
+
+.hx-topbar__empty {
+  color: var(--hx-text-faint);
+}
+
+.hx-run {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hx-paused);
+}
+
+.hx-run--running .hx-dot,
+.hx-status--running .hx-dot {
+  background: var(--hx-running);
+}
+
+.hx-run--blocked .hx-dot,
+.hx-status--blocked .hx-dot {
+  background: var(--hx-warning);
+}
+
+.hx-run--error .hx-dot,
+.hx-status--error .hx-dot {
+  background: var(--hx-danger);
+}
+
+.hx-status--done .hx-dot {
+  background: var(--hx-success);
+}
+
+.hx-quotas {
+  display: flex;
+  gap: var(--hx-space-3);
+}
+
+.hx-quota {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  font-size: var(--hx-font-12);
+}
+
+.hx-quota__bar {
+  width: 48px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+}
+
+.hx-quota__fill {
+  display: block;
+  height: 100%;
+  background: var(--hx-success);
+}
+
+.hx-quota[data-level='warning'] .hx-quota__fill {
+  background: var(--hx-warning);
+}
+
+.hx-quota[data-level='danger'] .hx-quota__fill {
+  background: var(--hx-danger);
+}
+
+/* 사이드바 */
+.hx-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-sidebar__new {
+  margin: var(--hx-space-3);
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border: 0;
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent);
+  color: var(--hx-on-accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.hx-sidebar__filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--hx-space-1);
+  padding: 0 var(--hx-space-3) var(--hx-space-2);
+}
+
+.hx-sidebar__filters select {
+  min-width: 0;
+  padding: var(--hx-space-1);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+  font-size: var(--hx-font-12);
+}
+
+.hx-sidebar__list {
+  flex: 1;
+  margin: 0;
+  padding: 0 var(--hx-space-2);
+  overflow-y: auto;
+  list-style: none;
+}
+
+.hx-sidebar__group {
+  margin: var(--hx-space-3) var(--hx-space-2) var(--hx-space-1);
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+  font-weight: 600;
+}
+
+.hx-session {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+  width: 100%;
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 0;
+  border-radius: var(--hx-radius);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.hx-session:hover,
+.hx-session[aria-current='true'] {
+  background: var(--hx-surface-2);
+}
+
+.hx-session__title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-session__engine {
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+}
+
+.hx-sidebar__empty {
+  padding: var(--hx-space-4);
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-13);
+}
+
+.hx-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--hx-space-2);
+  border-top: 1px solid var(--hx-border);
+}
+
+.hx-nav-item {
+  display: flex;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 0;
+  border-radius: var(--hx-radius);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.hx-nav-item:hover {
+  background: var(--hx-surface-2);
+}
+
+/* 경계 리사이즈 */
+.hx-resizer {
+  background: var(--hx-border);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.hx-resizer:hover,
+.hx-resizer[data-dragging='true'] {
+  background: var(--hx-accent);
+}
+
+/* 우측 패널 */
+.hx-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-panel__tabs {
+  display: flex;
+  gap: var(--hx-space-1);
+  padding: var(--hx-space-2);
+  border-bottom: 1px solid var(--hx-border);
+}
+
+.hx-tab {
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: 0;
+  border-radius: var(--hx-radius);
+  background: transparent;
+  color: var(--hx-text-muted);
+  cursor: grab;
+}
+
+.hx-tab[aria-selected='true'] {
+  background: var(--hx-surface-2);
+  color: var(--hx-text);
+}
+
+.hx-tab[data-drop-target='true'] {
+  box-shadow: inset 2px 0 0 var(--hx-accent);
+}
+
+.hx-panel__body {
+  flex: 1;
+  padding: var(--hx-space-4);
+  overflow: auto;
+  color: var(--hx-text-muted);
+}
+
+/* 좁은 화면 시트 */
+.hx-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--hx-neutral-900) 40%, transparent);
+}
+
+.hx-sheet {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 11;
+  display: flex;
+  width: min(85vw, 360px);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--hx-neutral-900) 30%, transparent);
+}
+
+.hx-sheet--left {
+  left: 0;
+}
+
+.hx-sheet--right {
+  right: 0;
+}
+
+.hx-sheet > * {
+  flex: 1;
+}
