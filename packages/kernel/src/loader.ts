@@ -125,13 +125,15 @@ export function harnessHome(): string {
   return process.env.HARNESS_X_HOME ?? join(homedir(), '.harness-x');
 }
 
-/** 6.1 기본 탐색 경로: ~/.harness-x/plugins, <workspace>/.harness-x/plugins, packages/plugins-core */
+/** 6.1 기본 탐색 경로: ~/.harness-x/plugins, ~/.harness-x/plugins/forge, <workspace>/.harness-x/plugins, packages/plugins-core */
 export function defaultPluginRoots(
   opts: { workspace?: string; repoRoot?: string; home?: string } = {},
 ): PluginRoot[] {
   const roots: PluginRoot[] = [];
   if (opts.workspace) roots.push({ dir: join(opts.workspace, '.harness-x', 'plugins'), origin: 'workspace' });
   roots.push({ dir: join(opts.home ?? harnessHome(), 'plugins'), origin: 'user' });
+  // T-052 Forge가 설치한 플러그인: ~/.harness-x/plugins/forge/<id>/ (미서명·격리)
+  roots.push({ dir: join(opts.home ?? harnessHome(), 'plugins', 'forge'), origin: 'user' });
   if (opts.repoRoot) roots.push({ dir: join(opts.repoRoot, 'packages', 'plugins-core'), origin: 'core' });
   return roots;
 }

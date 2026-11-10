@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`53.1 완료 세션의 체크리스트·궤적 → SKILL.md > 반복 단계·명령·검증을 일반화한 SKILL.md (프런트매터 검증 통과) 1`] = `
+"---
+name: component-tests
+description: "컴포넌트마다 테스트 쓰기 — 완료 세션에서 추출한 절차 (단계 2개, 반복 1개, 명령 2개, 검증 2개)"
+---
+
+# component-tests
+
+## 언제 쓰나
+
+- 컴포넌트마다 테스트 쓰기
+
+## 절차
+
+1. <…> 컴포넌트 테스트 작성 (반복 3회 — 예: Header 컴포넌트 테스트 작성 / Footer 컴포넌트 테스트 작성 / Sidebar 컴포넌트 테스트 작성)
+2. 스토리북 스냅샷 갱신
+
+## 자주 쓰는 명령
+
+- \`pnpm vitest run <path>\` (3회)
+- \`pnpm lint\` (2회)
+
+## 검증
+
+- \`pnpm vitest run <path>\` 종료코드 0
+- 산출물 파일 존재: __snapshots__
+"
+`;

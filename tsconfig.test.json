@@ -11,6 +11,7 @@
       "@harness-x/engine-codex": ["./packages/engines/codex/src/index.ts"],
       "@harness-x/engine-openai-compat": ["./packages/engines/openai-compat/src/index.ts"],
       "@harness-x/engine-scanner": ["./packages/plugins-core/engine-scanner/src/index.ts"],
+      "@harness-x/forge": ["./packages/plugins-core/forge/src/index.ts"],
       "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
       "@harness-x/mcp-host": ["./packages/plugins-core/mcp-host/src/index.ts"],
       "@harness-x/permission-gate": ["./packages/plugins-core/permission-gate/src/index.ts"],

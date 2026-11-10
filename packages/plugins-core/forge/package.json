@@ -1,0 +1,27 @@
+{
+  "name": "@harness-x/forge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@harness-x/agent-builder": "workspace:*",
+    "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/kernel": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "@harness-x/sdk": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "typescript": "~5.8.3",
+    "zod": "^4.6.7"
+  }
+}

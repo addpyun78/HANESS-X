@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol';
 import type { DispatchRunResult } from './dispatch.js';
+import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { Worker } from 'node:worker_threads';
@@ -24,6 +25,20 @@ interface ScannerPluginModule {
     app: { post(path: string, handler: () => Promise<unknown>): unknown },
     scanner: { scan(): Promise<unknown> },
   ): void;
+}
+
+/** forge 플러그인 모듈의 공개 함수 (T-051 /forge 실행 옵션, 카드 응답 라우트) */
+interface ForgePluginModule {
+  forgeRunnerOptionsFor?(input: {
+    sessionId: string;
+    request: string;
+    workspace: string;
+    engines: (id: string) => EngineAdapter | undefined;
+    defaultEngine?: string;
+    log: { append(rec: LogRecord): unknown };
+  }): Record<string, unknown>;
+  /** app: fastify 인스턴스 */
+  registerForgeApi?(app: unknown, opts: { log: { append(rec: LogRecord): unknown } }): void;
 }
 
 /** checklist-ledger 플러그인 모듈의 공개 함수 (T-028 28.1 GET /api/checklist/:session/status) */
@@ -207,6 +222,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         })
       : undefined;
   };
+  const forge = () => loader.plugins.get('forge')?.module as ForgePluginModule | undefined;
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
   const dispatch = new Dispatcher({
@@ -242,6 +258,17 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
+        // T-051 /forge: Forge 플러그인이 엔진 래퍼·gate 판정(검사·샌드박스)·scaffold 체크리스트를 준다
+        ...(i.pipeline.name === 'forge'
+          ? (forge()?.forgeRunnerOptionsFor?.({
+              sessionId: i.sessionId,
+              request: i.prompt,
+              workspace,
+              engines: (id: string) => list.find((a) => a.id === id),
+              ...((i.modifiers.engine ?? fallback) ? { defaultEngine: i.modifiers.engine ?? fallback } : {}),
+              log,
+            }) ?? {})
+          : {}),
       });
       return runner.run(i.pipeline, i.prompt);
     },
@@ -271,6 +298,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           ledger.registerChecklistStatusRoute(app, ledgerFor);
         if (ledgerFor && ledger?.registerChecklistPlanRoutes)
           ledger.registerChecklistPlanRoutes(app, ledgerFor, { log });
+        // T-051 Forge 카드 응답 (POST /api/forge/answers/:id)
+        forge()?.registerForgeApi?.(app, { log });
         registerRecoveryRoutes(app, {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),

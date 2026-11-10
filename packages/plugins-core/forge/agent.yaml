@@ -1,0 +1,6 @@
+name: forge
+displayName: Forge
+description: 대화로 훅·스킬·도구 플러그인을 만들어 시험하고 설치한다
+icon: '🔨'
+command: /forge
+pipeline: plugin:forge/forge
