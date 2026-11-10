@@ -20,6 +20,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@harness-x/protocol": "workspace:*",
     "@types/semver": "^7.8.0",
     "fastify": "^5.12.8"
   }
