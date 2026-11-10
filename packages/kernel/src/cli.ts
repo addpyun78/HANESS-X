@@ -29,6 +29,12 @@ interface ScannerPluginModule {
 interface LedgerPluginModule {
   workspaceLedgerResolver?(workspace: string): (sessionId: string) => unknown;
   registerChecklistStatusRoute?(app: unknown, resolve: (sessionId: string) => unknown): void;
+  /** T-036 GET /api/checklist/:session · POST /api/checklist/:session/lock (체크리스트 패널) */
+  registerChecklistPlanRoutes?(
+    app: unknown,
+    resolve: (sessionId: string) => unknown,
+    opts: { log: { append(e: never): unknown } },
+  ): void;
 }
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
@@ -182,6 +188,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             : undefined;
         if (ledgerFor && ledger?.registerChecklistStatusRoute)
           ledger.registerChecklistStatusRoute(app, ledgerFor);
+        if (ledgerFor && ledger?.registerChecklistPlanRoutes)
+          ledger.registerChecklistPlanRoutes(app, ledgerFor, { log });
         registerRecoveryRoutes(app, {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
