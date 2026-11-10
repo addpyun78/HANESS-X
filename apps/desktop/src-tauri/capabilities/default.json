@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "HARNESS-X 메인 창: 기본 권한 + 폴더 선택 대화상자(dialog:allow-open)",
+  "windows": ["main"],
+  "permissions": ["core:default", "dialog:allow-open"]
+}

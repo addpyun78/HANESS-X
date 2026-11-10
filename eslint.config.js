@@ -4,7 +4,17 @@ import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 
 export default tseslint.config(
-  { ignores: ['.claude/**', '**/node_modules/**', '**/dist/**', '.harness-x-dev/**', '**/*.d.ts'] },
+  {
+    ignores: [
+      '.claude/**',
+      '**/node_modules/**',
+      '**/dist/**',
+      '.harness-x-dev/**',
+      '**/*.d.ts',
+      '**/src-tauri/target/**',
+      '**/src-tauri/gen/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,

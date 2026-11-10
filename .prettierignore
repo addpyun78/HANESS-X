@@ -6,3 +6,5 @@ docs/PLAN-v2.md
 CLAUDE.md
 docs/tickets
 .claude
+apps/desktop/src-tauri/target
+apps/desktop/src-tauri/gen

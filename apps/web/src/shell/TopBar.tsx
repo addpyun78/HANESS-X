@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { ThemeToggle } from '../design/ThemeToggle.js';
+import { WorkspaceBar } from './WorkspaceBar.js';
 import { RUN_STATE_LABEL, type QuotaMeter, type RunState, type Workspace } from './types.js';
 
 export interface TopBarProps {
@@ -15,23 +16,7 @@ export function TopBar({ workspace, runState, quotas, leading, trailing }: TopBa
   return (
     <header className="hx-topbar" role="banner">
       {leading}
-      <div className="hx-topbar__ws" data-testid="workspace">
-        {workspace ? (
-          <>
-            <strong className="hx-topbar__name">{workspace.name}</strong>
-            <span className="hx-topbar__path hx-mono" title={workspace.path}>
-              {workspace.path}
-            </span>
-            {workspace.branch && (
-              <span className="hx-topbar__branch hx-mono" aria-label={`브랜치 ${workspace.branch}`}>
-                ⎇ {workspace.branch}
-              </span>
-            )}
-          </>
-        ) : (
-          <span className="hx-topbar__empty">프로젝트를 선택하세요</span>
-        )}
-      </div>
+      <WorkspaceBar workspace={workspace} />
       <span
         className={`hx-run hx-run--${runState}`}
         role="status"

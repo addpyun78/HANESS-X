@@ -21,7 +21,9 @@
       "@harness-x/verifier-local": ["./packages/plugins/verifier-local/src/index.ts"]
     },
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "declaration": false,
+    "declarationMap": false
   },
   "include": ["packages/**/*.ts", "apps/**/*.ts", "apps/**/*.tsx", "tests/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["**/node_modules/**", "**/dist/**"]

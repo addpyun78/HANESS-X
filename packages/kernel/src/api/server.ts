@@ -6,6 +6,14 @@ import websocket from '@fastify/websocket';
 import { providedSlots, type AgentSummary } from '@harness-x/protocol';
 import type { EventLog, LogRecord } from '../event-log.js';
 import { harnessHome, type PluginLoader } from '../loader.js';
+import {
+  NativeFolderPicker,
+  PickerBusyError,
+  PickerUnsupportedError,
+  singleFlight,
+  type FolderPicker,
+} from '../native/folder-picker.js';
+import { WorkspaceRejectedError, WorkspaceStore } from '../workspaces.js';
 
 /**
  * 로컬 API 서버
@@ -34,6 +42,12 @@ export interface ApiServerOptions {
   routes?: (app: FastifyInstance) => void | Promise<void>;
   /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
   approvals?: ApprovalHandler;
+  /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
+  folderPicker?: Pick<FolderPicker, 'pick'>;
+  /** 교차 출처 허용 (데스크톱 웹뷰). 기본 Tauri 출처만 */
+  corsOrigins?: string[];
+  /** 워크스페이스 등록·최근 목록 (기본: ~/.harness-x/workspaces.json, 처음 쓸 때 만든다) */
+  workspaces?: WorkspaceStore;
 }
 
 /** 승인 카드 버튼 (판정 사다리 L5): 동치 인정 / 이동 승인 / 실패 */
@@ -55,6 +69,9 @@ export interface ApiServer {
   port: number;
   close(): Promise<void>;
 }
+
+/** 63.x Tauri 웹뷰 출처 (Windows: http(s)://tauri.localhost, macOS·Linux: tauri://localhost) */
+export const TAURI_ORIGINS = ['http://tauri.localhost', 'https://tauri.localhost', 'tauri://localhost'];
 
 export class BindRefusedError extends Error {
   constructor(host: string) {
@@ -88,6 +105,8 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   let boundPort = opts.port ?? DEFAULT_API_PORT;
 
+  const corsOrigins = new Set(opts.corsOrigins ?? TAURI_ORIGINS);
+
   // DNS 리바인딩 방지: Host 헤더가 루프백이어야 함
   app.addHook('onRequest', async (req, reply) => {
     const hostHeader = (req.headers.host ?? '').toLowerCase();
@@ -96,6 +115,20 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       : hostHeader.split(':')[0];
     if (!['127.0.0.1', 'localhost', '[::1]'].includes(hostname ?? '')) {
       return reply.code(403).send({ error: 'forbidden_host' });
+    }
+    // 데스크톱 웹뷰(허용된 출처)만 CORS 허용. 사전 요청(OPTIONS)은 토큰 없이 응답
+    const origin = req.headers.origin;
+    if (origin && corsOrigins.has(origin)) {
+      reply.header('access-control-allow-origin', origin);
+      reply.header('vary', 'origin');
+      if (req.method === 'OPTIONS') {
+        return reply
+          .code(204)
+          .header('access-control-allow-methods', 'GET, POST, OPTIONS')
+          .header('access-control-allow-headers', 'authorization, content-type, x-harness-token')
+          .header('access-control-max-age', '600')
+          .send();
+      }
     }
     // 8.2 토큰 검사
     if (!checkToken(req, token)) {
@@ -156,6 +189,55 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       const message = err instanceof Error ? err.message : String(err);
       if (code === 'APPROVAL_NOT_FOUND') return reply.code(404).send({ error: 'not_found', message });
       return reply.code(409).send({ error: 'approval_failed', ...(code ? { code } : {}), message });
+    }
+  });
+
+  // 34.2 네이티브 폴더 대화상자 — 동시 1개(34.8: 두 번째는 409), 취소는 {cancelled:true}(34.6)
+  let picker: FolderPicker | undefined;
+  app.post('/api/native/pick-folder', async (req, reply) => {
+    const body = (req.body ?? {}) as { initialPath?: unknown };
+    const initialPath =
+      typeof body.initialPath === 'string' && body.initialPath.trim() ? body.initialPath : undefined;
+    picker ??= singleFlight(opts.folderPicker ?? new NativeFolderPicker());
+    if (picker.busy) return reply.code(409).send({ error: 'picker_busy' });
+    try {
+      const r = await picker.pick(initialPath ? { initialPath } : {});
+      return r.cancelled ? { cancelled: true } : { cancelled: false, path: r.path };
+    } catch (err) {
+      if (err instanceof PickerBusyError) return reply.code(409).send({ error: 'picker_busy' });
+      const message = err instanceof Error ? err.message : String(err);
+      if (err instanceof PickerUnsupportedError)
+        return reply.code(501).send({ error: 'unsupported_platform', message });
+      return reply.code(500).send({ error: 'picker_failed', message });
+    }
+  });
+
+  // 35.x 워크스페이스: 검증·등록·최근 목록·핀
+  let store = opts.workspaces;
+  const ws = () => (store ??= new WorkspaceStore());
+  app.get('/api/workspaces', async () => {
+    const current = ws().current();
+    return { ...(current ? { current } : {}), recent: ws().recent(), cwd: ws().sessionCwd() };
+  });
+  app.post('/api/workspaces/open', async (req, reply) => {
+    const { path } = (req.body ?? {}) as { path?: unknown };
+    try {
+      const workspace = ws().open(typeof path === 'string' ? path : '');
+      return { workspace, recent: ws().recent() };
+    } catch (err) {
+      if (err instanceof WorkspaceRejectedError)
+        return reply.code(400).send({ error: err.code, message: err.message });
+      throw err;
+    }
+  });
+  app.post('/api/workspaces/pin', async (req, reply) => {
+    const { path, pinned } = (req.body ?? {}) as { path?: unknown; pinned?: unknown };
+    try {
+      return { recent: ws().pin(String(path ?? ''), pinned === true) };
+    } catch (err) {
+      if (err instanceof WorkspaceRejectedError)
+        return reply.code(404).send({ error: err.code, message: err.message });
+      throw err;
     }
   });
 

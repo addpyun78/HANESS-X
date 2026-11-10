@@ -50,6 +50,27 @@ export interface PluginsResponse {
   rejected: { id?: string; dir: string; reason: string }[];
 }
 
+/** POST /api/native/pick-folder 응답 */
+export type PickFolderResponse = { cancelled: true } | { cancelled: false; path: string };
+
+/** 커널 WorkspaceInfo (packages/kernel/src/workspaces.ts) */
+export interface WorkspaceInfo {
+  name: string;
+  path: string;
+  lastUsedAt: string;
+  pinned?: boolean;
+  git: boolean;
+  branch?: string;
+  hasAgentsMd: boolean;
+  hasClaudeMd: boolean;
+}
+
+export interface WorkspacesResponse {
+  current?: WorkspaceInfo;
+  recent: WorkspaceInfo[];
+  cwd?: string;
+}
+
 export class ApiError extends Error {
   constructor(
     readonly status: number,
@@ -117,6 +138,34 @@ export class HarnessApiClient {
 
   plugins() {
     return this.request<PluginsResponse>('/api/plugins');
+  }
+
+  /** 34.2 서버가 네이티브 폴더 대화상자를 띄운다 (이미 떠 있으면 ApiError 409) */
+  pickFolder(initialPath?: string) {
+    return this.request<PickFolderResponse>('/api/native/pick-folder', {
+      method: 'POST',
+      body: JSON.stringify(initialPath ? { initialPath } : {}),
+    });
+  }
+
+  /** 35.x 현재 워크스페이스·최근 프로젝트 */
+  workspaces() {
+    return this.request<WorkspacesResponse>('/api/workspaces');
+  }
+
+  /** 35.1~35.2 검증 → 등록 → 현재 워크스페이스 (거부면 ApiError 400 {error, message}) */
+  openWorkspace(path: string) {
+    return this.request<{ workspace: WorkspaceInfo; recent: WorkspaceInfo[] }>('/api/workspaces/open', {
+      method: 'POST',
+      body: JSON.stringify({ path }),
+    });
+  }
+
+  pinWorkspace(path: string, pinned: boolean) {
+    return this.request<{ recent: WorkspaceInfo[] }>('/api/workspaces/pin', {
+      method: 'POST',
+      body: JSON.stringify({ path, pinned }),
+    });
   }
 
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {
