@@ -26,7 +26,7 @@ import {
   type RouterNode,
   type SubagentNode,
 } from '@harness-x/protocol';
-import { extractNodeOutput } from '../contract.js';
+import { MAX_CONTRACT_RETRIES, contractRetryPrompt, extractNodeOutput, validateOutput } from '../contract.js';
 import { evaluateCondition } from './condition.js';
 import type {
   GateFailure,
@@ -96,6 +96,18 @@ export function lastAssistantText(events: readonly HarnessEvent[]): string {
   const finals = events.filter((e) => e.type === 'assistant_text' && !e.partial);
   const last = finals[finals.length - 1];
   return last && last.type === 'assistant_text' ? last.text : '';
+}
+
+const isRecord = (v: unknown): v is Record<string, unknown> =>
+  typeof v === 'object' && v !== null && !Array.isArray(v);
+
+function mergeOutput(
+  base: Record<string, unknown> | undefined,
+  next: Record<string, unknown> | undefined,
+): Record<string, unknown> | undefined {
+  if (!base) return next;
+  if (!next) return base;
+  return { ...base, ...next };
 }
 
 export class PipelineRunner {
@@ -481,15 +493,17 @@ export class PipelineRunner {
     startedAt: number,
   ): Promise<void> {
     const node = ctx.node;
-    let res: Awaited<ReturnType<typeof this.turn>>;
-    try {
-      res = await this.turn(ctx, visit, prompt, undefined);
-    } catch (err) {
-      visit.status = 'error';
-      visit.reason = err instanceof Error ? err.message : String(err);
-      this.record(visit, startedAt);
-      throw new Halt('error', node.id, visit.reason);
-    }
+    const turn = async (p: string, resumeId: string | undefined) => {
+      try {
+        return await this.turn(ctx, visit, p, resumeId);
+      } catch (err) {
+        visit.status = 'error';
+        visit.reason = err instanceof Error ? err.message : String(err);
+        this.record(visit, startedAt);
+        throw new Halt('error', node.id, visit.reason);
+      }
+    };
+    const res = await turn(prompt, undefined);
     const done = this.completion(ctx.ledger, res.events);
     if (!done.ok) {
       visit.status = 'incomplete';
@@ -497,8 +511,38 @@ export class PipelineRunner {
       this.record(visit, startedAt);
       throw new Halt('incomplete', node.id, done.reason!);
     }
-    const out = this.extract(node, visit.events);
-    visit.output = out;
+    const schema = node.outputSchema;
+    if (this.opts.extractOutput || !schema) {
+      visit.output = this.extract(node, res.events);
+      this.record(visit, startedAt);
+      return;
+    }
+    // 42.2 계약 검증: 실패하면 같은 노드(같은 엔진 세션 재개)에 누락 필드 목록으로 재요청 (최대 2회)
+    // 부분 재실행·재요청에서는 새로 받은 필드를 앞 값 위에 덮어쓴다.
+    const prev = isRecord(visit.output) ? visit.output : undefined;
+    let value = mergeOutput(prev, extractNodeOutput(res.events, schema).value);
+    let check = validateOutput(value, schema);
+    let sid = res.engineSessionId;
+    const max = this.opts.maxContractRetries ?? MAX_CONTRACT_RETRIES;
+    for (let attempt = 1; !check.ok && attempt <= max; attempt++) {
+      const r = await turn(
+        contractRetryPrompt(check, value, schema, attempt),
+        ctx.engine.capabilities.resume ? sid : undefined,
+      );
+      sid = r.engineSessionId ?? sid;
+      value = mergeOutput(value, extractNodeOutput(r.events, schema).value);
+      check = validateOutput(value, schema);
+    }
+    visit.output = value;
+    if (!check.ok) {
+      visit.status = 'contract_failed';
+      visit.reason =
+        `출력 계약 불충족 (재요청 ${max}회 뒤)` +
+        (check.missing.length ? ` 누락: ${check.missing.join(', ')}` : '') +
+        (check.invalid.length ? ` 잘못됨: ${check.invalid.map((i) => i.path).join(', ')}` : '');
+      this.record(visit, startedAt);
+      throw new Halt('contract_failed', node.id, visit.reason);
+    }
     this.record(visit, startedAt);
   }
 

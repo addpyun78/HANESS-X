@@ -138,8 +138,10 @@ export interface PipelineRunnerOptions {
   maxAutoTurns?: number;
   /** subagent 노드: 에이전트 이름 → 파이프라인 (예: AgentRegistry.get(name)?.pipeline) */
   resolveAgent?: (name: string) => Pipeline | undefined;
-  /** 노드 출력 추출기 */
+  /** 노드 출력 추출기 (주면 계약 검증·재요청을 하지 않는다) */
   extractOutput?: OutputExtractor;
+  /** outputSchema 검증 실패 시 같은 노드에 재요청할 최대 횟수 (기본 2) */
+  maxContractRetries?: number;
   signal?: AbortSignal;
   idGen?: () => string;
   now?: () => Date;

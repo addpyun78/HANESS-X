@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"build-codex-thread-1"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"구현했습니다.\n```json\n{\"summary\":\"헤더 추가\"}\n```"}}
+{"type":"turn.completed","usage":{"input_tokens":100,"cached_input_tokens":0,"output_tokens":20}}
