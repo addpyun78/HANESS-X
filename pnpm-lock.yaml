@@ -298,6 +298,12 @@ importers:
         specifier: workspace:*
         version: link:../../protocol
 
+  packages/plugins/verifier-local:
+    dependencies:
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+
   packages/protocol:
     dependencies:
       yaml:
