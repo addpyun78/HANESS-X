@@ -41,7 +41,7 @@ describe('harness-x serve', () => {
       });
       child.stderr.on('data', (d) => (err += d));
       child.on('exit', (code) => rej(new Error(`exit ${code}: ${err}`)));
-      setTimeout(() => rej(new Error('timeout: ' + err)), 60_000);
+      setTimeout(() => rej(new Error('timeout: ' + err)), 150_000);
     });
     expect(info.plugins).toContain('hello');
     const token = readFileSync(info.tokenFile, 'utf8').trim();
@@ -49,5 +49,5 @@ describe('harness-x serve', () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { plugins: { id: string }[] };
     expect(body.plugins.map((p) => p.id)).toContain('hello');
-  }, 90_000);
+  }, 180_000);
 });

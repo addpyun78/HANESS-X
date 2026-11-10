@@ -3,34 +3,14 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@harness-x/agent-builder": [
-        "./packages/plugins-core/agent-builder/src/index.ts"
-      ],
-      "@harness-x/engine-openai-compat": [
-        "./packages/engines/openai-compat/src/index.ts"
-      ],
-      "@harness-x/engine-scanner": [
-        "./packages/plugins-core/engine-scanner/src/index.ts"
-      ],
-      "@harness-x/kernel": [
-        "./packages/kernel/src/index.ts"
-      ],
-      "@harness-x/protocol": [
-        "./packages/protocol/src/index.ts"
-      ],
-      "@harness-x/sdk": [
-        "./packages/sdk/src/index.ts"
-      ]
+      "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
+      "@harness-x/engine-openai-compat": ["./packages/engines/openai-compat/src/index.ts"],
+      "@harness-x/engine-scanner": ["./packages/plugins-core/engine-scanner/src/index.ts"],
+      "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
+      "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
+      "@harness-x/sdk": ["./packages/sdk/src/index.ts"]
     }
   },
-  "include": [
-    "packages/**/*.ts",
-    "apps/**/*.ts",
-    "tests/**/*.ts",
-    "types/**/*.d.ts"
-  ],
-  "exclude": [
-    "**/node_modules/**",
-    "**/dist/**"
-  ]
+  "include": ["packages/**/*.ts", "apps/**/*.ts", "tests/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["**/node_modules/**", "**/dist/**"]
 }
