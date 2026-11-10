@@ -255,6 +255,33 @@ importers:
         specifier: workspace:*
         version: link:../../protocol
 
+  packages/engines/antigravity:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+
+  packages/engines/claude-code:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+
+  packages/engines/codex:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+
   packages/kernel:
     dependencies:
       '@fastify/websocket':

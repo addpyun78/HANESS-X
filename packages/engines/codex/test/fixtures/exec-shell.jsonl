@@ -1,0 +1,12 @@
+{"type":"thread.started","thread_id":"019a7c2e-5b1d-7e30-9f4a-2c6d8e0b1a3f"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"reasoning","text":"**Running echo command**"}}
+{"type":"item.started","item":{"id":"item_1","type":"command_execution","command":"/bin/bash -lc 'echo hi'","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"command_execution","command":"/bin/bash -lc 'echo hi'","aggregated_output":"hi\n","exit_code":0,"status":"completed"}}
+{"type":"item.started","item":{"id":"item_2","type":"command_execution","command":"/bin/bash -lc 'touch x'","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_2","type":"command_execution","command":"/bin/bash -lc 'touch x'","aggregated_output":"touch: cannot touch 'x': Read-only file system\n","exit_code":1,"status":"failed"}}
+{"type":"item.completed","item":{"id":"item_3","type":"file_change","changes":[{"path":"/tmp/hx-fixture/notes.md","kind":"add"},{"path":"/tmp/hx-fixture/old.md","kind":"delete"},{"path":"/tmp/hx-fixture/README.md","kind":"update"}],"status":"completed"}}
+{"type":"item.started","item":{"id":"item_4","type":"mcp_tool_call","server":"harness","tool":"checklist.list","arguments":{},"result":null,"error":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_4","type":"mcp_tool_call","server":"harness","tool":"checklist.list","arguments":{},"result":{"content":[{"type":"text","text":"[]"}],"structured_content":null},"error":null,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_5","type":"agent_message","text":"done"}}
+{"type":"turn.completed","usage":{"input_tokens":11234,"cached_input_tokens":9984,"output_tokens":87}}
