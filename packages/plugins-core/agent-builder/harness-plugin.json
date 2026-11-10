@@ -1,0 +1,10 @@
+{
+  "id": "agent-builder",
+  "version": "0.0.0",
+  "apiVersion": 1,
+  "displayName": "Agent Builder",
+  "description": "에이전트 레지스트리(플러그인 단독·파이프라인·사용자 에이전트)와 빌더",
+  "main": "dist/index.js",
+  "provides": { "panel": ["agent-builder"] },
+  "permissions": { "fs": ["workspace:read"], "net": [], "shell": false }
+}

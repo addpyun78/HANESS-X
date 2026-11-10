@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
+      "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
       "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
       "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
       "@harness-x/sdk": ["./packages/sdk/src/index.ts"]

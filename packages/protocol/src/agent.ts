@@ -83,6 +83,31 @@ function isRelativePipelinePath(s: string): boolean {
   return /\.ya?ml$/.test(s);
 }
 
+// ── 에이전트 목록 (GET /api/agents) ──────────────────────────
+/** 등록 출처. 이름 충돌 시 우선순위: user > project > plugin */
+export const AGENT_SOURCES = ['user', 'project', 'plugin'] as const;
+export const AgentSourceSchema = z.enum(AGENT_SOURCES);
+export type AgentSource = z.infer<typeof AgentSourceSchema>;
+
+export const AgentSummarySchema = z
+  .object({
+    /** 레지스트리 안에서 유일한 이름 (충돌한 플러그인 에이전트는 '<플러그인id>:<이름>') */
+    name: z.string().min(1),
+    command: z.string().regex(/^\/\S+$/),
+    displayName: z.string().min(1),
+    description: z.string().optional(),
+    icon: z.string().optional(),
+    source: AgentSourceSchema,
+    pluginId: z.string().optional(),
+    defaultEngine: z.string().min(1),
+    nodeCount: z.number().int().min(1),
+  })
+  .strict();
+export type AgentSummary = z.infer<typeof AgentSummarySchema>;
+
+export const AgentListResponseSchema = z.object({ agents: z.array(AgentSummarySchema) }).strict();
+export type AgentListResponse = z.infer<typeof AgentListResponseSchema>;
+
 /** 명령 기본값 제안: 이름 → /이름 */
 export function commandForName(name: string): string {
   return `/${name}`;
