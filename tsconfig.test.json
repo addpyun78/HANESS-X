@@ -9,6 +9,7 @@
       "@harness-x/engine-scanner": ["./packages/plugins-core/engine-scanner/src/index.ts"],
       "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
       "@harness-x/mcp-host": ["./packages/plugins-core/mcp-host/src/index.ts"],
+      "@harness-x/permission-gate": ["./packages/plugins-core/permission-gate/src/index.ts"],
       "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
       "@harness-x/sdk": ["./packages/sdk/src/index.ts"],
       "@harness-x/verifier-ladder": ["./packages/plugins-core/verifiers/ladder/src/index.ts"]

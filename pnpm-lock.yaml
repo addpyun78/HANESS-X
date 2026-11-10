@@ -301,6 +301,21 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
 
+  packages/plugins-core/permission-gate:
+    dependencies:
+      '@harness-x/checklist-ledger':
+        specifier: workspace:*
+        version: link:../checklist-ledger
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+      '@harness-x/verifier-ladder':
+        specifier: workspace:*
+        version: link:../verifiers/ladder
+
   packages/plugins-core/verifiers/ladder:
     dependencies:
       '@harness-x/checklist-ledger':
