@@ -7,6 +7,7 @@ import {
   type ConnectionStatus,
   type WorkspaceInfo,
 } from './api/client.js';
+import { isTauri, pickFolderDesktop, waitForDesktopServer } from './api/desktop.js';
 import { ChatStream } from './chat/ChatStream.js';
 import type { ViewMode } from './chat/blocks.js';
 import { Composer } from './composer/Composer.js';
@@ -51,27 +52,42 @@ export function App() {
   const [wsError, setWsError] = useState<string>();
   const [client, setClient] = useState<HarnessApiClient>();
   const mobile = useIsMobile();
+  const desktop = useMemo(() => isTauri(), []);
 
   useEffect(() => {
     if (demo) return;
-    const token = resolveToken();
-    if (!token) return;
-    const client = new HarnessApiClient({ token });
-    setClient(client);
-    client
-      .workspaces()
-      .then((r) => {
-        setRecent(r.recent);
-        if (r.current) setWorkspace(toWorkspace(r.current));
-      })
-      .catch(() => {});
-    client
-      .plugins()
-      .then((r) => setEngines(enginesFromPlugins(r)))
-      .catch(() => setEngines([]));
-    const stream = client.events({ onEvent: (e) => setEvents((xs) => [...xs, e]), onStatus: setConn });
-    return () => stream.close();
-  }, [demo]);
+    let stopped = false;
+    let stream: { close(): void } | undefined;
+    const start = (client: HarnessApiClient) => {
+      if (stopped) return;
+      setClient(client);
+      client
+        .workspaces()
+        .then((r) => {
+          setRecent(r.recent);
+          if (r.current) setWorkspace(toWorkspace(r.current));
+        })
+        .catch(() => {});
+      client
+        .plugins()
+        .then((r) => setEngines(enginesFromPlugins(r)))
+        .catch(() => setEngines([]));
+      stream = client.events({ onEvent: (e) => setEvents((xs) => [...xs, e]), onStatus: setConn });
+    };
+    if (desktop) {
+      // 63.2 데스크톱: 앱이 띄운 사이드카 서버의 주소·토큰
+      waitForDesktopServer()
+        .then(({ url, token }) => start(new HarnessApiClient({ baseUrl: url, token })))
+        .catch((err: unknown) => setWsError(err instanceof Error ? err.message : String(err)));
+    } else {
+      const token = resolveToken();
+      if (token) start(new HarnessApiClient({ token }));
+    }
+    return () => {
+      stopped = true;
+      stream?.close();
+    };
+  }, [demo, desktop]);
 
   const runState: RunState = demo
     ? 'running'
@@ -100,7 +116,8 @@ export function App() {
     if (!client) return;
     let r;
     try {
-      r = await client.pickFolder(workspace?.path);
+      // 63.3 데스크톱은 Tauri 대화상자(open({ directory: true })), 브라우저는 서버의 네이티브 대화상자
+      r = desktop ? await pickFolderDesktop(workspace?.path) : await client.pickFolder(workspace?.path);
     } catch {
       return;
     }
