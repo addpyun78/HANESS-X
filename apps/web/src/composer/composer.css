@@ -1,6 +1,7 @@
 /* 지시 입력창 — 색은 토큰 변수만 */
 
 .hx-composer {
+  position: relative;
   margin: var(--hx-space-3) var(--hx-space-4) var(--hx-space-2);
   padding: var(--hx-space-2) var(--hx-space-3);
   border: 1px solid var(--hx-border);
@@ -213,4 +214,43 @@
   border: 0;
   background: transparent;
   cursor: pointer;
+}
+
+/* + 메뉴 (T-034): 입력창 왼쪽 위로 */
+.hx-plus-menu {
+  bottom: calc(100% - var(--hx-space-1));
+  left: var(--hx-space-2);
+  min-width: 260px;
+  max-width: min(420px, 90vw);
+}
+
+.hx-plus-menu__recent {
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--hx-space-3);
+}
+
+.hx-plus-menu[data-mobile] .hx-plus-menu__recent {
+  padding-left: 0;
+}
+
+.hx-plus-menu__project {
+  display: flex;
+  align-items: center;
+}
+
+.hx-plus-menu__project > .hx-popover__item {
+  flex: 1;
+  min-width: 0;
+}
+
+.hx-plus-menu__pin {
+  border: 0;
+  background: transparent;
+  color: var(--hx-text-faint);
+  cursor: pointer;
+}
+
+.hx-plus-menu__pin[aria-pressed='true'] {
+  color: var(--hx-accent);
 }

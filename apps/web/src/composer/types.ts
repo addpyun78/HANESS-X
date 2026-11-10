@@ -34,7 +34,7 @@ export interface Attachment {
   name: string;
   mime: string;
   size: number;
-  source: 'drop' | 'paste';
+  source: 'drop' | 'paste' | 'picker';
   file: File;
 }
 

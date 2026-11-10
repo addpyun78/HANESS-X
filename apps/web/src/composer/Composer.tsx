@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
 import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
+import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import {
   AUTH_LABEL,
   PERMISSION_DESC,
@@ -25,8 +26,10 @@ export interface ComposerProps {
   onSend: (p: SendPayload) => void;
   /** 첨부 이벤트 (드래그앤드롭·붙여넣기) */
   onAttach?: (e: AttachEvent) => void;
-  /** + 버튼 (메뉴는 T-034) */
+  /** + 버튼 클릭 알림 */
   onPlus?: () => void;
+  /** + 메뉴(T-034): 주어지면 + 클릭 시 "프로젝트 폴더 열기… / 최근 프로젝트 / 파일 첨부" 팝오버 */
+  plusMenu?: Omit<PlusMenuProps, 'onClose' | 'onAttachFiles'>;
   verdict?: Verdict;
   disabled?: boolean;
   placeholder?: string;
@@ -51,6 +54,7 @@ export function Composer({
   onSend,
   onAttach,
   onPlus,
+  plusMenu,
   verdict,
   disabled,
   placeholder = '지시를 입력하세요 (Enter 전송 · Shift+Enter 줄바꿈)',
@@ -64,6 +68,9 @@ export function Composer({
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const composing = useRef(false);
+  const [plusOpen, setPlusOpen] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const closePlus = useCallback(() => setPlusOpen(false), []);
 
   // 엔진 목록이 늦게 도착하면(API) 사용 가능한 첫 엔진으로
   useEffect(() => {
@@ -164,8 +171,34 @@ export function Composer({
           }
         }}
       />
+      {plusMenu && plusOpen && (
+        <PlusMenu {...plusMenu} onClose={closePlus} onAttachFiles={() => fileInput.current?.click()} />
+      )}
+      {plusMenu && (
+        <input
+          ref={fileInput}
+          type="file"
+          multiple
+          hidden
+          data-testid="attach-input"
+          onChange={(e) => {
+            addFiles(Array.from(e.target.files ?? []), 'picker');
+            e.target.value = '';
+          }}
+        />
+      )}
       <div className="hx-composer__bar" role="toolbar" aria-label="입력 도구">
-        <button type="button" className="hx-plus" aria-label="추가" data-slot="plus" onClick={onPlus}>
+        <button
+          type="button"
+          className="hx-plus"
+          aria-label="추가"
+          data-slot="plus"
+          {...(plusMenu ? { 'aria-haspopup': 'menu' as const, 'aria-expanded': plusOpen } : {})}
+          onClick={() => {
+            if (plusMenu) setPlusOpen((v) => !v);
+            onPlus?.();
+          }}
+        >
           +
         </button>
         <ChipMenu
