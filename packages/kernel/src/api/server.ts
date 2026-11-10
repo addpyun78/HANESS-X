@@ -14,6 +14,9 @@ import {
   type FolderPicker,
 } from '../native/folder-picker.js';
 import { WorkspaceRejectedError, WorkspaceStore } from '../workspaces.js';
+import type { Dispatcher } from '../dispatch.js';
+import { registerAgentSaveRoute, type SavedAgent } from './agents-routes.js';
+import { registerSessionRoutes } from './sessions-routes.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
@@ -41,8 +44,14 @@ export interface ApiServerOptions {
   logger?: boolean;
   /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
+  /** 46.3 PUT /api/agents/:name 저장 위치의 하네스 홈 (기본 harnessHome() — HARNESS_X_HOME 존중) */
+  agentsHome?: string;
+  /** 에이전트 저장 뒤 알림 (예: 레지스트리 캐시 비우기) */
+  onAgentSaved?: (saved: SavedAgent) => void;
   /** listen 전에 추가 라우트 등록 (예: engine-scanner의 POST /api/engines/rescan). 토큰 검사가 적용된다 */
   routes?: (app: FastifyInstance) => void | Promise<void>;
+  /** 48.1 POST/GET /api/sessions (/ 실행 디스패치). 없으면 라우트 없음 */
+  dispatch?: Dispatcher;
   /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
   approvals?: ApprovalHandler;
   /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
@@ -133,7 +142,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       if (req.method === 'OPTIONS') {
         return reply
           .code(204)
-          .header('access-control-allow-methods', 'GET, POST, OPTIONS')
+          .header('access-control-allow-methods', 'GET, POST, PUT, OPTIONS')
           .header('access-control-allow-headers', 'authorization, content-type, x-harness-token')
           .header('access-control-max-age', '600')
           .send();
@@ -182,6 +191,11 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   // 43.5 에이전트 목록 (agent-builder가 제공)
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
+  // 46.3 빌더 저장 → <home>/agents/<name>/agent.yaml + pipeline.yaml
+  registerAgentSaveRoute(app, {
+    home: () => opts.agentsHome ?? harnessHome(),
+    ...(opts.onAgentSaved ? { onSaved: opts.onAgentSaved } : {}),
+  });
 
   // 27.3 승인 카드 응답 {decision: equivalent|move|fail}
   app.post('/api/approvals/:id', async (req, reply) => {
@@ -250,6 +264,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     }
   });
 
+  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch);
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);

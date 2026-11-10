@@ -52,6 +52,18 @@ export interface SessionSummary {
   engineId: string;
   /** ISO 시각 */
   updatedAt: string;
+  /** 48.3 / 디스패치로 시작한 에이전트 세션 */
+  agent?: SessionAgent;
+  /** 실행 중인 노드 */
+  currentNode?: string;
+  /** 진행률 0~1 */
+  progress?: number;
+}
+
+export interface SessionAgent {
+  name: string;
+  command: string;
+  icon?: string;
 }
 
 export type NavTarget = 'agent-builder' | 'plugins' | 'skills' | 'engines' | 'settings';

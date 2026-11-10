@@ -2,8 +2,8 @@
    파란 돌기 = 스킬 블록(--hx-info), 주황 돌기 = 엔진 블록(--hx-warning) */
 
 .hx-builder {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   overflow: hidden;
 }
@@ -42,6 +42,7 @@
 
 .hx-builder__cols {
   display: grid;
+  flex: 1;
   grid-template-columns: 260px minmax(0, 1fr) 300px;
   min-height: 0;
 }
@@ -442,4 +443,197 @@
   background: var(--hx-danger-soft);
   color: var(--hx-danger);
   cursor: help;
+}
+
+/* ── 인스펙터·YAML·저장·시험 실행 (T-046) ─────── */
+.hx-inspector__tabs {
+  display: flex;
+  gap: var(--hx-space-1);
+  margin-bottom: var(--hx-space-3);
+  border-bottom: 1px solid var(--hx-border);
+}
+
+.hx-inspector__tab {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--hx-text-muted);
+  cursor: pointer;
+}
+
+.hx-inspector__tab[aria-selected='true'] {
+  border-bottom-color: var(--hx-accent);
+  color: var(--hx-text);
+}
+
+.hx-inspector__form,
+.hx-yaml,
+.hx-dryrun {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+}
+
+.hx-inspector__kind {
+  margin: 0;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  font-size: var(--hx-font-13);
+}
+
+.hx-field > span:first-child {
+  color: var(--hx-text-muted);
+}
+
+.hx-field input,
+.hx-field select,
+.hx-field textarea,
+.hx-yaml__text,
+.hx-savebar input {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+  font: inherit;
+}
+
+.hx-field__error,
+.hx-yaml__errors {
+  color: var(--hx-danger);
+  font-size: var(--hx-font-12);
+}
+
+.hx-yaml__errors {
+  margin: 0;
+  padding-left: var(--hx-space-4);
+}
+
+.hx-skill-order {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  margin: 0;
+  padding-left: var(--hx-space-4);
+}
+
+.hx-skill-order li {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+}
+
+.hx-skill-order li .hx-mono {
+  flex: 1;
+}
+
+.hx-yaml__text {
+  min-height: 320px;
+  font-size: var(--hx-font-12);
+  resize: vertical;
+}
+
+.hx-yaml__bar {
+  display: flex;
+  gap: var(--hx-space-2);
+}
+
+.hx-insp-btn {
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: 1px solid var(--hx-accent);
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent);
+  color: var(--hx-on-accent);
+  cursor: pointer;
+}
+
+.hx-insp-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-insp-btn--ghost {
+  background: transparent;
+  color: var(--hx-accent);
+}
+
+.hx-savebar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-2) var(--hx-space-4);
+  border-bottom: 1px solid var(--hx-border);
+  background: var(--hx-surface-2);
+}
+
+.hx-savebar__icon {
+  width: 3em;
+  text-align: center;
+}
+
+.hx-savebar input[aria-invalid='true'] {
+  border-color: var(--hx-danger);
+}
+
+.hx-savebar__status {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+}
+
+.hx-dryrun__note,
+.hx-dryrun__total {
+  margin: 0;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-dryrun__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--hx-font-12);
+}
+
+.hx-dryrun__list li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--hx-space-2);
+}
+
+.hx-run-badge {
+  align-self: flex-start;
+  padding: 0 var(--hx-space-2);
+  border-radius: 999px;
+  background: var(--hx-surface-2);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-run-badge[data-status='running'] {
+  background: var(--hx-running-soft);
+  color: var(--hx-running);
+}
+
+.hx-run-badge[data-status='completed'] {
+  background: var(--hx-success-soft);
+  color: var(--hx-success);
+}
+
+.hx-run-badge[data-status='failed'],
+.hx-run-badge[data-status='error'],
+.hx-run-badge[data-status='incomplete'] {
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+}
+
+.hx-node[data-run='running'] {
+  border-color: var(--hx-running);
 }

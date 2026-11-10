@@ -250,6 +250,45 @@
   font-size: var(--hx-font-12);
 }
 
+/* 48.3 에이전트 세션: 아이콘·현재 노드·진행률 */
+.hx-session:has(.hx-session__run) {
+  flex-wrap: wrap;
+}
+
+.hx-session__agent {
+  font-size: var(--hx-font-13);
+}
+
+.hx-session__run {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  gap: var(--hx-space-2);
+  padding-left: var(--hx-space-4);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-session__node {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-session__progress {
+  flex: 1;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--hx-border);
+}
+
+.hx-session__bar {
+  display: block;
+  height: 100%;
+  background: var(--hx-accent);
+}
+
 .hx-sidebar__empty {
   padding: var(--hx-space-4);
   color: var(--hx-text-faint);

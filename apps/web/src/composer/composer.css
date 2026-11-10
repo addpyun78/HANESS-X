@@ -254,3 +254,37 @@
 .hx-plus-menu__pin[aria-pressed='true'] {
   color: var(--hx-accent);
 }
+
+/* 48.4 서브에이전트 추가 확인 카드 */
+.hx-subagent-confirm {
+  margin-bottom: var(--hx-space-2);
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border: 1px solid var(--hx-accent);
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent-soft);
+  font-size: var(--hx-font-13);
+}
+
+.hx-subagent-confirm__text {
+  margin: 0 0 var(--hx-space-2);
+}
+
+.hx-subagent-confirm__actions {
+  display: flex;
+  gap: var(--hx-space-2);
+}
+
+.hx-subagent-confirm__actions button {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  cursor: pointer;
+}
+
+.hx-subagent-confirm__actions .hx-subagent-confirm__primary {
+  border-color: var(--hx-accent);
+  background: var(--hx-accent);
+  color: var(--hx-on-accent);
+}

@@ -1,4 +1,5 @@
-import type { AgentListResponse, HarnessEvent } from '@harness-x/protocol';
+import type { DispatchSessionLike } from '../shell/agent-sessions.js';
+import type { AgentInput, AgentListResponse, HarnessEvent, PipelineInput } from '@harness-x/protocol';
 
 /**
  * 로컬 하네스 API 클라이언트 (packages/kernel/src/api/server.ts와 짝)
@@ -69,6 +70,28 @@ export interface WorkspacesResponse {
   current?: WorkspaceInfo;
   recent: WorkspaceInfo[];
   cwd?: string;
+}
+
+/** PUT /api/agents/:name 요청 (kernel api/agents-routes.ts) */
+export interface SaveAgentRequest {
+  agent: Omit<AgentInput, 'pipeline'> & { pipeline?: string };
+  pipeline: PipelineInput;
+  overwrite?: boolean;
+}
+
+export interface SaveAgentResponse {
+  name: string;
+  command: string;
+  dir: string;
+  files: string[];
+  created: boolean;
+}
+
+export interface CreateSessionRequest {
+  /** 이름 또는 /명령 */
+  agent: string;
+  prompt: string;
+  modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean };
 }
 
 export class ApiError extends Error {
@@ -171,6 +194,30 @@ export class HarnessApiClient {
   /** GET /api/agents — 등록된 에이전트 요약 (빌더·/ 팔레트) */
   agents() {
     return this.request<AgentListResponse>('/api/agents');
+  }
+
+  /** 46.3 PUT /api/agents/:name — 빌더 저장 (~/.harness-x/agents/<name>/agent.yaml + pipeline.yaml) */
+  saveAgent(name: string, body: SaveAgentRequest) {
+    return this.request<SaveAgentResponse>(`/api/agents/${encodeURIComponent(name)}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    });
+  }
+
+  /** 48.1 POST /api/sessions — 에이전트 칩 + 지시문 → 새 세션 (수식어 @엔진 #strict !plan은 prompt 안에) */
+  createSession(req: CreateSessionRequest) {
+    return this.request<DispatchSessionLike>('/api/sessions', {
+      method: 'POST',
+      body: JSON.stringify(req),
+    });
+  }
+
+  /** 48.4 실행 중 세션에 서브에이전트 추가 */
+  addSubagent(sessionId: string, agent: string) {
+    return this.request<DispatchSessionLike>(`/api/sessions/${encodeURIComponent(sessionId)}/subagents`, {
+      method: 'POST',
+      body: JSON.stringify({ agent }),
+    });
   }
 
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {
