@@ -48,8 +48,14 @@ export function Sidebar({
                       onClick={() => onSelectSession?.(s.id)}
                     >
                       <span className="hx-dot" aria-label={SESSION_STATUS_LABEL[s.status]} />
+                      {s.agent && (
+                        <span className="hx-session__agent" title={s.agent.command} aria-hidden="true">
+                          {s.agent.icon ?? '✦'}
+                        </span>
+                      )}
                       <span className="hx-session__title">{s.title}</span>
                       <span className="hx-session__engine">{s.engineId}</span>
+                      {s.agent && <AgentProgress s={s} />}
                     </button>
                   </li>
                 ))}
@@ -73,5 +79,32 @@ export function Sidebar({
         ))}
       </div>
     </nav>
+  );
+}
+
+/** 48.3 에이전트 세션: 현재 노드 + 진행률 막대 */
+function AgentProgress({ s }: { s: SessionSummary }) {
+  const pct = Math.round((s.progress ?? 0) * 100);
+  return (
+    <span className="hx-session__run">
+      <span className="hx-session__node">
+        {s.currentNode
+          ? `▸ ${s.currentNode}`
+          : s.status === 'running'
+            ? '준비 중'
+            : SESSION_STATUS_LABEL[s.status]}
+      </span>
+      <span
+        className="hx-session__progress"
+        role="progressbar"
+        aria-label={`${s.title} 진행률`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+      >
+        <span className="hx-session__bar" style={{ width: `${pct}%` }} />
+      </span>
+      <span className="hx-session__pct">{pct}%</span>
+    </span>
   );
 }
