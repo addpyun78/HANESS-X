@@ -17,6 +17,8 @@ export interface CollapsibleCardProps {
   status?: 'ok' | 'fail' | 'pending';
   itemId?: string;
   defaultOpen?: boolean;
+  /** 헤더 오른쪽 추가 버튼 (예: Diff 열기) */
+  actions?: ReactNode;
   children?: ReactNode;
 }
 
@@ -32,6 +34,7 @@ export function CollapsibleCard({
   status,
   itemId,
   defaultOpen = false,
+  actions,
   children,
 }: CollapsibleCardProps) {
   const [open, setOpen] = useState(defaultOpen);
@@ -58,6 +61,7 @@ export function CollapsibleCard({
             {STATUS_ICON[status]}
           </span>
         )}
+        {actions}
         <ItemTag itemId={itemId} />
       </div>
       {open && hasBody && <div className="hx-card__body">{children}</div>}

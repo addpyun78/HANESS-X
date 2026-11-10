@@ -11,6 +11,8 @@ export interface AppShellProps {
   sidebar: ReactNode;
   main: ReactNode;
   panelContent?: Partial<Record<PanelTabId, ReactNode>>;
+  panelActive?: PanelTabId;
+  onPanelActiveChange?: (id: PanelTabId) => void;
 }
 
 type Sheet = 'sidebar' | 'panel' | undefined;
@@ -19,7 +21,14 @@ type Sheet = 'sidebar' | 'panel' | undefined;
  * 3열 레이아웃: 사이드바 240px / 채팅 가변 / 우측 패널 360px, 경계 드래그로 리사이즈(너비 저장).
  * 768px 미만에서는 사이드바·우측 패널이 시트로 접힌다.
  */
-export function AppShell({ topBar, sidebar, main, panelContent }: AppShellProps) {
+export function AppShell({
+  topBar,
+  sidebar,
+  main,
+  panelContent,
+  panelActive,
+  onPanelActiveChange,
+}: AppShellProps) {
   const [layout, setLayout] = useState<Layout>(loadLayout);
   const narrow = useMediaQuery(NARROW_QUERY);
   const [sheet, setSheet] = useState<Sheet>();
@@ -48,6 +57,8 @@ export function AppShell({ topBar, sidebar, main, panelContent }: AppShellProps)
       order={layout.tabOrder}
       onOrderChange={(tabOrder) => update({ tabOrder }, true)}
       content={panelContent}
+      active={panelActive}
+      onActiveChange={onPanelActiveChange}
     />
   );
 

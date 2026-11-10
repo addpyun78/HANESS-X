@@ -1,0 +1,86 @@
+/* 우측 패널 내용(Diff·터미널·궤적) — 색은 토큰 변수만 */
+
+.hx-panel-empty {
+  margin: var(--hx-space-4);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+}
+
+.hx-diff-panel,
+.hx-term-panel,
+.hx-traj {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  height: 100%;
+  min-height: 0;
+}
+
+.hx-diff-panel__head,
+.hx-term-panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+  font-size: var(--hx-font-13);
+}
+
+.hx-diff-panel__path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-diff-editor,
+.hx-term {
+  flex: 1;
+  min-height: 240px;
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  overflow: hidden;
+}
+
+.hx-term {
+  background: var(--hx-neutral-900);
+  padding: var(--hx-space-1);
+}
+
+.hx-term-panel__status {
+  margin-left: auto;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-traj__totals {
+  font-size: var(--hx-font-13);
+  color: var(--hx-text-muted);
+}
+
+.hx-traj__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.hx-traj__step {
+  padding: var(--hx-space-2) 0;
+  border-bottom: 1px solid var(--hx-border);
+}
+
+.hx-traj__step-head {
+  display: flex;
+  gap: var(--hx-space-2);
+  font-size: var(--hx-font-13);
+}
+
+.hx-traj__step-usage {
+  margin-left: auto;
+  font-size: var(--hx-font-12);
+  color: var(--hx-text-muted);
+}
+
+.hx-traj__events {
+  margin: var(--hx-space-1) 0 0;
+  padding-left: var(--hx-space-4);
+  font-size: var(--hx-font-12);
+}
