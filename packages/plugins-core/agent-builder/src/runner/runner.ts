@@ -26,7 +26,15 @@ import {
   type RouterNode,
   type SubagentNode,
 } from '@harness-x/protocol';
-import { MAX_CONTRACT_RETRIES, contractRetryPrompt, extractNodeOutput, validateOutput } from '../contract.js';
+import {
+  MAX_CONTRACT_RETRIES,
+  contractRetryPrompt,
+  extractNodeOutput,
+  outputInstruction,
+  renderInputValues,
+  selectInputValues,
+  validateOutput,
+} from '../contract.js';
 import { evaluateCondition } from './condition.js';
 import type {
   GateFailure,
@@ -345,13 +353,16 @@ export class PipelineRunner {
     parts.push(`# 역할: ${node.label ?? node.id}`);
     if (node.prompt) parts.push(node.prompt);
     if (node.skills.length) parts.push(`스킬: ${node.skills.join(', ')}`);
-    parts.push(`## 입력 값\n\`\`\`json\n${JSON.stringify(input ?? {}, null, 2)}\n\`\`\``);
+    // 42.3 앞 노드 출력은 값 그대로 주입 (inputSchema가 있으면 선언 필드만)
+    parts.push(renderInputValues(selectInputValues(input, node.inputSchema)));
     const items = ledger.read()?.items ?? [];
     if (items.length)
       parts.push(
         '## 체크리스트 (모든 항목이 done이어야 이 노드가 끝난다)\n' +
           items.map((i) => `- ${i.id}: ${i.title}`).join('\n'),
       );
+    const out = outputInstruction(node.outputSchema);
+    if (out) parts.push(out);
     return parts.join('\n\n');
   }
 
