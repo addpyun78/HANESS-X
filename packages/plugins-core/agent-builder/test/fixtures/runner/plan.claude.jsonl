@@ -1,0 +1,3 @@
+{"type":"system","subtype":"init","cwd":"/tmp/hx-fixture","session_id":"plan-claude-session-1","tools":["Read"],"mcp_servers":[],"model":"claude-opus-5-5","permissionMode":"plan"}
+{"type":"assistant","message":{"model":"claude-opus-5-5","id":"msg_plan","type":"message","role":"assistant","content":[{"type":"text","text":"계획:\n```json\n{\"tasks\":[\"헤더 만들기\",\"버튼 만들기\"],\"acceptance\":[\"헤더가 보인다\"]}\n```"}],"stop_reason":null,"usage":{"input_tokens":5,"output_tokens":30}},"parent_tool_use_id":null,"session_id":"plan-claude-session-1"}
+{"type":"result","subtype":"success","is_error":false,"duration_ms":900,"num_turns":1,"result":"ok","session_id":"plan-claude-session-1","total_cost_usd":0.01,"usage":{"input_tokens":5,"output_tokens":30}}

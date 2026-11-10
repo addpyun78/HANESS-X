@@ -15,7 +15,12 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@harness-x/checklist-ledger": "workspace:*",
     "@harness-x/kernel": "workspace:*",
     "@harness-x/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@harness-x/engine-claude-code": "workspace:*",
+    "@harness-x/engine-codex": "workspace:*"
   }
 }
