@@ -10,6 +10,7 @@
       "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
       "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
       "@harness-x/sdk": ["./packages/sdk/src/index.ts"],
+      "@harness-x/verifier-jev": ["./packages/plugins/verifier-jev/src/index.ts"],
       "@harness-x/verifier-ladder": ["./packages/plugins-core/verifiers/ladder/src/index.ts"]
     }
   },

@@ -1,0 +1,10 @@
+{
+  "id": "verifier-jev",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Verifier Jev (L4)",
+  "description": "판정 사다리 L4 — Jev(jev-1.13.0) 경량 판정 모델. 경로·파일명·심볼·항목 제목 메타데이터만 전송",
+  "main": "dist/index.js",
+  "provides": { "verifier": ["jev"] },
+  "permissions": { "fs": [], "net": ["openrouter.ai", "api.cloudflare.com"], "shell": false }
+}

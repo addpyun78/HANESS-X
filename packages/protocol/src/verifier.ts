@@ -158,3 +158,41 @@ export function judgeAnswerJsonSchema(question: JudgeQuestion): Record<string, u
     additionalProperties: false,
   };
 }
+
+// ── 공통 요청 형식 (Jev·로컬 LLM·L5 엔진이 같은 질문 형식을 쓴다) ─────────
+export const JUDGE_SYSTEM_PROMPT =
+  'You are a strict verification judge for a coding harness. You receive ONE typed question and metadata ' +
+  '(paths, file names, symbol names, checklist item title) — never source code. Answer ONLY with a JSON object ' +
+  'matching the given schema: the answer field named after the question kind ("noul" = probability 0..1 that the ' +
+  'answer is yes, "choice" = one of the choices, "score" = number in range) and "confidence" (0..1).';
+
+export interface JudgeMessages {
+  system: string;
+  user: string;
+}
+
+/** 질문 + 상태 → system/user 메시지. user는 결정적 JSON(키 순서 고정) */
+export function buildJudgeMessages(question: JudgeQuestion, state: JudgeState): JudgeMessages {
+  const q: Record<string, unknown> = { id: question.id, kind: question.kind, prompt: question.prompt };
+  if (question.kind === 'choice') q.choices = question.choices;
+  if (question.kind === 'score') Object.assign(q, { min: question.min, max: question.max });
+  const s = JudgeStateSchema.parse(state);
+  return {
+    system: JUDGE_SYSTEM_PROMPT,
+    user: JSON.stringify({ question: q, state: s, answerSchema: judgeAnswerJsonSchema(question) }),
+  };
+}
+
+/** 모델 텍스트 답에서 JSON 객체 하나를 꺼낸다 (```json 울타리·앞뒤 설명 허용). 없으면 JudgeAnswerError */
+export function extractJsonObject(text: string): unknown {
+  const fenced = /```(?:json)?\s*([\s\S]*?)```/i.exec(text);
+  const body = (fenced ? fenced[1]! : text).trim();
+  const start = body.indexOf('{');
+  const end = body.lastIndexOf('}');
+  if (start < 0 || end < start) throw new JudgeAnswerError('JSON 객체가 없는 답', text);
+  try {
+    return JSON.parse(body.slice(start, end + 1));
+  } catch {
+    throw new JudgeAnswerError('JSON 파싱 실패', text);
+  }
+}
