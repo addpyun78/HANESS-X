@@ -1,0 +1,18 @@
+# HARNESS-X 엔진 설정 예시 — ~/.harness-x/engines-settings.yaml 에 복사해 쓴다.
+# mode:
+#   subscription  공식 CLI를 그대로 실행 (CLI 자체 로그인 사용). API 키 환경변수는 제거된 채 실행된다.
+#   apiKey        OS 키체인에 저장된 키를 실행 시 환경변수로만 주입한다.
+# API 키 원문은 이 파일에 쓰지 않는다 (스키마가 거부한다).
+engines:
+  claude-code:
+    mode: subscription
+    model: claude-sonnet-4-5
+    fallback: codex
+  codex:
+    mode: subscription
+    fallback: [claude-code, openai-compat]
+  antigravity:
+    mode: apiKey
+  openai-compat:
+    mode: apiKey
+    model: qwen2.5-coder:7b
