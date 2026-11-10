@@ -196,3 +196,33 @@ export function extractJsonObject(text: string): unknown {
     throw new JudgeAnswerError('JSON 파싱 실패', text);
   }
 }
+
+// ── 26.3 질문 템플릿 2종 ─────────────────────────────────────────────
+export const DEVIATION_KINDS = ['equivalent', 'relocated-ok', 'wrong-target', 'missing'] as const;
+export type DeviationKind = (typeof DEVIATION_KINDS)[number];
+
+/** same_artifact (noul): 실제 경로가 기대 경로와 같은 산출물인가 */
+export function sameArtifactQuestion(): NoulQuestion {
+  return {
+    kind: 'noul',
+    id: 'same_artifact',
+    prompt:
+      'Is the artifact at state.actualPath the same deliverable the checklist item expects at ' +
+      'state.expectedPath (same purpose, only named or placed differently)? Judge from the item title, ' +
+      'paths, file names and symbol names only.',
+  };
+}
+
+/** deviation_kind (choice): 어긋남 종류 — 동치 / 허용 가능한 이동 / 잘못된 대상 / 누락 */
+export function deviationKindQuestion(): ChoiceQuestion {
+  return {
+    kind: 'choice',
+    id: 'deviation_kind',
+    prompt:
+      'Classify how state.actualPath deviates from state.expectedPath: "equivalent" = same location under ' +
+      'another name (translation, synonym, naming style), "relocated-ok" = the same artifact moved to an ' +
+      'acceptable other folder, "wrong-target" = a different artifact or an unacceptable place, ' +
+      '"missing" = the expected artifact was not produced.',
+    choices: [...DEVIATION_KINDS],
+  };
+}

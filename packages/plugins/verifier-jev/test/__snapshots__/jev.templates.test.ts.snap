@@ -1,0 +1,93 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`질문 템플릿 2종 (요청 스냅샷) > deviation_kind (choice: equivalent/relocated-ok/wrong-target/missing) 1`] = `
+{
+  "messages": [
+    {
+      "content": "You are a strict verification judge for a coding harness. You receive ONE typed question and metadata (paths, file names, symbol names, checklist item title) — never source code. Answer ONLY with a JSON object matching the given schema: the answer field named after the question kind ("noul" = probability 0..1 that the answer is yes, "choice" = one of the choices, "score" = number in range) and "confidence" (0..1).",
+      "role": "system",
+    },
+    {
+      "content": "{"question":{"id":"deviation_kind","kind":"choice","prompt":"Classify how state.actualPath deviates from state.expectedPath: \\"equivalent\\" = same location under another name (translation, synonym, naming style), \\"relocated-ok\\" = the same artifact moved to an acceptable other folder, \\"wrong-target\\" = a different artifact or an unacceptable place, \\"missing\\" = the expected artifact was not produced.","choices":["equivalent","relocated-ok","wrong-target","missing"]},"state":{"itemTitle":"모바일 앱 스캐폴드","expectedPath":"harness/mobile","actualPath":"ai/mobile","candidates":["ai/mobile","ai/mobile-old"],"fileNames":["MainActivity.kt","build.gradle.kts"],"symbols":["MainActivity","onCreate"]},"answerSchema":{"type":"object","properties":{"choice":{"type":"string","enum":["equivalent","relocated-ok","wrong-target","missing"]},"confidence":{"type":"number","minimum":0,"maximum":1}},"required":["choice","confidence"],"additionalProperties":false}}",
+      "role": "user",
+    },
+  ],
+  "model": "jev-1.13.0",
+  "response_format": {
+    "json_schema": {
+      "name": "judge_choice",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "choice": {
+            "enum": [
+              "equivalent",
+              "relocated-ok",
+              "wrong-target",
+              "missing",
+            ],
+            "type": "string",
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+          },
+        },
+        "required": [
+          "choice",
+          "confidence",
+        ],
+        "type": "object",
+      },
+      "strict": true,
+    },
+    "type": "json_schema",
+  },
+  "temperature": 0,
+}
+`;
+
+exports[`질문 템플릿 2종 (요청 스냅샷) > same_artifact (noul) 1`] = `
+{
+  "messages": [
+    {
+      "content": "You are a strict verification judge for a coding harness. You receive ONE typed question and metadata (paths, file names, symbol names, checklist item title) — never source code. Answer ONLY with a JSON object matching the given schema: the answer field named after the question kind ("noul" = probability 0..1 that the answer is yes, "choice" = one of the choices, "score" = number in range) and "confidence" (0..1).",
+      "role": "system",
+    },
+    {
+      "content": "{"question":{"id":"same_artifact","kind":"noul","prompt":"Is the artifact at state.actualPath the same deliverable the checklist item expects at state.expectedPath (same purpose, only named or placed differently)? Judge from the item title, paths, file names and symbol names only."},"state":{"itemTitle":"모바일 앱 스캐폴드","expectedPath":"harness/mobile","actualPath":"ai/mobile","candidates":["ai/mobile","ai/mobile-old"],"fileNames":["MainActivity.kt","build.gradle.kts"],"symbols":["MainActivity","onCreate"]},"answerSchema":{"type":"object","properties":{"noul":{"type":"number","minimum":0,"maximum":1},"confidence":{"type":"number","minimum":0,"maximum":1}},"required":["noul","confidence"],"additionalProperties":false}}",
+      "role": "user",
+    },
+  ],
+  "model": "jev-1.13.0",
+  "response_format": {
+    "json_schema": {
+      "name": "judge_noul",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+          },
+          "noul": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+          },
+        },
+        "required": [
+          "noul",
+          "confidence",
+        ],
+        "type": "object",
+      },
+      "strict": true,
+    },
+    "type": "json_schema",
+  },
+  "temperature": 0,
+}
+`;
