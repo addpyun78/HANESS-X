@@ -360,12 +360,22 @@ importers:
 
   packages/plugins-core/agent-builder:
     dependencies:
+      '@harness-x/checklist-ledger':
+        specifier: workspace:*
+        version: link:../checklist-ledger
       '@harness-x/kernel':
         specifier: workspace:*
         version: link:../../kernel
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../protocol
+    devDependencies:
+      '@harness-x/engine-claude-code':
+        specifier: workspace:*
+        version: link:../../engines/claude-code
+      '@harness-x/engine-codex':
+        specifier: workspace:*
+        version: link:../../engines/codex
 
   packages/plugins-core/checklist-ledger:
     dependencies:
