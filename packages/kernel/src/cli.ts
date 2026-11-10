@@ -3,7 +3,7 @@ import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import type { EngineAdapter } from '@harness-x/protocol';
+import type { AgentSummary, EngineAdapter } from '@harness-x/protocol';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { Worker } from 'node:worker_threads';
@@ -29,6 +29,16 @@ interface ScannerPluginModule {
 interface LedgerPluginModule {
   workspaceLedgerResolver?(workspace: string): (sessionId: string) => unknown;
   registerChecklistStatusRoute?(app: unknown, resolve: (sessionId: string) => unknown): void;
+}
+
+/**
+ * agent-builder 플러그인 모듈의 공개 API (커널은 그 패키지에 의존하지 않는다 — 순환 방지.
+ * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
+ */
+interface AgentBuilderPluginModule {
+  AgentRegistry?: new (o: { plugins?: () => Iterable<unknown>; home?: string; workspace?: string }) => {
+    summaries(): AgentSummary[];
+  };
 }
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
@@ -174,6 +184,18 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       log,
       host: values.host,
       port,
+      // 43.5/46.5 GET /api/agents: 요청마다 agent-builder 레지스트리가 사용자·프로젝트 폴더를 다시 읽는다
+      // → 빌더 저장(PUT /api/agents/:name) 직후 목록에 나타난다
+      agents: () => {
+        const mod = loader.plugins.get('agent-builder')?.module as AgentBuilderPluginModule | undefined;
+        if (!mod?.AgentRegistry) return [];
+        return new mod.AgentRegistry({
+          plugins: () => loader.plugins.values(),
+          home,
+          ...(values.workspace ? { workspace: resolve(values.workspace) } : {}),
+        }).summaries();
+      },
+      agentsHome: home,
       routes: (app) => {
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
         const ledgerFor =
