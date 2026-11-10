@@ -1,0 +1,15 @@
+{
+  "id": "engine-acp-generic",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "ACP 범용 엔진",
+  "description": "Agent Client Protocol(ACP) 에이전트(claude-agent-acp, codex-acp 등)를 stdio로 실행하고 HarnessEvent로 정규화",
+  "main": "dist/index.js",
+  "provides": {
+    "engine": ["acp-generic"]
+  },
+  "permissions": {
+    "fs": ["workspace:read", "workspace:write"],
+    "shell": true
+  }
+}

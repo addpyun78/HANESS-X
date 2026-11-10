@@ -4,6 +4,7 @@
     "noEmit": true,
     "paths": {
       "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
+      "@harness-x/engine-acp-generic": ["./packages/engines/acp-generic/src/index.ts"],
       "@harness-x/engine-openai-compat": ["./packages/engines/openai-compat/src/index.ts"],
       "@harness-x/engine-scanner": ["./packages/plugins-core/engine-scanner/src/index.ts"],
       "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
