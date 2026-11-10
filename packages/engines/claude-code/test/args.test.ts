@@ -57,4 +57,13 @@ describe('14.1 claude 실행 인자 빌더', () => {
     expect(a.at(-2)).toBe('--');
     expect(a.at(-1)).toBe('p');
   });
+
+  it('resumeId → --resume <id>', () => {
+    const a = buildClaudeArgs({ prompt: 'p', resumeId: 'f324fe3a-ef4b-4947-9fd3-3efa529054fa' });
+    expect(a.slice(a.indexOf('--resume'), a.indexOf('--resume') + 2)).toEqual([
+      '--resume',
+      'f324fe3a-ef4b-4947-9fd3-3efa529054fa',
+    ]);
+    expect(buildClaudeArgs({ prompt: 'p' })).not.toContain('--resume');
+  });
 });
