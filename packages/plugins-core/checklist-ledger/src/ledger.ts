@@ -151,6 +151,42 @@ export class ChecklistLedger {
     return next;
   }
 
+  /**
+   * 체크리스트 개정 (v{n} → v{n+1}) (20.5)
+   * 이전 개정본은 checklist.v{n}.json으로 보관된다. 같은 id의 항목은 진행 상태(status·attempts·
+   * evidence·verdict)를 이어받는다(입력에 명시하면 그 값). 빠진 항목은 to: 'removed' 이벤트를 남긴다.
+   */
+  revise(items: ChecklistItemInput[], opts: WriteOptions = {}): Checklist {
+    const changes: { itemId: string; from: ItemStatus | null; to: ItemStatus | 'removed' }[] = [];
+    const next = this.store.update((cur) => {
+      if (!cur) throw new ChecklistNotFoundError(this.store.file);
+      const prev = new Map(cur.items.map((i) => [i.id, i]));
+      const parsed = items.map((input) => {
+        const old = prev.get(input.id);
+        const carried = old
+          ? { status: old.status, attempts: old.attempts, evidence: old.evidence, verdict: old.verdict }
+          : {};
+        return ChecklistItemSchema.parse({ ...carried, ...input });
+      });
+      const kept = new Set(parsed.map((i) => i.id));
+      changes.length = 0;
+      for (const it of parsed)
+        changes.push({ itemId: it.id, from: prev.get(it.id)?.status ?? null, to: it.status });
+      for (const old of cur.items)
+        if (!kept.has(old.id)) changes.push({ itemId: old.id, from: old.status, to: 'removed' });
+      return { revision: cur.revision + 1, items: parsed };
+    }, opts);
+    this.emit(next, changes);
+    return next;
+  }
+
+  /** 보관된 개정본 (없으면 null) */
+  readRevision(revision: number): Checklist | null {
+    const cur = this.store.read();
+    if (cur?.revision === revision) return cur;
+    return this.store.readArchive(revision);
+  }
+
   /** 진행 중인 항목(doing/verifying/failed) 또는 의존이 모두 done인 첫 todo */
   currentItem(): ChecklistItem | null {
     const c = this.read();
@@ -171,7 +207,10 @@ export class ChecklistLedger {
     return this.read()?.items.filter((i) => i.status !== 'done') ?? [];
   }
 
-  protected emit(c: Checklist, changes: { itemId: string; from: ItemStatus | null; to: ItemStatus }[]): void {
+  protected emit(
+    c: Checklist,
+    changes: { itemId: string; from: ItemStatus | null; to: ItemStatus | 'removed' }[],
+  ): void {
     if (!this.log) return;
     for (const ch of changes) {
       const ev: ChecklistChangeEvent = ChecklistChangeEventSchema.parse({
