@@ -1,0 +1,25 @@
+{
+  "description": "기대 경로는 NFC, 엔진(맥·깃)은 NFD 한글로 기록",
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "changes": [
+    {
+      "path": "하네스/모바일/a.kt",
+      "change": "create",
+      "form": "NFD"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 1,
+    "verdict": "equal",
+    "actualPath": "하네스/모바일"
+  }
+}

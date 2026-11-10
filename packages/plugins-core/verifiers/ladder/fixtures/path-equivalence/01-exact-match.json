@@ -1,0 +1,27 @@
+{
+  "description": "정식 경로 그대로 작성",
+  "expected": {
+    "path": "harness/mobile",
+    "kind": "dir"
+  },
+  "files": {
+    "harness/mobile/MainActivity.kt": "class MainActivity"
+  },
+  "changes": [
+    {
+      "path": "harness/mobile/MainActivity.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 1,
+    "verdict": "equal",
+    "actualPath": "harness/mobile"
+  }
+}

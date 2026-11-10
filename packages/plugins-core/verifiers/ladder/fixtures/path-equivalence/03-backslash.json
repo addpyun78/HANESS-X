@@ -1,0 +1,24 @@
+{
+  "description": "Windows 엔진이 역슬래시로 기록",
+  "expected": {
+    "path": "harness/mobile",
+    "kind": "dir"
+  },
+  "changes": [
+    {
+      "path": "harness\\mobile\\a.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 1,
+    "verdict": "equal",
+    "actualPath": "harness/mobile"
+  }
+}

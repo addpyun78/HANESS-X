@@ -1,0 +1,28 @@
+{
+  "description": "회귀: 항목은 하네스/모바일, 에이전트는 ai/mobile에 만듦 → 내용 증거로 위치만 다름(L4로 넘김)",
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "files": {
+    "ai/mobile/MainActivity.kt": "class MainActivity : AppCompatActivity()"
+  },
+  "changes": [
+    {
+      "path": "ai/mobile/MainActivity.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 3,
+    "verdict": "relocated",
+    "actualPath": "ai/mobile",
+    "escalate": true
+  }
+}

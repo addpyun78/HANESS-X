@@ -1,0 +1,23 @@
+{
+  "description": "세션에 관련 변경 없음(삭제만 있음) → 누락",
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "changes": [
+    {
+      "path": "ai/mobile/MainActivity.kt",
+      "change": "delete"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 3,
+    "verdict": "missing"
+  }
+}

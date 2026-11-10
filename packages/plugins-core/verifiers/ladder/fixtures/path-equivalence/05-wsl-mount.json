@@ -1,0 +1,24 @@
+{
+  "description": "루트는 Windows 경로, 엔진은 WSL /mnt/c 경로로 기록",
+  "root": "C:\\Work\\Proj",
+  "expected": {
+    "path": "harness/mobile/a.kt",
+    "kind": "file"
+  },
+  "changes": [
+    {
+      "path": "/mnt/c/Work/Proj/harness/mobile/a.kt",
+      "change": "modify"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "file_exists"
+    }
+  ],
+  "expect": {
+    "level": 1,
+    "verdict": "equal",
+    "actualPath": "harness/mobile/a.kt"
+  }
+}
