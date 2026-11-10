@@ -1,0 +1,2 @@
+jetski: authentication required — no signed-in account found for headless mode.
+AGY_ERROR: {"code":"UNAUTHENTICATED","message":"You are not logged in. Run `agy` in a terminal to log in, then retry."}
