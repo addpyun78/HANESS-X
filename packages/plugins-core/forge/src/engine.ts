@@ -79,6 +79,8 @@ export interface ForgeRunInput {
   workspace: string;
   /** 엔진(LLM) 조회. 없거나 undefined면 결정적 경로만 (spec 초안·템플릿 본문) */
   engines?: (id: string) => EngineAdapter | undefined;
+  /** engine: auto 노드가 쓸 엔진(LLM) id (없으면 'forge' — 엔진 없이 결정적 경로만) */
+  defaultEngine?: string;
 }
 
 export const forgeDir = (workspace: string, sessionId: string) =>
@@ -136,7 +138,7 @@ export class Forge {
     const state = this.state(i);
     return {
       engines: (id) => this.wrap(id === 'forge' ? undefined : i.engines?.(id), state),
-      defaultEngine: 'forge',
+      defaultEngine: i.defaultEngine ?? 'forge',
       checklists: (_node, template) => (template === SCAFFOLD_TEMPLATE ? SCAFFOLD_ITEMS : undefined),
       verify: async ({ gate, attempt }) => {
         const fn = gate.id === 'check' ? this.opts.check : gate.id === 'test' ? this.opts.test : undefined;
