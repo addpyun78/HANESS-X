@@ -26,6 +26,7 @@ import {
   type RouterNode,
   type SubagentNode,
 } from '@harness-x/protocol';
+import { extractNodeOutput } from '../contract.js';
 import { evaluateCondition } from './condition.js';
 import type {
   GateFailure,
@@ -370,6 +371,7 @@ export class PipelineRunner {
                 ctx.ledgerDir,
                 '--session',
                 this.sessionId,
+                ...(node.outputSchema ? ['--node-output'] : []),
               ],
             },
           ]
@@ -428,7 +430,8 @@ export class PipelineRunner {
 
   private extract(node: RoleNode, events: readonly HarnessEvent[]): unknown {
     if (this.opts.extractOutput) return this.opts.extractOutput(node, events);
-    return { text: lastAssistantText(events) };
+    // 42.1 node.output 도구 → 마지막 JSON 블록 → (없으면) 마지막 텍스트
+    return extractNodeOutput(events, node.outputSchema).value ?? { text: lastAssistantText(events) };
   }
 
   private async runRole(node: RoleNode, input: unknown): Promise<unknown> {

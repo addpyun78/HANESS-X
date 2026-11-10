@@ -8,6 +8,7 @@ import { serveStdio, startMcpHttpServer } from './transports.js';
 /**
  * harness-mcp — 하네스 MCP 서버 단독 실행
  *   harness-mcp --dir <세션 폴더> [--session <id>] [--glossary <file>]            (stdio)
+ *   (--node-output: 파이프라인 노드 출력 도구 node.output 추가, T-042)
  *   harness-mcp --dir <세션 폴더> --http [--port <n>] [--token <t>]               (streamable HTTP)
  * stdout은 stdio 전송이 쓰므로 진단은 stderr로만 낸다.
  */
@@ -21,6 +22,7 @@ async function main(): Promise<void> {
       port: { type: 'string' },
       token: { type: 'string' },
       'tool-names': { type: 'string' },
+      'node-output': { type: 'boolean' },
     },
   });
   const dir = resolve(values.dir ?? process.cwd());
@@ -30,7 +32,7 @@ async function main(): Promise<void> {
     ...(values.glossary ? { glossaryFile: resolve(values.glossary) } : {}),
   });
   const toolNames = values['tool-names'] === 'underscore' ? 'underscore' : 'dotted';
-  const make = () => createHarnessMcpServer(deps, { toolNames });
+  const make = () => createHarnessMcpServer(deps, { toolNames, nodeOutput: values['node-output'] === true });
   if (values.http) {
     const srv = await startMcpHttpServer({
       createServer: make,

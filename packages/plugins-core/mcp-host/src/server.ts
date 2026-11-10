@@ -36,7 +36,15 @@ export interface HarnessMcpOptions {
    * (도구 이름에 점을 못 쓰는 클라이언트용)
    */
   toolNames?: 'dotted' | 'underscore';
+  /**
+   * T-042: 파이프라인 노드 출력 도구 node.output(json)도 등록한다.
+   * 하네스 실행기는 이 도구의 tool_call 입력을 노드 출력으로 읽는다(받은 값은 그대로 돌려준다).
+   */
+  nodeOutput?: boolean;
 }
+
+/** 파이프라인 노드 출력 도구 이름 (nodeOutput 옵션) */
+export const NODE_OUTPUT_TOOL = 'node.output';
 
 export function toolName(base: HarnessToolName, style: HarnessMcpOptions['toolNames'] = 'dotted'): string {
   return style === 'underscore' ? base.replace(/\./g, '_') : base;
@@ -162,6 +170,18 @@ export function createHarnessMcpServer(deps: HarnessToolDeps, opts: HarnessMcpOp
     },
     (args) => run(() => resolveArtifact(deps, args.artifactId)),
   );
+
+  if (opts.nodeOutput)
+    server.registerTool(
+      opts.toolNames === 'underscore' ? NODE_OUTPUT_TOOL.replace(/\./g, '_') : NODE_OUTPUT_TOOL,
+      {
+        title: '노드 출력 제출',
+        description:
+          '이 파이프라인 노드의 결과를 outputSchema에 맞는 JSON 객체로 제출한다. 다음 노드에는 이 값이 그대로 전달된다.',
+        inputSchema: { json: z.unknown().describe('outputSchema를 따르는 JSON 객체 (또는 그 JSON 문자열)') },
+      },
+      (args) => run(() => ({ accepted: true, json: args.json })),
+    );
 
   return server;
 }
