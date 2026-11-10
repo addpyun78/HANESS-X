@@ -1,0 +1,28 @@
+.hx-resume {
+  padding: var(--hx-space-3) var(--hx-space-4);
+  border: 1px solid var(--hx-info);
+  border-radius: var(--hx-radius);
+  background: var(--hx-info-soft);
+}
+
+.hx-resume__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-resume__count {
+  margin-left: auto;
+  font-size: var(--hx-font-12);
+  font-weight: 600;
+}
+
+.hx-resume__body,
+.hx-resume__next,
+.hx-resume__error {
+  margin: var(--hx-space-1) 0 0;
+}
+
+.hx-resume__button {
+  margin-top: var(--hx-space-2);
+}

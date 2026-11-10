@@ -71,6 +71,11 @@ export const ErrorEventSchema = EventBaseSchema.extend({
 export const TurnEndEventSchema = EventBaseSchema.extend({
   type: z.literal('turn_end'),
   reason: z.enum(['completed', 'interrupted', 'error', 'max_turns', 'blocked']),
+  /** reason 'blocked'(종료 차단, T-028)일 때: 남은(done이 아닌) 항목 수 */
+  remaining: z.number().int().nonnegative().optional(),
+  /** reason 'blocked'일 때: 다음에 할 항목 */
+  nextItemId: z.string().min(1).optional(),
+  nextItemTitle: z.string().optional(),
 });
 
 export const ApprovalRequestEventSchema = EventBaseSchema.extend({

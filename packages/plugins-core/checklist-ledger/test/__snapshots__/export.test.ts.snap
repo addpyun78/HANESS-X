@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`29.5 CHECKLIST.md 렌더러 > 상태 아이콘·계층·판정 사유·실패/차단 사유 (스냅샷) 1`] = `
+"# 하네스 모바일
+
+개정 v1 · 버전 10 · 진행 1/6
+현재 항목: 2
+
+범례: ⬜ todo · 🔄 doing · 🔍 verifying · ✅ done · ❌ failed · ⛔ blocked
+
+- ⬜ **1** 모바일 앱 — \`harness/mobile\`
+  - ✅ **1.1** 로그인 화면 — \`harness/mobile\` · 시도 1
+    - 판정: L4 equal (0.93) — ai/mobile ≡ harness/mobile (Jev)
+  - ⬜ **1.2** 비밀번호 검증 — \`art.item-1-2\` · 의존 1.1
+- ❌ **2** API 서버 — \`art.item-2\` · 시도 1
+  - 사유: api.test.ts 2 failed
+- ⛔ **3** 배포 스크립트 — \`art.item-3\`
+  - 사유: 정체: evidence 무변화 3턴
+- 🔍 **4** 문서 — \`art.item-4\` · 시도 1
+"
+`;

@@ -9,3 +9,7 @@ export * from './naming.js';
 export * from './manifest.js';
 export * from './learn.js';
 export * from './escalate.js';
+export * from './stop-guard.js';
+export * from './slice.js';
+export * from './stall.js';
+export * from './export.js';
