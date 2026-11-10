@@ -30,6 +30,8 @@ export interface ApiServerOptions {
   logger?: boolean;
   /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
+  /** listen 전에 추가 라우트 등록 (예: engine-scanner의 POST /api/engines/rescan). 토큰 검사가 적용된다 */
+  routes?: (app: FastifyInstance) => void | Promise<void>;
 }
 
 export interface ApiServer {
@@ -138,6 +140,8 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     socket.on('error', off);
     socket.send(JSON.stringify({ type: 'hello', ts: new Date().toISOString() }));
   });
+
+  if (opts.routes) await opts.routes(app);
 
   await app.listen({ host, port: boundPort });
   const addr = app.server.address();

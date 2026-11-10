@@ -1,0 +1,10 @@
+{
+  "id": "permission-gate",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Permission Gate",
+  "description": "계획 게이트(체크리스트 확정 전 쓰기 차단)와 쓰는 순간의 정식 경로 교정 (tool.before)",
+  "main": "dist/index.js",
+  "provides": { "hook": ["tool.before"] },
+  "permissions": { "fs": ["workspace:read", "workspace:write"], "net": [], "shell": false }
+}
