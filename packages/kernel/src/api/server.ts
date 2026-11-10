@@ -101,10 +101,27 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       origin: p.origin,
       slots: providedSlots(p.manifest),
       provides: p.manifest.provides,
+      ...(p.trust ? { trust: p.trust } : {}),
+      ...(p.isolation ? { isolation: p.isolation } : {}),
       ...(p.error ? { error: p.error } : {}),
     })),
     rejected: opts.loader.rejections.map((r) => ({ id: r.id, dir: r.dir, reason: r.reason })),
   }));
+
+  // 62.3 신뢰 등급 승격 (UI의 "신뢰" 버튼) → 메인 스레드로 다시 올림
+  app.post('/api/plugins/:id/promote', async (req, reply) => {
+    const { id } = req.params as { id: string };
+    if (!opts.loader.plugins.has(id)) return reply.code(404).send({ error: 'not_found' });
+    try {
+      const trust = await opts.loader.promote(id);
+      const p = opts.loader.plugins.get(id)!;
+      return { id, trust, isolation: p.isolation, state: p.state };
+    } catch (err) {
+      return reply
+        .code(409)
+        .send({ error: 'promote_failed', message: err instanceof Error ? err.message : String(err) });
+    }
+  });
 
   // 43.5 에이전트 목록 (agent-builder가 제공)
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
