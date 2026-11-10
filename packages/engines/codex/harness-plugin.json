@@ -1,0 +1,16 @@
+{
+  "id": "engine-codex",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Codex",
+  "description": "Codex CLI(codex app-server JSON-RPC / codex exec --json) 엔진 어댑터",
+  "main": "dist/index.js",
+  "provides": {
+    "engine": ["codex"]
+  },
+  "permissions": {
+    "fs": ["workspace:read", "workspace:write"],
+    "net": [],
+    "shell": true
+  }
+}
