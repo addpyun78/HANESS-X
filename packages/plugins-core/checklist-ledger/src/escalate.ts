@@ -1,5 +1,9 @@
+import { randomUUID } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import type { ChatMessage, ModelClient } from '@harness-x/kernel';
 import {
+  ApprovalRequestEventSchema,
   buildJudgeMessages,
   deviationKindQuestion,
   extractJsonObject,
@@ -13,6 +17,9 @@ import {
   type JudgeState,
   type NoulAnswer,
 } from '@harness-x/protocol';
+import { z } from 'zod';
+import { readJson, withFileLock, writeFileAtomic } from './fs-util.js';
+import type { EventSink } from './ledger.js';
 
 /**
  * 판정 사다리 L5 — 상위 검증 (T-027)
@@ -158,4 +165,207 @@ export async function askOtherEngine(
     answers: { sameArtifact: same, deviationKind: dev },
     reason: `L5 ${engineId}: same_artifact=${same.noul}, deviation_kind=${deviation}(${dev.confidence}) → ${decision}`,
   };
+}
+
+// ── 27.2 승인 카드 (approval_request) ─────────────────────────────────
+export const APPROVAL_DECISIONS = ['equivalent', 'move', 'fail'] as const;
+export type ApprovalDecision = (typeof APPROVAL_DECISIONS)[number];
+export const ApprovalDecisionSchema = z.enum(APPROVAL_DECISIONS);
+
+/** 버튼 3개: [동치 인정] [이동 승인] [실패] */
+export const APPROVAL_BUTTONS = [
+  { id: 'equivalent', label: '동치 인정' },
+  { id: 'move', label: '이동 승인' },
+  { id: 'fail', label: '실패' },
+] as const satisfies readonly { id: ApprovalDecision; label: string }[];
+
+export const LADDER_APPROVAL_KIND = 'ladder.l5';
+
+export const LadderApprovalDetailSchema = z
+  .object({
+    itemId: z.string().min(1),
+    artifactId: z.string().min(1),
+    /** 예상 경로 */
+    expectedPath: z.string().min(1),
+    /** 실제 경로 */
+    actualPath: z.string().min(1),
+    /** 판정 근거 */
+    reason: z.string().min(1),
+    /** L5 다른 엔진의 답 (물어봤다면) */
+    engine: z
+      .object({
+        engineId: z.string().min(1).nullable(),
+        decision: z.enum(['accept', 'escalate', 'fail']),
+        reason: z.string(),
+      })
+      .strict()
+      .optional(),
+    buttons: z
+      .array(z.object({ id: ApprovalDecisionSchema, label: z.string().min(1) }).strict())
+      .length(3)
+      .refine((b) => b.map((x) => x.id).join() === APPROVAL_DECISIONS.join(), {
+        message: '버튼은 equivalent, move, fail 순서의 3개',
+      }),
+  })
+  .strict();
+export type LadderApprovalDetail = z.infer<typeof LadderApprovalDetailSchema>;
+
+export const LadderApprovalRequestEventSchema = ApprovalRequestEventSchema.extend({
+  kind: z.literal(LADDER_APPROVAL_KIND),
+  itemId: z.string().min(1),
+  detail: LadderApprovalDetailSchema,
+  options: z.tuple([z.literal('equivalent'), z.literal('move'), z.literal('fail')]),
+});
+export type LadderApprovalRequestEvent = z.infer<typeof LadderApprovalRequestEventSchema>;
+
+// ── 대기 중인 승인 (approvals.json) ────────────────────────────────────
+export interface StoredApproval {
+  approvalId: string;
+  case: EscalationCase;
+  createdAt: string;
+  status: 'pending' | 'resolved';
+  decision?: ApprovalDecision;
+  by?: string;
+  resolvedAt?: string;
+}
+
+export const APPROVALS_FILE = 'approvals.json';
+
+export class ApprovalNotFoundError extends Error {
+  readonly code = 'APPROVAL_NOT_FOUND';
+  constructor(readonly approvalId: string) {
+    super(`없는 승인 요청: ${approvalId}`);
+    this.name = 'ApprovalNotFoundError';
+  }
+}
+
+export class ApprovalResolvedError extends Error {
+  readonly code = 'APPROVAL_RESOLVED';
+  constructor(readonly approvalId: string) {
+    super(`이미 처리된 승인 요청: ${approvalId}`);
+    this.name = 'ApprovalResolvedError';
+  }
+}
+
+/** 승인 요청 저장소 — 재시작 후에도 POST /api/approvals/:id가 처리되도록 파일에 둔다 */
+export class ApprovalStore {
+  readonly file: string;
+  constructor(dir: string, fileName = APPROVALS_FILE) {
+    this.file = join(dir, fileName);
+  }
+
+  all(): Record<string, StoredApproval> {
+    if (!existsSync(this.file)) return {};
+    return (readJson(this.file) as { approvals: Record<string, StoredApproval> }).approvals;
+  }
+
+  get(id: string): StoredApproval {
+    const a = this.all()[id];
+    if (!a) throw new ApprovalNotFoundError(id);
+    return a;
+  }
+
+  pending(): StoredApproval[] {
+    return Object.values(this.all()).filter((a) => a.status === 'pending');
+  }
+
+  put(a: StoredApproval): void {
+    withFileLock(`${this.file}.lock`, () => {
+      const approvals = { ...this.all(), [a.approvalId]: a };
+      writeFileAtomic(this.file, JSON.stringify({ version: 1, approvals }, null, 2) + '\n');
+    });
+  }
+}
+
+export interface EscalatorOptions {
+  /** approvals.json을 둘 폴더 (보통 체크리스트 폴더) */
+  dir: string;
+  sessionId: string;
+  log?: EventSink;
+  /** L5 다른 엔진 (없으면 바로 사람에게) */
+  engines?: EngineClientFactory;
+  thresholds?: EscalationThresholds;
+  now?: () => Date;
+  idGen?: () => string;
+}
+
+export type EscalationOutcome =
+  | {
+      status: 'decided';
+      by: 'engine';
+      engineId: string;
+      decision: ApprovalDecision;
+      engine: OtherEngineAnswer;
+    }
+  | { status: 'pending'; approvalId: string; event: LadderApprovalRequestEvent; engine?: OtherEngineAnswer };
+
+/** 엔진 답 → 버튼 (인정: 동치면 equivalent, 허용 이동이면 move / 실패: fail) */
+export function engineDecision(a: OtherEngineAnswer): ApprovalDecision | null {
+  if (a.decision === 'fail') return 'fail';
+  if (a.decision === 'accept') return a.deviation === 'relocated-ok' ? 'move' : 'equivalent';
+  return null;
+}
+
+export class Escalator {
+  readonly approvals: ApprovalStore;
+  protected readonly opts: EscalatorOptions;
+  protected readonly now: () => Date;
+  protected readonly idGen: () => string;
+
+  constructor(opts: EscalatorOptions) {
+    this.opts = opts;
+    this.approvals = new ApprovalStore(opts.dir);
+    this.now = opts.now ?? (() => new Date());
+    this.idGen = opts.idGen ?? randomUUID;
+  }
+
+  /** L5: 다른 엔진에 묻고, 그래도 불확실하면 승인 카드를 남긴다 */
+  async escalate(c: EscalationCase, opts: { signal?: AbortSignal } = {}): Promise<EscalationOutcome> {
+    let engine: OtherEngineAnswer | undefined;
+    if (this.opts.engines) {
+      engine = await askOtherEngine(c, {
+        engines: this.opts.engines,
+        ...(this.opts.thresholds ? { thresholds: this.opts.thresholds } : {}),
+        ...(opts.signal ? { signal: opts.signal } : {}),
+      });
+      const decision = engineDecision(engine);
+      if (decision && engine.engineId)
+        return { status: 'decided', by: 'engine', engineId: engine.engineId, decision, engine };
+    }
+    const { approvalId, event } = this.requestApproval(c, engine);
+    return { status: 'pending', approvalId, event, ...(engine ? { engine } : {}) };
+  }
+
+  /** 승인 카드: approval_request(예상 경로/실제 경로/근거/버튼 3개) 이벤트 + 저장 */
+  requestApproval(
+    c: EscalationCase,
+    engine?: OtherEngineAnswer,
+  ): { approvalId: string; event: LadderApprovalRequestEvent } {
+    const approvalId = this.idGen();
+    const event = LadderApprovalRequestEventSchema.parse({
+      id: this.idGen(),
+      ts: this.now().toISOString(),
+      sessionId: this.opts.sessionId,
+      itemId: c.itemId,
+      type: 'approval_request',
+      approvalId,
+      kind: LADDER_APPROVAL_KIND,
+      title: `경로 판정 확인: ${c.expectedPath} ↔ ${c.actualPath}`,
+      detail: {
+        itemId: c.itemId,
+        artifactId: c.artifactId,
+        expectedPath: c.expectedPath,
+        actualPath: c.actualPath,
+        reason: engine ? `${c.reason} / ${engine.reason}` : c.reason,
+        ...(engine
+          ? { engine: { engineId: engine.engineId, decision: engine.decision, reason: engine.reason } }
+          : {}),
+        buttons: APPROVAL_BUTTONS.map((b) => ({ ...b })),
+      },
+      options: [...APPROVAL_DECISIONS],
+    });
+    this.approvals.put({ approvalId, case: c, createdAt: event.ts, status: 'pending' });
+    this.opts.log?.append(event as Parameters<EventSink['append']>[0]);
+    return { approvalId, event };
+  }
 }
