@@ -48,15 +48,24 @@ export async function listWslDistros(opts: WslOptions = {}): Promise<string[]> {
   return parseWslDistros(r.stdout);
 }
 
+/**
+ * 배포판 안에서 실행할 확인 스크립트.
+ * POSIX sh(dash)의 `command -v a b c`는 첫 이름만 확인하므로(실제 Ubuntu에서 claude만 출력됨) 이름마다 반복한다.
+ */
+export function wslLookupScript(targets: readonly string[]): string {
+  for (const t of targets) if (!/^[a-z0-9][a-z0-9-]*$/.test(t)) throw new Error(`잘못된 CLI 이름: ${t}`);
+  return `for c in ${targets.join(' ')}; do command -v "$c"; done; exit 0`;
+}
+
 /** 11.2 배포판 안에서 command -v 로 CLI 경로 확인 → location: wsl:<배포판> */
 export async function scanWslDistro(distro: string, opts: WslOptions = {}): Promise<EngineEntry[]> {
   const exec = opts.exec ?? defaultExec;
   const wsl = opts.wslExe ?? WSL_EXE;
   const targets = opts.targets ?? WSL_TARGETS;
-  const r = await exec(wsl, ['-d', distro, '-e', 'sh', '-lc', `command -v ${targets.join(' ')}`], {
+  const r = await exec(wsl, ['-d', distro, '-e', 'sh', '-lc', wslLookupScript(targets)], {
     timeoutMs: opts.timeoutMs ?? 15_000,
   });
-  // command -v 는 하나라도 없으면 0이 아닌 코드로 끝나므로 출력만 본다
+  // 없는 CLI가 있어도 성공으로 끝나도록 스크립트가 exit 0 하지만, 종료 코드와 무관하게 출력만 본다
   const found = new Map<string, string>();
   for (const line of outputLines(r.stdout)) {
     if (!line.startsWith('/')) continue; // 로그인 셸 배너·별칭 등 제외
