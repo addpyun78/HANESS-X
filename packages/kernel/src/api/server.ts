@@ -14,7 +14,9 @@ import {
   type FolderPicker,
 } from '../native/folder-picker.js';
 import { WorkspaceRejectedError, WorkspaceStore } from '../workspaces.js';
+import type { Dispatcher } from '../dispatch.js';
 import { registerAgentSaveRoute, type SavedAgent } from './agents-routes.js';
+import { registerSessionRoutes } from './sessions-routes.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
@@ -48,6 +50,8 @@ export interface ApiServerOptions {
   onAgentSaved?: (saved: SavedAgent) => void;
   /** listen 전에 추가 라우트 등록 (예: engine-scanner의 POST /api/engines/rescan). 토큰 검사가 적용된다 */
   routes?: (app: FastifyInstance) => void | Promise<void>;
+  /** 48.1 POST/GET /api/sessions (/ 실행 디스패치). 없으면 라우트 없음 */
+  dispatch?: Dispatcher;
   /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
   approvals?: ApprovalHandler;
   /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
@@ -260,6 +264,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     }
   });
 
+  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch);
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);

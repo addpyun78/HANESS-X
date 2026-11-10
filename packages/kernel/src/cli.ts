@@ -3,7 +3,8 @@ import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import type { AgentSummary, EngineAdapter } from '@harness-x/protocol';
+import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol';
+import type { DispatchRunResult } from './dispatch.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { Worker } from 'node:worker_threads';
@@ -38,6 +39,18 @@ interface LedgerPluginModule {
 interface AgentBuilderPluginModule {
   AgentRegistry?: new (o: { plugins?: () => Iterable<unknown>; home?: string; workspace?: string }) => {
     summaries(): AgentSummary[];
+    get(nameOrCommand: string):
+      | {
+          name: string;
+          command: string;
+          agent: { displayName: string; icon?: string; defaultEngine: string };
+          pipeline: Pipeline;
+        }
+      | undefined;
+  };
+  /** T-041 실행기 (48.1 디스패치가 쓴다) */
+  PipelineRunner?: new (o: Record<string, unknown>) => {
+    run(pipeline: Pipeline, input: unknown): Promise<DispatchRunResult>;
   };
 }
 
@@ -174,6 +187,59 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       return p.state === 'active' && Array.isArray(list) ? (list as EngineAdapter[]) : [];
     });
   const enginesCache = join(home, 'engines.json');
+
+  // 43.5/46.5 에이전트 레지스트리: 요청마다 agent-builder 플러그인 모듈로 새로 만든다(핫리로드된 모듈 사용,
+  // 사용자·프로젝트 폴더를 매번 다시 읽음 → 빌더 저장 직후 / 목록에 나타난다). 커널은 agent-builder를 import하지 않는다.
+  const builder = () => loader.plugins.get('agent-builder')?.module as AgentBuilderPluginModule | undefined;
+  const registry = () => {
+    const R = builder()?.AgentRegistry;
+    return R
+      ? new R({
+          plugins: () => loader.plugins.values(),
+          home,
+          ...(values.workspace ? { workspace: resolve(values.workspace) } : {}),
+        })
+      : undefined;
+  };
+  // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
+  const { Dispatcher } = await import('./dispatch.js');
+  const dispatch = new Dispatcher({
+    log,
+    engines: () => adapters().map((a) => a.id),
+    resolve: (name) => {
+      const a = registry()?.get(name);
+      return a
+        ? {
+            name: a.name,
+            command: a.command,
+            displayName: a.agent.displayName,
+            ...(a.agent.icon ? { icon: a.agent.icon } : {}),
+            defaultEngine: a.agent.defaultEngine,
+            pipeline: a.pipeline,
+          }
+        : undefined;
+    },
+    run: async (i) => {
+      const Runner = builder()?.PipelineRunner;
+      if (!Runner) throw new Error('agent-builder 플러그인이 활성 상태가 아닙니다');
+      const list = adapters();
+      const fallback =
+        i.agent.defaultEngine && i.agent.defaultEngine !== 'auto' ? i.agent.defaultEngine : list[0]?.id;
+      const runner = new Runner({
+        engines: (id: string) => list.find((a) => a.id === id),
+        ...((i.modifiers.engine ?? fallback) ? { defaultEngine: i.modifiers.engine ?? fallback } : {}),
+        workspace,
+        sessionId: i.sessionId,
+        log,
+        onEvent: i.onEvent,
+        signal: i.signal,
+        // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
+        ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
+        resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
+      });
+      return runner.run(i.pipeline, i.prompt);
+    },
+  });
   let server;
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
@@ -186,15 +252,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       port,
       // 43.5/46.5 GET /api/agents: 요청마다 agent-builder 레지스트리가 사용자·프로젝트 폴더를 다시 읽는다
       // → 빌더 저장(PUT /api/agents/:name) 직후 목록에 나타난다
-      agents: () => {
-        const mod = loader.plugins.get('agent-builder')?.module as AgentBuilderPluginModule | undefined;
-        if (!mod?.AgentRegistry) return [];
-        return new mod.AgentRegistry({
-          plugins: () => loader.plugins.values(),
-          home,
-          ...(values.workspace ? { workspace: resolve(values.workspace) } : {}),
-        }).summaries();
-      },
+      agents: () => registry()?.summaries() ?? [],
+      dispatch,
       agentsHome: home,
       routes: (app) => {
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
@@ -267,6 +326,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   );
 
   const stop = async () => {
+    dispatch.abortAll();
     await reloader?.stop();
     await server.close();
     log.close();

@@ -1,3 +1,4 @@
+import type { DispatchSessionLike } from '../shell/agent-sessions.js';
 import type { AgentInput, AgentListResponse, HarnessEvent, PipelineInput } from '@harness-x/protocol';
 
 /**
@@ -84,6 +85,13 @@ export interface SaveAgentResponse {
   dir: string;
   files: string[];
   created: boolean;
+}
+
+export interface CreateSessionRequest {
+  /** 이름 또는 /명령 */
+  agent: string;
+  prompt: string;
+  modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean };
 }
 
 export class ApiError extends Error {
@@ -193,6 +201,22 @@ export class HarnessApiClient {
     return this.request<SaveAgentResponse>(`/api/agents/${encodeURIComponent(name)}`, {
       method: 'PUT',
       body: JSON.stringify(body),
+    });
+  }
+
+  /** 48.1 POST /api/sessions — 에이전트 칩 + 지시문 → 새 세션 (수식어 @엔진 #strict !plan은 prompt 안에) */
+  createSession(req: CreateSessionRequest) {
+    return this.request<DispatchSessionLike>('/api/sessions', {
+      method: 'POST',
+      body: JSON.stringify(req),
+    });
+  }
+
+  /** 48.4 실행 중 세션에 서브에이전트 추가 */
+  addSubagent(sessionId: string, agent: string) {
+    return this.request<DispatchSessionLike>(`/api/sessions/${encodeURIComponent(sessionId)}/subagents`, {
+      method: 'POST',
+      body: JSON.stringify({ agent }),
     });
   }
 
