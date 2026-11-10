@@ -1,13 +1,17 @@
 #!/usr/bin/env node
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import type { EngineAdapter } from '@harness-x/protocol';
+import type { EngineScanSnapshot } from './api/engines-routes.js';
 import { DEFAULT_API_PORT, startApiServer } from './api/server.js';
+import { getLoginStatus } from './auth-status.js';
 import { EventLog } from './event-log.js';
 import { HookBus } from './hooks.js';
 import { HotReloader } from './hot-reload.js';
 import { PluginLoader, defaultPluginRoots, harnessHome } from './loader.js';
+import { SecretStore } from './secrets.js';
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
@@ -73,6 +77,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     return 1;
   }
   const workspace = resolve(values.workspace ?? process.cwd());
+  /** 로드된 엔진 플러그인이 내보낸 어댑터 (`export const engines: EngineAdapter[]`) */
+  const adapters = () =>
+    [...loader.plugins.values()].flatMap((p) => {
+      const list = (p.module as { engines?: unknown } | undefined)?.engines;
+      return p.state === 'active' && Array.isArray(list) ? (list as EngineAdapter[]) : [];
+    });
+  const enginesCache = join(home, 'engines.json');
   let server;
   try {
     server = await startApiServer({
@@ -81,6 +92,24 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       host: values.host,
       port,
       terminal: { cwd: () => workspace },
+      engines: {
+        secrets: new SecretStore(),
+        scan: () =>
+          existsSync(enginesCache)
+            ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
+            : null,
+        rescan: async () => {
+          // engine-scanner 플러그인의 활성 스캐너로 다시 스캔 (커널은 스캐너 패키지에 의존하지 않는다)
+          const mod = loader.plugins.get('engine-scanner')?.module as
+            { activeScanner?: () => { scan(): Promise<EngineScanSnapshot> } | undefined } | undefined;
+          const scanner = mod?.activeScanner?.();
+          if (!scanner) throw new Error('engine-scanner 플러그인이 활성화돼 있지 않습니다');
+          return scanner.scan();
+        },
+        loginStatus: (id) => getLoginStatus(id),
+        adapters,
+        pingCwd: workspace,
+      },
     });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);

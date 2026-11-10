@@ -9,9 +9,11 @@ import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
 import { PanelActionsContext } from './panels/panel-actions.js';
 import { usePanels } from './panels/usePanels.js';
+import { enginesApi } from './settings/Engines/api.js';
+import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
 import { SessionNav } from './shell/SessionNav.js';
-import type { RunState, SessionSummary, Workspace } from './shell/types.js';
+import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
 
 const DEMO_ENGINES: EngineOption[] = [
   { id: 'claude-code', label: 'Claude Code', available: true },
@@ -38,7 +40,9 @@ export function App() {
     return token ? new HarnessApiClient({ token }) : undefined;
   }, [demo]);
   const panels = usePanels({ events, client, loginEngines: engines });
+  const [view, setView] = useState<'chat' | NavTarget>('chat');
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
+  const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
 
   useEffect(() => {
     if (!client) return;
@@ -73,18 +77,29 @@ export function App() {
             ...(demo ? { ratio: 0.42 } : {}),
           })),
         }}
-        sidebar={<SessionNav sessions={sessions} activeSessionId={sessions[0]?.id} />}
+        sidebar={
+          <SessionNav
+            sessions={sessions}
+            activeSessionId={sessions[0]?.id}
+            onNavigate={(to) => setView(to === 'engines' ? 'engines' : 'chat')}
+            onSelectSession={() => setView('chat')}
+          />
+        }
         main={
-          <>
-            <ChatStream events={events} mode={mode} onModeChange={setMode} />
-            <Composer
-              engines={engines}
-              onSend={() => {
-                /* 턴 전송 API는 이후 티켓에서 연결 */
-              }}
-              verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
-            />
-          </>
+          view === 'engines' && engineSettings ? (
+            <EnginesSettings api={engineSettings} />
+          ) : (
+            <>
+              <ChatStream events={events} mode={mode} onModeChange={setMode} />
+              <Composer
+                engines={engines}
+                onSend={() => {
+                  /* 턴 전송 API는 이후 티켓에서 연결 */
+                }}
+                verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
+              />
+            </>
+          )
         }
       />
     </PanelActionsContext.Provider>

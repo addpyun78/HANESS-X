@@ -6,6 +6,7 @@ import websocket from '@fastify/websocket';
 import { providedSlots, type AgentSummary } from '@harness-x/protocol';
 import type { EventLog, LogRecord } from '../event-log.js';
 import { harnessHome, type PluginLoader } from '../loader.js';
+import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 
 /**
@@ -33,6 +34,8 @@ export interface ApiServerOptions {
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
   /** 37.2 WS /ws/terminal (node-pty 셸, cwd = 워크스페이스). 없으면 라우트 없음 */
   terminal?: TerminalOptions;
+  /** T-038 설정 > 엔진 API (/api/engines…). 없으면 라우트 없음 */
+  engines?: EnginesApiOptions;
 }
 
 export interface ApiServer {
@@ -130,6 +133,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
 
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
+  if (opts.engines) registerEngineRoutes(app, opts.engines);
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {
