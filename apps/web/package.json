@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:css": "stylelint \"src/**/*.css\""
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
