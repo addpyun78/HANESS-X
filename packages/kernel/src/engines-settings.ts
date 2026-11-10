@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { parse as parseYaml } from 'yaml';
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 import { z } from 'zod';
 import { harnessHome } from './loader.js';
 
@@ -67,4 +67,17 @@ export function defaultEnginesSettingsFile(): string {
 export function loadEnginesSettings(file = defaultEnginesSettingsFile()): EnginesSettings {
   if (!existsSync(file)) return EnginesSettingsSchema.parse({});
   return parseEnginesSettings(readFileSync(file, 'utf8'));
+}
+
+/** 38.3 스키마 검증 후 원자적 기록 (임시 파일 → rename). 키 원문 필드는 strict 스키마가 거부한다 */
+export function writeEnginesSettings(
+  settings: z.input<typeof EnginesSettingsSchema>,
+  file = defaultEnginesSettingsFile(),
+): EnginesSettings {
+  const parsed = EnginesSettingsSchema.parse(settings);
+  mkdirSync(dirname(file), { recursive: true });
+  const tmp = `${file}.${process.pid}.tmp`;
+  writeFileSync(tmp, stringifyYaml(parsed));
+  renameSync(tmp, file);
+  return parsed;
 }
