@@ -50,6 +50,9 @@ export interface PluginsResponse {
   rejected: { id?: string; dir: string; reason: string }[];
 }
 
+/** POST /api/native/pick-folder 응답 */
+export type PickFolderResponse = { cancelled: true } | { cancelled: false; path: string };
+
 export class ApiError extends Error {
   constructor(
     readonly status: number,
@@ -117,6 +120,14 @@ export class HarnessApiClient {
 
   plugins() {
     return this.request<PluginsResponse>('/api/plugins');
+  }
+
+  /** 34.2 서버가 네이티브 폴더 대화상자를 띄운다 (이미 떠 있으면 ApiError 409) */
+  pickFolder(initialPath?: string) {
+    return this.request<PickFolderResponse>('/api/native/pick-folder', {
+      method: 'POST',
+      body: JSON.stringify(initialPath ? { initialPath } : {}),
+    });
   }
 
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {

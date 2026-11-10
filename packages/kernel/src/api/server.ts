@@ -6,6 +6,13 @@ import websocket from '@fastify/websocket';
 import { providedSlots, type AgentSummary } from '@harness-x/protocol';
 import type { EventLog, LogRecord } from '../event-log.js';
 import { harnessHome, type PluginLoader } from '../loader.js';
+import {
+  NativeFolderPicker,
+  PickerBusyError,
+  PickerUnsupportedError,
+  singleFlight,
+  type FolderPicker,
+} from '../native/folder-picker.js';
 
 /**
  * 로컬 API 서버
@@ -30,6 +37,8 @@ export interface ApiServerOptions {
   logger?: boolean;
   /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
+  /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
+  folderPicker?: Pick<FolderPicker, 'pick'>;
 }
 
 export interface ApiServer {
@@ -125,6 +134,26 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   // 43.5 에이전트 목록 (agent-builder가 제공)
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
+
+  // 34.2 네이티브 폴더 대화상자 — 동시 1개(34.8: 두 번째는 409), 취소는 {cancelled:true}(34.6)
+  let picker: FolderPicker | undefined;
+  app.post('/api/native/pick-folder', async (req, reply) => {
+    const body = (req.body ?? {}) as { initialPath?: unknown };
+    const initialPath =
+      typeof body.initialPath === 'string' && body.initialPath.trim() ? body.initialPath : undefined;
+    picker ??= singleFlight(opts.folderPicker ?? new NativeFolderPicker());
+    if (picker.busy) return reply.code(409).send({ error: 'picker_busy' });
+    try {
+      const r = await picker.pick(initialPath ? { initialPath } : {});
+      return r.cancelled ? { cancelled: true } : { cancelled: false, path: r.path };
+    } catch (err) {
+      if (err instanceof PickerBusyError) return reply.code(409).send({ error: 'picker_busy' });
+      const message = err instanceof Error ? err.message : String(err);
+      if (err instanceof PickerUnsupportedError)
+        return reply.code(501).send({ error: 'unsupported_platform', message });
+      return reply.code(500).send({ error: 'picker_failed', message });
+    }
+  });
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {

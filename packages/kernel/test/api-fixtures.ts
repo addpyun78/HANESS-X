@@ -1,8 +1,10 @@
 import { join } from 'node:path';
-import { startApiServer, type ApiServer } from '../src/api/server.js';
+import { startApiServer, type ApiServer, type ApiServerOptions } from '../src/api/server.js';
 import { setup } from './plugin-fixtures.js';
 
-export async function bootApi(opts: { host?: string } = {}) {
+export async function bootApi(
+  opts: { host?: string; server?: Partial<Omit<ApiServerOptions, 'loader' | 'log'>> } = {},
+) {
   const env = setup();
   env.copyHello();
   const loader = env.mk();
@@ -13,12 +15,19 @@ export async function bootApi(opts: { host?: string } = {}) {
     port: 0,
     host: opts.host,
     tokenFile: join(env.home, 'run', 'token'),
+    ...opts.server,
   });
   return {
     env,
     loader,
     server,
     get: (path: string, headers: Record<string, string> = {}) => fetch(server.url + path, { headers }),
+    post: (path: string, body: unknown, headers: Record<string, string> = {}) =>
+      fetch(server.url + path, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', ...headers },
+        body: JSON.stringify(body),
+      }),
     auth: { authorization: `Bearer ${server.token}` },
     async close() {
       await server.close();
