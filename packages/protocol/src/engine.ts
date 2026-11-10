@@ -1,4 +1,7 @@
 import type { HarnessEvent } from './events.js';
+import type { AuthMode } from './pipeline.js';
+
+export type { AuthMode };
 
 /**
  * 엔진 어댑터 공통 인터페이스
@@ -6,7 +9,6 @@ import type { HarnessEvent } from './events.js';
  * 어댑터는 엔진 고유 출력을 HarnessEvent로 정규화해 내보낸다.
  */
 
-export type AuthMode = 'subscription' | 'apiKey';
 export type PermissionMode = 'read-only' | 'workspace-write' | 'full-access';
 
 export interface EngineCapabilities {
