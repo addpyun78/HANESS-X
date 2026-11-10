@@ -8,6 +8,7 @@ import { EventLog } from './event-log.js';
 import { HookBus } from './hooks.js';
 import { HotReloader } from './hot-reload.js';
 import { PluginLoader, defaultPluginRoots, harnessHome } from './loader.js';
+import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { installTokenFileGuard } from './secrets.js';
 
 /**
@@ -89,6 +90,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   });
   const active = await loader.loadAll();
 
+  // 61.1 크래시 복구: 마지막 턴 이벤트가 turn_end가 아닌 세션 → GET /api/recovery "이어서 하기" 카드
+  const unfinished = findUnfinishedSessions(log);
+  if (unfinished.length)
+    process.stderr.write(
+      `미종료 세션 ${unfinished.length}개: ${unfinished.map((u) => u.sessionId).join(', ')} (GET /api/recovery)\n`,
+    );
+
   const port = values.port !== undefined ? Number(values.port) : DEFAULT_API_PORT;
   if (!Number.isInteger(port) || port < 0 || port > 65535) {
     process.stderr.write(`잘못된 포트: ${values.port}\n`);
@@ -103,8 +111,16 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       port,
       routes: (app) => {
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
-        if (values.workspace && ledger?.registerChecklistStatusRoute && ledger.workspaceLedgerResolver)
-          ledger.registerChecklistStatusRoute(app, ledger.workspaceLedgerResolver(resolve(values.workspace)));
+        const ledgerFor =
+          values.workspace && ledger?.workspaceLedgerResolver
+            ? ledger.workspaceLedgerResolver(resolve(values.workspace))
+            : undefined;
+        if (ledgerFor && ledger?.registerChecklistStatusRoute)
+          ledger.registerChecklistStatusRoute(app, ledgerFor);
+        registerRecoveryRoutes(app, {
+          log,
+          ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
+        });
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
         const register = mod()?.registerRescanRoute;

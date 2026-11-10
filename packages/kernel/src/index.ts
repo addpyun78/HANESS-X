@@ -10,3 +10,4 @@ export * from './secrets.js';
 export * from './engines-settings.js';
 export * from './auth-status.js';
 export * from './proc.js';
+export * from './recover.js';
