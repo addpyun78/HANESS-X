@@ -191,6 +191,14 @@ export class HarnessApiClient {
     });
   }
 
+  /** T-051 Forge 질문·spec·설치 카드 답 → POST /api/forge/answers/:id (서버가 forge_answer 이벤트를 남긴다) */
+  forgeAnswer(approvalId: string, answer: { value: string | string[]; text?: string }) {
+    return this.request<{ approvalId: string }>(`/api/forge/answers/${encodeURIComponent(approvalId)}`, {
+      method: 'POST',
+      body: JSON.stringify(answer),
+    });
+  }
+
   /** GET /api/agents — 등록된 에이전트 요약 (빌더·/ 팔레트) */
   agents() {
     return this.request<AgentListResponse>('/api/agents');

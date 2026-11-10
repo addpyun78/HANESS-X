@@ -24,6 +24,7 @@ import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { agentSessionsFromEvents, fromDispatchSession } from './shell/agent-sessions.js';
+import { ForgeAnswerContext, type ForgeActions } from './forge/ForgeCards.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
 import { useQuota } from './shell/useQuota.js';
@@ -191,81 +192,93 @@ export function App() {
     }
   };
 
+  // Forge 카드 버튼 → 서버로 답 전송 (서버 연결 전·데모에서는 무시)
+  const forgeActions = useMemo<ForgeActions>(
+    () => ({
+      onAnswer: (approvalId, answer) => {
+        void client?.forgeAnswer(approvalId, answer).catch(() => {});
+      },
+    }),
+    [client],
+  );
+
   return (
-    <PanelActionsContext.Provider value={panels.actions}>
-      <AppShell
-        panelContent={panels.content}
-        panelActive={panels.active}
-        onPanelActiveChange={panels.setActive}
-        topBar={{
-          workspace,
-          runState,
-          quotas:
-            quotas ??
-            available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
-        }}
-        sidebar={
-          <SessionNav
-            sessions={sessions}
-            activeSessionId={activeId ?? sessions[0]?.id}
-            onNavigate={(to) => {
-              if (to === 'agent-builder') navigate('/builder/new');
-              else setView(to === 'engines' ? 'engines' : 'chat');
-            }}
-            onSelectSession={(id) => {
-              setActiveId(id);
-              setView('chat');
-            }}
-          />
-        }
-        main={
-          view === 'engines' && engineSettings ? (
-            <EnginesSettings api={engineSettings} />
-          ) : (
-            <>
-              <ChatStream events={events} mode={mode} onModeChange={setMode} />
-              {wsError && (
-                <div className="hx-ws-error" role="alert">
-                  {wsError}
-                </div>
-              )}
-              {sendError && (
-                <div className="hx-ws-error" role="alert">
-                  {sendError}
-                </div>
-              )}
-              {confirm && (
-                <SubagentConfirm
-                  agent={confirm.payload.agent!}
-                  running={confirm.running}
-                  onAddSubagent={() => {
-                    setConfirm(undefined);
-                    void addSubagent(confirm.running, confirm.payload.agent!);
+    <ForgeAnswerContext.Provider value={forgeActions}>
+      <PanelActionsContext.Provider value={panels.actions}>
+        <AppShell
+          panelContent={panels.content}
+          panelActive={panels.active}
+          onPanelActiveChange={panels.setActive}
+          topBar={{
+            workspace,
+            runState,
+            quotas:
+              quotas ??
+              available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
+          }}
+          sidebar={
+            <SessionNav
+              sessions={sessions}
+              activeSessionId={activeId ?? sessions[0]?.id}
+              onNavigate={(to) => {
+                if (to === 'agent-builder') navigate('/builder/new');
+                else setView(to === 'engines' ? 'engines' : 'chat');
+              }}
+              onSelectSession={(id) => {
+                setActiveId(id);
+                setView('chat');
+              }}
+            />
+          }
+          main={
+            view === 'engines' && engineSettings ? (
+              <EnginesSettings api={engineSettings} />
+            ) : (
+              <>
+                <ChatStream events={events} mode={mode} onModeChange={setMode} />
+                {wsError && (
+                  <div className="hx-ws-error" role="alert">
+                    {wsError}
+                  </div>
+                )}
+                {sendError && (
+                  <div className="hx-ws-error" role="alert">
+                    {sendError}
+                  </div>
+                )}
+                {confirm && (
+                  <SubagentConfirm
+                    agent={confirm.payload.agent!}
+                    running={confirm.running}
+                    onAddSubagent={() => {
+                      setConfirm(undefined);
+                      void addSubagent(confirm.running, confirm.payload.agent!);
+                    }}
+                    onNewSession={() => {
+                      setConfirm(undefined);
+                      void startSession(confirm.payload);
+                    }}
+                    onCancel={() => setConfirm(undefined)}
+                  />
+                )}
+                <Composer
+                  engines={engines}
+                  plusMenu={{
+                    mobile,
+                    recent,
+                    onOpenFolder: () => void openFolder(),
+                    onPickRecent: (p) => void openWorkspace(p.path),
+                    onTogglePin: (p) => void togglePin(p),
                   }}
-                  onNewSession={() => {
-                    setConfirm(undefined);
-                    void startSession(confirm.payload);
-                  }}
-                  onCancel={() => setConfirm(undefined)}
+                  agents={agents}
+                  onSend={onSend}
+                  verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
                 />
-              )}
-              <Composer
-                engines={engines}
-                plusMenu={{
-                  mobile,
-                  recent,
-                  onOpenFolder: () => void openFolder(),
-                  onPickRecent: (p) => void openWorkspace(p.path),
-                  onTogglePin: (p) => void togglePin(p),
-                }}
-                agents={agents}
-                onSend={onSend}
-                verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
-              />
-            </>
-          )
-        }
-      />
-    </PanelActionsContext.Provider>
+              </>
+            )
+          }
+        />
+      </PanelActionsContext.Provider>
+    </ForgeAnswerContext.Provider>
   );
 }
