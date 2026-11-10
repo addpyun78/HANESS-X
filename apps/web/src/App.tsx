@@ -5,6 +5,7 @@ import { ChatStream } from './chat/ChatStream.js';
 import type { ViewMode } from './chat/blocks.js';
 import { Composer } from './composer/Composer.js';
 import { enginesFromPlugins } from './composer/engines.js';
+import type { RecentProject } from './composer/PlusMenu.js';
 import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
 import { AppShell } from './shell/AppShell.js';
@@ -30,13 +31,16 @@ export function App() {
   const [conn, setConn] = useState<ConnectionStatus>('closed');
   const [mode, setMode] = useState<ViewMode>('normal');
   const sessions: SessionSummary[] = demo ? DEMO_SESSIONS : [];
-  const workspace: Workspace | undefined = demo ? DEMO_WORKSPACE : undefined;
+  const [workspace, setWorkspace] = useState<Workspace | undefined>(demo ? DEMO_WORKSPACE : undefined);
+  const [recent] = useState<RecentProject[]>(demo ? [DEMO_WORKSPACE] : []);
+  const [client, setClient] = useState<HarnessApiClient>();
 
   useEffect(() => {
     if (demo) return;
     const token = resolveToken();
     if (!token) return;
     const client = new HarnessApiClient({ token });
+    setClient(client);
     client
       .plugins()
       .then((r) => setEngines(enginesFromPlugins(r)))
@@ -53,6 +57,18 @@ export function App() {
         ? 'idle'
         : 'running';
 
+  // 34.1/34.6 + → "프로젝트 폴더 열기…" → 서버가 네이티브 대화상자. 취소면 아무 변화 없음
+  const openFolder = async () => {
+    if (!client) return;
+    try {
+      const r = await client.pickFolder(workspace?.path);
+      if (r.cancelled) return;
+      setWorkspace({ name: r.path.split(/[\\/]/).filter(Boolean).at(-1) ?? r.path, path: r.path });
+    } catch {
+      /* 409(이미 열림) 등은 무시 */
+    }
+  };
+
   return (
     <AppShell
       topBar={{
@@ -68,6 +84,11 @@ export function App() {
           <ChatStream events={events} mode={mode} onModeChange={setMode} />
           <Composer
             engines={engines}
+            plusMenu={{
+              recent,
+              onOpenFolder: () => void openFolder(),
+              onPickRecent: (p) => setWorkspace({ name: p.name, path: p.path, branch: p.branch }),
+            }}
             onSend={() => {
               /* 턴 전송 API는 이후 티켓에서 연결 */
             }}
