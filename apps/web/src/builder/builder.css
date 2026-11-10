@@ -1,0 +1,354 @@
+/* 에이전트 만들기(컨셉 C) — 색은 토큰 변수만.
+   파란 돌기 = 스킬 블록(--hx-info), 주황 돌기 = 엔진 블록(--hx-warning) */
+
+.hx-builder {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hx-builder__loading {
+  padding: var(--hx-space-5);
+  color: var(--hx-text-muted);
+}
+
+.hx-builder__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-3);
+  padding: var(--hx-space-2) var(--hx-space-4);
+  border-bottom: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-builder__title {
+  margin: 0;
+  font-size: var(--hx-font-16);
+}
+
+.hx-builder__origin {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+}
+
+.hx-builder__back {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.hx-builder__cols {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 300px;
+  min-height: 0;
+}
+
+/* ── 시작 선택 ───────────────────────────────── */
+.hx-start {
+  max-width: 720px;
+  margin: var(--hx-space-6) auto;
+  padding: 0 var(--hx-space-4);
+}
+
+.hx-start__title {
+  font-size: var(--hx-font-20);
+}
+
+.hx-start__options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--hx-space-3);
+}
+
+.hx-start__option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  padding: var(--hx-space-4);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.hx-start__option[aria-pressed='true'] {
+  border-color: var(--hx-accent);
+  background: var(--hx-accent-soft);
+}
+
+.hx-start__option span,
+.hx-start__desc {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+}
+
+.hx-start__desc {
+  margin-left: var(--hx-space-2);
+}
+
+.hx-start__list {
+  display: grid;
+  gap: var(--hx-space-2);
+  margin: var(--hx-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-start__list button {
+  width: 100%;
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  text-align: left;
+  cursor: pointer;
+}
+
+.hx-start__list button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.hx-start__empty {
+  color: var(--hx-text-faint);
+}
+
+/* ── 블록 서랍 ───────────────────────────────── */
+.hx-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  min-height: 0;
+  padding: var(--hx-space-2);
+  border-right: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-drawer__tabs {
+  display: flex;
+  gap: var(--hx-space-1);
+}
+
+.hx-drawer__tab {
+  flex: 1;
+  padding: var(--hx-space-1) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--hx-font-13);
+}
+
+.hx-drawer__tab[aria-selected='true'] {
+  border-bottom-color: var(--hx-accent);
+  color: var(--hx-accent);
+}
+
+.hx-drawer__search {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+  font: inherit;
+}
+
+.hx-drawer__list {
+  display: grid;
+  gap: var(--hx-space-2);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.hx-drawer__empty {
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-13);
+}
+
+.hx-block {
+  position: relative;
+  display: grid;
+  padding: var(--hx-space-2) var(--hx-space-3) var(--hx-space-2) var(--hx-space-5);
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  cursor: grab;
+}
+
+.hx-block__stud {
+  position: absolute;
+  top: var(--hx-space-2);
+  left: var(--hx-space-2);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--hx-text-faint);
+}
+
+.hx-block[data-kind='skill'] .hx-block__stud {
+  background: var(--hx-info);
+}
+
+.hx-block[data-kind='engine'] .hx-block__stud {
+  background: var(--hx-warning);
+}
+
+.hx-block[data-kind='plugin'] {
+  border-style: dashed;
+}
+
+.hx-block[data-kind='plugin'] .hx-block__stud {
+  background: var(--hx-accent);
+}
+
+.hx-block__desc {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+/* ── 캔버스 ───────────────────────────────── */
+.hx-canvas {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  background: var(--hx-bg);
+}
+
+.hx-canvas__hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  color: var(--hx-text-faint);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hx-node {
+  width: 192px;
+  min-height: 96px;
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font-size: var(--hx-font-13);
+}
+
+.hx-node[data-selected] {
+  border-color: var(--hx-accent);
+  box-shadow: 0 0 0 2px var(--hx-accent-soft);
+}
+
+.hx-node__head {
+  display: flex;
+  gap: var(--hx-space-2);
+  align-items: baseline;
+  margin-bottom: var(--hx-space-1);
+}
+
+.hx-node__type {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-node__label {
+  font-weight: 600;
+}
+
+.hx-engine-chip {
+  display: inline-block;
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-warning);
+  border-radius: 999px;
+  background: var(--hx-warning-soft);
+  font-size: var(--hx-font-12);
+}
+
+.hx-engine-chip[data-engine='claude-code'] {
+  border-color: var(--hx-warning);
+  background: var(--hx-warning-soft);
+}
+
+.hx-engine-chip[data-engine='codex'] {
+  border-color: var(--hx-success);
+  background: var(--hx-success-soft);
+}
+
+.hx-engine-chip[data-engine='antigravity'] {
+  border-color: var(--hx-running);
+  background: var(--hx-running-soft);
+}
+
+.hx-engine-chip[data-engine='auto'] {
+  border-color: var(--hx-border-strong);
+  background: transparent;
+}
+
+.hx-skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+  margin: var(--hx-space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-info);
+  border-radius: 999px;
+  background: var(--hx-info-soft);
+  font-size: var(--hx-font-12);
+}
+
+.hx-port {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--hx-border-strong);
+  background: var(--hx-bg);
+}
+
+/* ── 인스펙터 ───────────────────────────────── */
+.hx-inspector {
+  min-height: 0;
+  padding: var(--hx-space-3);
+  overflow: auto;
+  border-left: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+}
+
+.hx-inspector__title {
+  margin: 0 0 var(--hx-space-3);
+  font-size: var(--hx-font-14);
+}
+
+.hx-inspector__fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--hx-space-1) var(--hx-space-3);
+  margin: 0;
+}
+
+.hx-inspector__fields dt {
+  color: var(--hx-text-muted);
+}
+
+.hx-inspector__fields dd {
+  margin: 0;
+}
+
+.hx-inspector__empty,
+.hx-inspector__count {
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-13);
+}

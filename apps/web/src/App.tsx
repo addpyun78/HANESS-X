@@ -7,6 +7,7 @@ import { Composer } from './composer/Composer.js';
 import { enginesFromPlugins } from './composer/engines.js';
 import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
+import { navigate } from './router.js';
 import { AppShell } from './shell/AppShell.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { RunState, SessionSummary, Workspace } from './shell/types.js';
@@ -62,7 +63,13 @@ export function App() {
           .filter((e) => e.available)
           .map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
       }}
-      sidebar={<SessionNav sessions={sessions} activeSessionId={sessions[0]?.id} />}
+      sidebar={
+        <SessionNav
+          sessions={sessions}
+          activeSessionId={sessions[0]?.id}
+          onNavigate={(to) => to === 'agent-builder' && navigate('/builder/new')}
+        />
+      }
       main={
         <>
           <ChatStream events={events} mode={mode} onModeChange={setMode} />
