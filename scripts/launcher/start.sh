@@ -28,8 +28,8 @@ if api_up; then
   say "하네스 서버 실행 중 ($API)"
 else
   say "하네스 서버 시작 중... (WSL에서 C: 드라이브 위라 10~20초 걸릴 수 있음)"
-  nohup node --no-warnings packages/kernel/dist/cli.js serve --workspace "$ROOT" >"$RUN/server.out" 2>"$RUN/server.log" &
-  echo $! >"$RUN/server.pid"
+  # setsid: 바로가기 창(wsl.exe)이 닫혀도 프로세스가 같이 죽지 않게 새 세션으로 분리
+  setsid -f bash -c 'echo $$ >"$0/server.pid"; exec node --no-warnings packages/kernel/dist/cli.js serve --workspace "$1" >"$0/server.out" 2>"$0/server.log" </dev/null' "$RUN" "$ROOT"
   sleep 2
   wait_for "서버" api_up || exit 1
   say "하네스 서버 준비 ($API)"
@@ -46,12 +46,12 @@ if web_up; then
   say "웹 화면 실행 중 ($WEB)"
 else
   say "웹 화면 시작 중..."
-  nohup pnpm --filter web exec vite --host 127.0.0.1 --port 5173 --strictPort >"$RUN/web.log" 2>&1 &
-  echo $! >"$RUN/web.pid"
+  setsid -f bash -c 'echo $$ >"$0/web.pid"; cd "$1/apps/web" && exec ./node_modules/.bin/vite --host 127.0.0.1 --port 5173 --strictPort >"$0/web.log" 2>&1 </dev/null' "$RUN" "$ROOT"
   wait_for "웹 화면" web_up || exit 1
 fi
 
 # 4) Windows 브라우저로 열기 (토큰은 주소로 전달 → 화면이 세션 저장소로 옮기고 주소창에서 지움)
+[ -n "${HX_NO_BROWSER:-}" ] && { say "준비됨: $WEB/?token=… (HX_NO_BROWSER)"; exit 0; }
 say "브라우저를 엽니다"
 cmd.exe /c start "" "$WEB/?token=$TOKEN" >/dev/null 2>&1 || explorer.exe "$WEB/?token=$TOKEN"
 exit 0
