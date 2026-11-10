@@ -1,0 +1,6 @@
+{
+  "name": "safe-shell",
+  "version": "1.2.0",
+  "description": "위험한 셸 명령을 막고 코드 리뷰 명령을 제공하는 Claude Code 플러그인",
+  "author": { "name": "example" }
+}

@@ -16,6 +16,8 @@ export * from './check.js';
 export * from './sandbox.js';
 export * from './install.js';
 export * from './forge.js';
+export * from './extract.js';
+export * from './import/index.js';
 
 /** 이 플러그인 폴더 (src/와 dist/ 모두 한 단계 아래) */
 export const FORGE_PLUGIN_DIR = fileURLToPath(new URL('..', import.meta.url));
