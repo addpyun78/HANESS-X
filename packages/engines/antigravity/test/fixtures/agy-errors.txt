@@ -1,0 +1,6 @@
+AGY_ERROR: {"code":"UNAUTHENTICATED","message":"Not signed in. Run `agy` in an interactive terminal to sign in."}
+AGY_ERROR: {"code":"RESOURCE_EXHAUSTED","message":"Quota exceeded for model gemini-3-pro. Resets in 3h."}
+AGY_ERROR: {"code":"UNAVAILABLE","message":"The model is overloaded. Please try again later."}
+AGY_ERROR: {"code":"INVALID_ARGUMENT","message":"unknown model: gemini-0"}
+AGY_ERROR: {"code":"DEADLINE_EXCEEDED","message":"request timed out"}
+AGY_ERROR: {"code":"INTERNAL","message":"internal error"}
