@@ -20,6 +20,13 @@ export interface EngineCapabilities {
   interrupt: boolean;
 }
 
+/** 체크리스트 Stop 처리 경로: 엔진 네이티브 Stop 훅, 또는 하네스가 turn_end 후 재주입 */
+export type StopStrategy = 'native-hook' | 'harness-reinject';
+
+export function selectStopStrategy(caps: Pick<EngineCapabilities, 'nativeStopHook'>): StopStrategy {
+  return caps.nativeStopHook ? 'native-hook' : 'harness-reinject';
+}
+
 export interface McpServerRef {
   name: string;
   /** stdio 실행 */
