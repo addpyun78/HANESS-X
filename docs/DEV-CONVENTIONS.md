@@ -14,6 +14,7 @@ CLAUDE.md 규칙이 우선한다. 이 문서는 그 규칙을 이 저장소에�
 3. 항목마다 검증 명령을 실제로 실행하고 통과하면:
    `scripts/dev/tick.sh T-xxx N.M "결과(종료코드·요약)" "커밋 요약" <이 항목 파일들...>`
    (prettier → `pnpm lint` 전체 통과 확인 → 체크 → 커밋. lint 실패 시 아무것도 바뀌지 않는다)
+   샌드박스가 PATH 변경과 git을 한 명령에서 거부하면: `scripts/dev/check-and-tick.sh T-xxx N.M "결과" <파일...>`로 체크만 하고, `git add ... && git commit -m "T-xxx/N.M: 요약" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"`를 따로 실행한다.
 4. 모든 항목이 [x]면 `sed -i 's/^status: doing/status: done/'` 후 커밋 `T-xxx: status: done`.
 
 - 🖐 항목: 자동 검증 가능한 부분은 테스트로 확인하되 체크하지 않는다. 항목 아래 `  - awaiting-human: <확인할 내용/스크린샷 경로>`를 적는다. 남은 것이 🖐뿐이면 `status: awaiting-human`.
