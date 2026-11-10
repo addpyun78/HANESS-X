@@ -37,3 +37,15 @@ describe('EventLog SQLite 인덱스', () => {
     again.close();
   });
 });
+
+describe('EventLog 인덱스 재구성', () => {
+  it('rebuildIndex가 JSONL에서 인덱스를 복구', () => {
+    const t = tempDir();
+    const log = new EventLog({ root: t.dir });
+    for (let i = 0; i < 20; i++) log.append(textEvent('r1', `x${i}`, { itemId: i % 2 ? 'odd' : 'even' }));
+    expect(log.rebuildIndex('r1')).toBe(20);
+    expect(log.query({ sessionId: 'r1', itemId: 'odd' })).toHaveLength(10);
+    log.close();
+    t.cleanup();
+  });
+});

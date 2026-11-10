@@ -6,6 +6,7 @@ import {
   fsyncSync,
   mkdirSync,
   openSync,
+  readFileSync,
   readSync,
   writeSync,
 } from 'node:fs';
@@ -63,6 +64,9 @@ export class EventLog {
   private readonly fsyncEach: boolean;
   private readonly listeners = new Set<Listener>();
   private closed = false;
+  private readonly sizes = new Map<string, number>();
+  private pending: [string, string, string, string | null, string, number, number][] = [];
+  private flushTimer: NodeJS.Immediate | undefined;
 
   constructor(opts: EventLogOptions) {
     this.root = opts.root;
@@ -87,7 +91,7 @@ export class EventLog {
       CREATE INDEX IF NOT EXISTS ix_events_ts ON events(ts);
     `);
     this.insert = this.db.prepare(
-      'INSERT INTO events (id, session_id, type, item_id, ts, offset, length) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT OR IGNORE INTO events (id, session_id, type, item_id, ts, offset, length) VALUES (?, ?, ?, ?, ?, ?, ?)',
     );
   }
 
@@ -108,10 +112,13 @@ export class EventLog {
     const rec = validate(maskDeep(event));
     const line = Buffer.from(JSON.stringify(rec) + '\n', 'utf8');
     const fd = this.fdFor(rec.sessionId);
-    const offset = fstatSync(fd).size;
+    const offset = this.sizes.get(rec.sessionId) ?? fstatSync(fd).size;
     writeAll(fd, line);
+    this.sizes.set(rec.sessionId, offset + line.length);
     if (this.fsyncEach) fsyncSafe(fd);
-    this.insert.run(rec.id, rec.sessionId, rec.type, rec.itemId ?? null, rec.ts, offset, line.length - 1);
+    this.pending.push([rec.id, rec.sessionId, rec.type, rec.itemId ?? null, rec.ts, offset, line.length - 1]);
+    if (this.pending.length >= 512) this.flush();
+    else this.scheduleFlush();
     for (const fn of this.listeners) {
       try {
         fn(rec);
@@ -124,18 +131,72 @@ export class EventLog {
 
   appendMany(events: Iterable<LogRecord>): number {
     let n = 0;
+    for (const e of events) {
+      this.append(e);
+      n++;
+    }
+    this.flush();
+    return n;
+  }
+
+  /**
+   * 인덱스 대기열을 한 트랜잭션으로 반영한다. JSONL이 원본이고 인덱스는 파생물이므로
+   * 비정상 종료 시 잃은 인덱스 행은 rebuildIndex()로 복구한다.
+   */
+  flush(): void {
+    if (this.pending.length === 0) return;
+    const rows = this.pending;
+    this.pending = [];
     this.db.exec('BEGIN');
     try {
-      for (const e of events) {
-        this.append(e);
-        n++;
-      }
+      for (const r of rows) this.insert.run(...r);
       this.db.exec('COMMIT');
     } catch (err) {
       this.db.exec('ROLLBACK');
       throw err;
     }
+  }
+
+  /** JSONL 원본에서 세션 인덱스를 다시 만든다 */
+  rebuildIndex(sessionId: string): number {
+    this.flush();
+    const file = this.sessionFile(sessionId);
+    if (!existsSync(file)) return 0;
+    const buf = readFileSync(file);
+    this.db.prepare('DELETE FROM events WHERE session_id = ?').run(sessionId);
+    let offset = 0;
+    let n = 0;
+    while (offset < buf.length) {
+      let end = buf.indexOf(0x0a, offset);
+      if (end < 0) end = buf.length;
+      try {
+        const rec = JSON.parse(buf.subarray(offset, end).toString('utf8')) as LogRecord;
+        this.pending.push([
+          rec.id,
+          rec.sessionId,
+          rec.type,
+          rec.itemId ?? null,
+          rec.ts,
+          offset,
+          end - offset,
+        ]);
+        n++;
+      } catch {
+        // 잘린 줄은 건너뛴다
+      }
+      offset = end + 1;
+    }
+    this.flush();
     return n;
+  }
+
+  private scheduleFlush(): void {
+    if (this.flushTimer) return;
+    this.flushTimer = setImmediate(() => {
+      this.flushTimer = undefined;
+      if (!this.closed) this.flush();
+    });
+    this.flushTimer.unref?.();
   }
 
   /** 4.2 세션 이벤트를 기록 순서대로 재생 */
@@ -155,6 +216,7 @@ export class EventLog {
 
   /** 4.3 인덱스 조회 → 파일 오프셋에서 원문을 읽어 반환 */
   query(q: EventQuery): LogRecord[] {
+    this.flush();
     const where: string[] = [];
     const args: (string | number)[] = [];
     if (q.sessionId) (where.push('session_id = ?'), args.push(q.sessionId));
@@ -177,6 +239,7 @@ export class EventLog {
 
   /** 세션 목록 */
   sessions(): string[] {
+    this.flush();
     const rows = this.db.prepare('SELECT DISTINCT session_id FROM events ORDER BY session_id').all() as {
       session_id: string;
     }[];
@@ -185,6 +248,8 @@ export class EventLog {
 
   close(): void {
     if (this.closed) return;
+    this.flush();
+    if (this.flushTimer) clearImmediate(this.flushTimer);
     this.closed = true;
     for (const fd of this.fds.values()) closeSync(fd);
     this.fds.clear();
