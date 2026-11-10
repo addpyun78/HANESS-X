@@ -224,7 +224,7 @@ deps: 없음 · 산출물: CLAUDE.md, .claude/settings.json, scripts/ticket-gate
 
 deps: T-000 · 산출물: package.json, pnpm-workspace.yaml, tsconfig.base.json, vitest.config.ts
 
-- 1.1 pnpm init + pnpm-workspace.yaml(packages/, packages//, apps/) — 검증: pnpm -v ≥ 9, 파일 존재
+- 1.1 pnpm init + pnpm-workspace.yaml(packages/*, packages/*/*, apps/*) — 검증: pnpm -v ≥ 9, 파일 존재
 - 1.2 Node 버전 고정 .nvmrc=22, engines.node=">=22.19" — 검증: node -v 22.x
 - 1.3 tsconfig.base.json(strict, NodeNext, ES2023) — 검증: pnpm tsc -p tsconfig.base.json --noEmit exit 0
 - 1.4 Vitest 루트 설정 + pnpm test 스크립트 — 검증: 빈 테스트 1개 통과
