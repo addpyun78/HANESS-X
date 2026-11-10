@@ -1,14 +1,19 @@
 import '@xyflow/react/dist/style.css';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import { HarnessApiClient, resolveToken } from '../api/client.js';
 import { navigate } from '../router.js';
 import { Canvas } from './Canvas.js';
 import { DEFAULT_CATALOG, loadCatalog, type BuilderCatalog } from './catalog.js';
 import { Drawer } from './Drawer.js';
 import { emptyGraph } from './graph.js';
-import { Inspector } from './Inspector.js';
+import { InspectorPanel } from './inspector/InspectorPanel.js';
+import type { Overlay } from './inspector/dryrun.js';
+import { inspectorReducer } from './inspector/model.js';
+import { RunOverlayContext } from './inspector/overlay-context.js';
+import { mergePipelineMeta, suggestCommand, type AgentMeta } from './inspector/save.js';
+import { SaveBar, type SaveAgentFn } from './inspector/SaveBar.js';
+import type { PipelineMeta } from './inspector/yaml.js';
 import { canRedo, canUndo, initHistory, withHistory } from './lego/history.js';
-import { legoReducer } from './lego/model.js';
 import { startGraph, type StartResult } from './start.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
@@ -18,14 +23,26 @@ export interface BuilderPageProps {
   route: string;
   /** 주입용 카탈로그 (없으면 API → 실패 시 기본 카탈로그) */
   catalog?: BuilderCatalog;
+  /** 저장 API (없으면 토큰이 있을 때 HarnessApiClient.saveAgent) */
+  saveAgent?: SaveAgentFn;
+  /** 시험 실행 리플레이 간격 (테스트용) */
+  dryRunStepMs?: number;
 }
 
-const builderReducer = withHistory(legoReducer);
+const builderReducer = withHistory(inspectorReducer);
 
 /** 에이전트 만들기(컨셉 C): 시작 선택 → 블록 서랍 / 캔버스 / 인스펙터 */
-export function BuilderPage({ route, catalog: given }: BuilderPageProps) {
+export function BuilderPage({ route, catalog: given, saveAgent, dryRunStepMs }: BuilderPageProps) {
   const catalog = useCatalog(given);
+  const save = useSaveAgent(saveAgent);
   const [start, setStart] = useState<StartResult>();
+  const [meta, setMeta] = useState<AgentMeta>({ name: 'new-agent', displayName: '새 에이전트' });
+  const [overlay, setOverlay] = useState<Overlay>();
+  const pipelineMeta: PipelineMeta = {
+    name: meta.name,
+    ...(meta.displayName ? { displayName: meta.displayName } : {}),
+    ...(meta.entry ? { entry: meta.entry } : {}),
+  };
   const [history, dispatch] = useReducer(builderReducer, undefined, () => initHistory(emptyGraph()));
   const graph = history.present;
 
@@ -83,11 +100,24 @@ export function BuilderPage({ route, catalog: given }: BuilderPageProps) {
           </span>
         )}
       </header>
+      {start && <SaveBar graph={graph} meta={meta} onMeta={setMeta} {...(save ? { save } : {})} />}
       {start ? (
         <div className="hx-builder__cols">
           <Drawer catalog={catalog} />
-          <Canvas graph={graph} catalog={catalog} dispatch={dispatch} />
-          <Inspector graph={graph} />
+          <RunOverlayContext.Provider value={overlay}>
+            <Canvas graph={graph} catalog={catalog} dispatch={dispatch} />
+          </RunOverlayContext.Provider>
+          <InspectorPanel
+            graph={graph}
+            catalog={catalog}
+            meta={pipelineMeta}
+            dispatch={dispatch}
+            onMeta={(m) => setMeta((cur) => mergePipelineMeta(cur, m))}
+            overlay={overlay}
+            onOverlay={setOverlay}
+            {...(meta.defaultEngine ? { defaultEngine: meta.defaultEngine } : {})}
+            {...(dryRunStepMs !== undefined ? { dryRunStepMs } : {})}
+          />
         </div>
       ) : (
         <StartChoice
@@ -95,6 +125,7 @@ export function BuilderPage({ route, catalog: given }: BuilderPageProps) {
           onChoose={(c) => {
             const r = startGraph(c, catalog);
             dispatch({ type: 'load', graph: r.graph });
+            setMeta({ name: r.name, displayName: r.name, command: suggestCommand(r.name) });
             setStart(r);
           }}
         />
@@ -118,6 +149,16 @@ function useCatalog(given?: BuilderCatalog): BuilderCatalog {
     };
   }, [given]);
   return catalog;
+}
+
+function useSaveAgent(given?: SaveAgentFn): SaveAgentFn | undefined {
+  return useMemo(() => {
+    if (given) return given;
+    const token = resolveToken();
+    if (!token) return undefined;
+    const client = new HarnessApiClient({ token });
+    return (name, body) => client.saveAgent(name, body);
+  }, [given]);
 }
 
 export function isEditable(t: EventTarget | null): boolean {

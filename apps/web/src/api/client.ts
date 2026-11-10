@@ -1,4 +1,4 @@
-import type { AgentListResponse, HarnessEvent } from '@harness-x/protocol';
+import type { AgentInput, AgentListResponse, HarnessEvent, PipelineInput } from '@harness-x/protocol';
 
 /**
  * 로컬 하네스 API 클라이언트 (packages/kernel/src/api/server.ts와 짝)
@@ -69,6 +69,21 @@ export interface WorkspacesResponse {
   current?: WorkspaceInfo;
   recent: WorkspaceInfo[];
   cwd?: string;
+}
+
+/** PUT /api/agents/:name 요청 (kernel api/agents-routes.ts) */
+export interface SaveAgentRequest {
+  agent: Omit<AgentInput, 'pipeline'> & { pipeline?: string };
+  pipeline: PipelineInput;
+  overwrite?: boolean;
+}
+
+export interface SaveAgentResponse {
+  name: string;
+  command: string;
+  dir: string;
+  files: string[];
+  created: boolean;
 }
 
 export class ApiError extends Error {
@@ -171,6 +186,14 @@ export class HarnessApiClient {
   /** GET /api/agents — 등록된 에이전트 요약 (빌더·/ 팔레트) */
   agents() {
     return this.request<AgentListResponse>('/api/agents');
+  }
+
+  /** 46.3 PUT /api/agents/:name — 빌더 저장 (~/.harness-x/agents/<name>/agent.yaml + pipeline.yaml) */
+  saveAgent(name: string, body: SaveAgentRequest) {
+    return this.request<SaveAgentResponse>(`/api/agents/${encodeURIComponent(name)}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    });
   }
 
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {

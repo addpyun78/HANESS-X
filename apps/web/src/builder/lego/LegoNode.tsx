@@ -4,11 +4,22 @@ import { blockKindMime } from '../catalog.js';
 import { readBlock } from '../Drawer.js';
 import type { HxFlowNode } from '../flow.js';
 import { NODE_LABEL } from '../graph.js';
+import { formatUsd } from '../inspector/dryrun.js';
+import { useRunOverlay } from '../inspector/overlay-context.js';
 import { CHIP_MIME, hasType, readChip, useLegoDispatch } from './dnd.js';
 import { acceptsEngine, acceptsSkills, skillsOf } from './model.js';
 
 type Props = NodeProps<Extract<HxFlowNode, { type: 'hxNode' }>>;
 type Highlight = 'skill' | 'engine';
+
+const RUN_LABEL: Record<string, string> = {
+  pending: '대기',
+  running: '실행 중',
+  completed: '완료',
+  incomplete: '미완료',
+  failed: '실패',
+  error: '오류',
+};
 
 /**
  * 역할 노드 카드(레고): 스킬 블록·칩을 놓으면 스킬 칩으로 끼워지고, 엔진 블록을 놓으면 엔진이 바뀐다.
@@ -22,6 +33,8 @@ export function LegoNode({ data, selected }: Props) {
   const engine = 'engine' in spec ? spec.engine : undefined;
   const skills = skillsOf(spec);
   const name = spec.label ?? spec.id;
+  // 46.4 시험 실행 오버레이 (노드별 진행·비용)
+  const run = useRunOverlay()?.[node.id];
 
   const accepts = (dt: DataTransfer | null): Highlight | undefined => {
     if (acceptsSkills(spec) && (hasType(dt, blockKindMime('skill')) || hasType(dt, CHIP_MIME)))
@@ -58,6 +71,7 @@ export function LegoNode({ data, selected }: Props) {
       data-node-type={spec.type}
       data-selected={selected || undefined}
       data-highlight={highlight}
+      data-run={run?.status}
       onDragOver={onDragOver}
       onDragLeave={() => setHighlight(undefined)}
       onDrop={onDrop}
@@ -67,6 +81,16 @@ export function LegoNode({ data, selected }: Props) {
         <span className="hx-node__type">{NODE_LABEL[spec.type]}</span>
         <span className="hx-node__label">{name}</span>
       </div>
+      {run && (
+        <span
+          className="hx-run-badge"
+          data-status={run.status}
+          aria-label={`${name} 시험 실행 ${run.status}`}
+        >
+          {run.order ? `${run.order}. ` : ''}
+          {RUN_LABEL[run.status]} · {formatUsd(run.costUsd)}
+        </span>
+      )}
       {engine !== undefined && (
         <span className="hx-engine-chip" data-engine={engine} aria-label={`${name} 엔진 ${engine}`}>
           {engine}
