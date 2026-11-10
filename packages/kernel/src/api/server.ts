@@ -1,0 +1,147 @@
+import { randomBytes, timingSafeEqual } from 'node:crypto';
+import { chmodSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import Fastify, { type FastifyInstance, type FastifyRequest } from 'fastify';
+import websocket from '@fastify/websocket';
+import { providedSlots } from '@harness-x/protocol';
+import type { EventLog, LogRecord } from '../event-log.js';
+import { harnessHome, type PluginLoader } from '../loader.js';
+
+/**
+ * 로컬 API 서버
+ * - 127.0.0.1(루프백)에만 바인딩. 그 외 주소는 기동 거부
+ * - 실행마다 랜덤 세션 토큰 → ~/.harness-x/run/token (권한 600)
+ * - 모든 요청에 토큰 필요 (Authorization: Bearer / x-harness-token, WebSocket은 ?token= 허용)
+ * - Host 헤더 검사로 DNS 리바인딩 차단
+ */
+
+export const DEFAULT_API_PORT = 3790;
+export const LOOPBACK_HOSTS = ['127.0.0.1', '::1', 'localhost'] as const;
+
+export interface ApiServerOptions {
+  loader: PluginLoader;
+  log: EventLog;
+  host?: string;
+  port?: number;
+  /** 토큰 파일 경로 (기본 ~/.harness-x/run/token) */
+  tokenFile?: string;
+  /** 테스트용 고정 토큰 */
+  token?: string;
+  logger?: boolean;
+}
+
+export interface ApiServer {
+  app: FastifyInstance;
+  token: string;
+  tokenFile: string;
+  url: string;
+  port: number;
+  close(): Promise<void>;
+}
+
+export class BindRefusedError extends Error {
+  constructor(host: string) {
+    super(`외부 바인딩 금지: '${host}'. 하네스 API는 ${LOOPBACK_HOSTS.join(', ')}에만 바인딩합니다`);
+  }
+}
+
+export function assertLoopback(host: string): void {
+  if (!(LOOPBACK_HOSTS as readonly string[]).includes(host)) throw new BindRefusedError(host);
+}
+
+export function writeTokenFile(file: string, token: string): void {
+  mkdirSync(dirname(file), { recursive: true, mode: 0o700 });
+  writeFileSync(file, token + '\n', { mode: 0o600 });
+  try {
+    chmodSync(file, 0o600); // 기존 파일이 있던 경우에도 600 보장 (Windows에서는 무시됨)
+  } catch {
+    /* noop */
+  }
+}
+
+export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer> {
+  const host = opts.host ?? '127.0.0.1';
+  assertLoopback(host); // 8.1 — listen 전에 거부
+  const token = opts.token ?? randomBytes(32).toString('base64url');
+  const tokenFile = opts.tokenFile ?? join(harnessHome(), 'run', 'token');
+  writeTokenFile(tokenFile, token);
+
+  const app = Fastify({ logger: opts.logger ?? false });
+  await app.register(websocket);
+
+  let boundPort = opts.port ?? DEFAULT_API_PORT;
+
+  // DNS 리바인딩 방지: Host 헤더가 루프백이어야 함
+  app.addHook('onRequest', async (req, reply) => {
+    const hostHeader = (req.headers.host ?? '').toLowerCase();
+    const hostname = hostHeader.startsWith('[')
+      ? hostHeader.slice(0, hostHeader.indexOf(']') + 1)
+      : hostHeader.split(':')[0];
+    if (!['127.0.0.1', 'localhost', '[::1]'].includes(hostname ?? '')) {
+      return reply.code(403).send({ error: 'forbidden_host' });
+    }
+    // 8.2 토큰 검사
+    if (!checkToken(req, token)) {
+      return reply.code(401).send({ error: 'unauthorized' });
+    }
+  });
+
+  app.get('/api/health', async () => ({ ok: true, port: boundPort }));
+
+  // 8.3 플러그인 목록
+  app.get('/api/plugins', async () => ({
+    plugins: [...opts.loader.plugins.values()].map((p) => ({
+      id: p.manifest.id,
+      version: p.manifest.version,
+      displayName: p.manifest.displayName ?? p.manifest.id,
+      description: p.manifest.description,
+      state: p.state,
+      origin: p.origin,
+      slots: providedSlots(p.manifest),
+      provides: p.manifest.provides,
+      ...(p.error ? { error: p.error } : {}),
+    })),
+    rejected: opts.loader.rejections.map((r) => ({ id: r.id, dir: r.dir, reason: r.reason })),
+  }));
+
+  // 8.4 이벤트 스트리밍
+  app.get('/ws/events', { websocket: true }, (socket, req) => {
+    const q = req.query as { sessionId?: string; type?: string };
+    const off = opts.log.subscribe((rec: LogRecord) => {
+      if (q.sessionId && rec.sessionId !== q.sessionId) return;
+      if (q.type && rec.type !== q.type) return;
+      if (socket.readyState === socket.OPEN) socket.send(JSON.stringify(rec));
+    });
+    socket.on('close', off);
+    socket.on('error', off);
+    socket.send(JSON.stringify({ type: 'hello', ts: new Date().toISOString() }));
+  });
+
+  await app.listen({ host, port: boundPort });
+  const addr = app.server.address();
+  if (addr && typeof addr === 'object') boundPort = addr.port;
+  const urlHost = host === '::1' ? '[::1]' : host;
+  return {
+    app,
+    token,
+    tokenFile,
+    port: boundPort,
+    url: `http://${urlHost}:${boundPort}`,
+    close: () => app.close(),
+  };
+}
+
+function checkToken(req: FastifyRequest, token: string): boolean {
+  const auth = req.headers.authorization;
+  let given: string | undefined;
+  if (auth?.startsWith('Bearer ')) given = auth.slice(7).trim();
+  else if (typeof req.headers['x-harness-token'] === 'string') given = req.headers['x-harness-token'];
+  else if (req.url.startsWith('/ws/')) {
+    const q = req.query as { token?: unknown };
+    if (typeof q.token === 'string') given = q.token;
+  }
+  if (!given) return false;
+  const a = Buffer.from(given);
+  const b = Buffer.from(token);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
