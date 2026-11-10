@@ -5,8 +5,10 @@ import { navigate } from '../router.js';
 import { Canvas } from './Canvas.js';
 import { DEFAULT_CATALOG, loadCatalog, type BuilderCatalog } from './catalog.js';
 import { Drawer } from './Drawer.js';
-import { emptyGraph, graphReducer } from './graph.js';
+import { emptyGraph } from './graph.js';
 import { Inspector } from './Inspector.js';
+import { canRedo, canUndo, initHistory, withHistory } from './lego/history.js';
+import { legoReducer } from './lego/model.js';
 import { startGraph, type StartResult } from './start.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
@@ -18,17 +20,28 @@ export interface BuilderPageProps {
   catalog?: BuilderCatalog;
 }
 
+const builderReducer = withHistory(legoReducer);
+
 /** 에이전트 만들기(컨셉 C): 시작 선택 → 블록 서랍 / 캔버스 / 인스펙터 */
 export function BuilderPage({ route, catalog: given }: BuilderPageProps) {
   const catalog = useCatalog(given);
   const [start, setStart] = useState<StartResult>();
-  const [graph, dispatch] = useReducer(graphReducer, undefined, emptyGraph);
+  const [history, dispatch] = useReducer(builderReducer, undefined, () => initHistory(emptyGraph()));
+  const graph = history.present;
 
   useEffect(() => {
     if (!start) return;
     const onKey = (e: KeyboardEvent) => {
       if (isEditable(e.target)) return;
-      if (e.key === 'Delete' || e.key === 'Backspace') {
+      const mod = e.ctrlKey || e.metaKey;
+      const k = e.key.toLowerCase();
+      if (mod && (k === 'y' || (k === 'z' && e.shiftKey))) {
+        e.preventDefault();
+        dispatch({ type: 'redo' });
+      } else if (mod && k === 'z') {
+        e.preventDefault();
+        dispatch({ type: 'undo' });
+      } else if (e.key === 'Delete' || e.key === 'Backspace') {
         e.preventDefault();
         dispatch({ type: 'removeSelected' });
       }
@@ -45,11 +58,35 @@ export function BuilderPage({ route, catalog: given }: BuilderPageProps) {
         </button>
         <h1 className="hx-builder__title">에이전트 만들기</h1>
         {start && <span className="hx-builder__origin">{start.origin}</span>}
+        {start && (
+          <span className="hx-builder__history">
+            <button
+              type="button"
+              className="hx-icon-btn"
+              aria-label="실행 취소"
+              title="실행 취소 (Ctrl+Z)"
+              disabled={!canUndo(history)}
+              onClick={() => dispatch({ type: 'undo' })}
+            >
+              ↶
+            </button>
+            <button
+              type="button"
+              className="hx-icon-btn"
+              aria-label="다시 실행"
+              title="다시 실행 (Ctrl+Y)"
+              disabled={!canRedo(history)}
+              onClick={() => dispatch({ type: 'redo' })}
+            >
+              ↷
+            </button>
+          </span>
+        )}
       </header>
       {start ? (
         <div className="hx-builder__cols">
           <Drawer catalog={catalog} />
-          <Canvas graph={graph} dispatch={dispatch} />
+          <Canvas graph={graph} catalog={catalog} dispatch={dispatch} />
           <Inspector graph={graph} />
         </div>
       ) : (

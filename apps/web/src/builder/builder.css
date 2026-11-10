@@ -352,3 +352,94 @@
   color: var(--hx-text-faint);
   font-size: var(--hx-font-13);
 }
+
+/* ── 레고 장착·분리 (T-045) ───────────────────── */
+.hx-builder__history {
+  display: inline-flex;
+  gap: var(--hx-space-1);
+  margin-left: auto;
+}
+
+.hx-node[data-highlight='skill'] {
+  border-color: var(--hx-info);
+  box-shadow: 0 0 0 3px var(--hx-info-soft);
+}
+
+.hx-node[data-highlight='engine'] {
+  border-color: var(--hx-warning);
+  box-shadow: 0 0 0 3px var(--hx-warning-soft);
+}
+
+.hx-skill-chip {
+  cursor: grab;
+}
+
+.hx-skill-chip__x {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--hx-text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.hx-skill-chips__empty {
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+}
+
+.hx-group {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--hx-accent);
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent-soft);
+}
+
+.hx-group[data-selected] {
+  border-style: solid;
+}
+
+.hx-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--hx-space-2);
+  color: var(--hx-accent);
+  font-size: var(--hx-font-12);
+}
+
+.hx-group__detach {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.react-flow__node.hx-flow-group {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.hx-edge--bad .react-flow__edge-path,
+.react-flow__edge-path.hx-edge--bad {
+  stroke: var(--hx-danger);
+  stroke-width: 2;
+}
+
+.hx-edge__badge {
+  position: absolute;
+  padding: 0 var(--hx-space-1);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+  pointer-events: all;
+}
+
+.hx-edge__badge--bad {
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+  cursor: help;
+}

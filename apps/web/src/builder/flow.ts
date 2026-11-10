@@ -1,11 +1,12 @@
 import type { Edge, Node } from '@xyflow/react';
 import type { BuilderGraph, BuilderGroup, BuilderNode } from './graph.js';
 import { GRID } from './graph.js';
+import { edgeCompat } from './lego/model.js';
 
 /** 그래프 모델 → React Flow 노드·엣지 (순수 함수) */
 
 export const NODE_W = 12 * GRID;
-export const NODE_H = 6 * GRID;
+export const NODE_H = 8 * GRID;
 const GROUP_PAD = 2 * GRID;
 
 export type HxNodeData = { node: BuilderNode };
@@ -43,13 +44,22 @@ export function toFlowNodes(g: BuilderGraph): HxFlowNode[] {
   return [...groups, ...nodes];
 }
 
-export function toFlowEdges(g: BuilderGraph): Edge[] {
+export type HxEdgeData = { compatible: boolean; reason: string; onFail?: boolean };
+export type HxFlowEdge = Edge<HxEdgeData, 'hxEdge'>;
+
+/** 엣지: 출력→입력 스키마 정적 검사 결과를 실어 보낸다(비호환이면 빨간 선 + 사유) */
+export function toFlowEdges(g: BuilderGraph): HxFlowEdge[] {
   const sel = new Set(g.selection);
-  return g.edges.map((e) => ({
-    id: e.id,
-    source: e.from,
-    target: e.to,
-    selected: sel.has(e.id),
-    ...(e.onFail ? { className: 'hx-edge--fail', label: '실패 시' } : {}),
-  }));
+  return g.edges.map((e) => {
+    const c = edgeCompat(g, e);
+    return {
+      id: e.id,
+      type: 'hxEdge',
+      source: e.from,
+      target: e.to,
+      selected: sel.has(e.id),
+      data: { compatible: c.compatible, reason: c.reason, ...(e.onFail ? { onFail: true } : {}) },
+      ...(c.compatible ? {} : { className: 'hx-edge--bad' }),
+    };
+  });
 }

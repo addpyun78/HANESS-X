@@ -12,3 +12,4 @@ export type {
 } from './engine.js';
 export * from './pipeline.js';
 export * from './agent.js';
+export * from './schema-compat.js';
