@@ -30,10 +30,8 @@ export interface ApiServerOptions {
   logger?: boolean;
   /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
-<<<<<<< HEAD
   /** listen 전에 추가 라우트 등록 (예: engine-scanner의 POST /api/engines/rescan). 토큰 검사가 적용된다 */
   routes?: (app: FastifyInstance) => void | Promise<void>;
-=======
   /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
   approvals?: ApprovalHandler;
 }
@@ -47,7 +45,6 @@ export type ApiApprovalDecision = (typeof API_APPROVAL_DECISIONS)[number];
  */
 export interface ApprovalHandler {
   resolve(approvalId: string, decision: ApiApprovalDecision, meta: { by: string }): unknown;
->>>>>>> worktree-agent-a841b26f259562ee2
 }
 
 export interface ApiServer {
