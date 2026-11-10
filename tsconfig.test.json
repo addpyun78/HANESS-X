@@ -3,60 +3,25 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@harness-x/agent-builder": [
-        "./packages/plugins-core/agent-builder/src/index.ts"
-      ],
-      "@harness-x/checklist-ledger": [
-        "./packages/plugins-core/checklist-ledger/src/index.ts"
-      ],
-      "@harness-x/engine-acp-generic": [
-        "./packages/engines/acp-generic/src/index.ts"
-      ],
-      "@harness-x/engine-antigravity": [
-        "./packages/engines/antigravity/src/index.ts"
-      ],
-      "@harness-x/engine-claude-code": [
-        "./packages/engines/claude-code/src/index.ts"
-      ],
-      "@harness-x/engine-codex": [
-        "./packages/engines/codex/src/index.ts"
-      ],
-      "@harness-x/engine-openai-compat": [
-        "./packages/engines/openai-compat/src/index.ts"
-      ],
-      "@harness-x/engine-scanner": [
-        "./packages/plugins-core/engine-scanner/src/index.ts"
-      ],
-      "@harness-x/kernel": [
-        "./packages/kernel/src/index.ts"
-      ],
-      "@harness-x/mcp-host": [
-        "./packages/plugins-core/mcp-host/src/index.ts"
-      ],
-      "@harness-x/permission-gate": [
-        "./packages/plugins-core/permission-gate/src/index.ts"
-      ],
-      "@harness-x/protocol": [
-        "./packages/protocol/src/index.ts"
-      ],
-      "@harness-x/sdk": [
-        "./packages/sdk/src/index.ts"
-      ],
-      "@harness-x/verifier-jev": [
-        "./packages/plugins/verifier-jev/src/index.ts"
-      ],
-      "@harness-x/verifier-ladder": [
-        "./packages/plugins-core/verifiers/ladder/src/index.ts"
-      ],
-      "@harness-x/verifier-local": [
-        "./packages/plugins/verifier-local/src/index.ts"
-      ]
+      "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
+      "@harness-x/checklist-ledger": ["./packages/plugins-core/checklist-ledger/src/index.ts"],
+      "@harness-x/engine-acp-generic": ["./packages/engines/acp-generic/src/index.ts"],
+      "@harness-x/engine-antigravity": ["./packages/engines/antigravity/src/index.ts"],
+      "@harness-x/engine-claude-code": ["./packages/engines/claude-code/src/index.ts"],
+      "@harness-x/engine-codex": ["./packages/engines/codex/src/index.ts"],
+      "@harness-x/engine-openai-compat": ["./packages/engines/openai-compat/src/index.ts"],
+      "@harness-x/engine-scanner": ["./packages/plugins-core/engine-scanner/src/index.ts"],
+      "@harness-x/forge": ["./packages/plugins-core/forge/src/index.ts"],
+      "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
+      "@harness-x/mcp-host": ["./packages/plugins-core/mcp-host/src/index.ts"],
+      "@harness-x/permission-gate": ["./packages/plugins-core/permission-gate/src/index.ts"],
+      "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
+      "@harness-x/sdk": ["./packages/sdk/src/index.ts"],
+      "@harness-x/verifier-jev": ["./packages/plugins/verifier-jev/src/index.ts"],
+      "@harness-x/verifier-ladder": ["./packages/plugins-core/verifiers/ladder/src/index.ts"],
+      "@harness-x/verifier-local": ["./packages/plugins/verifier-local/src/index.ts"]
     },
-    "lib": [
-      "ES2023",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "declaration": false,
     "declarationMap": false
@@ -69,8 +34,5 @@
     "e2e/**/*.ts",
     "types/**/*.d.ts"
   ],
-  "exclude": [
-    "**/node_modules/**",
-    "**/dist/**"
-  ]
+  "exclude": ["**/node_modules/**", "**/dist/**"]
 }

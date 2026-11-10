@@ -1,0 +1,57 @@
+# forge: 대화로 플러그인 만들기 — 인터뷰 → spec → 스캐폴드 → 검사 → 시험 → 설치
+# role 노드는 Forge 엔진 래퍼(src/engine.ts)가 맡는다: 하네스가 할 일(질문 카드·파일 쓰기·설치)은 결정적으로,
+# 글 쓰기(spec 다듬기·본문 작성)만 엔진(LLM)에 맡긴다. check/test는 gate — 실패하면 scaffold로 되돌린다(최대 3회).
+name: forge
+displayName: Forge
+description: 대화로 훅·스킬·도구 플러그인을 만들어 시험하고 설치한다
+version: 1
+entry: interview
+nodes:
+  - id: interview
+    type: role
+    label: 인터뷰
+    permission: read-only
+    prompt: 무엇을 만들지 최대 5문항(종류·발동 시점·입출력·권한·성공 예시)을 선택지 버튼으로 묻는다.
+  - id: spec
+    type: role
+    label: spec
+    permission: read-only
+    prompt: 요청과 인터뷰 답으로 forge-spec.json을 만들고 사용자 확인을 받는다.
+  - id: scaffold
+    type: role
+    label: 스캐폴드
+    permission: workspace-write
+    checklistTemplate: forge-scaffold
+    prompt: spec으로 템플릿을 채우고 플러그인 본문을 작성한다.
+  - id: check
+    type: gate
+    label: 정적 검사
+    verifiers: [forge-check]
+    maxRetries: 3
+  - id: test
+    type: gate
+    label: 샌드박스 시험
+    verifiers: [forge-sandbox]
+    maxRetries: 3
+  - id: install
+    type: role
+    label: 설치
+    permission: workspace-write
+    prompt: 설치 카드(파일 diff·권한 요약·경고)를 보여 주고 승인되면 설치한다.
+edges:
+  - from: interview
+    to: spec
+  - from: spec
+    to: scaffold
+  - from: scaffold
+    to: check
+  - from: check
+    to: test
+  - from: test
+    to: install
+  - from: check
+    to: scaffold
+    onFail: true
+  - from: test
+    to: scaffold
+    onFail: true

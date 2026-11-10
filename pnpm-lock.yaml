@@ -414,6 +414,27 @@ importers:
         specifier: ^5.12.8
         version: 5.12.8
 
+  packages/plugins-core/forge:
+    dependencies:
+      '@harness-x/agent-builder':
+        specifier: workspace:*
+        version: link:../agent-builder
+      '@harness-x/checklist-ledger':
+        specifier: workspace:*
+        version: link:../checklist-ledger
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+      '@harness-x/sdk':
+        specifier: workspace:*
+        version: link:../../sdk
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+
   packages/plugins-core/mcp-host:
     dependencies:
       '@harness-x/checklist-ledger':
