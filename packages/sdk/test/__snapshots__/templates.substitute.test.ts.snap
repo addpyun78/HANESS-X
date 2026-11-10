@@ -1,0 +1,181 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`50.2 템플릿 변수 치환기 > 스냅샷: hook 템플릿 렌더링 1`] = `
+{
+  "harness-plugin.json": "{
+  "id": "commit-guard",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "커밋 가드",
+  "description": "커밋 전에 \\"비밀\\" 값이 없는지 검사한다",
+  "main": "dist/index.js",
+  "provides": {
+    "hook": ["commit-guard"]
+  },
+  "permissions": {"fs":["workspace:read"],"net":["api.example.com"],"shell":true}
+}
+",
+  "package.json": "{
+  "name": "commit-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "커밋 전에 \\"비밀\\" 값이 없는지 검사한다",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3"
+  }
+}
+",
+  "src/index.ts": "/**
+ * 커밋 가드 — 훅 플러그인
+ * 차단형(onBlocking)은 allow/deny/block을 돌려주고, 알림형(onNotify)은 결과를 돌려주지 않는다.
+ */
+
+export type HookName =
+  | 'session.start'
+  | 'prompt.submit'
+  | 'tool.before'
+  | 'tool.after'
+  | 'turn.end'
+  | 'stop.before'
+  | 'context.compact'
+  | 'item.verify';
+
+export interface HookContext {
+  sessionId?: string;
+  [key: string]: unknown;
+}
+
+export interface HookResult {
+  decision: 'allow' | 'deny' | 'block';
+  reason?: string;
+}
+
+export interface PluginContext {
+  manifest: { id: string; version: string };
+  log(message: string): void;
+  hooks: {
+    onBlocking(name: HookName, handler: (ctx: HookContext) => HookResult | void): () => void;
+    onNotify(name: HookName, handler: (ctx: HookContext) => void): () => void;
+  };
+}
+
+export const HOOK_ID = 'commit-guard';
+
+export function activate(ctx: PluginContext): void {
+  ctx.hooks.onNotify('session.start', (c) => ctx.log(\`\${HOOK_ID}: session \${c.sessionId ?? '?'} started\`));
+  ctx.hooks.onBlocking('tool.before', () => ({ decision: 'allow' }));
+}
+
+export function deactivate(): void {}
+",
+  "tsconfig.json": "{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "types": [],
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
+",
+}
+`;
+
+exports[`50.2 템플릿 변수 치환기 > 스냅샷: skill 템플릿 렌더링 1`] = `
+{
+  "SKILL.md": "---
+name: 'commit-guard'
+description: "커밋 전에 \\"비밀\\" 값이 없는지 검사한다"
+---
+
+# 커밋 가드
+
+커밋 전에 "비밀" 값이 없는지 검사한다
+
+## 언제 쓰나
+
+- 이 스킬이 필요한 상황을 적는다.
+
+## 절차
+
+1. 첫 단계
+2. 두 번째 단계
+",
+  "harness-plugin.json": "{
+  "id": "commit-guard",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "커밋 가드",
+  "description": "커밋 전에 \\"비밀\\" 값이 없는지 검사한다",
+  "main": "dist/index.js",
+  "provides": {
+    "skill": ["commit-guard"]
+  },
+  "permissions": {"fs":["workspace:read"],"net":["api.example.com"],"shell":true}
+}
+",
+  "package.json": "{
+  "name": "commit-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "커밋 전에 \\"비밀\\" 값이 없는지 검사한다",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3"
+  }
+}
+",
+  "src/index.ts": "/**
+ * 커밋 가드 — 스킬 플러그인
+ * 지침은 SKILL.md에 있다. 하네스가 이 스킬을 역할 노드에 끼우면 SKILL.md 내용이 컨텍스트로 들어간다.
+ */
+
+export interface PluginContext {
+  manifest: { id: string; version: string };
+  log(message: string): void;
+}
+
+export const SKILL_ID = 'commit-guard';
+export const SKILL_FILE = 'SKILL.md';
+
+export function activate(ctx: PluginContext): void {
+  ctx.log(\`skill \${SKILL_ID} ready (\${SKILL_FILE})\`);
+}
+
+export function deactivate(): void {}
+",
+  "tsconfig.json": "{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "types": [],
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
+",
+}
+`;
