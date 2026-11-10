@@ -1,0 +1,5 @@
+{
+  "kind": "hook",
+  "slot": "hook",
+  "description": "훅 플러그인: 하네스 훅(session.start 등)에 반응"
+}

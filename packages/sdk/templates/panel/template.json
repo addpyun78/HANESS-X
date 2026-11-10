@@ -1,0 +1,5 @@
+{
+  "kind": "panel",
+  "slot": "panel",
+  "description": "패널 플러그인: UI 패널 설명자와 render()"
+}

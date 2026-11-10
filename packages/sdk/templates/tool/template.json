@@ -1,0 +1,5 @@
+{
+  "kind": "tool",
+  "slot": "tool",
+  "description": "도구 플러그인: 입력 스키마와 run()을 가진 도구 1개"
+}

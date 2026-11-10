@@ -1,0 +1,23 @@
+name: '{{id}}'
+displayName: '{{json:displayName}}'
+description: '{{json:description}}'
+version: 1
+nodes:
+  - id: plan
+    type: role
+    label: 계획
+    engine: auto
+    permission: read-only
+    outputSchema:
+      type: object
+      properties:
+        tasks: { type: array, items: { type: string } }
+      required: [tasks]
+  - id: build
+    type: role
+    label: 구현
+    engine: auto
+    permission: workspace-write
+edges:
+  - from: plan
+    to: build
