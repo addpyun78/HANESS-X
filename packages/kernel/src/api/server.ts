@@ -40,6 +40,8 @@ export interface ApiServerOptions {
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
   /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
   folderPicker?: Pick<FolderPicker, 'pick'>;
+  /** 교차 출처 허용 (데스크톱 웹뷰). 기본 Tauri 출처만 */
+  corsOrigins?: string[];
   /** 워크스페이스 등록·최근 목록 (기본: ~/.harness-x/workspaces.json, 처음 쓸 때 만든다) */
   workspaces?: WorkspaceStore;
 }
@@ -52,6 +54,9 @@ export interface ApiServer {
   port: number;
   close(): Promise<void>;
 }
+
+/** 63.x Tauri 웹뷰 출처 (Windows: http(s)://tauri.localhost, macOS·Linux: tauri://localhost) */
+export const TAURI_ORIGINS = ['http://tauri.localhost', 'https://tauri.localhost', 'tauri://localhost'];
 
 export class BindRefusedError extends Error {
   constructor(host: string) {
@@ -85,6 +90,8 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   let boundPort = opts.port ?? DEFAULT_API_PORT;
 
+  const corsOrigins = new Set(opts.corsOrigins ?? TAURI_ORIGINS);
+
   // DNS 리바인딩 방지: Host 헤더가 루프백이어야 함
   app.addHook('onRequest', async (req, reply) => {
     const hostHeader = (req.headers.host ?? '').toLowerCase();
@@ -93,6 +100,20 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       : hostHeader.split(':')[0];
     if (!['127.0.0.1', 'localhost', '[::1]'].includes(hostname ?? '')) {
       return reply.code(403).send({ error: 'forbidden_host' });
+    }
+    // 데스크톱 웹뷰(허용된 출처)만 CORS 허용. 사전 요청(OPTIONS)은 토큰 없이 응답
+    const origin = req.headers.origin;
+    if (origin && corsOrigins.has(origin)) {
+      reply.header('access-control-allow-origin', origin);
+      reply.header('vary', 'origin');
+      if (req.method === 'OPTIONS') {
+        return reply
+          .code(204)
+          .header('access-control-allow-methods', 'GET, POST, OPTIONS')
+          .header('access-control-allow-headers', 'authorization, content-type, x-harness-token')
+          .header('access-control-max-age', '600')
+          .send();
+      }
     }
     // 8.2 토큰 검사
     if (!checkToken(req, token)) {

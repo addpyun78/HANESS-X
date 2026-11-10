@@ -3,12 +3,12 @@ import { existsSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { DEFAULT_API_PORT, startApiServer } from './api/server.js';
-import { EventLog } from './event-log.js';
-import { HookBus } from './hooks.js';
-import { HotReloader } from './hot-reload.js';
-import { PluginLoader, defaultPluginRoots, harnessHome } from './loader.js';
-import { WorkspaceStore } from './workspaces.js';
+import { Worker } from 'node:worker_threads';
+import type { HotReloader as HotReloaderType } from './hot-reload.js';
+
+// 무거운 모듈(fastify 등)은 main 안에서 동적으로 불러온다 → --exit-with-stdin 감시를 기동 초기에 건다
+// (WSL /mnt/c 위에서는 모듈 로딩만 수십 초 걸린다). 값은 api/server.ts의 DEFAULT_API_PORT와 같다.
+const DEFAULT_API_PORT = 3790;
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
@@ -21,8 +21,37 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
   --workspace <dir>   워크스페이스 폴더 (<dir>/.harness-x/plugins 탐색)
   --plugins <dir>     추가 플러그인 루트 (여러 번 가능)
   --no-watch          핫리로드 끄기
+  --exit-with-stdin   stdin이 닫히면 종료 (데스크톱 앱 사이드카용)
+  --token-file <f>    토큰 파일 경로 (기본 ~/.harness-x/run/token)
+  환경 변수 HARNESS_X_TOKEN이 있으면 그 값을 세션 토큰으로 쓴다 (32자 이상)
   -h, --help          도움말
 `;
+
+/**
+ * stdin EOF 감시. 모듈 로딩 중에는 메인 이벤트 루프가 막혀 있을 수 있으므로(WSL /mnt/c에서 수십 초)
+ * 별도 스레드가 fd 0을 블로킹으로 읽는다. EOF면 메인에 알리고, 5초 안에 끝나지 않으면 프로세스를 강제 종료한다.
+ */
+const STDIN_WATCH = `
+const { readSync } = require('node:fs');
+const { parentPort } = require('node:worker_threads');
+const buf = Buffer.alloc(4096);
+const pause = new Int32Array(new SharedArrayBuffer(4));
+for (;;) {
+  let n;
+  try { n = readSync(0, buf, 0, buf.length, null); }
+  catch (e) { if (e && e.code === 'EAGAIN') { Atomics.wait(pause, 0, 0, 50); continue; } n = 0; }
+  if (n === 0) break;
+}
+parentPort.postMessage('eof');
+Atomics.wait(pause, 0, 0, 5000);
+process.kill(process.pid, 'SIGKILL');
+`;
+
+function watchStdinEof(onEof: () => void): void {
+  const w = new Worker(STDIN_WATCH, { eval: true });
+  w.once('message', onEof);
+  w.unref();
+}
 
 /** dist/cli.js → 저장소 루트 (packages/kernel/dist → ../../..) */
 function repoRoot(): string | undefined {
@@ -40,6 +69,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       workspace: { type: 'string' },
       plugins: { type: 'string', multiple: true },
       'no-watch': { type: 'boolean' },
+      'exit-with-stdin': { type: 'boolean' },
+      'token-file': { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
   });
@@ -53,6 +84,22 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     return 1;
   }
 
+  // 63.2 데스크톱 앱이 끝나면(파이프가 닫히면) 서버도 끝난다 — 기동 중이어도 곧바로 종료
+  const life: { shutdown?: () => Promise<void> } = {};
+  if (values['exit-with-stdin']) {
+    watchStdinEof(() => (life.shutdown ? void life.shutdown() : process.exit(0)));
+  }
+
+  const [{ startApiServer }, { EventLog }, { HookBus }, { HotReloader }, loaderMod, { WorkspaceStore }] =
+    await Promise.all([
+      import('./api/server.js'),
+      import('./event-log.js'),
+      import('./hooks.js'),
+      import('./hot-reload.js'),
+      import('./loader.js'),
+      import('./workspaces.js'),
+    ]);
+  const { PluginLoader, defaultPluginRoots, harnessHome } = loaderMod;
   const home = harnessHome();
   const log = new EventLog({ root: join(home, 'logs') });
   const hooks = new HookBus({ log });
@@ -77,14 +124,23 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
     const workspaces = new WorkspaceStore();
-    server = await startApiServer({ loader, log, host: values.host, port, workspaces });
+    const envToken = process.env.HARNESS_X_TOKEN;
+    server = await startApiServer({
+      loader,
+      log,
+      host: values.host,
+      port,
+      workspaces,
+      ...(envToken && envToken.length >= 32 ? { token: envToken } : {}),
+      ...(values['token-file'] ? { tokenFile: resolve(values['token-file']) } : {}),
+    });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
     log.close();
     return 1;
   }
 
-  let reloader: HotReloader | undefined;
+  let reloader: HotReloaderType | undefined;
   if (!values['no-watch']) {
     reloader = new HotReloader(loader, { roots });
     reloader.on('reloaded', (e: { id: string; version: string }) =>
@@ -106,14 +162,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     }) + '\n',
   );
 
-  const shutdown = async () => {
+  const stop = async () => {
     await reloader?.stop();
     await server.close();
     log.close();
     process.exit(0);
   };
-  process.once('SIGINT', () => void shutdown());
-  process.once('SIGTERM', () => void shutdown());
+  life.shutdown = stop;
+  process.once('SIGINT', () => void stop());
+  process.once('SIGTERM', () => void stop());
   return new Promise<number>(() => {}); // 서버가 살아 있는 동안 대기
 }
 
