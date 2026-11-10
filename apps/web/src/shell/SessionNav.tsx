@@ -26,7 +26,7 @@ export function SessionNav({ sessions, ...rest }: SessionNavProps) {
         value={f.status}
         onChange={(e) => setF({ ...f, status: e.target.value as SessionStatus })}
       >
-        <option value={ALL}>모든 상태</option>
+        <option value={ALL}>상태</option>
         {(Object.keys(SESSION_STATUS_LABEL) as SessionStatus[]).map((s) => (
           <option key={s} value={s}>
             {SESSION_STATUS_LABEL[s]}
@@ -38,13 +38,13 @@ export function SessionNav({ sessions, ...rest }: SessionNavProps) {
         value={f.project}
         onChange={(e) => setF({ ...f, project: e.target.value })}
       >
-        <option value={ALL}>모든 프로젝트</option>
+        <option value={ALL}>프로젝트</option>
         {opts.projects.map((p) => (
           <option key={p}>{p}</option>
         ))}
       </select>
       <select aria-label="엔진" value={f.engine} onChange={(e) => setF({ ...f, engine: e.target.value })}>
-        <option value={ALL}>모든 엔진</option>
+        <option value={ALL}>엔진</option>
         {opts.engines.map((p) => (
           <option key={p}>{p}</option>
         ))}

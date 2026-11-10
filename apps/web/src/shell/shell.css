@@ -17,6 +17,28 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+.hx-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* 좁은 화면: 상단 바는 이름·브랜치·실행 상태만 */
+.hx-shell--narrow .hx-topbar {
+  gap: var(--hx-space-2);
+  padding: 0 var(--hx-space-2);
+  overflow: hidden;
+}
+
+.hx-shell--narrow .hx-topbar__path,
+.hx-shell--narrow .hx-quotas {
+  display: none;
+}
+
+.hx-shell--narrow .hx-topbar__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .hx-shell__main {
   display: flex;
   flex-direction: column;
