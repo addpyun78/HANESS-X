@@ -1,0 +1,10 @@
+{
+  "id": "mcp-host",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Harness MCP Host",
+  "description": "체크리스트·경로 원장을 엔진에 MCP 도구(checklist.*, manifest.resolve)로 제공 (stdio + streamable HTTP)",
+  "main": "dist/index.js",
+  "provides": { "tool": ["mcp-host"] },
+  "permissions": { "fs": ["workspace:read", "workspace:write"], "net": ["127.0.0.1"], "shell": false }
+}
