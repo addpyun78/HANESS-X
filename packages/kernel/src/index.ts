@@ -6,3 +6,4 @@ export * from './hot-reload.js';
 export * from './api/server.js';
 export * from './secrets.js';
 export * from './engines-settings.js';
+export * from './auth-status.js';
