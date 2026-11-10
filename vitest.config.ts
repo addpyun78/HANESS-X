@@ -12,10 +12,17 @@ const alias = Object.fromEntries(
   ]),
 );
 
-const include = ['packages/**/*.test.ts', 'apps/**/*.test.ts', 'scripts/**/*.test.ts', 'tests/**/*.test.ts'];
+const include = [
+  'packages/**/*.test.ts',
+  'apps/**/*.test.{ts,tsx}',
+  'scripts/**/*.test.ts',
+  'tests/**/*.test.ts',
+];
 
 export default defineConfig({
   resolve: { alias },
+  // apps/web 컴포넌트 테스트(.tsx): React 자동 JSX 런타임. DOM 테스트는 파일 첫 줄 `// @vitest-environment jsdom`
+  esbuild: { jsx: 'automatic' },
   test: {
     include,
     exclude: ['**/node_modules/**', '**/dist/**'],
