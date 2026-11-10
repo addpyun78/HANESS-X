@@ -30,6 +30,19 @@ export interface ApiServerOptions {
   logger?: boolean;
   /** GET /api/agents 제공자 (예: agent-builder 레지스트리). 없으면 빈 목록 */
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
+  /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
+  approvals?: ApprovalHandler;
+}
+
+/** 승인 카드 버튼 (판정 사다리 L5): 동치 인정 / 이동 승인 / 실패 */
+export const API_APPROVAL_DECISIONS = ['equivalent', 'move', 'fail'] as const;
+export type ApiApprovalDecision = (typeof API_APPROVAL_DECISIONS)[number];
+
+/**
+ * 승인 요청 응답 처리기. 오류의 code가 APPROVAL_NOT_FOUND면 404, 그 밖의 오류는 409로 응답한다.
+ */
+export interface ApprovalHandler {
+  resolve(approvalId: string, decision: ApiApprovalDecision, meta: { by: string }): unknown;
 }
 
 export interface ApiServer {
@@ -125,6 +138,24 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   // 43.5 에이전트 목록 (agent-builder가 제공)
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
+
+  // 27.3 승인 카드 응답 {decision: equivalent|move|fail}
+  app.post('/api/approvals/:id', async (req, reply) => {
+    const { id } = req.params as { id: string };
+    if (!opts.approvals) return reply.code(404).send({ error: 'not_found' });
+    const decision = (req.body as { decision?: unknown } | undefined)?.decision;
+    if (typeof decision !== 'string' || !(API_APPROVAL_DECISIONS as readonly string[]).includes(decision))
+      return reply.code(400).send({ error: 'invalid_decision', allowed: API_APPROVAL_DECISIONS });
+    try {
+      const result = await opts.approvals.resolve(id, decision as ApiApprovalDecision, { by: 'api' });
+      return { id, decision, result };
+    } catch (err) {
+      const code = (err as { code?: unknown }).code;
+      const message = err instanceof Error ? err.message : String(err);
+      if (code === 'APPROVAL_NOT_FOUND') return reply.code(404).send({ error: 'not_found', message });
+      return reply.code(409).send({ error: 'approval_failed', ...(code ? { code } : {}), message });
+    }
+  });
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {

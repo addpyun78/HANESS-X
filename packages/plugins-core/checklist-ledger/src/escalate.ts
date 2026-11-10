@@ -19,7 +19,8 @@ import {
 } from '@harness-x/protocol';
 import { z } from 'zod';
 import { readJson, withFileLock, writeFileAtomic } from './fs-util.js';
-import type { EventSink } from './ledger.js';
+import type { ChecklistLedger, EventSink } from './ledger.js';
+import type { ItemStatus, Verdict, VerdictKind } from './schema.js';
 
 /**
  * 판정 사다리 L5 — 상위 검증 (T-027)
@@ -285,6 +286,8 @@ export interface EscalatorOptions {
   /** L5 다른 엔진 (없으면 바로 사람에게) */
   engines?: EngineClientFactory;
   thresholds?: EscalationThresholds;
+  /** 체크리스트 원장 — 결정을 항목 상태에 반영 (27.3) */
+  ledger?: ChecklistLedger;
   now?: () => Date;
   idGen?: () => string;
 }
@@ -296,6 +299,8 @@ export type EscalationOutcome =
       engineId: string;
       decision: ApprovalDecision;
       engine: OtherEngineAnswer;
+      /** 원장이 있으면 결정을 반영한 결과 */
+      resolution?: ApprovalResolution;
     }
   | { status: 'pending'; approvalId: string; event: LadderApprovalRequestEvent; engine?: OtherEngineAnswer };
 
@@ -304,6 +309,22 @@ export function engineDecision(a: OtherEngineAnswer): ApprovalDecision | null {
   if (a.decision === 'fail') return 'fail';
   if (a.decision === 'accept') return a.deviation === 'relocated-ok' ? 'move' : 'equivalent';
   return null;
+}
+
+export const APPROVAL_EVIDENCE_KIND = 'approval_resolution';
+
+const VERDICT_OF: Record<ApprovalDecision, VerdictKind> = {
+  equivalent: 'equal',
+  move: 'relocated',
+  fail: 'wrong',
+};
+
+export interface ApprovalResolution {
+  itemId: string;
+  decision: ApprovalDecision;
+  /** 반영 후 항목 상태 */
+  status: ItemStatus;
+  verdict: Verdict;
 }
 
 export class Escalator {
@@ -329,11 +350,65 @@ export class Escalator {
         ...(opts.signal ? { signal: opts.signal } : {}),
       });
       const decision = engineDecision(engine);
-      if (decision && engine.engineId)
-        return { status: 'decided', by: 'engine', engineId: engine.engineId, decision, engine };
+      if (decision && engine.engineId) {
+        const by = `engine:${engine.engineId}`;
+        const resolution = this.opts.ledger ? this.apply(c, decision, { by }) : undefined;
+        return {
+          status: 'decided',
+          by: 'engine',
+          engineId: engine.engineId,
+          decision,
+          engine,
+          ...(resolution ? { resolution } : {}),
+        };
+      }
     }
     const { approvalId, event } = this.requestApproval(c, engine);
     return { status: 'pending', approvalId, event, ...(engine ? { engine } : {}) };
+  }
+
+  /**
+   * 27.3 승인 카드 응답 (커널 API POST /api/approvals/:id의 ApprovalHandler)
+   * 없는 id → ApprovalNotFoundError(404), 이미 처리됨 → ApprovalResolvedError(409)
+   */
+  resolve(approvalId: string, decision: ApprovalDecision, meta: { by?: string } = {}): ApprovalResolution {
+    const a = this.approvals.get(approvalId);
+    if (a.status !== 'pending') throw new ApprovalResolvedError(approvalId);
+    const by = meta.by ?? 'human';
+    const res = this.apply(a.case, ApprovalDecisionSchema.parse(decision), { by, approvalId });
+    this.approvals.put({ ...a, status: 'resolved', decision, by, resolvedAt: this.now().toISOString() });
+    return res;
+  }
+
+  /** 결정 → 항목 상태: equivalent·move → done, fail → failed (verdict L5 + evidence) */
+  apply(
+    c: EscalationCase,
+    decision: ApprovalDecision,
+    meta: { by: string; approvalId?: string },
+  ): ApprovalResolution {
+    const ledger = this.opts.ledger;
+    if (!ledger) throw new Error('Escalator에 ledger가 없어 결정을 반영할 수 없습니다');
+    const verdictKind: VerdictKind = VERDICT_OF[decision];
+    const label = APPROVAL_BUTTONS.find((b) => b.id === decision)!.label;
+    const verdict: Verdict = {
+      level: 5,
+      verdict: verdictKind,
+      confidence: 1,
+      reason: `L5 ${label} (${meta.by}): ${c.expectedPath} ↔ ${c.actualPath}`,
+    };
+    const evidence = {
+      kind: APPROVAL_EVIDENCE_KIND,
+      summary: verdict.reason,
+      decision,
+      by: meta.by,
+      ...(meta.approvalId ? { approvalId: meta.approvalId } : {}),
+      expectedPath: c.expectedPath,
+      actualPath: c.actualPath,
+    };
+    const status: ItemStatus = decision === 'fail' ? 'failed' : 'done';
+    if (ledger.item(c.itemId).status === 'doing') ledger.transition(c.itemId, 'verifying');
+    ledger.transition(c.itemId, status, { verdict, evidence });
+    return { itemId: c.itemId, decision, status, verdict };
   }
 
   /** 승인 카드: approval_request(예상 경로/실제 경로/근거/버튼 3개) 이벤트 + 저장 */
