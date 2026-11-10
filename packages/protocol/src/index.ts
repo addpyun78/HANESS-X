@@ -1,1 +1,1 @@
-export const name = '@harness-x/protocol';
+export * from './events.js';
