@@ -8,6 +8,10 @@ export * from './broker.js';
 export * from './scaffold.js';
 export * from './engine.js';
 export * from './routes.js';
+export * from './check.js';
+export * from './sandbox.js';
+export * from './install.js';
+export * from './forge.js';
 
 /** 이 플러그인 폴더 (src/와 dist/ 모두 한 단계 아래) */
 export const FORGE_PLUGIN_DIR = fileURLToPath(new URL('..', import.meta.url));

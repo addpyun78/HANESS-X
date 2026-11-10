@@ -14,12 +14,13 @@ describe('플러그인 탐색', () => {
     expect(found).toEqual([{ dir: join(env.wsRoot, 'hello'), origin: 'workspace' }]);
   });
 
-  it('기본 루트 3종', () => {
+  it('기본 루트 4종 (Forge 설치 폴더 포함)', () => {
     env = setup();
     const roots = defaultPluginRoots({ workspace: '/w', repoRoot: '/r', home: '/h' });
     expect(roots.map((r) => r.dir)).toEqual([
       join('/w', '.harness-x', 'plugins'),
       join('/h', 'plugins'),
+      join('/h', 'plugins', 'forge'),
       join('/r', 'packages', 'plugins-core'),
     ]);
   });
