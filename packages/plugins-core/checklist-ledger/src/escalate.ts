@@ -19,7 +19,9 @@ import {
 } from '@harness-x/protocol';
 import { z } from 'zod';
 import { readJson, withFileLock, writeFileAtomic } from './fs-util.js';
+import { learnEquivalence, type LearnEquivalenceResult } from './learn.js';
 import type { ChecklistLedger, EventSink } from './ledger.js';
+import type { ManifestStore } from './manifest.js';
 import type { ItemStatus, Verdict, VerdictKind } from './schema.js';
 
 /**
@@ -288,6 +290,10 @@ export interface EscalatorOptions {
   thresholds?: EscalationThresholds;
   /** 체크리스트 원장 — 결정을 항목 상태에 반영 (27.3) */
   ledger?: ChecklistLedger;
+  /** 경로 원장 — 동치 인정 시 별칭(27.4), 이동 승인 시 경로 갱신(27.5) */
+  manifest?: ManifestStore;
+  /** 프로젝트 glossary.json — 동치 인정 시 단어 별칭 추가 (27.4) */
+  glossaryFile?: string;
   now?: () => Date;
   idGen?: () => string;
 }
@@ -325,6 +331,8 @@ export interface ApprovalResolution {
   /** 반영 후 항목 상태 */
   status: ItemStatus;
   verdict: Verdict;
+  /** 동치 인정 시 사전 학습 결과 (27.4) */
+  learned?: LearnEquivalenceResult;
 }
 
 export class Escalator {
@@ -405,10 +413,22 @@ export class Escalator {
       expectedPath: c.expectedPath,
       actualPath: c.actualPath,
     };
+    // 27.4 동치 인정 → manifest 별칭 + glossary 단어 별칭 (다음 판정은 L2에서 끝난다)
+    const learned =
+      decision === 'equivalent' && (this.opts.manifest || this.opts.glossaryFile)
+        ? learnEquivalence({
+            expectedPath: c.expectedPath,
+            actualPath: c.actualPath,
+            reason: `L5 동치 인정 (${meta.by}): ${c.expectedPath} ≡ ${c.actualPath}`,
+            artifactId: c.artifactId,
+            ...(this.opts.manifest ? { manifest: this.opts.manifest } : {}),
+            ...(this.opts.glossaryFile ? { glossaryFile: this.opts.glossaryFile } : {}),
+          })
+        : undefined;
     const status: ItemStatus = decision === 'fail' ? 'failed' : 'done';
     if (ledger.item(c.itemId).status === 'doing') ledger.transition(c.itemId, 'verifying');
     ledger.transition(c.itemId, status, { verdict, evidence });
-    return { itemId: c.itemId, decision, status, verdict };
+    return { itemId: c.itemId, decision, status, verdict, ...(learned ? { learned } : {}) };
   }
 
   /** 승인 카드: approval_request(예상 경로/실제 경로/근거/버튼 3개) 이벤트 + 저장 */
