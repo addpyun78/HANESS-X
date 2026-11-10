@@ -5,3 +5,4 @@ export * from './version.js';
 export * from './min-versions.js';
 export * from './cache.js';
 export * from './scan.js';
+export * from './wsl.js';
