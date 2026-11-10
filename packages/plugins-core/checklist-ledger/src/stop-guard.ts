@@ -11,6 +11,7 @@ import {
 import { z } from 'zod';
 import { ChecklistLedger, currentItemOf, type EventSink } from './ledger.js';
 import { ITEM_STATUSES, type Checklist, type ChecklistItem } from './schema.js';
+import type { SessionBudget, StallDetector } from './stall.js';
 
 /**
  * 종료 차단 (T-028)
@@ -372,6 +373,10 @@ export interface StopGuardRunOptions {
   preparePrompt?: (prompt: string, turn: number) => string;
   /** 네이티브 브리지 주입 (없으면 주입 안 함) */
   bridge?: { command: string };
+  /** 29.3 정체 감지 (있으면 무진척 처리를 맡는다: 2턴 접근 변경 지시, 3턴 blocked) */
+  stall?: StallDetector;
+  /** 29.4 세션 상한 (초과 시 turn_end(max_turns)를 내고 일시정지) */
+  budget?: SessionBudget;
 }
 
 /**
@@ -389,6 +394,30 @@ export async function* runWithStopGuard(o: StopGuardRunOptions): AsyncGenerator<
     let resumeId = o.run.resumeId;
     let stopHookActive = false;
     for (let turn = 0; ; turn++) {
+      const pause = o.budget?.check();
+      if (pause?.paused) {
+        yield {
+          id: randomUUID(),
+          ts: new Date().toISOString(),
+          sessionId: o.run.sessionId,
+          engineId: o.engine.id,
+          type: 'error',
+          code: 'session_limit',
+          message: pause.reason,
+          retryable: true,
+        };
+        yield {
+          id: randomUUID(),
+          ts: new Date().toISOString(),
+          sessionId: o.run.sessionId,
+          engineId: o.engine.id,
+          type: 'turn_end',
+          reason: 'max_turns',
+        };
+        return;
+      }
+      o.budget?.startTurn();
+      o.stall?.beginTurn();
       const run = o.engine.run({
         ...o.run,
         prompt: o.preparePrompt ? o.preparePrompt(prompt, turn) : prompt,
@@ -397,19 +426,23 @@ export async function* runWithStopGuard(o: StopGuardRunOptions): AsyncGenerator<
       let last: HarnessEvent | undefined;
       for await (const e of run.events) {
         last = e;
+        o.budget?.observe(e);
         yield e;
       }
       await run.done;
       resumeId = run.engineSessionId() ?? resumeId;
       if (strategy !== 'harness-reinject') return;
       if (last?.type !== 'turn_end' || last.reason !== 'completed') return;
+      const stall = o.stall?.observeTurn();
+      // 정체 감지가 있으면 무진척 판단은 정체 감지가 맡는다 (가드는 항상 "처음 멈춤"으로 본다)
+      const active = o.stall ? false : stopHookActive;
       const outcome = o.hooks
         ? await o.hooks.runBlocking('stop.before', {
             sessionId: o.run.sessionId,
             engineId: o.engine.id,
-            stopHookActive,
+            stopHookActive: active,
           })
-        : o.guard.decide(stopHookActive);
+        : o.guard.decide(active);
       if (outcome.decision === 'allow') return;
       const st = o.guard.status();
       yield {
@@ -425,6 +458,7 @@ export async function* runWithStopGuard(o: StopGuardRunOptions): AsyncGenerator<
       };
       if (turn + 1 >= max) return;
       prompt = outcome.reason ?? st.next?.instruction ?? '체크리스트의 다음 항목을 진행하세요.';
+      if (stall?.action === 'change_approach') prompt = `${stall.instruction}\n\n${prompt}`;
       stopHookActive = true;
     }
   } finally {
