@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { ForgeCard, isForgeCard } from '../forge/ForgeCards.js';
 import { usePanelActions } from '../panels/panel-actions.js';
 import type { ChatBlock } from './blocks.js';
 import { StopBlockCard } from './StopBlockCard.js';
@@ -68,6 +69,8 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
         <StopBlockCard remaining={b.remaining} nextItemId={b.nextItemId} nextItemTitle={b.nextItemTitle} />
       );
     case 'approval':
+      // Forge 카드(질문·spec 확인·설치)는 선택지 버튼 UI로
+      if (isForgeCard(b.approvalKind)) return <ForgeCard block={b} />;
       return (
         <div className="hx-approval" role="group" aria-label={`승인 요청: ${b.title}`}>
           <div className="hx-approval__head">

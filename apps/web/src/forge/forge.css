@@ -1,0 +1,123 @@
+/* Forge 카드: 질문 · spec 확인 · 설치 */
+.hx-forge {
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-accent);
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent-soft);
+}
+
+.hx-forge__head {
+  display: flex;
+  gap: var(--hx-space-2);
+  align-items: center;
+  font-size: var(--hx-font-12);
+  color: var(--hx-text-muted);
+}
+
+.hx-forge__title {
+  margin: var(--hx-space-1) 0 var(--hx-space-2);
+  color: var(--hx-text);
+}
+
+.hx-forge__choices,
+.hx-forge__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+  margin-top: var(--hx-space-2);
+}
+
+.hx-forge__choice,
+.hx-forge__submit {
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font-size: var(--hx-font-13);
+  cursor: pointer;
+}
+
+.hx-forge__choice[data-suggested] {
+  border-color: var(--hx-accent);
+}
+
+.hx-forge__choice[aria-pressed='true'],
+.hx-forge__submit {
+  background: var(--hx-accent);
+  color: var(--hx-on-accent);
+}
+
+.hx-forge__choice:disabled,
+.hx-forge__submit:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.hx-forge__text {
+  flex: 1;
+  min-width: 12rem;
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+}
+
+.hx-forge__spec {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--hx-space-1) var(--hx-space-3);
+  margin: 0;
+  font-size: var(--hx-font-13);
+}
+
+.hx-forge__spec dt {
+  color: var(--hx-text-muted);
+}
+
+.hx-forge__spec dd {
+  margin: 0;
+}
+
+.hx-forge__trust {
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-warning);
+  border-radius: var(--hx-radius);
+  background: var(--hx-warning-soft);
+  color: var(--hx-text);
+}
+
+.hx-forge__warn {
+  margin: var(--hx-space-1) 0;
+  padding: var(--hx-space-2);
+  border-radius: var(--hx-radius);
+  font-size: var(--hx-font-13);
+}
+
+/* 네트워크·셸 권한: 빨간 경고 */
+.hx-forge__warn--danger {
+  border: 1px solid var(--hx-danger);
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+}
+
+.hx-forge__perms {
+  margin: var(--hx-space-1) 0;
+  font-size: var(--hx-font-13);
+}
+
+.hx-forge__files {
+  margin: 0;
+  padding-left: var(--hx-space-4);
+  font-size: var(--hx-font-12);
+}
+
+.hx-forge__diff {
+  max-height: 16rem;
+  overflow: auto;
+  margin: var(--hx-space-1) 0;
+  padding: var(--hx-space-2);
+  background: var(--hx-surface-2);
+  font-family: var(--hx-font-mono);
+}
