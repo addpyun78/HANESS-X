@@ -12,7 +12,8 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "gen:schema": "pnpm build && node scripts/gen-schema.mjs"
   },
   "dependencies": {
     "zod": "^4.6.7"
