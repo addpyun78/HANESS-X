@@ -1,15 +1,53 @@
 # Create the HARNESS-X shortcut on the Desktop (ASCII only: Windows PowerShell 5.1 reads BOM-less files as ANSI)
+#
+# If the desktop app (T-063, Tauri) is installed or built, HARNESS-X.lnk points to it and a second
+# shortcut "HARNESS-X (browser).lnk" keeps the browser launcher. Otherwise HARNESS-X.lnk is the browser launcher.
+#   -Browser     always use the browser launcher for HARNESS-X.lnk
+#   -App <exe>   use this desktop exe
+param(
+  [switch]$Browser,
+  [string]$App = ''
+)
 $root = 'C:\agentCli\harness-x'
 $desktop = [Environment]::GetFolderPath('Desktop')
 $ws = New-Object -ComObject WScript.Shell
-$path = Join-Path $desktop 'HARNESS-X.lnk'
-$lnk = $ws.CreateShortcut($path)
-$lnk.TargetPath = "$root\scripts\launcher\start-harness.cmd"
-$lnk.WorkingDirectory = $root
-$lnk.IconLocation = "$root\assets\brand\harness-x.ico,0"
-$lnk.Description = 'HARNESS-X'
-$lnk.WindowStyle = 1
-$lnk.Save()
-$chk = $ws.CreateShortcut($path)
-Write-Output ("target=" + $chk.TargetPath)
-Write-Output ("icon=" + $chk.IconLocation)
+$icon = "$root\assets\brand\harness-x.ico,0"
+$launcher = "$root\scripts\launcher\start-harness.cmd"
+
+function Find-DesktopApp {
+  $candidates = @(
+    (Join-Path $env:LOCALAPPDATA 'HARNESS-X\HARNESS-X.exe'),            # NSIS (per-user)
+    (Join-Path $env:LOCALAPPDATA 'Programs\HARNESS-X\HARNESS-X.exe'),
+    (Join-Path $env:ProgramFiles 'HARNESS-X\HARNESS-X.exe'),             # MSI
+    'C:\agentCli\harness-x-desktop-build\apps\desktop\src-tauri\target\release\harness-x-desktop.exe'  # built, not installed
+  )
+  foreach ($c in $candidates) { if ($c -and (Test-Path $c)) { return $c } }
+  return $null
+}
+
+function New-Shortcut($name, $target, $workdir, $iconLocation) {
+  $path = Join-Path $desktop $name
+  $lnk = $ws.CreateShortcut($path)
+  $lnk.TargetPath = $target
+  $lnk.WorkingDirectory = $workdir
+  $lnk.IconLocation = $iconLocation
+  $lnk.Description = 'HARNESS-X'
+  $lnk.WindowStyle = 1
+  $lnk.Save()
+  $chk = $ws.CreateShortcut($path)
+  Write-Output ("shortcut=" + $path)
+  Write-Output ("target=" + $chk.TargetPath)
+  Write-Output ("icon=" + $chk.IconLocation)
+}
+
+$exe = $null
+if (-not $Browser) {
+  if ($App) { $exe = $App } else { $exe = Find-DesktopApp }
+}
+
+if ($exe) {
+  New-Shortcut 'HARNESS-X.lnk' $exe (Split-Path $exe) ($exe + ',0')
+  New-Shortcut 'HARNESS-X (browser).lnk' $launcher $root $icon
+} else {
+  New-Shortcut 'HARNESS-X.lnk' $launcher $root $icon
+}
