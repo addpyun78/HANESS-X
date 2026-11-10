@@ -1,8 +1,6 @@
 import type { HarnessEvent } from './events.js';
 import type { AuthMode } from './pipeline.js';
 
-export type { AuthMode };
-
 /**
  * 엔진 어댑터 공통 인터페이스
  * Claude Code·Codex·Antigravity·로컬 LLM 등 모든 엔진은 이 형태로 하네스에 꽂힌다.
