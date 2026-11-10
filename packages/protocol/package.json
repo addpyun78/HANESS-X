@@ -16,6 +16,7 @@
     "gen:schema": "pnpm build && node scripts/gen-schema.mjs"
   },
   "dependencies": {
+    "yaml": "^2.9.1",
     "zod": "^4.6.7"
   }
 }
