@@ -17,5 +17,9 @@
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
     "@harness-x/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@harness-x/verifier-jev": "workspace:*",
+    "@harness-x/verifier-local": "workspace:*"
   }
 }
