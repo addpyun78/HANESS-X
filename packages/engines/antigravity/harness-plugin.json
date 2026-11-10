@@ -1,0 +1,16 @@
+{
+  "id": "engine-antigravity",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Antigravity",
+  "description": "Antigravity CLI(agy -p) 엔진 어댑터",
+  "main": "dist/index.js",
+  "provides": {
+    "engine": ["antigravity"]
+  },
+  "permissions": {
+    "fs": ["workspace:read", "workspace:write"],
+    "net": [],
+    "shell": true
+  }
+}
