@@ -8,6 +8,7 @@ import { EventLog } from './event-log.js';
 import { HookBus } from './hooks.js';
 import { HotReloader } from './hot-reload.js';
 import { PluginLoader, defaultPluginRoots, harnessHome } from './loader.js';
+import { WorkspaceStore } from './workspaces.js';
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
@@ -74,7 +75,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   }
   let server;
   try {
-    server = await startApiServer({ loader, log, host: values.host, port });
+    // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
+    const workspaces = new WorkspaceStore();
+    server = await startApiServer({ loader, log, host: values.host, port, workspaces });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
     log.close();

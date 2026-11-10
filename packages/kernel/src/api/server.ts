@@ -13,6 +13,7 @@ import {
   singleFlight,
   type FolderPicker,
 } from '../native/folder-picker.js';
+import { WorkspaceRejectedError, WorkspaceStore } from '../workspaces.js';
 
 /**
  * 로컬 API 서버
@@ -39,6 +40,8 @@ export interface ApiServerOptions {
   agents?: () => AgentSummary[] | Promise<AgentSummary[]>;
   /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
   folderPicker?: Pick<FolderPicker, 'pick'>;
+  /** 워크스페이스 등록·최근 목록 (기본: ~/.harness-x/workspaces.json, 처음 쓸 때 만든다) */
+  workspaces?: WorkspaceStore;
 }
 
 export interface ApiServer {
@@ -152,6 +155,35 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       if (err instanceof PickerUnsupportedError)
         return reply.code(501).send({ error: 'unsupported_platform', message });
       return reply.code(500).send({ error: 'picker_failed', message });
+    }
+  });
+
+  // 35.x 워크스페이스: 검증·등록·최근 목록·핀
+  let store = opts.workspaces;
+  const ws = () => (store ??= new WorkspaceStore());
+  app.get('/api/workspaces', async () => {
+    const current = ws().current();
+    return { ...(current ? { current } : {}), recent: ws().recent(), cwd: ws().sessionCwd() };
+  });
+  app.post('/api/workspaces/open', async (req, reply) => {
+    const { path } = (req.body ?? {}) as { path?: unknown };
+    try {
+      const workspace = ws().open(typeof path === 'string' ? path : '');
+      return { workspace, recent: ws().recent() };
+    } catch (err) {
+      if (err instanceof WorkspaceRejectedError)
+        return reply.code(400).send({ error: err.code, message: err.message });
+      throw err;
+    }
+  });
+  app.post('/api/workspaces/pin', async (req, reply) => {
+    const { path, pinned } = (req.body ?? {}) as { path?: unknown; pinned?: unknown };
+    try {
+      return { recent: ws().pin(String(path ?? ''), pinned === true) };
+    } catch (err) {
+      if (err instanceof WorkspaceRejectedError)
+        return reply.code(404).send({ error: err.code, message: err.message });
+      throw err;
     }
   });
 
