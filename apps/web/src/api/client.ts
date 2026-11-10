@@ -181,6 +181,19 @@ export class HarnessApiClient {
     return u.toString();
   }
 
+  /** 37.2 WS /ws/terminal (node-pty 셸, cwd = 워크스페이스) */
+  terminalUrl(q: { cols?: number; rows?: number } = {}): string {
+    const u = new URL(this.baseUrl.replace(/^http/, 'ws') + '/ws/terminal');
+    u.searchParams.set('token', this.token);
+    if (q.cols) u.searchParams.set('cols', String(q.cols));
+    if (q.rows) u.searchParams.set('rows', String(q.rows));
+    return u.toString();
+  }
+
+  openSocket(url: string): WebSocket {
+    return new this.WS(url);
+  }
+
   events(opts: EventStreamOptions): EventStream {
     let status: ConnectionStatus = 'connecting';
     let ws: WebSocket | undefined;

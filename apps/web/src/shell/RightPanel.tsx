@@ -6,13 +6,27 @@ export interface RightPanelProps {
   onOrderChange: (order: PanelTabId[]) => void;
   /** 탭별 내용 (없으면 빈 자리 안내) */
   content?: Partial<Record<PanelTabId, ReactNode>>;
+  /** 바깥에서 탭을 고를 때 (예: Diff 열기). 생략하면 내부 상태 */
+  active?: PanelTabId;
+  onActiveChange?: (id: PanelTabId) => void;
 }
 
 const LABEL = Object.fromEntries(PANEL_TABS.map((t) => [t.id, t.label])) as Record<PanelTabId, string>;
 
 /** 우측 패널: 탭을 끌어서 순서를 바꾼다 (키보드: Alt+←/→) */
-export function RightPanel({ order, onOrderChange, content = {} }: RightPanelProps) {
-  const [active, setActive] = useState<PanelTabId>(order[0] ?? 'checklist');
+export function RightPanel({
+  order,
+  onOrderChange,
+  content = {},
+  active: activeProp,
+  onActiveChange,
+}: RightPanelProps) {
+  const [activeState, setActiveState] = useState<PanelTabId>(order[0] ?? 'checklist');
+  const active = activeProp ?? activeState;
+  const setActive = (id: PanelTabId) => {
+    setActiveState(id);
+    onActiveChange?.(id);
+  };
   const [over, setOver] = useState<PanelTabId | undefined>();
   const dragId = useRef<PanelTabId | undefined>(undefined);
 

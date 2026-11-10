@@ -1,0 +1,120 @@
+/* 설정 > 엔진 — 색은 토큰 변수만 */
+
+.hx-engines {
+  padding: var(--hx-space-5);
+  overflow: auto;
+}
+
+.hx-engines__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-3);
+  margin-bottom: var(--hx-space-4);
+}
+
+.hx-engines__head h2 {
+  margin: 0;
+  font-size: var(--hx-font-20);
+}
+
+.hx-engines__scanned {
+  margin-left: auto;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-engines__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--hx-space-4);
+}
+
+.hx-engine-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-4);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  font-size: var(--hx-font-13);
+}
+
+.hx-engine-card[data-installed='false'] {
+  background: var(--hx-bg);
+  color: var(--hx-text-faint);
+  border-style: dashed;
+}
+
+.hx-engine-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-engine-card__locs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-engine-card__locs li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-engine-card__mode {
+  display: flex;
+  gap: var(--hx-space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.hx-engine-card__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-engine-card__install {
+  color: var(--hx-accent);
+}
+
+.hx-engine-card__error {
+  margin: 0;
+  color: var(--hx-danger);
+}
+
+.hx-engine-card__note {
+  margin: 0;
+  color: var(--hx-text-muted);
+}
+
+.hx-badge {
+  padding: 0 var(--hx-space-1);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  font-size: var(--hx-font-12);
+}
+
+.hx-badge--muted {
+  color: var(--hx-text-faint);
+}
+
+.hx-badge--loggedIn {
+  border-color: var(--hx-success);
+  color: var(--hx-success);
+}
+
+.hx-badge--loggedOut,
+.hx-badge--warn {
+  border-color: var(--hx-warning);
+  color: var(--hx-warning);
+}
+
+.hx-badge--unknown {
+  color: var(--hx-text-muted);
+}

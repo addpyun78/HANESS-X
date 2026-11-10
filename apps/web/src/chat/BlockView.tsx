@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { usePanelActions } from '../panels/panel-actions.js';
 import type { ChatBlock } from './blocks.js';
 import { StopBlockCard } from './StopBlockCard.js';
 import { CollapsibleCard, formatValue, ItemTag, ToolCard, truncate } from './ToolCard.js';
@@ -37,21 +38,7 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
         </CollapsibleCard>
       );
     case 'file':
-      return (
-        <CollapsibleCard
-          className={`hx-card--file hx-change--${b.change}`}
-          icon="✎"
-          title={
-            <>
-              <span className="hx-change">{CHANGE_LABEL[b.change]}</span>{' '}
-              <span className="hx-mono">{b.fromPath ? `${b.fromPath} → ${b.path}` : b.path}</span>
-            </>
-          }
-          itemId={b.itemId}
-        >
-          {b.diff ? <pre className="hx-pre hx-diff">{b.diff}</pre> : undefined}
-        </CollapsibleCard>
-      );
+      return <FileCard block={b} />;
     case 'usage':
       return (
         <div className="hx-meta" aria-label="사용량">
@@ -105,3 +92,43 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
       );
   }
 });
+
+/** 파일 변경 카드 — 우측 패널이 연결돼 있으면 "Diff 열기"로 Monaco diff 패널을 연다 */
+function FileCard({ block: b }: { block: Extract<ChatBlock, { kind: 'file' }> }) {
+  const panel = usePanelActions();
+  return (
+    <CollapsibleCard
+      className={`hx-card--file hx-change--${b.change}`}
+      icon="✎"
+      title={
+        <>
+          <span className="hx-change">{CHANGE_LABEL[b.change]}</span>{' '}
+          <span className="hx-mono">{b.fromPath ? `${b.fromPath} → ${b.path}` : b.path}</span>
+        </>
+      }
+      itemId={b.itemId}
+      actions={
+        panel && (
+          <button
+            type="button"
+            className="hx-icon-btn hx-card__action"
+            aria-label={`Diff 열기: ${b.path}`}
+            onClick={() =>
+              panel.openDiff({
+                path: b.path,
+                change: b.change,
+                ...(b.fromPath ? { fromPath: b.fromPath } : {}),
+                ...(b.diff !== undefined ? { diff: b.diff } : {}),
+                ...(b.itemId ? { itemId: b.itemId } : {}),
+              })
+            }
+          >
+            Diff
+          </button>
+        )
+      }
+    >
+      {b.diff ? <pre className="hx-pre hx-diff">{b.diff}</pre> : undefined}
+    </CollapsibleCard>
+  );
+}

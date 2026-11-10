@@ -3,8 +3,11 @@ import { startApiServer, type ApiServer, type ApiServerOptions } from '../src/ap
 import { setup } from './plugin-fixtures.js';
 
 export async function bootApi(
-  opts: { host?: string; server?: Partial<Omit<ApiServerOptions, 'loader' | 'log'>> } = {},
+  opts: { host?: string; server?: Partial<Omit<ApiServerOptions, 'loader' | 'log'>> } & Partial<
+    Omit<ApiServerOptions, 'loader' | 'log'>
+  > = {},
 ) {
+  const { server: serverOpts, ...rest } = opts;
   const env = setup();
   env.copyHello();
   const loader = env.mk();
@@ -12,10 +15,10 @@ export async function bootApi(
   const server: ApiServer = await startApiServer({
     loader,
     log: env.log,
-    port: 0,
-    host: opts.host,
     tokenFile: join(env.home, 'run', 'token'),
-    ...opts.server,
+    ...rest,
+    ...serverOpts,
+    port: 0,
   });
   return {
     env,

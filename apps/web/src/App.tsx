@@ -16,10 +16,15 @@ import type { RecentProject } from './composer/PlusMenu.js';
 import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
 import { navigate } from './router.js';
+import { PanelActionsContext } from './panels/panel-actions.js';
+import { usePanels } from './panels/usePanels.js';
+import { enginesApi } from './settings/Engines/api.js';
+import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { SessionNav } from './shell/SessionNav.js';
-import type { RunState, SessionSummary, Workspace } from './shell/types.js';
+import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
+import { useQuota } from './shell/useQuota.js';
 
 const DEMO_ENGINES: EngineOption[] = [
   { id: 'claude-code', label: 'Claude Code', available: true },
@@ -55,6 +60,11 @@ export function App() {
   const [client, setClient] = useState<HarnessApiClient>();
   const mobile = useIsMobile();
   const desktop = useMemo(() => isTauri(), []);
+  const panels = usePanels({ events, client, loginEngines: engines });
+  const [view, setView] = useState<'chat' | NavTarget>('chat');
+  const available = useMemo(() => engines.filter((e) => e.available), [engines]);
+  const quotas = useQuota(client, events, available);
+  const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
 
   useEffect(() => {
     if (demo) return;
@@ -140,46 +150,59 @@ export function App() {
   };
 
   return (
-    <AppShell
-      topBar={{
-        workspace,
-        runState,
-        quotas: engines
-          .filter((e) => e.available)
-          .map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
-      }}
-      sidebar={
-        <SessionNav
-          sessions={sessions}
-          activeSessionId={sessions[0]?.id}
-          onNavigate={(to) => to === 'agent-builder' && navigate('/builder/new')}
-        />
-      }
-      main={
-        <>
-          <ChatStream events={events} mode={mode} onModeChange={setMode} />
-          {wsError && (
-            <div className="hx-ws-error" role="alert">
-              {wsError}
-            </div>
-          )}
-          <Composer
-            engines={engines}
-            plusMenu={{
-              mobile,
-              recent,
-              onOpenFolder: () => void openFolder(),
-              onPickRecent: (p) => void openWorkspace(p.path),
-              onTogglePin: (p) => void togglePin(p),
+    <PanelActionsContext.Provider value={panels.actions}>
+      <AppShell
+        panelContent={panels.content}
+        panelActive={panels.active}
+        onPanelActiveChange={panels.setActive}
+        topBar={{
+          workspace,
+          runState,
+          quotas:
+            quotas ??
+            available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
+        }}
+        sidebar={
+          <SessionNav
+            sessions={sessions}
+            activeSessionId={sessions[0]?.id}
+            onNavigate={(to) => {
+              if (to === 'agent-builder') navigate('/builder/new');
+              else setView(to === 'engines' ? 'engines' : 'chat');
             }}
-            agents={agents}
-            onSend={() => {
-              /* 턴 전송 API는 이후 티켓에서 연결 */
-            }}
-            verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
+            onSelectSession={() => setView('chat')}
           />
-        </>
-      }
-    />
+        }
+        main={
+          view === 'engines' && engineSettings ? (
+            <EnginesSettings api={engineSettings} />
+          ) : (
+            <>
+              <ChatStream events={events} mode={mode} onModeChange={setMode} />
+              {wsError && (
+                <div className="hx-ws-error" role="alert">
+                  {wsError}
+                </div>
+              )}
+              <Composer
+                engines={engines}
+                plusMenu={{
+                  mobile,
+                  recent,
+                  onOpenFolder: () => void openFolder(),
+                  onPickRecent: (p) => void openWorkspace(p.path),
+                  onTogglePin: (p) => void togglePin(p),
+                }}
+                agents={agents}
+                onSend={() => {
+                  /* 턴 전송 API는 이후 티켓에서 연결 */
+                }}
+                verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
+              />
+            </>
+          )
+        }
+      />
+    </PanelActionsContext.Provider>
   );
 }

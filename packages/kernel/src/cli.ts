@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import type { EngineAdapter } from '@harness-x/protocol';
+import type { EngineScanSnapshot } from './api/engines-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -121,7 +123,10 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const { PluginLoader, defaultPluginRoots, harnessHome } = loaderMod;
 
   // 엔진 CLI 구독 토큰 파일을 하네스 프로세스가 읽지 못하게 막는다
-  const { installTokenFileGuard } = await import('./secrets.js');
+  const [{ installTokenFileGuard, SecretStore }, { getLoginStatus }] = await Promise.all([
+    import('./secrets.js'),
+    import('./auth-status.js'),
+  ]);
   installTokenFileGuard();
 
   const home = harnessHome();
@@ -151,6 +156,14 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     process.stderr.write(`잘못된 포트: ${values.port}\n`);
     return 1;
   }
+  const workspace = resolve(values.workspace ?? process.cwd());
+  /** 로드된 엔진 플러그인이 내보낸 어댑터 (`export const engines: EngineAdapter[]`) */
+  const adapters = () =>
+    [...loader.plugins.values()].flatMap((p) => {
+      const list = (p.module as { engines?: unknown } | undefined)?.engines;
+      return p.state === 'active' && Array.isArray(list) ? (list as EngineAdapter[]) : [];
+    });
+  const enginesCache = join(home, 'engines.json');
   let server;
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
@@ -188,6 +201,20 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       workspaces,
       ...(envToken && envToken.length >= 32 ? { token: envToken } : {}),
       ...(values['token-file'] ? { tokenFile: resolve(values['token-file']) } : {}),
+      // 37.2 터미널 셸 cwd = 현재 워크스페이스 (폴더 선택기로 바꾸면 다음 셸부터 반영)
+      terminal: { cwd: () => workspaces.sessionCwd(workspace) },
+      engines: {
+        secrets: new SecretStore(),
+        scan: () =>
+          existsSync(enginesCache)
+            ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
+            : null,
+        // POST /api/engines/rescan은 위 routes의 engine-scanner registerRescanRoute가 맡는다 (중복 등록 방지)
+        loginStatus: (id) => getLoginStatus(id),
+        adapters,
+        pingCwd: workspace,
+      },
+      quota: {},
     });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);

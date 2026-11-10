@@ -24,7 +24,7 @@ describe('상단 바', () => {
     expect(screen.getByRole('status').textContent).toContain('실행 중');
     const meters = screen.getAllByRole('meter');
     expect(meters.map((m) => m.getAttribute('aria-valuenow'))).toEqual(['42', '93', null]);
-    expect(container.querySelector('[data-engine="codex"]')?.getAttribute('data-level')).toBe('danger');
+    expect(container.querySelector('[data-engine="codex"]')?.getAttribute('data-level')).toBe('warning'); // 60.2: 95% 미만은 노랑
     expect(container.innerHTML).toMatchSnapshot();
   });
 

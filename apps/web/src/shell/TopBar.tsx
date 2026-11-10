@@ -36,16 +36,29 @@ export function TopBar({ workspace, runState, quotas, leading, trailing }: TopBa
   );
 }
 
+/** 60.2 막대 색: 80% 이상 노랑(warning), 95% 이상 빨강(danger) — packages/kernel/src/quota.ts와 같은 기준 */
+export const QUOTA_WARNING_RATIO = 0.8;
+export const QUOTA_DANGER_RATIO = 0.95;
+
+export function quotaLevel(ratio: number | undefined): 'ok' | 'warning' | 'danger' | 'unknown' {
+  if (ratio === undefined || !Number.isFinite(ratio)) return 'unknown';
+  return ratio >= QUOTA_DANGER_RATIO ? 'danger' : ratio >= QUOTA_WARNING_RATIO ? 'warning' : 'ok';
+}
+
+function quotaTitle(q: QuotaMeter, pct: number | undefined): string {
+  const parts = [pct === undefined ? `${q.label}: 쿼터 정보 없음` : `${q.label}: ${pct}%`];
+  if (q.totalTokens !== undefined) parts.push(`토큰 ${q.totalTokens.toLocaleString('ko-KR')}`);
+  if (q.requests !== undefined) parts.push(`요청 ${q.requests.toLocaleString('ko-KR')}`);
+  if (q.costUsd !== undefined) parts.push(`${q.costEstimated ? '추정 ' : ''}$${q.costUsd.toFixed(2)}`);
+  return parts.join(' · ');
+}
+
 function QuotaMeterView({ q }: { q: QuotaMeter }) {
-  const pct = q.ratio === undefined ? undefined : Math.round(Math.min(1, Math.max(0, q.ratio)) * 100);
-  const level = pct === undefined ? 'unknown' : pct >= 90 ? 'danger' : pct >= 70 ? 'warning' : 'ok';
+  const ratio = q.ratio === undefined ? undefined : Math.min(1, Math.max(0, q.ratio));
+  const pct = ratio === undefined ? undefined : Math.round(ratio * 100);
+  const level = quotaLevel(ratio);
   return (
-    <div
-      className="hx-quota"
-      data-engine={q.engineId}
-      data-level={level}
-      title={pct === undefined ? `${q.label}: 쿼터 정보 없음` : `${q.label}: ${pct}%`}
-    >
+    <div className="hx-quota" data-engine={q.engineId} data-level={level} title={quotaTitle(q, pct)}>
       <span className="hx-quota__label">{q.label}</span>
       <span
         className="hx-quota__bar"

@@ -14,6 +14,9 @@ import {
   type FolderPicker,
 } from '../native/folder-picker.js';
 import { WorkspaceRejectedError, WorkspaceStore } from '../workspaces.js';
+import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
+import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
+import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 
 /**
  * 로컬 API 서버
@@ -48,6 +51,12 @@ export interface ApiServerOptions {
   corsOrigins?: string[];
   /** 워크스페이스 등록·최근 목록 (기본: ~/.harness-x/workspaces.json, 처음 쓸 때 만든다) */
   workspaces?: WorkspaceStore;
+  /** 37.2 WS /ws/terminal (node-pty 셸, cwd = 워크스페이스). 없으면 라우트 없음 */
+  terminal?: TerminalOptions;
+  /** T-038 설정 > 엔진 API (/api/engines…). 없으면 라우트 없음 */
+  engines?: EnginesApiOptions;
+  /** T-060 GET /api/quota (엔진별 사용량 집계). 없으면 라우트 없음 */
+  quota?: QuotaApiOptions;
 }
 
 /** 승인 카드 버튼 (판정 사다리 L5): 동치 인정 / 이동 승인 / 실패 */
@@ -240,6 +249,10 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       throw err;
     }
   });
+
+  if (opts.terminal) registerTerminalRoute(app, opts.terminal);
+  if (opts.engines) registerEngineRoutes(app, opts.engines);
+  if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {
