@@ -8,6 +8,19 @@ import { EventLog } from './event-log.js';
 import { HookBus } from './hooks.js';
 import { HotReloader } from './hot-reload.js';
 import { PluginLoader, defaultPluginRoots, harnessHome } from './loader.js';
+import { installTokenFileGuard } from './secrets.js';
+
+/**
+ * engine-scanner 플러그인 모듈의 공개 함수 (커널은 그 패키지에 의존하지 않는다 — 순환 방지.
+ * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
+ */
+interface ScannerPluginModule {
+  activeScanner?(): { scan(): Promise<unknown> } | undefined;
+  registerRescanRoute?(
+    app: { post(path: string, handler: () => Promise<unknown>): unknown },
+    scanner: { scan(): Promise<unknown> },
+  ): void;
+}
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
@@ -52,6 +65,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     return 1;
   }
 
+  // 엔진 CLI 구독 토큰 파일을 하네스 프로세스가 읽지 못하게 막는다
+  installTokenFileGuard();
+
   const home = harnessHome();
   const log = new EventLog({ root: join(home, 'logs') });
   const hooks = new HookBus({ log });
@@ -74,7 +90,25 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   }
   let server;
   try {
-    server = await startApiServer({ loader, log, host: values.host, port });
+    server = await startApiServer({
+      loader,
+      log,
+      host: values.host,
+      port,
+      routes: (app) => {
+        // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
+        const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
+        const register = mod()?.registerRescanRoute;
+        if (!register) return;
+        register(app, {
+          scan: async () => {
+            const s = mod()?.activeScanner?.();
+            if (!s) throw new Error('engine-scanner가 활성 상태가 아닙니다');
+            return s.scan();
+          },
+        });
+      },
+    });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
     log.close();
