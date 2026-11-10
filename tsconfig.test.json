@@ -2,6 +2,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
     "paths": {
       "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
       "@harness-x/checklist-ledger": ["./packages/plugins-core/checklist-ledger/src/index.ts"],
