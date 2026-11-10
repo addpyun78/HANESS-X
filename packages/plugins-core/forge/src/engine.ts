@@ -12,7 +12,7 @@ import {
   type ForgeAnswer,
   type InterviewAnswers,
 } from './interview.js';
-import { applyFiles, currentBody, scaffoldFromSpec, ScaffoldPathError } from './scaffold.js';
+import { applyFiles, currentBody, scaffoldFromSpec } from './scaffold.js';
 import { FORGE_SPEC_FILE, validateForgeSpec, type ForgeSpec } from './spec.js';
 
 /**
@@ -381,13 +381,10 @@ export class Forge {
     const out = lastJson(got);
     const files = out && isStringRecord(out.files) ? out.files : undefined;
     if (files) {
-      try {
-        for (const w of applyFiles(s.pluginDir, files))
-          yield ev({ type: 'file_change', path: join(s.pluginDir, w.path), change: w.change });
-      } catch (err) {
-        if (!(err instanceof ScaffoldPathError)) throw err;
-        yield ev({ type: 'error', code: 'invalid_request', message: err.message });
-      }
+      const r = applyFiles(s.pluginDir, files);
+      for (const w of r.written)
+        yield ev({ type: 'file_change', path: join(s.pluginDir, w.path), change: w.change });
+      for (const x of r.rejected) yield ev({ type: 'error', code: 'invalid_request', message: x.reason });
     }
     completeLedger(o);
     yield ev({

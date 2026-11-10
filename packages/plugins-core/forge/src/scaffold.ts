@@ -50,21 +50,35 @@ export function checkWritablePath(rel: string): string {
   return norm;
 }
 
-/** 엔진이 쓴 파일들을 플러그인 폴더에 쓴다 */
-export function applyFiles(dir: string, files: Record<string, string>): FileWrite[] {
-  const out: FileWrite[] = [];
+/** 엔진이 쓴 파일들을 플러그인 폴더에 쓴다. 쓸 수 없는 경로는 건너뛰고 rejected에 남긴다 */
+export function applyFiles(
+  dir: string,
+  files: Record<string, string>,
+): { written: FileWrite[]; rejected: { path: string; reason: string }[] } {
+  const written: FileWrite[] = [];
+  const rejected: { path: string; reason: string }[] = [];
   for (const [rel, content] of Object.entries(files)) {
-    const norm = checkWritablePath(rel);
+    let norm: string;
+    try {
+      norm = checkWritablePath(rel);
+    } catch (err) {
+      if (!(err instanceof ScaffoldPathError)) throw err;
+      rejected.push({ path: rel, reason: err.message });
+      continue;
+    }
     const file = resolve(dir, norm);
     const r = relative(resolve(dir), file);
-    if (r.startsWith('..') || isAbsolute(r)) throw new ScaffoldPathError(`폴더 밖 경로 금지: ${rel}`);
+    if (r.startsWith('..') || isAbsolute(r)) {
+      rejected.push({ path: rel, reason: `폴더 밖 경로 금지: ${rel}` });
+      continue;
+    }
     const existed = existsSync(file);
     if (existed && readFileSync(file, 'utf8') === content) continue;
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, content);
-    out.push({ path: norm, change: existed ? 'modify' : 'create' });
+    written.push({ path: norm, change: existed ? 'modify' : 'create' });
   }
-  return out;
+  return { written, rejected };
 }
 
 /** 엔진에 보여 줄 현재 본문 (src/index.ts, SKILL.md) */
