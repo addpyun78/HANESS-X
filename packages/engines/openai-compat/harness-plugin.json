@@ -1,0 +1,16 @@
+{
+  "id": "engine-openai-compat",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "OpenAI 호환 엔진",
+  "description": "OpenAI 호환(/v1/chat/completions, Ollama 등)·Anthropic·Gemini·DeepSeek API를 하네스 자체 도구 루프로 실행",
+  "main": "dist/index.js",
+  "provides": {
+    "engine": ["openai-compat", "openai-compat:ollama", "anthropic-api", "gemini-api", "deepseek-api"]
+  },
+  "permissions": {
+    "fs": ["workspace:read", "workspace:write"],
+    "net": ["api.openai.com", "api.anthropic.com", "generativelanguage.googleapis.com", "api.deepseek.com"],
+    "shell": false
+  }
+}

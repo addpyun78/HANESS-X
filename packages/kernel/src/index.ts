@@ -5,3 +5,4 @@ export * from './loader.js';
 export * from './hot-reload.js';
 export * from './api/server.js';
 export * from './sandbox/index.js';
+export * from './agent-loop.js';
