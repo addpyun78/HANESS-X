@@ -1,6 +1,12 @@
 import type { HarnessEvent } from '@harness-x/protocol';
 import { useEffect, useMemo, useState } from 'react';
-import { HarnessApiClient, resolveToken, type ConnectionStatus } from './api/client.js';
+import {
+  ApiError,
+  HarnessApiClient,
+  resolveToken,
+  type ConnectionStatus,
+  type WorkspaceInfo,
+} from './api/client.js';
 import { ChatStream } from './chat/ChatStream.js';
 import type { ViewMode } from './chat/blocks.js';
 import { Composer } from './composer/Composer.js';
@@ -9,6 +15,7 @@ import type { RecentProject } from './composer/PlusMenu.js';
 import type { EngineOption } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
 import { AppShell } from './shell/AppShell.js';
+import { useIsMobile } from './shell/mobile.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { RunState, SessionSummary, Workspace } from './shell/types.js';
 
@@ -23,6 +30,14 @@ function demoParam(): number | undefined {
   return v === null ? undefined : Number(v) || 1;
 }
 
+const toWorkspace = (w: WorkspaceInfo): Workspace => ({
+  name: w.name,
+  path: w.path,
+  ...(w.branch ? { branch: w.branch } : {}),
+  hasAgentsMd: w.hasAgentsMd,
+  hasClaudeMd: w.hasClaudeMd,
+});
+
 /** 메인 화면(컨셉 A): 상단 바 / 사이드바 · 채팅 + 입력창 · 우측 패널 */
 export function App() {
   const demo = useMemo(demoParam, []);
@@ -32,8 +47,10 @@ export function App() {
   const [mode, setMode] = useState<ViewMode>('normal');
   const sessions: SessionSummary[] = demo ? DEMO_SESSIONS : [];
   const [workspace, setWorkspace] = useState<Workspace | undefined>(demo ? DEMO_WORKSPACE : undefined);
-  const [recent] = useState<RecentProject[]>(demo ? [DEMO_WORKSPACE] : []);
+  const [recent, setRecent] = useState<RecentProject[]>(demo ? [DEMO_WORKSPACE] : []);
+  const [wsError, setWsError] = useState<string>();
   const [client, setClient] = useState<HarnessApiClient>();
+  const mobile = useIsMobile();
 
   useEffect(() => {
     if (demo) return;
@@ -41,6 +58,13 @@ export function App() {
     if (!token) return;
     const client = new HarnessApiClient({ token });
     setClient(client);
+    client
+      .workspaces()
+      .then((r) => {
+        setRecent(r.recent);
+        if (r.current) setWorkspace(toWorkspace(r.current));
+      })
+      .catch(() => {});
     client
       .plugins()
       .then((r) => setEngines(enginesFromPlugins(r)))
@@ -57,15 +81,38 @@ export function App() {
         ? 'idle'
         : 'running';
 
-  // 34.1/34.6 + → "프로젝트 폴더 열기…" → 서버가 네이티브 대화상자. 취소면 아무 변화 없음
-  const openFolder = async () => {
+  // 35.1~35.4 경로 검증·등록 → 상단 바 갱신 (다음 세션 cwd는 서버의 현재 워크스페이스)
+  const openWorkspace = async (path: string) => {
     if (!client) return;
     try {
-      const r = await client.pickFolder(workspace?.path);
-      if (r.cancelled) return;
-      setWorkspace({ name: r.path.split(/[\\/]/).filter(Boolean).at(-1) ?? r.path, path: r.path });
+      const r = await client.openWorkspace(path);
+      setWorkspace(toWorkspace(r.workspace));
+      setRecent(r.recent);
+      setWsError(undefined);
+    } catch (err) {
+      const body = err instanceof ApiError ? (err.body as { message?: string } | undefined) : undefined;
+      setWsError(body?.message ?? (err instanceof Error ? err.message : String(err)));
+    }
+  };
+
+  // 34.1/34.6 + → "프로젝트 폴더 열기…" → 서버가 네이티브 대화상자. 취소(·409)면 아무 변화 없음
+  const openFolder = async () => {
+    if (!client) return;
+    let r;
+    try {
+      r = await client.pickFolder(workspace?.path);
     } catch {
-      /* 409(이미 열림) 등은 무시 */
+      return;
+    }
+    if (!r.cancelled) await openWorkspace(r.path);
+  };
+
+  const togglePin = async (p: RecentProject) => {
+    if (!client) return;
+    try {
+      setRecent((await client.pinWorkspace(p.path, !p.pinned)).recent);
+    } catch {
+      /* noop */
     }
   };
 
@@ -82,12 +129,19 @@ export function App() {
       main={
         <>
           <ChatStream events={events} mode={mode} onModeChange={setMode} />
+          {wsError && (
+            <div className="hx-ws-error" role="alert">
+              {wsError}
+            </div>
+          )}
           <Composer
             engines={engines}
             plusMenu={{
+              mobile,
               recent,
               onOpenFolder: () => void openFolder(),
-              onPickRecent: (p) => setWorkspace({ name: p.name, path: p.path, branch: p.branch }),
+              onPickRecent: (p) => void openWorkspace(p.path),
+              onTogglePin: (p) => void togglePin(p),
             }}
             onSend={() => {
               /* 턴 전송 API는 이후 티켓에서 연결 */
