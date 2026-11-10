@@ -1,6 +1,13 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": { "noEmit": true },
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
+      "@harness-x/kernel": ["./packages/kernel/src/index.ts"],
+      "@harness-x/sdk": ["./packages/sdk/src/index.ts"]
+    }
+  },
   "include": ["packages/**/*.ts", "apps/**/*.ts", "tests/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["**/node_modules/**", "**/dist/**"]
 }

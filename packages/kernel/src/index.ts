@@ -1,1 +1,2 @@
-export const name = '@harness-x/kernel';
+export * from './secrets-mask.js';
+export * from './event-log.js';
