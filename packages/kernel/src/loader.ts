@@ -21,6 +21,8 @@ import {
 } from '@harness-x/protocol';
 import type { EventLog } from './event-log.js';
 import type { BlockingHandler, HookBus, HookName, NotifyHandler, RegisterOptions } from './hooks.js';
+import { SandboxHost } from './sandbox/host.js';
+import { TrustStore, type TrustLevel } from './sandbox/trust.js';
 
 /**
  * 플러그인 로더
@@ -67,6 +69,18 @@ export interface LoadedPlugin {
   state: PluginState;
   error?: string;
   module?: PluginModule;
+  /** 62.3 신뢰 등급 (sandbox 옵션이 있을 때만) */
+  trust?: TrustLevel;
+  /** 실행 위치: 메인 스레드 / 격리 워커 */
+  isolation?: 'main' | 'worker';
+}
+
+/** 62 플러그인 격리 옵션. 지정하면 unsigned-isolated 등급 플러그인을 worker_threads에서 실행한다 */
+export interface SandboxOptions {
+  /** 승격 기록 (기본: ~/.harness-x/trust.json) */
+  trust?: TrustStore;
+  /** 격리 플러그인 fs 권한의 기준 루트 */
+  workspace?: string;
 }
 
 export interface Rejection {
@@ -100,6 +114,8 @@ export interface PluginLoaderOptions {
    * 테스트 러너처럼 query를 무시하는 환경에서 교체한다.
    */
   importModule?: (file: string, sha256: string) => Promise<unknown>;
+  /** 플러그인 격리 (없으면 모두 메인 스레드 — 기존 동작) */
+  sandbox?: SandboxOptions;
 }
 
 export const defaultImportModule = (file: string, sha256: string): Promise<unknown> =>
@@ -133,6 +149,7 @@ export class PluginLoader {
   private readonly logger: (line: string) => void;
   private readonly importModule: (file: string, sha256: string) => Promise<unknown>;
   private lock: Map<string, LockEntry>;
+  private readonly sandbox: (SandboxOptions & { trust: TrustStore }) | undefined;
 
   constructor(opts: PluginLoaderOptions) {
     this.hooks = opts.hooks;
@@ -145,6 +162,9 @@ export class PluginLoader {
     this.logger = opts.logger ?? (() => {});
     this.importModule = opts.importModule ?? defaultImportModule;
     this.lock = readLock(this.lockFile);
+    this.sandbox = opts.sandbox
+      ? { ...opts.sandbox, trust: opts.sandbox.trust ?? new TrustStore(join(harnessHome(), 'trust.json')) }
+      : undefined;
   }
 
   /** 6.1 탐색: 루트 바로 아래 폴더 중 harness-plugin.json이 있는 것 */
@@ -260,17 +280,32 @@ export class PluginLoader {
         return false;
       }
     }
+    if (this.sandbox) p.trust = this.sandbox.trust.levelOf({ id, sha256: p.sha256, origin: p.origin });
     try {
-      const mod = (await this.importModule(resolve(p.dir, p.manifest.main), p.sha256)) as PluginModule & {
-        default?: PluginModule;
-      };
-      const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? {});
-      p.module = m;
-      await withTimeout(
-        Promise.resolve(m.activate?.(this.contextFor(p))),
-        this.lifecycleTimeoutMs,
-        'activate',
-      );
+      if (this.sandbox && p.trust === 'unsigned-isolated') {
+        // 62.1 격리 실행: 워커 안에서 import·activate, 메인과는 메시지 RPC만
+        const host = this.sandboxHostFor(p);
+        p.module = { deactivate: () => host.deactivate() };
+        p.isolation = 'worker';
+        await withTimeout(host.activate(), this.lifecycleTimeoutMs, 'activate').catch(
+          async (err: unknown) => {
+            await host.terminate();
+            throw err;
+          },
+        );
+      } else {
+        const mod = (await this.importModule(resolve(p.dir, p.manifest.main), p.sha256)) as PluginModule & {
+          default?: PluginModule;
+        };
+        const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? {});
+        p.module = m;
+        p.isolation = 'main';
+        await withTimeout(
+          Promise.resolve(m.activate?.(this.contextFor(p))),
+          this.lifecycleTimeoutMs,
+          'activate',
+        );
+      }
       p.state = 'active';
       delete p.error;
       this.emit('plugin_activated', id, `${id}@${p.manifest.version}`);
@@ -319,6 +354,100 @@ export class PluginLoader {
       p.state = 'inactive';
       this.emit('plugin_deactivated', id, id);
     }
+  }
+
+  /** 62.3 신뢰 등급 승격: 현재 파일 해시로 trusted 기록, 격리 실행 중이면 메인 스레드로 다시 올린다 */
+  async promote(id: string): Promise<TrustLevel> {
+    const p = this.plugins.get(id);
+    if (!p) throw new Error(`없는 플러그인: ${id}`);
+    if (!this.sandbox)
+      throw new Error('sandbox 옵션 없이 만든 로더: 모든 플러그인이 이미 메인 스레드에서 실행됨');
+    this.sandbox.trust.promote(id, p.sha256);
+    this.emit('plugin_promoted', id, `${id} → trusted`);
+    return this.replace(p);
+  }
+
+  /** 승격 취소: 다시 unsigned-isolated, 실행 중이면 워커로 옮긴다 */
+  async demote(id: string): Promise<TrustLevel> {
+    const p = this.plugins.get(id);
+    if (!p) throw new Error(`없는 플러그인: ${id}`);
+    if (!this.sandbox) throw new Error('sandbox 옵션 없이 만든 로더');
+    this.sandbox.trust.demote(id);
+    this.emit('plugin_demoted', id, `${id} → unsigned-isolated`);
+    return this.replace(p);
+  }
+
+  /** 등급이 바뀌어 실행 위치가 달라지면 내렸다 다시 올린다 */
+  private async replace(p: LoadedPlugin): Promise<TrustLevel> {
+    const id = p.manifest.id;
+    const level = this.sandbox!.trust.levelOf({ id, sha256: p.sha256, origin: p.origin });
+    const want = level === 'unsigned-isolated' ? 'worker' : 'main';
+    p.trust = level;
+    if (p.state === 'active' && p.isolation !== want) {
+      await this.deactivate(id, { force: true });
+      await this.activate(id);
+    }
+    return level;
+  }
+
+  private sandboxHostFor(p: LoadedPlugin): SandboxHost {
+    const id = p.manifest.id;
+    return new SandboxHost({
+      manifest: p.manifest,
+      dir: p.dir,
+      sha256: p.sha256,
+      hooks: this.hooks,
+      config: this.config[id] ?? {},
+      workspace: this.sandbox?.workspace,
+      log: (message) => {
+        this.logger(`[${id}] ${message}`);
+        this.emit('plugin_log', id, message);
+      },
+      onDenied: (d) => this.emit('permission_denied', id, d.reason, { kind: d.kind, method: d.method }),
+    });
+  }
+
+  /** 격리 플러그인 핫리로드: 새 워커를 먼저 올리고 성공하면 이전 것을 내린다 (메인 스레드에서 import하지 않는다) */
+  private async reloadIsolated(
+    old: LoadedPlugin,
+    manifest: PluginManifest,
+    sha256: string,
+    fail: (error: string) => { ok: boolean; error?: string; version?: string },
+  ): Promise<{ ok: boolean; error?: string; version?: string }> {
+    const id = manifest.id;
+    const next: LoadedPlugin = {
+      manifest,
+      dir: old.dir,
+      origin: old.origin,
+      sha256,
+      state: 'discovered',
+      trust: 'unsigned-isolated',
+      isolation: 'worker',
+    };
+    const wasActive = old.state === 'active';
+    // 메인 스레드 플러그인의 훅은 pluginId로 지워야 하므로 먼저 내린다
+    if (wasActive && old.isolation !== 'worker') await this.deactivate(id, { force: true });
+    const host = this.sandboxHostFor(next);
+    try {
+      await withTimeout(host.activate(), this.lifecycleTimeoutMs, 'activate');
+    } catch (err) {
+      await host.terminate();
+      return fail(`activate 실패: ${errMsg(err)}`);
+    }
+    next.module = { deactivate: () => host.deactivate() };
+    if (wasActive && old.isolation === 'worker') {
+      try {
+        await withTimeout(Promise.resolve(old.module?.deactivate?.()), this.lifecycleTimeoutMs, 'deactivate');
+      } catch (err) {
+        this.emit('plugin_failed', id, `deactivate: ${errMsg(err)}`);
+      }
+    }
+    next.state = 'active';
+    this.plugins.set(id, next);
+    this.lock.set(id, { id, version: manifest.version, sha256 });
+    this.saveLock();
+    this.emit('plugin_reloaded', id, `${id}@${manifest.version}`);
+    return { ok: true, version: manifest.version };
   }
 
   /** 6.6 lock 저장 (원자적 교체) */
@@ -385,6 +514,12 @@ export class PluginLoader {
       if (this.plugins.get(dep)?.state !== 'active') return fail(`의존 플러그인 비활성: ${dep}`);
     }
     const sha256 = hashPluginDir(old.dir);
+    if (
+      this.sandbox &&
+      this.sandbox.trust.levelOf({ id, sha256, origin: old.origin }) === 'unsigned-isolated'
+    ) {
+      return this.reloadIsolated(old, manifest, sha256, fail);
+    }
 
     // 2) 새 모듈 로드 (문법 오류 등은 여기서 걸림)
     let mod: PluginModule;
