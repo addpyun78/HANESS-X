@@ -1,0 +1,111 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`52.4 설치 카드 (파일 diff, 권한 요약, 네트워크·셸 빨간 경고) > 첫 설치 카드 + 다시 설치 카드(diff) 스냅샷 > first-install 1`] = `
+{
+  "displayName": "PR 전에 Kotlin 린트 실패 시 막는 훅 만들어줘",
+  "files": [
+    {
+      "change": "create",
+      "path": "dist/index.d.ts",
+    },
+    {
+      "change": "create",
+      "path": "dist/index.js",
+    },
+    {
+      "change": "create",
+      "path": "harness-plugin.json",
+    },
+    {
+      "change": "create",
+      "path": "package.json",
+    },
+    {
+      "change": "create",
+      "path": "tsconfig.json",
+    },
+  ],
+  "id": "pr-kotlin-guard",
+  "permissionSummary": [
+    "네트워크: api.github.com",
+    "셸 명령 실행",
+  ],
+  "permissions": {
+    "fs": [],
+    "net": [
+      "api.github.com",
+    ],
+    "shell": true,
+  },
+  "suggestions": [],
+  "target": "<home>/plugins/forge/pr-kotlin-guard",
+  "trust": "unsigned-isolated",
+  "trustLabel": "미서명·격리",
+  "update": false,
+  "version": "0.1.0",
+  "warnings": [
+    {
+      "kind": "net",
+      "level": "danger",
+      "message": "네트워크 권한(api.github.com): 이 플러그인은 외부로 데이터를 보낼 수 있습니다",
+    },
+    {
+      "kind": "shell",
+      "level": "danger",
+      "message": "셸 권한: 이 플러그인은 워크스페이스에서 명령을 실행할 수 있습니다",
+    },
+  ],
+}
+`;
+
+exports[`52.4 설치 카드 (파일 diff, 권한 요약, 네트워크·셸 빨간 경고) > 첫 설치 카드 + 다시 설치 카드(diff) 스냅샷 > reinstall 1`] = `
+{
+  "displayName": "PR 전에 Kotlin 린트 실패 시 막는 훅 만들어줘",
+  "files": [
+    {
+      "change": "modify",
+      "diff": "…
+ }
+ 
+ const TARGET = /\\bgh\\s+pr\\s+create\\b/;
+-const LINT = ['./gradlew', 'ktlintCheck'];
++const LINT = ['./gradlew', 'ktlintCheck', '--continue'];
+ 
+ /** 훅 컨텍스트에서 실행하려는 명령 글 */
+ export function commandOf(input: unknown): string {
+…",
+      "path": "src/index.ts",
+    },
+  ],
+  "id": "pr-kotlin-guard",
+  "permissionSummary": [
+    "네트워크: api.github.com",
+    "셸 명령 실행",
+  ],
+  "permissions": {
+    "fs": [],
+    "net": [
+      "api.github.com",
+    ],
+    "shell": true,
+  },
+  "suggestions": [],
+  "target": "<home>/plugins/forge/pr-kotlin-guard",
+  "trust": "unsigned-isolated",
+  "trustLabel": "미서명·격리",
+  "update": true,
+  "version": "0.1.0",
+  "warnings": [
+    {
+      "kind": "net",
+      "level": "danger",
+      "message": "네트워크 권한(api.github.com): 이 플러그인은 외부로 데이터를 보낼 수 있습니다",
+    },
+    {
+      "kind": "shell",
+      "level": "danger",
+      "message": "셸 권한: 이 플러그인은 워크스페이스에서 명령을 실행할 수 있습니다",
+    },
+  ],
+}
+`;

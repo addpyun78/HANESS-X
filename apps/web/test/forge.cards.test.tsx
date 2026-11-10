@@ -94,6 +94,48 @@ describe('51.2 Forge 질문 카드 (선택지 버튼)', () => {
   });
 });
 
+describe('52.4 Forge 설치 카드', () => {
+  it('파일 diff · 권한 요약 · 네트워크·셸 빨간 경고 · 등급 (스냅샷)', () => {
+    const onAnswer = show({
+      ...base,
+      type: 'approval_request',
+      approvalId: 's1:install',
+      kind: 'forge_install',
+      title: 'PR 전 Kotlin 린트 가드 설치할까요?',
+      options: ['install', 'cancel'],
+      detail: {
+        target: '~/.harness-x/plugins/forge/pr-kotlin-guard',
+        trust: 'unsigned-isolated',
+        trustLabel: '미서명·격리',
+        permissions: { fs: [], net: ['api.github.com'], shell: true },
+        warnings: [
+          {
+            kind: 'net',
+            level: 'danger',
+            message: '네트워크 권한(api.github.com): 외부로 데이터를 보낼 수 있습니다',
+          },
+          { kind: 'shell', level: 'danger', message: '셸 권한: 워크스페이스에서 명령을 실행할 수 있습니다' },
+        ],
+        files: [
+          { path: 'harness-plugin.json', change: 'create', diff: '+{\n+  "id": "pr-kotlin-guard"\n+}' },
+          { path: 'dist/index.js', change: 'create' },
+        ],
+      },
+    });
+    const card = screen.getByRole('group', { name: /Forge 설치/ });
+    const alerts = screen.getAllByRole('alert');
+    expect(alerts.map((a) => [a.getAttribute('data-kind'), a.className])).toEqual([
+      ['net', 'hx-forge__warn hx-forge__warn--danger'],
+      ['shell', 'hx-forge__warn hx-forge__warn--danger'],
+    ]);
+    expect(card.textContent).toContain('미서명·격리');
+    expect(card.textContent).toContain('권한: 네트워크(api.github.com) · 셸 실행');
+    expect(card.outerHTML).toMatchSnapshot();
+    fireEvent.click(screen.getByRole('button', { name: '설치' }));
+    expect(onAnswer).toHaveBeenCalledWith('s1:install', { value: 'install' });
+  });
+});
+
 describe('51.3 Forge spec 확인 카드', () => {
   it('spec 요약(종류·발동·권한·예시) + 확인/취소', () => {
     const onAnswer = show({
