@@ -1,0 +1,24 @@
+{
+  "description": "kebab-case 기대, 엔진은 PascalCase 파일명",
+  "expected": {
+    "path": "harness/mobile/login-screen.kt",
+    "kind": "file"
+  },
+  "changes": [
+    {
+      "path": "harness/mobile/LoginScreen.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "LoginScreen"
+    }
+  ],
+  "expect": {
+    "level": 2,
+    "verdict": "equal",
+    "actualPath": "harness/mobile/LoginScreen.kt"
+  }
+}

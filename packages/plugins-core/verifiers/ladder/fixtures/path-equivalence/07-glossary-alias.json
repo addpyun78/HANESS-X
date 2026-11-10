@@ -1,0 +1,24 @@
+{
+  "description": "계획은 한글 표시 이름, 엔진은 영문 정식 경로",
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "changes": [
+    {
+      "path": "harness/mobile/MainActivity.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 2,
+    "verdict": "equal",
+    "actualPath": "harness/mobile"
+  }
+}

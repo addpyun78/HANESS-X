@@ -1,0 +1,131 @@
+[
+  {
+    "name": "만들고-테스트",
+    "expectRules": ["R1"],
+    "items": [
+      {
+        "id": "1",
+        "title": "모바일 로그인 화면 만들고 테스트",
+        "artifactId": "art.mobile-login",
+        "acceptance": [{ "type": "test" }]
+      }
+    ]
+  },
+  {
+    "name": "작성하고-추가",
+    "expectRules": ["R1"],
+    "items": [
+      {
+        "id": "1",
+        "title": "API 클라이언트 작성하고 재시도 로직 추가",
+        "artifactId": "art.api-client",
+        "acceptance": [{ "type": "test" }]
+      }
+    ]
+  },
+  {
+    "name": "영문-and",
+    "expectRules": ["R1"],
+    "items": [
+      {
+        "id": "1",
+        "title": "Implement settings screen and add dark mode",
+        "artifactId": "art.settings",
+        "acceptance": [{ "type": "symbol" }]
+      }
+    ]
+  },
+  {
+    "name": "및-연결",
+    "expectRules": ["R1"],
+    "items": [
+      {
+        "id": "1",
+        "title": "회원가입 및 비밀번호 재설정 구현",
+        "artifactId": "art.auth",
+        "acceptance": [{ "type": "test" }]
+      }
+    ]
+  },
+  {
+    "name": "산출물-2개",
+    "expectRules": ["R2"],
+    "items": [
+      {
+        "id": "1",
+        "title": "공통 버튼 컴포넌트 작성",
+        "artifactId": ["art.button", "art.icon-button"],
+        "acceptance": [{ "type": "test" }]
+      }
+    ]
+  },
+  {
+    "name": "산출물-없음",
+    "expectRules": ["R2"],
+    "items": [{ "id": "1", "title": "README 갱신", "acceptance": [{ "type": "file_exists" }] }]
+  },
+  {
+    "name": "llm-검증뿐",
+    "expectRules": ["R3"],
+    "items": [
+      {
+        "id": "1",
+        "title": "온보딩 화면 디자인 개선",
+        "artifactId": "art.onboarding",
+        "acceptance": [{ "type": "llm" }]
+      }
+    ]
+  },
+  {
+    "name": "크기-초과",
+    "expectRules": ["R4"],
+    "items": [
+      {
+        "id": "1",
+        "title": "결제 모듈 리팩터링",
+        "artifactId": "art.payment",
+        "acceptance": [{ "type": "test" }],
+        "estimate": { "files": 12, "diffLines": 900 }
+      }
+    ]
+  },
+  {
+    "name": "deps-순환",
+    "expectRules": ["R5"],
+    "items": [
+      {
+        "id": "a",
+        "title": "스키마 정의",
+        "artifactId": "art.schema",
+        "acceptance": [{ "type": "test" }],
+        "deps": ["c"]
+      },
+      {
+        "id": "b",
+        "title": "저장소 구현",
+        "artifactId": "art.store",
+        "acceptance": [{ "type": "test" }],
+        "deps": ["a"]
+      },
+      {
+        "id": "c",
+        "title": "API 라우트 추가",
+        "artifactId": "art.routes",
+        "acceptance": [{ "type": "test" }],
+        "deps": ["b"]
+      }
+    ]
+  },
+  {
+    "name": "복합-위반",
+    "expectRules": ["R1", "R2", "R3"],
+    "items": [
+      {
+        "id": "1",
+        "title": "Create docs, then deploy site",
+        "artifactId": "art.docs, art.site",
+        "acceptance": []
+      }
+    ]
+  }
+]

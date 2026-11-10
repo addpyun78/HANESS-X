@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`25.5 판정 결과 타입 기록 > L1·L2·L3 결과의 evidence 스냅샷 + 원장 항목에 기록 1`] = `
+[
+  {
+    "actualPath": "harness/mobile",
+    "candidates": [],
+    "confidence": 1,
+    "escalate": false,
+    "expectedPath": "harness/mobile",
+    "kind": "ladder_verdict",
+    "level": 1,
+    "reason": "정규화 후 경로 일치",
+    "summary": "L1 equal (1)",
+    "ts": "2026-11-10T00:00:00.000Z",
+    "verdict": "equal",
+  },
+  {
+    "actualPath": "harness/mobile",
+    "candidates": [],
+    "confidence": 1,
+    "escalate": false,
+    "expectedPath": "하네스/모바일",
+    "kind": "ladder_verdict",
+    "level": 2,
+    "reason": "glossary 별칭 치환 후 경로 일치 (harness/mobile)",
+    "summary": "L2 equal (1)",
+    "ts": "2026-11-10T00:00:00.000Z",
+    "verdict": "equal",
+  },
+  {
+    "actualPath": "ai/mobile",
+    "candidates": [
+      {
+        "path": "ai/mobile",
+        "similarity": 1,
+      },
+      {
+        "path": "ai",
+        "similarity": 0.167,
+      },
+    ],
+    "checks": [
+      {
+        "ok": true,
+        "type": "symbol",
+      },
+    ],
+    "confidence": 0.9,
+    "escalate": true,
+    "expectedPath": "하네스/모바일",
+    "kind": "ladder_verdict",
+    "level": 3,
+    "reason": "acceptance가 후보 경로 ai/mobile에서 통과 — 위치만 다름 (basename 유사도 1)",
+    "summary": "L3 relocated (0.9)",
+    "ts": "2026-11-10T00:00:00.000Z",
+    "verdict": "relocated",
+  },
+]
+`;

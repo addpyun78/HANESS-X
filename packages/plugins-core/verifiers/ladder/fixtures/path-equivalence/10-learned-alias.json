@@ -1,0 +1,30 @@
+{
+  "description": "L5에서 동치 인정 후(ai ⇄ harness 사전 등록) 같은 케이스는 L2에서 종료",
+  "glossaryAdd": {
+    "harness": ["ai"]
+  },
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "files": {
+    "ai/mobile/MainActivity.kt": "class MainActivity : AppCompatActivity()"
+  },
+  "changes": [
+    {
+      "path": "ai/mobile/MainActivity.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 2,
+    "verdict": "equal",
+    "actualPath": "ai/mobile"
+  }
+}

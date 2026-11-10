@@ -1,0 +1,11 @@
+{
+  "id": "verifier-ladder",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Verifier Ladder L1-L3",
+  "description": "판정 사다리 L1~L3 (정규화·별칭·내용 증거) — 모델 호출 없는 코드 판정",
+  "main": "dist/index.js",
+  "provides": { "verifier": ["ladder-l1-l3"] },
+  "requires": { "checklist-ledger": ">=0.1.0" },
+  "permissions": { "fs": ["workspace:read"], "net": [], "shell": true }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "checklist-ledger",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Checklist Ledger",
+  "description": "체크리스트 원장·상태 기계·원자성 린터·경로 원장(manifest)·이름 정책",
+  "main": "dist/index.js",
+  "provides": { "tool": ["checklist-ledger"] },
+  "permissions": { "fs": ["workspace:read", "workspace:write"], "net": [], "shell": false }
+}

@@ -1,0 +1,26 @@
+{
+  "description": "비슷한 폴더에 썼지만 내용이 다름 → 잘못된 대상",
+  "expected": {
+    "path": "하네스/모바일",
+    "kind": "dir"
+  },
+  "files": {
+    "ai/mobile/Other.kt": "class Other"
+  },
+  "changes": [
+    {
+      "path": "ai/mobile/Other.kt",
+      "change": "create"
+    }
+  ],
+  "acceptance": [
+    {
+      "type": "symbol",
+      "symbol": "class MainActivity"
+    }
+  ],
+  "expect": {
+    "level": 3,
+    "verdict": "wrong"
+  }
+}
