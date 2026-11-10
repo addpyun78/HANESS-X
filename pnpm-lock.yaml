@@ -222,6 +222,25 @@ importers:
         specifier: ^8.22.2
         version: 8.22.2
 
+  packages/plugins-core/engine-scanner:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      semver:
+        specifier: ^7.8.6
+        version: 7.8.6
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@types/semver':
+        specifier: ^7.8.0
+        version: 7.8.0
+      fastify:
+        specifier: ^5.12.8
+        version: 5.12.8
+
   packages/protocol:
     dependencies:
       zod:

@@ -1,0 +1,10 @@
+{
+  "id": "engine-scanner",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Engine Scanner",
+  "description": "설치된 엔진 CLI(PATH·WSL)와 로컬 LLM 서버를 자동 탐지해 ~/.harness-x/engines.json에 캐시",
+  "main": "dist/index.js",
+  "provides": { "tool": ["engine-scan"] },
+  "permissions": { "fs": [], "net": ["127.0.0.1"], "shell": true }
+}
