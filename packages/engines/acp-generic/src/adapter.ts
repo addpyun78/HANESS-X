@@ -2,7 +2,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { Readable, Writable } from 'node:stream';
 import * as acp from '@agentclientprotocol/sdk';
-import { stripCredentialEnv } from '@harness-x/kernel';
+import { stripCredentialEnv, type HookBus } from '@harness-x/kernel';
 import type {
   EngineAdapter,
   EngineCapabilities,
@@ -13,6 +13,7 @@ import type {
   McpServerRef,
 } from '@harness-x/protocol';
 import { AcpEventMapper, mapStopReason, type HarnessEventBody } from './events.js';
+import { hookPermissionGate } from './permission.js';
 import { AsyncQueue } from './queue.js';
 
 /**
@@ -50,7 +51,9 @@ export interface AcpEngineConfig {
   args?: string[];
   /** opts.env 위에 덧붙일 env */
   env?: Record<string, string>;
-  /** session/request_permission 처리 (기본: 거부 없이 cancelled) */
+  /** 하네스 훅 버스: 권한 요청을 tool.before(차단형)로 돌린다 (permission-gate) */
+  hooks?: HookBus;
+  /** session/request_permission 처리 (기본: hookPermissionGate({ hooks })) */
   permission?: PermissionHandler;
   /** 턴 종료 후 에이전트 프로세스가 스스로 끝나길 기다리는 시간 (기본 2초, 이후 SIGTERM) */
   shutdownGraceMs?: number;
@@ -186,9 +189,7 @@ export class AcpEngine implements EngineAdapter {
           else signal.addEventListener('abort', () => done(null), { once: true });
         }),
     };
-    const permission: PermissionHandler =
-      cfg.permission ??
-      (async () => ({ outcome: { outcome: 'cancelled' } }) as acp.RequestPermissionResponse);
+    const permission: PermissionHandler = cfg.permission ?? hookPermissionGate({ hooks: cfg.hooks });
 
     const app = acp
       .client({ name: HARNESS_CLIENT_INFO.name })
