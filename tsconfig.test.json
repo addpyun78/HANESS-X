@@ -19,8 +19,10 @@
       "@harness-x/verifier-jev": ["./packages/plugins/verifier-jev/src/index.ts"],
       "@harness-x/verifier-ladder": ["./packages/plugins-core/verifiers/ladder/src/index.ts"],
       "@harness-x/verifier-local": ["./packages/plugins/verifier-local/src/index.ts"]
-    }
+    },
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx"
   },
-  "include": ["packages/**/*.ts", "apps/**/*.ts", "tests/**/*.ts", "types/**/*.d.ts"],
+  "include": ["packages/**/*.ts", "apps/**/*.ts", "apps/**/*.tsx", "tests/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["**/node_modules/**", "**/dist/**"]
 }
