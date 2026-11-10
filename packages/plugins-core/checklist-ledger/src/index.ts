@@ -8,3 +8,4 @@ export * from './glossary.js';
 export * from './naming.js';
 export * from './manifest.js';
 export * from './learn.js';
+export * from './escalate.js';
