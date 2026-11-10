@@ -13,5 +13,11 @@ export default tseslint.config(
       sourceType: 'module',
       globals: { process: 'readonly', console: 'readonly' },
     },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' },
+      ],
+    },
   },
 );

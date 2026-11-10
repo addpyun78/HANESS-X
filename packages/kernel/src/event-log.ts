@@ -219,11 +219,26 @@ export class EventLog {
     this.flush();
     const where: string[] = [];
     const args: (string | number)[] = [];
-    if (q.sessionId) (where.push('session_id = ?'), args.push(q.sessionId));
-    if (q.type) (where.push('type = ?'), args.push(q.type));
-    if (q.itemId) (where.push('item_id = ?'), args.push(q.itemId));
-    if (q.since) (where.push('ts >= ?'), args.push(q.since));
-    if (q.until) (where.push('ts <= ?'), args.push(q.until));
+    if (q.sessionId) {
+      where.push('session_id = ?');
+      args.push(q.sessionId);
+    }
+    if (q.type) {
+      where.push('type = ?');
+      args.push(q.type);
+    }
+    if (q.itemId) {
+      where.push('item_id = ?');
+      args.push(q.itemId);
+    }
+    if (q.since) {
+      where.push('ts >= ?');
+      args.push(q.since);
+    }
+    if (q.until) {
+      where.push('ts <= ?');
+      args.push(q.until);
+    }
     const sql =
       'SELECT session_id, offset, length FROM events' +
       (where.length ? ` WHERE ${where.join(' AND ')}` : '') +
