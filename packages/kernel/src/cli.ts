@@ -72,9 +72,16 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     process.stderr.write(`잘못된 포트: ${values.port}\n`);
     return 1;
   }
+  const workspace = resolve(values.workspace ?? process.cwd());
   let server;
   try {
-    server = await startApiServer({ loader, log, host: values.host, port });
+    server = await startApiServer({
+      loader,
+      log,
+      host: values.host,
+      port,
+      terminal: { cwd: () => workspace },
+    });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
     log.close();
