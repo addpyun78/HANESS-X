@@ -17,6 +17,9 @@ export default defineConfig({
     include,
     exclude: ['**/node_modules/**', '**/dist/**'],
     environment: 'node',
+    // WSL의 /mnt/c(NTFS) 위에서는 모듈 로딩이 수 초씩 걸리므로 넉넉하게 둔다
+    testTimeout: 30_000,
+    hookTimeout: 120_000,
     typecheck: {
       enabled: true,
       include,
