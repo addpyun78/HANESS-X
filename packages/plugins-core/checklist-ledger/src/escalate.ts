@@ -21,8 +21,8 @@ import { z } from 'zod';
 import { readJson, withFileLock, writeFileAtomic } from './fs-util.js';
 import { learnEquivalence, type LearnEquivalenceResult } from './learn.js';
 import type { ChecklistLedger, EventSink } from './ledger.js';
-import type { ManifestStore } from './manifest.js';
-import type { ItemStatus, Verdict, VerdictKind } from './schema.js';
+import { UnknownArtifactError, type ManifestEntry, type ManifestStore } from './manifest.js';
+import type { Acceptance, ItemStatus, Verdict, VerdictKind } from './schema.js';
 
 /**
  * 판정 사다리 L5 — 상위 검증 (T-027)
@@ -333,6 +333,8 @@ export interface ApprovalResolution {
   verdict: Verdict;
   /** 동치 인정 시 사전 학습 결과 (27.4) */
   learned?: LearnEquivalenceResult;
+  /** 이동 승인 시 manifest·참조 항목 갱신 결과 (27.5) */
+  moved?: MoveArtifactResult;
 }
 
 export class Escalator {
@@ -425,10 +427,29 @@ export class Escalator {
             ...(this.opts.glossaryFile ? { glossaryFile: this.opts.glossaryFile } : {}),
           })
         : undefined;
+    // 27.5 이동 승인 → manifest 경로를 실제 경로로 갱신 + 참조 항목 일괄 갱신
+    const moved =
+      decision === 'move' && this.opts.manifest
+        ? moveArtifact({
+            manifest: this.opts.manifest,
+            ledger,
+            artifactId: c.artifactId,
+            newPath: c.actualPath,
+            reason: `L5 이동 승인 (${meta.by}): ${c.expectedPath} → ${c.actualPath}`,
+            now: this.now,
+          })
+        : undefined;
     const status: ItemStatus = decision === 'fail' ? 'failed' : 'done';
     if (ledger.item(c.itemId).status === 'doing') ledger.transition(c.itemId, 'verifying');
     ledger.transition(c.itemId, status, { verdict, evidence });
-    return { itemId: c.itemId, decision, status, verdict, ...(learned ? { learned } : {}) };
+    return {
+      itemId: c.itemId,
+      decision,
+      status,
+      verdict,
+      ...(learned ? { learned } : {}),
+      ...(moved ? { moved } : {}),
+    };
   }
 
   /** 승인 카드: approval_request(예상 경로/실제 경로/근거/버튼 3개) 이벤트 + 저장 */
@@ -463,4 +484,99 @@ export class Escalator {
     this.opts.log?.append(event as Parameters<EventSink['append']>[0]);
     return { approvalId, event };
   }
+}
+
+// ── 27.5 이동 승인: manifest 경로 갱신 + 참조 항목 일괄 갱신 ─────────────────
+export const PATH_UPDATED_EVIDENCE_KIND = 'path_updated';
+
+/** p가 from 자체이거나 그 아래면 to 기준으로 옮긴 경로, 아니면 null */
+export function rebasePath(p: string, from: string, to: string): string | null {
+  if (p === from) return to;
+  if (p.startsWith(`${from}/`)) return to + p.slice(from.length);
+  return null;
+}
+
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** 문자열 안의 경로 참조(from, from/…)를 to로 바꾼다. 경로 조각 경계에서만 (harness/mobile-old는 그대로) */
+export function rewritePathRefs(text: string, from: string, to: string): string {
+  const re = new RegExp(`(^|[\\s'"=:(,])(\\./)?${escapeRe(from)}(?=$|[/\\s'"):;,])`, 'g');
+  return text.replace(re, (_m, pre: string, dot: string | undefined) => `${pre}${dot ?? ''}${to}`);
+}
+
+function rewriteAcceptance(a: Acceptance, from: string, to: string): Acceptance {
+  const out: Record<string, unknown> = { ...a };
+  if ('run' in a) out.run = rewritePathRefs(a.run, from, to);
+  if ('file' in a && a.file !== undefined) out.file = rewritePathRefs(a.file, from, to);
+  return out as Acceptance;
+}
+
+export interface MoveArtifactOptions {
+  manifest: ManifestStore;
+  ledger?: ChecklistLedger;
+  artifactId: string;
+  /** 새 정식 경로 (승인된 실제 경로) */
+  newPath: string;
+  reason: string;
+  now?: () => Date;
+}
+
+export interface MoveArtifactResult {
+  /** 개정 후 manifest revision */
+  revision: number;
+  /** 경로가 바뀐 산출물 (대상 + 그 아래에 있던 산출물) */
+  moved: { artifactId: string; from: string; to: string }[];
+  /** 경로를 갱신한 항목 (옮긴 산출물을 참조하거나 acceptance가 옛 경로를 가리키던 항목) */
+  updatedItems: string[];
+}
+
+export function moveArtifact(opts: MoveArtifactOptions): MoveArtifactResult {
+  const m = opts.manifest.read();
+  const target = m?.artifacts[opts.artifactId];
+  if (!m || !target) throw new UnknownArtifactError(opts.artifactId);
+  const from = target.path;
+  const to = opts.newPath;
+  const changes: Record<string, ManifestEntry> = {};
+  const moved: MoveArtifactResult['moved'] = [];
+  for (const [id, e] of Object.entries(m.artifacts)) {
+    const np = rebasePath(e.path, from, to);
+    if (np === null || np === e.path) continue;
+    const aliases = (e.aliases ?? []).filter((a) => a !== np);
+    const { aliases: _old, ...rest } = e;
+    changes[id] = { ...rest, path: np, ...(aliases.length ? { aliases } : {}) };
+    moved.push({ artifactId: id, from: e.path, to: np });
+  }
+  const next = opts.manifest.revise(changes, { reason: opts.reason });
+  const updatedItems: string[] = [];
+  const ledger = opts.ledger;
+  if (ledger && moved.length > 0) {
+    const ts = (opts.now ?? (() => new Date()))().toISOString();
+    const movedTo = new Map(moved.map((x) => [x.artifactId, x]));
+    const items = ledger.get().items.map((it) => {
+      const acceptance = it.acceptance.map((a) => rewriteAcceptance(a, from, to));
+      const accChanged = JSON.stringify(acceptance) !== JSON.stringify(it.acceptance);
+      const mv = movedTo.get(it.artifactId);
+      if (!accChanged && !mv) return it;
+      updatedItems.push(it.id);
+      return {
+        ...it,
+        acceptance,
+        evidence: [
+          ...it.evidence,
+          {
+            kind: PATH_UPDATED_EVIDENCE_KIND,
+            ts,
+            summary: `경로 갱신 ${from} → ${to}`,
+            artifactId: it.artifactId,
+            from,
+            to,
+            ...(mv ? { artifactPath: mv.to } : {}),
+            acceptanceUpdated: accChanged,
+          },
+        ],
+      };
+    });
+    if (updatedItems.length > 0) ledger.revise(items);
+  }
+  return { revision: next.revision, moved, updatedItems };
 }
