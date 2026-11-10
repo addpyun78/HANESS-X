@@ -58,6 +58,45 @@ describe('14.1 claude 실행 인자 빌더', () => {
     expect(a.at(-1)).toBe('p');
   });
 
+  it('14.4 mcpServers → --mcp-config JSON 스냅샷 (stdio·http), -- 앞에 위치', () => {
+    const a = buildClaudeArgs({
+      prompt: 'p',
+      mcpServers: [
+        { name: 'harness', command: 'node', args: ['mcp.js', '--stdio'], env: { HX_SESSION: 's1' } },
+        { name: 'harness-http', url: 'http://127.0.0.1:4000/mcp', headers: { authorization: 'Bearer t' } },
+      ],
+    });
+    const i = a.indexOf('--mcp-config');
+    expect(i).toBeGreaterThan(0);
+    expect(i).toBeLessThan(a.indexOf('--'));
+    expect(JSON.parse(a[i + 1]!)).toMatchInlineSnapshot(`
+      {
+        "mcpServers": {
+          "harness": {
+            "args": [
+              "mcp.js",
+              "--stdio",
+            ],
+            "command": "node",
+            "env": {
+              "HX_SESSION": "s1",
+            },
+            "type": "stdio",
+          },
+          "harness-http": {
+            "headers": {
+              "authorization": "Bearer t",
+            },
+            "type": "http",
+            "url": "http://127.0.0.1:4000/mcp",
+          },
+        },
+      }
+    `);
+    expect(buildClaudeArgs({ prompt: 'p', mcpServers: [] })).not.toContain('--mcp-config');
+    expect(() => buildClaudeArgs({ prompt: 'p', mcpServers: [{ name: 'bad' }] })).toThrow(/command 또는 url/);
+  });
+
   it('resumeId → --resume <id>', () => {
     const a = buildClaudeArgs({ prompt: 'p', resumeId: 'f324fe3a-ef4b-4947-9fd3-3efa529054fa' });
     expect(a.slice(a.indexOf('--resume'), a.indexOf('--resume') + 2)).toEqual([
