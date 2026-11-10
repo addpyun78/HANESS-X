@@ -1,0 +1,16 @@
+{
+  "id": "engine-claude-code",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Claude Code",
+  "description": "Claude Code CLI(claude -p stream-json) 엔진 어댑터",
+  "main": "dist/index.js",
+  "provides": {
+    "engine": ["claude-code"]
+  },
+  "permissions": {
+    "fs": ["workspace:read", "workspace:write"],
+    "net": [],
+    "shell": true
+  }
+}
