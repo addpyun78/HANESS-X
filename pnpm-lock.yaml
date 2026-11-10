@@ -431,6 +431,9 @@ importers:
       '@harness-x/sdk':
         specifier: workspace:*
         version: link:../../sdk
+      typescript:
+        specifier: ~5.8.3
+        version: 5.8.3
       zod:
         specifier: ^4.6.7
         version: 4.6.7
