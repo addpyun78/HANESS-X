@@ -22,6 +22,12 @@ interface ScannerPluginModule {
   ): void;
 }
 
+/** checklist-ledger 플러그인 모듈의 공개 함수 (T-028 28.1 GET /api/checklist/:session/status) */
+interface LedgerPluginModule {
+  workspaceLedgerResolver?(workspace: string): (sessionId: string) => unknown;
+  registerChecklistStatusRoute?(app: unknown, resolve: (sessionId: string) => unknown): void;
+}
+
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
 사용법:
@@ -96,6 +102,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       host: values.host,
       port,
       routes: (app) => {
+        const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
+        if (values.workspace && ledger?.registerChecklistStatusRoute && ledger.workspaceLedgerResolver)
+          ledger.registerChecklistStatusRoute(app, ledger.workspaceLedgerResolver(resolve(values.workspace)));
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
         const register = mod()?.registerRescanRoute;
