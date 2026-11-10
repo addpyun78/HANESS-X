@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto';
 import { runAgentLoop, toEngineRun, type AgentTool, type HookBus, type ModelClient } from '@harness-x/kernel';
 import type { EngineAdapter, EngineRun, EngineRunOptions, HarnessEvent } from '@harness-x/protocol';
 import type { FetchLike } from './http.js';
+import { AnthropicClient } from './anthropic.js';
+import { GeminiClient } from './gemini.js';
 import { autoToolModeClient, jsonFallbackClient } from './json-fallback.js';
 import { OpenAIChatClient } from './openai.js';
 
@@ -10,7 +12,7 @@ import { OpenAIChatClient } from './openai.js';
  * API 키는 EngineRunOptions.env에서만 읽는다 (secrets 모듈이 채운다).
  */
 
-export type ApiProvider = 'openai-compat';
+export type ApiProvider = 'openai-compat' | 'deepseek' | 'anthropic' | 'gemini';
 
 export interface ApiEngineConfig {
   /** 예: openai-compat:ollama */
@@ -51,7 +53,21 @@ function makeClient(cfg: ApiEngineConfig, model: string, apiKey: string | undefi
       ...(cfg.fetch ? { fetch: cfg.fetch } : {}),
       ...(jsonMode ? { jsonMode } : {}),
     });
-  const mode = cfg.toolMode ?? 'auto';
+  if (cfg.provider === 'anthropic')
+    return new AnthropicClient({
+      model,
+      apiKey: apiKey ?? '',
+      ...(cfg.baseUrl ? { baseUrl: cfg.baseUrl } : {}),
+      ...(cfg.fetch ? { fetch: cfg.fetch } : {}),
+    });
+  if (cfg.provider === 'gemini')
+    return new GeminiClient({
+      model,
+      apiKey: apiKey ?? '',
+      ...(cfg.baseUrl ? { baseUrl: cfg.baseUrl } : {}),
+      ...(cfg.fetch ? { fetch: cfg.fetch } : {}),
+    });
+  const mode = cfg.toolMode ?? (cfg.provider === 'deepseek' ? 'native' : 'auto');
   if (mode === 'native') return openai(false);
   if (mode === 'json') return jsonFallbackClient(openai(true));
   return autoToolModeClient(openai(false), openai(true));
@@ -114,6 +130,48 @@ export function ollamaEngine(extra: Partial<ApiEngineConfig> = {}): EngineAdapte
     displayName: 'Ollama (로컬)',
     provider: 'openai-compat',
     baseUrl: OLLAMA_BASE_URL,
+    ...extra,
+  });
+}
+
+export const DEEPSEEK_BASE_URL = 'https://api.deepseek.com/v1';
+
+/** Anthropic Messages API — 키: env.ANTHROPIC_API_KEY */
+export function anthropicEngine(extra: Partial<ApiEngineConfig> = {}): EngineAdapter {
+  return createApiEngine({
+    id: 'anthropic-api',
+    displayName: 'Anthropic API',
+    provider: 'anthropic',
+    apiKeyEnv: 'ANTHROPIC_API_KEY',
+    requireApiKey: true,
+    defaultModel: 'claude-sonnet-4-5',
+    ...extra,
+  });
+}
+
+/** Gemini API — 키: env.GEMINI_API_KEY */
+export function geminiEngine(extra: Partial<ApiEngineConfig> = {}): EngineAdapter {
+  return createApiEngine({
+    id: 'gemini-api',
+    displayName: 'Gemini API',
+    provider: 'gemini',
+    apiKeyEnv: 'GEMINI_API_KEY',
+    requireApiKey: true,
+    defaultModel: 'gemini-2.5-flash',
+    ...extra,
+  });
+}
+
+/** DeepSeek API (OpenAI 호환) — 키: env.DEEPSEEK_API_KEY */
+export function deepseekEngine(extra: Partial<ApiEngineConfig> = {}): EngineAdapter {
+  return createApiEngine({
+    id: 'deepseek-api',
+    displayName: 'DeepSeek API',
+    provider: 'deepseek',
+    baseUrl: DEEPSEEK_BASE_URL,
+    apiKeyEnv: 'DEEPSEEK_API_KEY',
+    requireApiKey: true,
+    defaultModel: 'deepseek-chat',
     ...extra,
   });
 }
