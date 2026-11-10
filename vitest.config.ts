@@ -17,6 +17,7 @@ const include = [
   'apps/**/*.test.{ts,tsx}',
   'scripts/**/*.test.ts',
   'tests/**/*.test.ts',
+  'e2e/**/*.test.ts',
 ];
 
 export default defineConfig({
