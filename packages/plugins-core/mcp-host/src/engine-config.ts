@@ -7,7 +7,7 @@ import { MCP_SERVER_NAME } from './server.js';
  *  - codex:  `codex -c mcp_servers.<name>.<key>=<TOML 값>` 인자 목록 (또는 config.toml 조각)
  */
 
-export type McpLaunch =
+export type McpLaunch = (
   | {
       /** 엔진이 자식 프로세스로 띄우는 stdio 서버 */
       transport: 'stdio';
@@ -23,7 +23,14 @@ export type McpLaunch =
       token?: string;
       /** codex bearer_token_env_var 이름 (기본 HARNESS_MCP_TOKEN) */
       tokenEnvVar?: string;
-    };
+    }
+) & {
+  /**
+   * 서버 기동·연결 대기 시간(초). 느린 파일 시스템(WSL /mnt/c)에서는 수십 초 걸릴 수 있다.
+   * codex: startup_timeout_sec, claude: MCP_TIMEOUT 환경 변수(claudeMcpEnv)
+   */
+  startupTimeoutSec?: number;
+};
 
 export const DEFAULT_TOKEN_ENV = 'HARNESS_MCP_TOKEN';
 
@@ -37,11 +44,17 @@ export function stdioLaunch(opts: {
   glossaryFile?: string;
   node?: string;
   bin?: string;
+  startupTimeoutSec?: number;
 }): McpLaunch {
   const args = [opts.bin ?? MCP_BIN, '--dir', opts.dir];
   if (opts.sessionId) args.push('--session', opts.sessionId);
   if (opts.glossaryFile) args.push('--glossary', opts.glossaryFile);
-  return { transport: 'stdio', command: opts.node ?? process.execPath, args };
+  return {
+    transport: 'stdio',
+    command: opts.node ?? process.execPath,
+    args,
+    ...(opts.startupTimeoutSec !== undefined ? { startupTimeoutSec: opts.startupTimeoutSec } : {}),
+  };
 }
 
 // ── claude ────────────────────────────────────────────────────
@@ -81,6 +94,13 @@ export function claudeMcpArgs(configFileOrJson: string, opts: { strict?: boolean
   return ['--mcp-config', configFileOrJson, ...(opts.strict ? ['--strict-mcp-config'] : [])];
 }
 
+/** claude 실행 시 함께 넘길 환경 변수 (MCP 서버 연결 대기 ms) */
+export function claudeMcpEnv(launch: McpLaunch): Record<string, string> {
+  return launch.startupTimeoutSec !== undefined
+    ? { MCP_TIMEOUT: String(Math.ceil(launch.startupTimeoutSec * 1000)) }
+    : {};
+}
+
 // ── codex ─────────────────────────────────────────────────────
 /** TOML 값 (문자열·문자열 배열·인라인 테이블). JSON 문자열 이스케이프는 TOML 기본 문자열과 호환 */
 function toml(v: string | string[] | Record<string, string>): string {
@@ -92,14 +112,16 @@ function toml(v: string | string[] | Record<string, string>): string {
 }
 
 function codexEntries(launch: McpLaunch): [string, string][] {
+  const out: [string, string][] = [];
   if (launch.transport === 'stdio') {
-    const out: [string, string][] = [['command', toml(launch.command)]];
-    out.push(['args', toml(launch.args ?? [])]);
+    out.push(['command', toml(launch.command)], ['args', toml(launch.args ?? [])]);
     if (launch.env) out.push(['env', toml(launch.env)]);
-    return out;
+  } else {
+    out.push(['url', toml(launch.url)]);
+    if (launch.token) out.push(['bearer_token_env_var', toml(launch.tokenEnvVar ?? DEFAULT_TOKEN_ENV)]);
   }
-  const out: [string, string][] = [['url', toml(launch.url)]];
-  if (launch.token) out.push(['bearer_token_env_var', toml(launch.tokenEnvVar ?? DEFAULT_TOKEN_ENV)]);
+  if (launch.startupTimeoutSec !== undefined)
+    out.push(['startup_timeout_sec', String(Math.ceil(launch.startupTimeoutSec))]);
   return out;
 }
 
