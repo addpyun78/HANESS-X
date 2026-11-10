@@ -25,6 +25,13 @@
     "declaration": false,
     "declarationMap": false
   },
-  "include": ["packages/**/*.ts", "apps/**/*.ts", "apps/**/*.tsx", "tests/**/*.ts", "types/**/*.d.ts"],
+  "include": [
+    "packages/**/*.ts",
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "tests/**/*.ts",
+    "e2e/**/*.ts",
+    "types/**/*.d.ts"
+  ],
   "exclude": ["**/node_modules/**", "**/dist/**"]
 }
