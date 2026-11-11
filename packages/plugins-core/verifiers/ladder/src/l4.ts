@@ -14,6 +14,7 @@ import {
   type Verifier,
 } from '@harness-x/protocol';
 import type { LadderResult } from './ladder.js';
+import type { JudgeSettings } from './settings.js';
 
 /**
  * 판정 사다리 L4 — 경량 판정 모델 (T-026)
@@ -158,31 +159,22 @@ export async function runLadderL4(prev: LadderResult, opts: L4Options): Promise<
   return r;
 }
 
-// ── 26.7 판정기 선택: 설정 verifier.l4 = jev | local | off ─────────────
-export const L4_MODES = ['jev', 'local', 'off'] as const;
-export type L4Mode = (typeof L4_MODES)[number];
-/** 기본값 off — 계획서 "결정 필요 사항"(Jev 유료 / 로컬 느림 / off)이 정해질 때까지 외부 호출 없음 */
-export const DEFAULT_L4_MODE: L4Mode = 'off';
+// ── 판정기 선택 (T-100 J.3·J.4) ─────────────────────────────────────
+// 예전 설정 `verifier.l4`는 폐기했다(J.4). 의미 판단 설정은 judge.*(settings.ts)를 따른다.
+// 의미 판단 체인(judge 패키지: 사용자 설정 AI → 로컬 → 구독 엔진 → 승인 카드)은 E.14에서 연결한다.
 
-/** 설정 → L4 모드. { verifier: { l4 } } 또는 { 'verifier.l4' } 형태. 모르는 값이면 오류 */
-export function l4ModeFrom(config: Record<string, unknown> = {}): L4Mode {
-  const nested = (config.verifier as { l4?: unknown } | undefined)?.l4;
-  const v = nested ?? config['verifier.l4'];
-  if (v === undefined || v === null) return DEFAULT_L4_MODE;
-  if (typeof v !== 'string' || !(L4_MODES as readonly string[]).includes(v))
-    throw new RangeError(`verifier.l4는 ${L4_MODES.join(' | ')} 중 하나여야 합니다 (받은 값: ${String(v)})`);
-  return v as L4Mode;
+/** 판정기 생성기 (verifier-local 플러그인이 제공) */
+export interface L4VerifierFactories {
+  local?: () => Verifier;
 }
 
-/** 판정기 생성기 (verifier-jev·verifier-local 플러그인이 제공) — 선택된 것만 만든다 */
-export type L4VerifierFactories = Partial<Record<Exclude<L4Mode, 'off'>, () => Verifier>>;
-
-/** 모드 → 판정기. off면 null(L5로 직행). 선택된 판정기가 설치되지 않았으면 오류 */
-export function selectL4Verifier(mode: L4Mode, factories: L4VerifierFactories): Verifier | null {
-  if (mode === 'off') return null;
-  const make = factories[mode];
-  if (!make) throw new Error(`verifier.l4=${mode} 이지만 판정기 플러그인(verifier-${mode})이 없습니다`);
-  return make();
+/**
+ * judge 설정 → L4 판정기. judge.semantic = off면 null(의미 판단 없이 L5로),
+ * 그 밖에는 로컬 판정기(설치돼 있지 않으면 null).
+ */
+export function selectL4Verifier(settings: JudgeSettings, factories: L4VerifierFactories): Verifier | null {
+  if (settings.semantic === 'off') return null;
+  return factories.local ? factories.local() : null;
 }
 
 /** L4 인정 시 manifest·glossary 별칭 자동 추가 (다음 판정은 L2에서 끝난다) */

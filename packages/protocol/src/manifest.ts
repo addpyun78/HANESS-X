@@ -16,6 +16,8 @@ export const PLUGIN_SLOTS = [
   'panel',
   'memory',
   'command',
+  // T-100 P1-B.4: 기대값·실제값 비교기 (kind 이름 목록)
+  'comparator',
 ] as const;
 export const PluginSlotSchema = z.enum(PLUGIN_SLOTS);
 export type PluginSlot = z.infer<typeof PluginSlotSchema>;
@@ -60,6 +62,7 @@ export const ProvidesSchema = z
     panel: z.array(z.string().min(1)).optional(),
     memory: z.array(z.string().min(1)).optional(),
     command: z.array(z.string().regex(/^\/[a-z0-9][a-z0-9-]*$/)).optional(),
+    comparator: z.array(z.string().regex(/^[A-Za-z][A-Za-z0-9-]*$/)).optional(),
   })
   .strict()
   .refine((p) => Object.values(p).some((v) => Array.isArray(v) && v.length > 0), {

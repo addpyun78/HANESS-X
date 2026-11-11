@@ -1,13 +1,19 @@
 import { existsSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import {
+  defaultCompareCtx,
+  EMPTY_EQUIVALENCES,
+  pathComparator,
+  type CompareCtx,
+  type Equivalences,
+} from '@harness-x/comparators';
+import {
   glossaryIndex,
   type Acceptance,
   type Glossary,
   type GlossaryIndex,
   type VerdictKind,
 } from '@harness-x/checklist-ledger';
-import { aliasKeyOf } from './alias.js';
 import {
   changedPaths,
   collectCandidates,
@@ -21,7 +27,8 @@ import {
   type AcceptanceOutcome,
   type AcceptanceRunner,
 } from './evidence.js';
-import { isWithinKey, normalizePath, toPosixForm, type NormalizeOptions } from './normalize.js';
+import { aliasKeyOf } from './alias.js';
+import { normalizePath, toPosixForm, type NormalizeOptions } from './normalize.js';
 
 /**
  * 판정 사다리 L1~L3 (코드 판정, 모델 호출 0회)
@@ -54,6 +61,8 @@ export interface LadderInput {
   candidateLimit?: number;
   /** 기대 경로가 디스크에 이미 있으면 L1 동치로 본다 (기본 true) */
   checkDisk?: boolean;
+  /** 사전 허용 규칙·동치 쌍 (T-100 C.3, 기본 없음) */
+  equivalences?: Equivalences;
 }
 
 export interface LadderResult {
@@ -74,14 +83,28 @@ export interface LadderResult {
   escalate: boolean;
 }
 
-function matchPrefix(key: string, expKey: string, kind: 'file' | 'dir', mapped: (k: string) => string) {
-  const k = mapped(key);
-  const e = mapped(expKey);
-  if (kind === 'file') return k === e ? key : null;
-  if (!isWithinKey(k, e)) return null;
-  // 디렉터리: 실제 경로에서 기대 경로 깊이만큼의 앞부분
-  const depth = e === '' ? 0 : e.split('/').length;
-  return key.split('/').slice(0, depth).join('/');
+/**
+ * 관찰된 경로 key가 기대 경로 target과 같은가 — path 비교기(T-100 C.2)로 판정한다.
+ * 파일은 경로 전체, 디렉터리는 실제 경로에서 기대 경로 깊이만큼의 앞부분을 비교한다.
+ * level=normalize: 정규화 칸만(L1), dictionary: glossary·사전 규칙까지(L2)
+ */
+function matchPrefix(
+  key: string,
+  target: string,
+  kind: 'file' | 'dir',
+  level: 'normalize' | 'dictionary',
+  ctx: CompareCtx,
+): string | null {
+  const depth = target === '' ? 0 : target.split('/').length;
+  const parts = key.split('/');
+  if (kind === 'dir' && parts.length < depth) return null;
+  const actual = kind === 'file' ? key : parts.slice(0, depth).join('/');
+  const r = pathComparator.equals(target, actual, ctx, {
+    cwd: null,
+    caseInsensitive: false,
+    dictionary: level === 'dictionary',
+  });
+  return r.verdict === 'equal' ? actual : null;
 }
 
 export async function runLadder(input: LadderInput): Promise<LadderResult> {
@@ -93,10 +116,16 @@ export async function runLadder(input: LadderInput): Promise<LadderResult> {
   const aliasKeys = (input.expected.aliases ?? []).map(keyOf);
   const observed = changedPaths(input.changes).map(keyOf);
   const base = { expectedPath: expKey, candidates: [] as Candidate[], escalate: false };
+  const ctx = defaultCompareCtx({
+    os: 'posix',
+    workspaceRoot: input.root,
+    glossary: idx,
+    equivalences: input.equivalences ?? EMPTY_EQUIVALENCES,
+  });
 
   // L1 정규화
   for (const key of observed) {
-    const hit = matchPrefix(key, expKey, input.expected.kind, (k) => k);
+    const hit = matchPrefix(key, expKey, input.expected.kind, 'normalize', ctx);
     if (hit !== null)
       return {
         ...base,
@@ -121,10 +150,9 @@ export async function runLadder(input: LadderInput): Promise<LadderResult> {
   }
 
   // L2 별칭 사전 (glossary 단어 치환 + manifest 별칭 경로)
-  const mapped = (k: string) => aliasKeyOf(k, idx);
   for (const key of observed) {
     for (const target of [expKey, ...aliasKeys]) {
-      const hit = matchPrefix(key, target, input.expected.kind, mapped);
+      const hit = matchPrefix(key, target, input.expected.kind, 'dictionary', ctx);
       if (hit !== null)
         return {
           ...base,
@@ -133,7 +161,7 @@ export async function runLadder(input: LadderInput): Promise<LadderResult> {
           confidence: 1,
           reason:
             target === expKey
-              ? `glossary 별칭 치환 후 경로 일치 (${mapped(expKey)})`
+              ? `glossary 별칭 치환 후 경로 일치 (${aliasKeyOf(expKey, idx)})`
               : `manifest 별칭 경로 일치 (${target})`,
           actualPath: hit,
         };

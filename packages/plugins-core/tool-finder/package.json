@@ -1,0 +1,29 @@
+{
+  "name": "@harness-x/tool-finder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@harness-x/approvals": "workspace:*",
+    "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/installer": "workspace:*",
+    "@harness-x/kernel": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@harness-x/mcp-host": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2"
+  }
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { NARROW_QUERY, useMediaQuery } from '../../shell/useMediaQuery.js';
 import { ActionCard } from './ActionCard.js';
 import {
@@ -24,6 +24,11 @@ export interface ApprovalsAreaProps {
   onFocused?: () => void;
   /** 강제 배치 (기본: 768px 미만이면 하단 시트) */
   variant?: 'panel' | 'sheet';
+  /**
+   * 같은 영역에 함께 띄울 다른 카드 (T-100 P3-C.8 도구 고르기 카드 등).
+   * 승인 카드와 같은 자리(패널 맨 위)·개수 배지·좁은 화면 하단 시트를 그대로 쓴다.
+   */
+  extraCards?: readonly { id: string; node: ReactNode }[];
 }
 
 /**
@@ -42,6 +47,7 @@ export function ApprovalsArea({
   focusId,
   onFocused,
   variant,
+  extraCards = [],
 }: ApprovalsAreaProps) {
   const narrow = useMediaQuery(NARROW_QUERY);
   const v = variant ?? (narrow ? 'sheet' : 'panel');
@@ -60,7 +66,8 @@ export function ApprovalsArea({
     onFocused?.();
   }, [focusId, onFocused]);
 
-  if (cards.length === 0 && !last) return null;
+  const total = cards.length + extraCards.length;
+  if (total === 0 && !last) return null;
 
   const kinds = new Map<string, number>();
   for (const c of cards) kinds.set(c.kind, (kinds.get(c.kind) ?? 0) + 1);
@@ -79,9 +86,9 @@ export function ApprovalsArea({
           <span aria-hidden="true">✋ </span>
           {AREA_TITLE}
         </h3>
-        {cards.length > 1 && (
-          <span className="hx-approvals__count" aria-label={`카드 ${cards.length}장`}>
-            {cards.length}
+        {total > 1 && (
+          <span className="hx-approvals__count" aria-label={`카드 ${total}장`}>
+            {total}
           </span>
         )}
       </header>
@@ -103,6 +110,11 @@ export function ApprovalsArea({
               }
             : {})}
         />
+      ))}
+      {extraCards.map((x) => (
+        <div key={x.id} className="hx-approvals__extra" data-extra-id={x.id}>
+          {x.node}
+        </div>
       ))}
       {last && (
         <p className="hx-approvals__last" role="status">

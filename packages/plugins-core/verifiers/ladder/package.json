@@ -16,10 +16,12 @@
   },
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
-    "@harness-x/protocol": "workspace:*"
+    "@harness-x/comparators": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@harness-x/verifier-jev": "workspace:*",
+    "@harness-x/kernel": "workspace:*",
     "@harness-x/verifier-local": "workspace:*"
   }
 }

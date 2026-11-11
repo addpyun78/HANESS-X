@@ -15,7 +15,7 @@ import {
  * 로컬 대체 판정기 (26.6) — Ollama JSON 스키마 출력
  *   POST {baseUrl}/api/chat
  *   { model, stream: false, format: <답 JSON Schema>, options: { temperature: 0 }, messages: [system, user] }
- * 질문 형식(system/user 메시지·답 스키마)은 Jev와 같다(@harness-x/protocol buildJudgeMessages).
+ * 질문 형식(system/user 메시지·답 스키마)은 판정 사다리 공통 형식이다(@harness-x/protocol buildJudgeMessages).
  * 오프라인·민감 프로젝트용: 데이터가 이 컴퓨터 밖으로 나가지 않는다.
  */
 

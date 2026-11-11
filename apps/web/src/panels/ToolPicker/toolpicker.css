@@ -1,0 +1,79 @@
+/* T-100 P3-C.3 도구 고르기 카드 — 승인 카드(approvals.css) 틀 안의 후보 목록 */
+.hx-tool-cands {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-tool-cand {
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+}
+
+.hx-tool-cand[data-recommended] {
+  border-color: var(--hx-accent);
+}
+
+.hx-tool-cand p {
+  margin: var(--hx-space-1) 0 0;
+}
+
+.hx-tool-cand__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-1);
+  cursor: pointer;
+}
+
+.hx-tool-cand__head input {
+  width: 20px;
+  height: 20px;
+}
+
+.hx-tool-cand__previous,
+.hx-tool-cand__note,
+.hx-tool-cand__install {
+  color: var(--hx-text-muted);
+}
+
+.hx-tool-cand__label {
+  font-weight: 600;
+}
+
+/* P2-D.2와 같은 색: 무료 초록 · 무료+유료 파랑 · 체험판 주황 · 유료 빨강 · 확인 못 함 노랑 */
+.hx-price-badge {
+  padding: 0 var(--hx-space-1);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hx-price-badge--green {
+  background: var(--hx-success-soft);
+  color: var(--hx-success);
+}
+
+.hx-price-badge--blue {
+  background: var(--hx-info-soft);
+  color: var(--hx-info);
+}
+
+.hx-price-badge--orange {
+  background: color-mix(in srgb, color-mix(in srgb, var(--hx-warning), var(--hx-danger)) 16%, var(--hx-bg));
+  color: color-mix(in srgb, var(--hx-warning), var(--hx-danger));
+}
+
+.hx-price-badge--red {
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+}
+
+.hx-price-badge--yellow {
+  background: var(--hx-warning-soft);
+  color: var(--hx-warning);
+}

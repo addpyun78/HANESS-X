@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`F.1 evidence.compare > 정규화 일치 · 사전 일치 · 의미 판단 증거 (스냅샷) 1`] = `
+[
+  {
+    "compare": {
+      "confidence": 1,
+      "kind": "text",
+      "level": "normalize",
+      "normalizedActual": "build ok",
+      "normalizedExpected": "build ok",
+      "verdict": "equal",
+    },
+    "kind": "compare",
+    "summary": "text equal (normalize, 1.00) — 정규화 후 텍스트 일치",
+    "ts": "2026-11-11T00:00:00.000Z",
+  },
+  {
+    "compare": {
+      "confidence": 1,
+      "kind": "path",
+      "level": "dictionary",
+      "normalizedActual": "/work/harness/mobile",
+      "normalizedExpected": "/work/하네스/모바일",
+      "verdict": "equal",
+    },
+    "kind": "compare",
+    "summary": "path equal (dictionary, 1.00) — glossary 별칭 치환 후 경로 일치 (/work/harness/mobile)",
+    "ts": "2026-11-11T00:00:00.000Z",
+  },
+  {
+    "ai_judged": true,
+    "compare": {
+      "confidence": 0.93,
+      "judgeEngine": "claude-code",
+      "kind": "text",
+      "level": "semantic",
+      "normalizedActual": "작업이 끝났습니다",
+      "normalizedExpected": "완료",
+      "samples": 3,
+      "verdict": "equal",
+    },
+    "kind": "compare",
+    "summary": "text equal (semantic, 0.93) — 같은 뜻",
+    "ts": "2026-11-11T00:00:00.000Z",
+  },
+]
+`;

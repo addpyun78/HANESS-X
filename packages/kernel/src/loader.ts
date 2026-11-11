@@ -454,11 +454,7 @@ export class PluginLoader {
 
   /** 6.6 lock 저장 (원자적 교체) */
   saveLock(): void {
-    const entries = [...this.lock.values()].sort((a, b) => a.id.localeCompare(b.id));
-    mkdirSync(dirname(this.lockFile), { recursive: true });
-    const tmp = `${this.lockFile}.${process.pid}.tmp`;
-    writeFileSync(tmp, JSON.stringify({ lockfileVersion: 1, plugins: entries }, null, 2) + '\n');
-    renameSync(tmp, this.lockFile);
+    writeLock(this.lockFile, this.lock);
   }
 
   /** 슬롯별 활성 플러그인 */
@@ -707,6 +703,31 @@ export function hashPluginDir(dir: string): string {
   };
   walk(dir);
   return h.digest('hex');
+}
+
+function writeLock(file: string, lock: Map<string, LockEntry>): void {
+  const entries = [...lock.values()].sort((a, b) => a.id.localeCompare(b.id));
+  mkdirSync(dirname(file), { recursive: true });
+  const tmp = `${file}.${process.pid}.tmp`;
+  writeFileSync(tmp, JSON.stringify({ lockfileVersion: 1, plugins: entries }, null, 2) + '\n');
+  renameSync(tmp, file);
+}
+
+/** plugins.lock 항목 목록 (파일이 없거나 깨졌으면 빈 배열) */
+export function listLockEntries(file: string): LockEntry[] {
+  return [...readLock(file).values()];
+}
+
+/**
+ * plugins.lock에서 항목 제거 — 저장소에서 삭제된 플러그인의 흔적 정리 (T-100 J.2).
+ * 지운 id 목록을 돌려준다. 없는 id는 무시하고, 바뀐 것이 없으면 파일을 다시 쓰지 않는다.
+ */
+export function removeLockEntries(file: string, ids: readonly string[]): string[] {
+  if (!existsSync(file)) return [];
+  const lock = readLock(file);
+  const removed = [...new Set(ids)].filter((id) => lock.delete(id));
+  if (removed.length) writeLock(file, lock);
+  return removed;
 }
 
 function readLock(file: string): Map<string, LockEntry> {

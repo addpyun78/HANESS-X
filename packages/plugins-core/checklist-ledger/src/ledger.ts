@@ -4,6 +4,7 @@ import { ChecklistChangeEventSchema, type ChecklistChangeEvent } from '@harness-
 import {
   ChecklistItemSchema,
   EvidenceSchema,
+  hasAiJudgedEvidence,
   VerdictSchema,
   type Checklist,
   type ChecklistItem,
@@ -12,7 +13,7 @@ import {
   type ItemStatus,
   type Verdict,
 } from './schema.js';
-import { assertTransition } from './state.js';
+import { assertTransition, InvalidTransitionError } from './state.js';
 import { ChecklistStore, type ChecklistStoreOptions, type WriteOptions } from './store.js';
 
 /**
@@ -122,12 +123,44 @@ export class ChecklistLedger {
           attempts: to === 'doing' ? it.attempts + 1 : it.attempts,
           evidence: [...it.evidence, ...extra],
           ...(verdict ? { verdict } : {}),
+          ...(hasAiJudgedEvidence(extra) ? { ai_judged: true } : {}),
         };
       });
       if (!cur.items.some((i) => i.id === itemId)) throw new ItemNotFoundError(itemId);
       return { revision: cur.revision, items };
     }, opts);
     this.emit(next, [{ itemId, from, to }]);
+    return next;
+  }
+
+  /**
+   * blocked → doing 재개 (T-100 P3-D.1 기다리던 도구 설치 완료 · P3-C.6 도구 없이 진행).
+   * 전이표에서 blocked는 종단 상태라 일반 transition으로는 못 돌아온다 — 이 명시적 재개만 허용. 다른 상태면 InvalidTransitionError.
+   */
+  resume(itemId: string, opts: TransitionOptions = {}): Checklist {
+    const extra = toArray(opts.evidence).map((e) =>
+      EvidenceSchema.parse({ ts: this.now().toISOString(), ...e }),
+    );
+    const next = this.store.update((cur) => {
+      if (!cur) throw new ChecklistNotFoundError(this.store.file);
+      const target = cur.items.find((i) => i.id === itemId);
+      if (!target) throw new ItemNotFoundError(itemId);
+      if (target.status !== 'blocked') throw new InvalidTransitionError(itemId, target.status, 'doing');
+      return {
+        revision: cur.revision,
+        items: cur.items.map((it) =>
+          it.id === itemId
+            ? {
+                ...it,
+                status: 'doing' as const,
+                attempts: it.attempts + 1,
+                evidence: [...it.evidence, ...extra],
+              }
+            : it,
+        ),
+      };
+    }, opts);
+    this.emit(next, [{ itemId, from: 'blocked', to: 'doing' }]);
     return next;
   }
 
@@ -143,7 +176,13 @@ export class ChecklistLedger {
       return {
         revision: cur.revision,
         items: cur.items.map((it) =>
-          it.id === itemId ? { ...it, evidence: [...it.evidence, ...extra] } : it,
+          it.id === itemId
+            ? {
+                ...it,
+                evidence: [...it.evidence, ...extra],
+                ...(hasAiJudgedEvidence(extra) ? { ai_judged: true } : {}),
+              }
+            : it,
         ),
       };
     }, opts);

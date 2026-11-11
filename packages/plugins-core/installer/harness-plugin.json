@@ -1,0 +1,10 @@
+{
+  "id": "installer",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Installer",
+  "description": "설치 관리자: 앱·도구·모델·확장을 계획 카드 → 사람 승인 → 실행·검증·기록. 도구 목록(~/.harness-x/tools/registry.json)을 AI에 바로 탑재",
+  "main": "dist/index.js",
+  "provides": { "tool": ["install-search", "install-resolve", "install-plan"] },
+  "permissions": { "fs": [], "net": [], "shell": true }
+}
