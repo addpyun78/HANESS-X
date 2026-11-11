@@ -9,6 +9,7 @@ export * from './api/engines-routes.js';
 export * from './api/agents-routes.js';
 export * from './api/install-routes.js';
 export * from './api/tool-routes.js';
+export * from './install-wiring.js';
 export * from './human-gesture-token.js';
 export * from './api/sessions-routes.js';
 export * from './dispatch.js';

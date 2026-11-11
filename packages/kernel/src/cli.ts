@@ -63,13 +63,23 @@ interface ApprovalsPluginModule {
   ): Promise<number>;
 }
 
-/** 저장소의 approvals 플러그인 (빌드된 dist) — 커널은 그 패키지에 의존하지 않는다 */
-async function loadApprovalsModule(): Promise<ApprovalsPluginModule | undefined> {
+/** 저장소의 plugins-core 플러그인 (빌드된 dist) — 커널은 그 패키지에 의존하지 않는다 */
+async function loadCorePluginModule<T>(name: string): Promise<T | undefined> {
   const root = repoRoot();
-  const file = root && join(root, 'packages', 'plugins-core', 'approvals', 'dist', 'index.js');
+  const file = root && join(root, 'packages', 'plugins-core', name, 'dist', 'index.js');
   if (!file || !existsSync(file)) return undefined;
   const { pathToFileURL } = await import('node:url');
-  return (await import(pathToFileURL(file).href)) as ApprovalsPluginModule;
+  return (await import(pathToFileURL(file).href)) as T;
+}
+
+const loadApprovalsModule = () => loadCorePluginModule<ApprovalsPluginModule>('approvals');
+
+/** installer 플러그인 모듈의 공개 함수 (T-100 P2-G.7 `harness-x install`·`harness-x tools`) */
+interface InstallerPluginModule {
+  installCli?(
+    argv: string[],
+    io: { input: NodeJS.ReadableStream; output: NodeJS.WritableStream },
+  ): Promise<number>;
 }
 
 /**
@@ -106,6 +116,10 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
   harness-x serve [옵션]     로컬 API 서버 실행 (기본 127.0.0.1:${DEFAULT_API_PORT})
   harness-x approvals [--workspace <dir>] [--session <id>] [카드 번호 선택 번호]
                              확인이 필요한 카드를 글로 보고 번호로 고르기
+  harness-x install <이름|주소>
+                             설치 계획을 글로 보고 y/n으로 설치 (화면 없이)
+  harness-x tools list       설치된 도구 목록
+  harness-x tools allow <id> 새 도구 첫 실행을 앞으로 허락
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -161,6 +175,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     }
     return mod.approvalsCli(argv.slice(1), { input: process.stdin, output: process.stdout });
   }
+  // T-100 P2-G.7 화면 없이 설치: 계획 표시 → y/n 승인 (installer 플러그인의 installCli)
+  if (argv[0] === 'install' || argv[0] === 'tools') {
+    const mod = await loadCorePluginModule<InstallerPluginModule>('installer');
+    if (!mod?.installCli) {
+      process.stderr.write('installer 플러그인을 찾지 못했습니다 (pnpm -r build 필요)\n');
+      return 1;
+    }
+    return mod.installCli(argv, { input: process.stdin, output: process.stdout });
+  }
   const { values, positionals } = parseArgs({
     args: argv,
     allowPositionals: true,
@@ -191,15 +214,23 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     watchStdinEof(() => (life.shutdown ? void life.shutdown() : process.exit(0)));
   }
 
-  const [{ startApiServer }, { EventLog }, { HookBus }, { HotReloader }, loaderMod, { WorkspaceStore }] =
-    await Promise.all([
-      import('./api/server.js'),
-      import('./event-log.js'),
-      import('./hooks.js'),
-      import('./hot-reload.js'),
-      import('./loader.js'),
-      import('./workspaces.js'),
-    ]);
+  const [
+    { startApiServer },
+    { EventLog },
+    { HookBus },
+    { HotReloader },
+    loaderMod,
+    { WorkspaceStore },
+    { wireInstaller, wireToolFinder },
+  ] = await Promise.all([
+    import('./api/server.js'),
+    import('./event-log.js'),
+    import('./hooks.js'),
+    import('./hot-reload.js'),
+    import('./loader.js'),
+    import('./workspaces.js'),
+    import('./install-wiring.js'),
+  ]);
   const { PluginLoader, defaultPluginRoots, harnessHome } = loaderMod;
 
   // 엔진 CLI 구독 토큰 파일을 하네스 프로세스가 읽지 못하게 막는다
@@ -309,6 +340,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       return runner.run(i.pipeline, i.prompt);
     },
   });
+  // T-100 Part 2 설치 관리자: API(/api/install/…) + MCP 도구(install.search·resolve·plan, 같은 서비스) +
+  // 새 도구 첫 실행 확인(permission-gate, <home>/tools/allowed.json) + 설치 도구 감지(읽기만)
+  const installWiring = wireInstaller({ plugins: loader.plugins, hooks });
+  // T-100 Part 3 도구 찾기: /api/tools/* + tools.request(MCP) + 도구 고르기 카드 이벤트 + 설치 후 자동 재개
+  const toolWiring = installWiring
+    ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })
+    : undefined;
   let server;
   let inventory: { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void } | undefined;
   try {
@@ -384,6 +422,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         pingCwd: workspace,
       },
       quota: {},
+      ...(installWiring ? { install: installWiring.install } : {}),
+      ...(toolWiring ? { toolFinder: toolWiring.toolFinder } : {}),
     });
   } catch (err) {
     process.stderr.write(`서버 기동 실패: ${err instanceof Error ? err.message : String(err)}\n`);
