@@ -6,3 +6,4 @@ export * from './path-normalize.js';
 export * from './path-alias.js';
 export * from './comparators/path.js';
 export * from './comparators/text.js';
+export * from './comparators/json.js';
