@@ -2,15 +2,15 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
 import { listLockEntries, removeLockEntries } from '../src/loader.js';
+import { RETIRED_PLUGIN_LABEL, retiredName } from '../../../tests/helpers/retired-names.js';
 import { setup } from './plugin-fixtures.js';
 
 /**
  * T-100 P1-J.2 — plugins.lock에서 삭제된 판정기 플러그인 항목 제거.
- * 플러그인 id는 조사 파일(docs/tickets/T-100-jev-sites.md)에서 읽는다(코드에 이름을 남기지 않는다, J.8).
+ * 플러그인 id는 조사 파일(A.3)에서 읽는다(코드에 이름을 남기지 않는다, J.8).
  */
 const REPO = fileURLToPath(new URL('../../../', import.meta.url));
-const SITES = `${REPO}docs/tickets/T-100-jev-sites.md`;
-const retiredId = /삭제된 플러그인 id[^`]*`([^`]+)`/.exec(readFileSync(SITES, 'utf8'))?.[1];
+const retiredId = retiredName(RETIRED_PLUGIN_LABEL);
 
 describe('J.2 plugins.lock에서 삭제된 판정기 플러그인 제거', () => {
   let env: ReturnType<typeof setup>;
@@ -29,12 +29,12 @@ describe('J.2 plugins.lock에서 삭제된 판정기 플러그인 제거', () =>
     await env.mk().loadAll();
     expect(listLockEntries(env.lockFile).map((e) => e.id)).toContain(retiredId);
 
-    expect(removeLockEntries(env.lockFile, [retiredId!, 'not-there'])).toEqual([retiredId]);
+    expect(removeLockEntries(env.lockFile, [retiredId, 'not-there'])).toEqual([retiredId]);
     const ids = listLockEntries(env.lockFile).map((e) => e.id);
     expect(ids).toEqual(['hello']);
     expect(ids.some((id) => id === retiredId)).toBe(false);
     // 다시 실행해도 그대로, 다음 로드도 정상
-    expect(removeLockEntries(env.lockFile, [retiredId!])).toEqual([]);
+    expect(removeLockEntries(env.lockFile, [retiredId])).toEqual([]);
     expect(await env.mk().loadAll()).toEqual(['hello']);
     // 저장소에도 그 플러그인 폴더가 없다
     expect(existsSync(`${REPO}packages/plugins/${retiredId}`)).toBe(false);

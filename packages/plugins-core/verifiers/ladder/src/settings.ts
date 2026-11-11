@@ -98,7 +98,7 @@ export interface MigrateVerifierResult {
 }
 
 /**
- * `verifier.l4`가 jev·local·engine(off 밖의 모든 값)이면 judge.engine = ""(자동),
+ * `verifier.l4`가 (삭제된 외부 서비스)·local·engine(off 밖의 모든 값)이면 judge.engine = ""(자동),
  * off면 judge.semantic = off. 폐기 키(verifier.*, 'verifier.l4')는 지운다. 입력은 바꾸지 않는다.
  */
 export function migrateVerifierConfig(

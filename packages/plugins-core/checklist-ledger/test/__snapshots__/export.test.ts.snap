@@ -10,7 +10,7 @@ exports[`29.5 CHECKLIST.md 렌더러 > 상태 아이콘·계층·판정 사유·
 
 - ⬜ **1** 모바일 앱 — \`harness/mobile\`
   - ✅ **1.1** 로그인 화면 — \`harness/mobile\` · 시도 1
-    - 판정: L4 equal (0.93) — ai/mobile ≡ harness/mobile (Jev)
+    - 판정: L4 equal (0.93) — ai/mobile ≡ harness/mobile (AI 판단)
   - ⬜ **1.2** 비밀번호 검증 — \`art.item-1-2\` · 의존 1.1
 - ❌ **2** API 서버 — \`art.item-2\` · 시도 1
   - 사유: api.test.ts 2 failed

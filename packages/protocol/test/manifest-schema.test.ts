@@ -15,11 +15,11 @@ const samples = {
     configSchema: { type: 'object', properties: { model: { type: 'string' } } },
   },
   verifier: {
-    id: 'verifier-jev',
+    id: 'verifier-remote',
     version: '0.3.2',
     apiVersion: 1,
     provides: { verifier: ['l4'] },
-    permissions: { net: ['api.example.com', '*.jev.example'] },
+    permissions: { net: ['api.example.com', '*.judge.example'] },
   },
 };
 

@@ -1,11 +1,9 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { RETIRED_CONFIG_LABEL, retiredName } from '../../../../../tests/helpers/retired-names.js';
 import { judgeSettingsFrom, migrateVerifierConfig, type SettingsEventSink } from '../src/settings.js';
 
 /** 삭제된 외부 판정 서비스의 예전 설정 값 — 조사 파일에서 읽는다(코드에 이름을 남기지 않는다, J.8) */
-const SITES = fileURLToPath(new URL('../../../../../docs/tickets/T-100-jev-sites.md', import.meta.url));
-const retired = /예전 설정 값·절 이름[^`]*`([^`]+)`/.exec(readFileSync(SITES, 'utf8'))![1]!;
+const retired = retiredName(RETIRED_CONFIG_LABEL);
 
 function sink() {
   const events: Record<string, unknown>[] = [];

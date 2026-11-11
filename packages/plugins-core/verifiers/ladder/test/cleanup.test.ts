@@ -1,14 +1,13 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { EventLog, SecretStore, listLockEntries, memoryBackend, removeLockEntries } from '@harness-x/kernel';
 import { afterEach, describe, expect, it } from 'vitest';
+import { RETIRED_CONFIG_LABEL, retiredName } from '../../../../../tests/helpers/retired-names.js';
 import { cleanupLegacyVerifier, RETIRED_JUDGE_KEY_NOTICE, retiredSecretAccounts } from '../src/cleanup.js';
 
 /** 삭제된 서비스 이름은 조사 파일에서 읽는다 (J.8) */
-const SITES = fileURLToPath(new URL('../../../../../docs/tickets/T-100-jev-sites.md', import.meta.url));
-const name = /예전 설정 값·절 이름[^`]*`([^`]+)`/.exec(readFileSync(SITES, 'utf8'))![1]!;
+const name = retiredName(RETIRED_CONFIG_LABEL);
 
 const dirs: string[] = [];
 afterEach(() => {

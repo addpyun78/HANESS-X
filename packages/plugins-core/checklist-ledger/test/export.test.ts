@@ -36,7 +36,7 @@ function fixture(dir: string) {
   };
   go('1.1');
   l.transition('1.1', 'done', {
-    verdict: { level: 4, verdict: 'equal', confidence: 0.93, reason: 'ai/mobile ≡ harness/mobile (Jev)' },
+    verdict: { level: 4, verdict: 'equal', confidence: 0.93, reason: 'ai/mobile ≡ harness/mobile (AI 판단)' },
   });
   go('2');
   l.transition('2', 'failed', { evidence: { kind: 'test_failed', summary: 'api.test.ts 2 failed' } });
@@ -55,7 +55,7 @@ describe('29.5 CHECKLIST.md 렌더러', () => {
       const md = renderChecklistMarkdown(l.read(), { title: '하네스 모바일', manifest: m.read() });
       expect(md).toMatchSnapshot();
       expect(md).toContain('- ✅ **1.1** 로그인 화면');
-      expect(md).toContain('판정: L4 equal (0.93) — ai/mobile ≡ harness/mobile (Jev)');
+      expect(md).toContain('판정: L4 equal (0.93) — ai/mobile ≡ harness/mobile (AI 판단)');
       expect(md).toContain('사유: api.test.ts 2 failed');
       expect(renderChecklistMarkdown(null)).toBe('# 체크리스트\n\n체크리스트 없음\n');
     } finally {
