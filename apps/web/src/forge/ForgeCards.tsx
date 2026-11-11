@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import './forge.css';
+import { act } from '../actions/registry.js';
 
 /**
  * Forge 카드 (approval_request kind = forge_question / forge_spec / forge_install)
@@ -83,6 +84,7 @@ export function ForgeQuestionCard({ block: b }: { block: ForgeCardBlock }) {
           const on = multiple ? picked.includes(c.value) : false;
           return (
             <button
+              {...act('forge.choice')}
               key={c.value}
               type="button"
               className="hx-forge__choice"
@@ -114,6 +116,7 @@ export function ForgeQuestionCard({ block: b }: { block: ForgeCardBlock }) {
           )}
           {(multiple || text.trim()) && (
             <button
+              {...act('forge.submit')}
               type="button"
               className="hx-forge__submit"
               disabled={sent || (multiple && picked.length === 0)}
@@ -165,6 +168,7 @@ export function ForgeSpecCard({ block: b }: { block: ForgeCardBlock }) {
       <div className="hx-forge__choices">
         {b.options.map((o) => (
           <button
+            {...act('forge.option')}
             key={o}
             type="button"
             className="hx-forge__choice"
@@ -234,6 +238,7 @@ export function ForgeInstallCard({ block: b }: { block: ForgeCardBlock }) {
       <div className="hx-forge__choices">
         {b.options.map((o) => (
           <button
+            {...act('forge.option')}
             key={o}
             type="button"
             className="hx-forge__choice"
