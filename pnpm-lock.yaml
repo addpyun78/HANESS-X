@@ -494,6 +494,9 @@ importers:
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../../checklist-ledger
+      '@harness-x/comparators':
+        specifier: workspace:*
+        version: link:../comparators
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../../protocol

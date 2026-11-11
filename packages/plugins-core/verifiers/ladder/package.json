@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/comparators": "workspace:*",
     "@harness-x/protocol": "workspace:*",
     "zod": "^4.6.7"
   },

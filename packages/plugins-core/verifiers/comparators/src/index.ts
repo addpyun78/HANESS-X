@@ -2,3 +2,6 @@ export * from './types.js';
 export * from './builtins.js';
 export * from './registry.js';
 export * from './comparators/exact.js';
+export * from './path-normalize.js';
+export * from './path-alias.js';
+export * from './comparators/path.js';
