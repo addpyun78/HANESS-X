@@ -20,6 +20,15 @@ import { ChecklistPanel } from '../../src/panels/Checklist/ChecklistPanel.js';
 import { ToolPickerCard } from '../../src/panels/ToolPicker/ToolPickerCard.js';
 import { ResumeCard } from '../../src/recovery/ResumeCard.js';
 import { EnginesSettings } from '../../src/settings/Engines/EnginesSettings.js';
+import { SettingsForm } from '../../src/settings/form/SettingsForm.js';
+import type { ProjectView, SessionRecordView } from '../../src/shell/projects/api.js';
+import { ConfirmCard } from '../../src/shell/projects/ConfirmCard.js';
+import { EmptySession } from '../../src/shell/projects/EmptySession.js';
+import { ProjectSettings } from '../../src/shell/projects/ProjectSettings.js';
+import { ProjectSidebar } from '../../src/shell/projects/ProjectSidebar.js';
+import { DEFAULT_PREFS, type SidebarPrefs } from '../../src/shell/projects/prefs.js';
+import { RootSuggestCard, WhereToWork } from '../../src/shell/projects/WhereToWork.js';
+import { memorySettings } from '../settings-form-fixtures.js';
 import { fixtureCard, requestEvent } from '../approvals-fixtures.js';
 import { ev, fakeApi as checklistApi, view } from '../checklist-fixtures.js';
 import { DRAFT_CATALOG, fakeDesignerApi, QUESTIONS, sampleDraft } from '../draft-fixtures.js';
@@ -124,6 +133,17 @@ function installApi(h: Harness): InstallApi {
   } as InstallApi);
 }
 
+let lastSettings: { dispose(): void } | undefined;
+
+function memStorage() {
+  const m = new Map<string, string>();
+  return {
+    getItem: (k: string) => m.get(k) ?? null,
+    setItem: (k: string, v: string) => void m.set(k, v),
+    removeItem: (k: string) => void m.delete(k),
+  };
+}
+
 const sink = (h: Harness) => ({ add: h.cb(), addFailure: h.cb() });
 
 const forgeEvent = (n: number, detail: Record<string, unknown>, options: string[]): HarnessEvent =>
@@ -171,6 +191,83 @@ function builder(h: Harness, props: Record<string, unknown> = {}) {
       autosaveMs={0}
       loadStt={() => Promise.resolve(undefined)}
       {...props}
+    />,
+  );
+}
+
+const NOW = new Date('2026-11-12T12:00:00.000Z');
+const ago = (min: number) => new Date(NOW.getTime() - min * 60_000).toISOString();
+const proj = (id: string, name: string, extra: Partial<ProjectView> = {}): ProjectView => ({
+  id,
+  name,
+  rootPath: `/mnt/c/work/${name}`,
+  createdAt: ago(10_000),
+  lastOpenedAt: ago(5_000),
+  pinned: false,
+  order: 0,
+  missing: false,
+  ...extra,
+});
+const sess = (
+  id: string,
+  projectId: string | null,
+  extra: Partial<SessionRecordView> = {},
+): SessionRecordView => ({
+  id,
+  projectId,
+  title: `대화 ${id}`,
+  titleLocked: false,
+  status: 'idle',
+  cwd: '/mnt/c/work',
+  origin: 'ui',
+  draft: false,
+  messageCount: 1,
+  archived: false,
+  createdAt: ago(100),
+  updatedAt: ago(10),
+  lastActivityAt: ago(10),
+  engine: 'claude-code',
+  permission: 'workspace-write',
+  ...extra,
+});
+const PROJECTS = [
+  proj('p1', 'imjang-note', { pinned: true, branch: 'main', order: 0 }),
+  proj('p2', 'harness-x', { branch: 'main', order: 1 }),
+  proj('p3', 'a2a', { missing: true, order: 2 }),
+];
+const PSESSIONS = [
+  sess('s1', 'p1', {
+    title: 'design-qa',
+    status: 'running',
+    agent: 'design-qa',
+    agentIcon: '🎨',
+    lastActivityAt: ago(2),
+  }),
+  sess('s2', 'p1', { title: 'API 리팩터', status: 'needs-approval', lastActivityAt: ago(30) }),
+  sess('d1', 'p1', { title: '끝난 일', status: 'done', lastActivityAt: ago(60 * 24 * 40) }),
+  sess('s4', 'p2', { title: '하네스 작업', status: 'idle', lastActivityAt: ago(60 * 24 * 3) }),
+];
+
+function projectSidebar(h: Harness) {
+  let prefs: SidebarPrefs = { ...DEFAULT_PREFS };
+  render(
+    <ProjectSidebar
+      projects={PROJECTS}
+      sessions={PSESSIONS}
+      currentProjectId="p1"
+      activeSessionId="s1"
+      onNewSession={h.cb()}
+      onNewSessionIn={h.cb()}
+      onOpenFolder={h.cb()}
+      onSelectProject={h.cb()}
+      onSelectSession={h.cb()}
+      onProjectAction={h.cb()}
+      onSessionAction={h.cb()}
+      onReorder={h.cb()}
+      onArchiveMany={h.cb()}
+      onNavigate={h.cb()}
+      now={NOW}
+      prefs={{ load: () => prefs, save: (p) => void (prefs = p) }}
     />,
   );
 }
@@ -401,6 +498,83 @@ export const RENDERERS: Record<string, Renderer> = {
         />
       </ForgeAnswerContext.Provider>,
     );
+  },
+
+  'project-sidebar': (h) => projectSidebar(h),
+
+  'project-sidebar-menus': (h) => {
+    projectSidebar(h);
+    fireEvent.click(screen.getByLabelText('프로젝트 골라서 새 세션'));
+    fireEvent.click(screen.getByLabelText('imjang-note 메뉴'));
+    fireEvent.click(screen.getByLabelText('design-qa 메뉴'));
+  },
+
+  'project-picker': (h) => {
+    render(
+      <>
+        <WhereToWork
+          recent={PROJECTS}
+          onOpenFolder={h.cb()}
+          onPickProject={h.cb()}
+          onScratch={h.cb()}
+          onCancel={h.cb()}
+        />
+        <RootSuggestCard
+          s={{
+            path: '/mnt/c/work/app/src',
+            gitRoot: '/mnt/c/work/app',
+            suggest: true,
+            message: '맨 위 폴더가 있어요',
+          }}
+          onUseTop={h.cb()}
+          onKeep={h.cb()}
+        />
+      </>,
+    );
+  },
+
+  'empty-session-projects': (h) => {
+    render(
+      <>
+        <EmptySession
+          projectName="imjang-note"
+          recentAgents={[{ command: '/design-qa', name: 'design-qa', icon: '🎨' }]}
+          onExample={h.cb()}
+          onAgent={h.cb()}
+        />
+        <ConfirmCard
+          title="목록에서 뺄까요?"
+          body="파일은 지우지 않아요."
+          confirmLabel="빼기"
+          onConfirm={h.cb()}
+          onCancel={h.cb()}
+        />
+        <ProjectSettings
+          project={PROJECTS[0]!}
+          info={{ hasAgentsMd: true, hasClaudeMd: false, git: true, branch: 'main' }}
+          engines={[{ id: 'claude-code', label: 'Claude Code', available: true }]}
+          agents={[{ command: '/design-qa', name: 'design-qa' }]}
+          onSave={h.cb()}
+          onRelink={h.cb()}
+          onClose={h.cb()}
+        />
+      </>,
+    );
+  },
+
+  'settings-form': async (h) => {
+    lastSettings?.dispose(); // 임시 폴더 정리 (화면을 다시 그릴 때마다 새로 만든다)
+    const m = memorySettings();
+    lastSettings = m;
+    render(
+      <SettingsForm
+        api={h.api(m.api)}
+        showAdvanced
+        storage={memStorage()}
+        ctx={{ pickFolder: h.api({ f: async () => ({ cancelled: true }) }).f as never }}
+      />,
+    );
+    await screen.findByText('모든 설정 기본값으로');
   },
 
   'builder-start': (h) => builder(h),
