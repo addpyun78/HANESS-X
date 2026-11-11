@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { applyTheme, THEME_KEY, type ThemePref } from '../../design/theme.js';
+import { applyBrowserSetting } from '../../design/ui-prefs.js';
 import { errorMessage, type SettingsApi, type SettingsWidgetContext } from './api.js';
 import { CUSTOM_WIDGETS } from './custom-widgets.js';
 import type { SaveScope, SettingField, SettingGroup, SettingsResponse, SettingValueState } from './types.js';
@@ -57,7 +57,7 @@ function readBrowser(f: SettingField, st?: SettingsFormProps['storage']): Settin
 }
 
 const defaultBrowserChange = (f: SettingField, v: unknown) => {
-  if (f.browserKey === THEME_KEY && typeof document !== 'undefined') applyTheme(v as ThemePref);
+  if (f.browserKey && typeof document !== 'undefined') applyBrowserSetting(f.browserKey, v);
 };
 
 export function SettingsForm(props: SettingsFormProps) {

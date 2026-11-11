@@ -40,6 +40,7 @@ import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
+import { SettingsPage } from './settings/SettingsPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { agentSessionsFromEvents, fromDispatchSession } from './shell/agent-sessions.js';
@@ -320,7 +321,7 @@ export function App() {
     else if (to === 'install') {
       setInstallNav({ tab: 'installed', query: '' });
       setView('install');
-    } else setView(to === 'engines' ? 'engines' : 'chat');
+    } else setView(to === 'engines' ? 'engines' : to === 'settings' ? 'settings' : 'chat');
   };
 
   const togglePin = async (p: RecentProject) => {
@@ -433,6 +434,14 @@ export function App() {
             main={
               view === 'engines' && engineSettings ? (
                 <EnginesSettings api={engineSettings} />
+              ) : view === 'settings' && client ? (
+                // T-101 6번 설정 화면 (13개 탭 · 검색 · 고급 설정 보기)
+                <SettingsPage
+                  client={client}
+                  engines={engines}
+                  {...(desktop ? { pickFolder: (p?: string) => pickFolderDesktop(p) } : {})}
+                  {...(proj.current ? { project: proj.current.id, projectName: proj.current.name } : {})}
+                />
               ) : view === 'install' && instApi ? (
                 <InstallManager
                   api={instApi}

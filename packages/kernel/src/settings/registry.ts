@@ -325,6 +325,40 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     browserKey: 'hx-theme',
     options: { system: '컴퓨터 설정 따르기', light: '밝게', dark: '어둡게' },
   }),
+  // T-101 6B.1 일반: 글자 크기·움직임 줄이기·언어 (이 기기 화면에만 — apps/web/src/design/ui-prefs.ts)
+  defineSetting('ui.fontSize', z.enum(['small', 'medium', 'large']).default('medium'), {
+    group: 'general',
+    title: '글자 크기',
+    description: '화면 글자를 작게, 보통, 크게 중에서 골라요. 이 기기 화면에만 저장돼요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.font-size',
+    options: { small: '작게', medium: '보통', large: '크게' },
+  }),
+  defineSetting('ui.reduceMotion', z.enum(['system', 'on', 'off']).default('system'), {
+    group: 'general',
+    title: '움직임 줄이기',
+    description: '화면이 바뀔 때 움직이는 효과를 줄여요. 어지러우면 켜 두세요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.reduce-motion',
+    options: { system: '컴퓨터 설정 따르기', on: '줄이기', off: '그대로' },
+  }),
+  defineSetting('ui.language', z.enum(['ko']).default('ko'), {
+    group: 'general',
+    title: '화면 언어',
+    description: '화면에 보이는 말을 고르는 곳이에요. 지금은 한국어만 있어요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.language',
+    options: { ko: '한국어' },
+  }),
 
   // ── AI·엔진
   defineSetting('engines', z.record(z.string(), EngineSettingSchema).default({}), {

@@ -1,0 +1,199 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.1 일반 > 설계 그림대로 13개 탭이 있고, 처음엔 일반 탭: 테마·글자 크기·움직임 줄이기·언어 (스냅샷) 1`] = `
+<section
+  aria-label="일반"
+  class="hx-settings-form__section"
+  data-setting-group="general"
+>
+  <header
+    class="hx-settings-form__section-head"
+  >
+    <h3>
+      일반
+    </h3>
+    <button
+      class="hx-setting__link"
+      data-action="settings.reset-group"
+      type="button"
+    >
+      이 묶음 기본값으로
+    </button>
+  </header>
+  <p
+    class="hx-settings-form__section-desc"
+  >
+    화면 모양처럼 자주 바꾸는 설정이에요.
+  </p>
+  <div
+    class="hx-setting"
+    data-setting-key="ui.theme"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-ui-theme"
+      >
+        화면 테마
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      밝은 화면과 어두운 화면 중에서 골라요. 이 기기 화면에만 저장돼요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-ui-theme"
+      >
+        <option
+          value="system"
+        >
+          컴퓨터 설정 따르기
+        </option>
+        <option
+          value="light"
+        >
+          밝게
+        </option>
+        <option
+          value="dark"
+        >
+          어둡게
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="ui.fontSize"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-ui-fontSize"
+      >
+        글자 크기
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      화면 글자를 작게, 보통, 크게 중에서 골라요. 이 기기 화면에만 저장돼요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-ui-fontSize"
+      >
+        <option
+          value="small"
+        >
+          작게
+        </option>
+        <option
+          value="medium"
+        >
+          보통
+        </option>
+        <option
+          value="large"
+        >
+          크게
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="ui.reduceMotion"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-ui-reduceMotion"
+      >
+        움직임 줄이기
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      화면이 바뀔 때 움직이는 효과를 줄여요. 어지러우면 켜 두세요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-ui-reduceMotion"
+      >
+        <option
+          value="system"
+        >
+          컴퓨터 설정 따르기
+        </option>
+        <option
+          value="on"
+        >
+          줄이기
+        </option>
+        <option
+          value="off"
+        >
+          그대로
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="ui.language"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-ui-language"
+      >
+        화면 언어
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      화면에 보이는 말을 고르는 곳이에요. 지금은 한국어만 있어요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-ui-language"
+      >
+        <option
+          value="ko"
+        >
+          한국어
+        </option>
+      </select>
+    </div>
+  </div>
+</section>
+`;
