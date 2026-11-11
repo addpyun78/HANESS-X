@@ -158,7 +158,7 @@ export function pendingFromEvents(
 }
 
 /** 세션별 대기 카드 수 (사이드바 "확인 필요" 배지) */
-export function countBySession(cards: readonly ApprovalCardData[]): Record<string, number> {
+export function countBySession(cards: readonly { sessionId?: string }[]): Record<string, number> {
   const out: Record<string, number> = {};
   for (const c of cards) if (c.sessionId) out[c.sessionId] = (out[c.sessionId] ?? 0) + 1;
   return out;

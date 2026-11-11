@@ -22,8 +22,20 @@ export interface Toast {
   text: string;
 }
 
+/** 승인 카드 영역에 함께 뜨는 다른 카드 요약 (Part 2 설치 계획 카드 — 토스트·탭 제목·사이드바 배지에 함께 센다) */
+export interface ExtraPending {
+  id: string;
+  sessionId?: string;
+  /** 토스트·알림 글 */
+  text: string;
+}
+
+const NO_EXTRA: readonly ExtraPending[] = [];
+
 export interface UseApprovalsOptions {
   events: readonly unknown[];
+  /** T-100 P2-D.8 설치 계획 카드 등 */
+  extra?: readonly ExtraPending[];
   api?: ApprovalsApi;
   /** 서버 없이 그릴 때(테스트·데모) */
   initial?: ApprovalCardData[];
@@ -87,7 +99,14 @@ function errorText(err: unknown): string {
  *  - 대기 카드: GET /api/approvals?status=pending + approval_request/approval_resolved 이벤트
  *  - 새 카드: 토스트 + 탭 제목 "(n)" + 백그라운드면 OS 알림(첫 1회 권한 요청)
  */
-export function useApprovals({ events, api, initial = [], baseTitle, notifier }: UseApprovalsOptions) {
+export function useApprovals({
+  events,
+  api,
+  initial = [],
+  baseTitle,
+  notifier,
+  extra = NO_EXTRA,
+}: UseApprovalsOptions) {
   const [loaded, setLoaded] = useState<ApprovalCardData[]>(initial);
   const [done, setDone] = useState<Set<string>>(() => new Set());
   const [busy, setBusy] = useState<string>();
@@ -113,37 +132,50 @@ export function useApprovals({ events, api, initial = [], baseTitle, notifier }:
     [loaded, events, done],
   );
 
+  // 승인 카드 + 함께 뜨는 카드(설치 계획) — 알림·탭 제목·배지는 모두 센다
+  const all = useMemo<ExtraPending[]>(
+    () => [
+      ...pending.map((c) => ({
+        id: c.id,
+        ...(c.sessionId ? { sessionId: c.sessionId } : {}),
+        text: c.whatHappened,
+      })),
+      ...extra,
+    ],
+    [pending, extra],
+  );
+
   // ── 새 카드 알림 (H.12·H.13) ─────────────────────────────────
   const seen = useRef<Set<string> | undefined>(undefined);
   const notify = useMemo(() => notifier ?? browserNotifier(), [notifier]);
   useEffect(() => {
     const first = seen.current === undefined;
     seen.current ??= new Set();
-    const fresh = pending.filter((c) => !seen.current!.has(c.id));
-    for (const c of pending) seen.current.add(c.id);
+    const fresh = all.filter((c) => !seen.current!.has(c.id));
+    for (const c of all) seen.current.add(c.id);
     if (first && fresh.length === 0) return;
     if (fresh.length === 0) return;
     setToasts((ts) => [
       ...ts,
-      ...fresh.map((c) => ({ id: `t-${c.id}`, cardId: c.id, text: `${AREA_TITLE} — ${c.whatHappened}` })),
+      ...fresh.map((c) => ({ id: `t-${c.id}`, cardId: c.id, text: `${AREA_TITLE} — ${c.text}` })),
     ]);
     if (typeof document !== 'undefined' && document.hidden && notify) {
-      const show = () => notify.show(AREA_TITLE, fresh[0]!.whatHappened, () => setFocusId(fresh[0]!.id));
+      const show = () => notify.show(AREA_TITLE, fresh[0]!.text, () => setFocusId(fresh[0]!.id));
       if (notify.permission === 'granted') show();
       else if (notify.permission === 'default' && !askedBefore()) {
         markAsked();
         void notify.requestPermission().then((p) => p === 'granted' && show());
       }
     }
-  }, [pending, notify]);
+  }, [all, notify]);
 
   // ── 탭 제목 "(n)" ───────────────────────────────────────────────
   const base = useRef(baseTitle);
   useEffect(() => {
     if (typeof document === 'undefined') return;
     base.current ??= document.title;
-    document.title = titleWithCount(base.current, pending.length);
-  }, [pending.length]);
+    document.title = titleWithCount(base.current, all.length);
+  }, [all.length]);
   useEffect(
     () => () => {
       if (typeof document !== 'undefined' && base.current !== undefined) document.title = base.current;
@@ -190,7 +222,7 @@ export function useApprovals({ events, api, initial = [], baseTitle, notifier }:
 
   return {
     pending,
-    bySession: countBySession(pending),
+    bySession: countBySession(all),
     busy,
     errors,
     toasts,

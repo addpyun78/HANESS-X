@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef, type ReactNode } from 'react';
 import { NARROW_QUERY, useMediaQuery } from '../../shell/useMediaQuery.js';
 import { ActionCard } from './ActionCard.js';
 import {
@@ -11,8 +11,16 @@ import {
 } from './model.js';
 import './approvals.css';
 
+/** 같은 영역에 함께 뜨는 다른 카드 (Part 2 설치 계획 카드·Part 3 도구 고르기 카드 — 모두 ActionCard로 그린다) */
+export interface ExtraAreaCard {
+  id: string;
+  render: (o: { autoFocus: boolean }) => ReactNode;
+}
+
 export interface ApprovalsAreaProps {
   cards: readonly ApprovalCardData[];
+  /** T-100 P2-D.8 설치 계획 카드 등 (승인 카드 뒤에 같은 틀·같은 키보드·같은 시트로) */
+  extra?: readonly ExtraAreaCard[];
   onChoose?: (id: string, choice: ChoiceId, remember: boolean) => void;
   busy?: string;
   errors?: Record<string, string>;
@@ -34,6 +42,7 @@ export interface ApprovalsAreaProps {
  */
 export function ApprovalsArea({
   cards,
+  extra = [],
   onChoose,
   busy,
   errors = {},
@@ -46,7 +55,8 @@ export function ApprovalsArea({
   const narrow = useMediaQuery(NARROW_QUERY);
   const v = variant ?? (narrow ? 'sheet' : 'panel');
   const root = useRef<HTMLElement>(null);
-  const firstId = cards[0]?.id;
+  const firstId = cards[0]?.id ?? extra[0]?.id;
+  const total = cards.length + extra.length;
 
   useEffect(() => {
     if (!focusId) return;
@@ -60,7 +70,7 @@ export function ApprovalsArea({
     onFocused?.();
   }, [focusId, onFocused]);
 
-  if (cards.length === 0 && !last) return null;
+  if (total === 0 && !last) return null;
 
   const kinds = new Map<string, number>();
   for (const c of cards) kinds.set(c.kind, (kinds.get(c.kind) ?? 0) + 1);
@@ -79,9 +89,9 @@ export function ApprovalsArea({
           <span aria-hidden="true">✋ </span>
           {AREA_TITLE}
         </h3>
-        {cards.length > 1 && (
-          <span className="hx-approvals__count" aria-label={`카드 ${cards.length}장`}>
-            {cards.length}
+        {total > 1 && (
+          <span className="hx-approvals__count" aria-label={`카드 ${total}장`}>
+            {total}
           </span>
         )}
       </header>
@@ -103,6 +113,9 @@ export function ApprovalsArea({
               }
             : {})}
         />
+      ))}
+      {extra.map((x) => (
+        <Fragment key={x.id}>{x.render({ autoFocus: x.id === firstId })}</Fragment>
       ))}
       {last && (
         <p className="hx-approvals__last" role="status">
