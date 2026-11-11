@@ -10,6 +10,7 @@ type Rec = { type: string; sessionId?: string; ts?: string } & Record<string, un
 
 const STATUS: Record<string, SessionStatus> = {
   running: 'running',
+  paused: 'paused',
   completed: 'done',
   incomplete: 'blocked',
   stalled: 'blocked',
@@ -38,6 +39,8 @@ export interface DispatchSessionLike {
   startedAt: string;
   endedAt?: string;
   modifiers?: { engine?: string };
+  /** T-101 2A.6 멈춘 세션 */
+  paused?: { reason: string };
 }
 
 export function fromDispatchSession(d: DispatchSessionLike, project: string, engineId = ''): SessionSummary {
@@ -51,6 +54,7 @@ export function fromDispatchSession(d: DispatchSessionLike, project: string, eng
     agent: { name: d.agent.name, command: d.agent.command, ...(d.agent.icon ? { icon: d.agent.icon } : {}) },
     ...(d.currentNode ? { currentNode: d.currentNode } : {}),
     progress: d.progress,
+    ...(d.paused ? { pausedReason: d.paused.reason } : {}),
   };
 }
 
@@ -97,6 +101,18 @@ export function agentSessionsFromEvents(events: readonly unknown[], project: str
       case 'node_end':
         if (node && (e.status === 'completed' || e.status === 'max_iterations')) acc.done++;
         if (node && s.currentNode === node) delete s.currentNode;
+        break;
+      // T-101 2A.9 멈춤 → 이유 표시, 이어감 → 다시 실행 중
+      case 'session_paused': {
+        s.status = 'paused';
+        const reason = str((e.paused as { reason?: unknown } | undefined)?.reason);
+        if (reason) s.pausedReason = reason;
+        delete s.currentNode;
+        break;
+      }
+      case 'session_resumed':
+        s.status = 'running';
+        delete s.pausedReason;
         break;
       case 'session_end': {
         s.status = STATUS[str(e.status) ?? ''] ?? 'idle';
