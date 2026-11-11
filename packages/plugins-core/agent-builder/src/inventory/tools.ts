@@ -31,15 +31,28 @@ export const RegistryToolEntrySchema = z.looseObject({
 });
 export type RegistryToolEntry = z.infer<typeof RegistryToolEntrySchema>;
 
-/** 'free'·'paid' 또는 { kind|type: 'free' … } 모양을 받아 free|paid|unknown */
+const pricingWord = (v: unknown): unknown =>
+  typeof v === 'string'
+    ? v
+    : v && typeof v === 'object'
+      ? ((v as Record<string, unknown>).tier ??
+        (v as Record<string, unknown>).kind ??
+        (v as Record<string, unknown>).type)
+      : undefined;
+
+/**
+ * 'free'·'paid' 또는 { tier|kind|type: 'free' … } 모양을 받아 free|paid|unknown
+ * (설치 관리자 registry.json은 pricing.tier — P2-F.7). 무료+유료 기능·체험판은 단정하지 않고 unknown.
+ */
 export function normalizePricing(v: unknown): ToolAsset['pricing'] {
-  const s =
-    typeof v === 'string'
-      ? v
-      : v && typeof v === 'object'
-        ? ((v as Record<string, unknown>).kind ?? (v as Record<string, unknown>).type)
-        : undefined;
+  const s = pricingWord(v);
   return s === 'free' || s === 'paid' ? s : 'unknown';
+}
+
+/** 설치 관리자 등급 그대로 ({ tier } 모양만: free·freemium·trial·paid·unknown), 없으면 undefined */
+export function pricingTierOf(v: unknown): ToolAsset['pricingTier'] {
+  const s = v && typeof v === 'object' ? (v as Record<string, unknown>).tier : undefined;
+  return s === 'free' || s === 'freemium' || s === 'trial' || s === 'paid' || s === 'unknown' ? s : undefined;
 }
 
 /** registry.json 읽기: 없거나 깨지면 [], 항목 단위로 잘못된 것은 건너뛴다 */
@@ -74,6 +87,7 @@ export function collectTools(
     kind: t.kind ?? 'unknown',
     ...(t.version ? { version: t.version } : {}),
     pricing: normalizePricing(t.pricing),
+    ...(pricingTierOf(t.pricing) ? { pricingTier: pricingTierOf(t.pricing) } : {}),
     purpose: t.purpose ?? '',
     capabilities: [...(t.capabilities ?? [])],
     source: 'registry' as const,

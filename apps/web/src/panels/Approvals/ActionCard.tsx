@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import type { ActionCardModel } from './model.js';
+import { badgeLabel, type ActionCardModel } from './model.js';
 
 export interface ActionCardProps {
   card: ActionCardModel;
@@ -26,9 +26,17 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
     if (autoFocus) first.current?.focus();
   }, [autoFocus]);
 
+  const locked = (id: string) => !checked && card.buttons.some((b) => b.id === id && b.requiresCheck);
   const choose = (id: string) => {
-    if (!busy) onChoose?.(id, { checked });
+    if (!busy && !locked(id)) onChoose?.(id, { checked });
   };
+  const gated = card.buttons.some((b) => b.requiresCheck);
+  const checkbox = card.checkbox && (
+    <label className="hx-action-card__check">
+      <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} />{' '}
+      {card.checkbox}
+    </label>
+  );
 
   const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
@@ -46,7 +54,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
     <article
       className="hx-action-card"
       role="group"
-      aria-label={`${card.title}${card.badges?.length ? ` ${card.badges.join(' ')}` : ''}`}
+      aria-label={`${card.title}${card.badges?.length ? ` ${card.badges.map(badgeLabel).join(' ')}` : ''}`}
       data-card-id={card.id}
       onKeyDown={onKeyDown}
     >
@@ -55,12 +63,23 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
           <span aria-hidden="true">{`${card.icon ?? '✋'} `}</span>
           {card.title}
         </strong>
-        {card.badges?.map((b) => (
-          <span key={b} className="hx-action-card__badge">
-            {b}
-          </span>
-        ))}
+        {card.badges?.map((b) =>
+          typeof b === 'string' ? (
+            <span key={b} className="hx-action-card__badge">
+              {b}
+            </span>
+          ) : (
+            <span
+              key={b.label}
+              className={`hx-action-card__badge hx-action-card__badge--${b.tone}`}
+              data-tone={b.tone}
+            >
+              [{b.label}]
+            </span>
+          ),
+        )}
       </header>
+      {card.subtitle && <p className="hx-action-card__subtitle">{card.subtitle}</p>}
       {card.sections.map((s, i) => (
         <section key={i} className="hx-action-card__section">
           {s.heading && <h4>{s.heading}</h4>}
@@ -68,6 +87,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
         </section>
       ))}
       {children}
+      {gated && checkbox}
       <div className="hx-action-card__buttons">
         {card.buttons.map((b, i) => (
           <button
@@ -77,7 +97,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
             className={`hx-action-card__btn${b.primary ? ' hx-action-card__btn--primary' : ''}`}
             data-choice={b.id}
             aria-keyshortcuts={String(i + 1)}
-            disabled={busy || !onChoose}
+            disabled={busy || !onChoose || (b.requiresCheck && !checked)}
             onClick={() => choose(b.id)}
           >
             <span className="hx-action-card__key" aria-hidden="true">
@@ -87,11 +107,11 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
           </button>
         ))}
       </div>
-      {card.checkbox && (
-        <label className="hx-action-card__check">
-          <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} />{' '}
-          {card.checkbox}
-        </label>
+      {!gated && checkbox}
+      {card.status && (
+        <p className="hx-action-card__status" role="status">
+          <span className="hx-action-card__spinner" aria-hidden="true" /> {card.status}
+        </p>
       )}
       {card.technical && card.technical.length > 0 && (
         <div className="hx-action-card__tech">

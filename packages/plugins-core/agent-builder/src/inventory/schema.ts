@@ -87,6 +87,8 @@ export const ToolAssetSchema = z
     version: z.string().optional(),
     /** 무료/유료 (모르면 unknown) */
     pricing: z.enum(PRICING),
+    /** 설치 관리자 도구 목록의 원래 등급 (T-100 P2-F.7: free·freemium·trial·paid·unknown) */
+    pricingTier: z.enum(['free', 'freemium', 'trial', 'paid', 'unknown']).optional(),
     purpose: z.string(),
     capabilities: z.array(z.string()),
     /** registry = ~/.harness-x/tools/registry.json, plugin = tool 슬롯 플러그인 */

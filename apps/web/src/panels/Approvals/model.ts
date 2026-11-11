@@ -56,21 +56,34 @@ export interface ActionCardButton {
   label: string;
   /** 추천 버튼 강조 */
   primary?: boolean;
+  /** 체크 상자를 켜야 누를 수 있다 (Part 2 D.4 "무료인지 직접 확인했어요") */
+  requiresCheck?: boolean;
+}
+/** 색이 있는 배지 (Part 2 D.2 무료/유료: green·blue·orange·red·yellow) */
+export interface ActionCardBadge {
+  label: string;
+  tone: 'green' | 'blue' | 'orange' | 'red' | 'yellow';
 }
 export interface ActionCardModel {
   id: string;
-  title: string;
-  /** 제목 앞 그림 글자 (기본 ✋, 도구 고르기 카드는 🔧) */
+  /** 제목 앞 그림 (기본 ✋, 설치 카드 📦) */
   icon?: string;
+  title: string;
+  /** 제목 아래 한 줄 (예: 설치할 도구 이름) */
+  subtitle?: string;
   /** 제목 옆 작은 표시 (예: 항목 번호, 무료/유료) */
-  badges?: string[];
+  badges?: (string | ActionCardBadge)[];
   sections: ActionCardSection[];
   buttons: ActionCardButton[];
   /** "다음부터 같은 경우는 자동으로 처리해 주세요" 같은 체크 상자 */
   checkbox?: string;
   /** 자세히 보기 (기본 접힘) */
   technical?: { label: string; value: string }[];
+  /** 지금 상태 한 줄 (예: "Windows 허락 창을 기다리고 있어요") */
+  status?: string;
 }
+
+export const badgeLabel = (b: string | ActionCardBadge): string => (typeof b === 'string' ? b : b.label);
 
 export const REMEMBER_LABEL = '다음부터 같은 경우는 자동으로 처리해 주세요';
 
@@ -145,7 +158,7 @@ export function pendingFromEvents(
 }
 
 /** 세션별 대기 카드 수 (사이드바 "확인 필요" 배지) */
-export function countBySession(cards: readonly ApprovalCardData[]): Record<string, number> {
+export function countBySession(cards: readonly { sessionId?: string }[]): Record<string, number> {
   const out: Record<string, number> = {};
   for (const c of cards) if (c.sessionId) out[c.sessionId] = (out[c.sessionId] ?? 0) + 1;
   return out;

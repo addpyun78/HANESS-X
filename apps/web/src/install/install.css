@@ -1,0 +1,121 @@
+/* 설정 > 설치 관리 (T-100 P2-G) — 색은 토큰 변수만 */
+.hx-install {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-3);
+  padding: var(--hx-space-4);
+  overflow: auto;
+  font-size: 15px;
+}
+
+.hx-install__title {
+  margin: 0;
+  font-size: var(--hx-font-20);
+}
+
+.hx-install__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+  border-bottom: 1px solid var(--hx-border);
+}
+
+.hx-install__tab {
+  min-height: 44px;
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}
+
+.hx-install__tab[aria-selected='true'] {
+  border-bottom-color: var(--hx-accent);
+  color: var(--hx-text);
+  font-weight: 600;
+}
+
+.hx-install__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+}
+
+.hx-install__input {
+  flex: 1 1 240px;
+  min-height: 44px;
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font-size: 15px;
+}
+
+.hx-install__select,
+.hx-install__btn {
+  min-height: 44px;
+  padding: 0 var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font-size: 15px;
+}
+
+.hx-install__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-install__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  font-size: 15px;
+}
+
+.hx-install__row--fail {
+  border-color: var(--hx-danger);
+}
+
+.hx-install__name {
+  font-weight: 600;
+}
+
+.hx-install__kind,
+.hx-install__version,
+.hx-install__origin,
+.hx-install__label,
+.hx-install__trust,
+.hx-install__when,
+.hx-install__note {
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}
+
+.hx-install__version {
+  font-family: var(--hx-font-mono);
+}
+
+.hx-install__actions {
+  display: flex;
+  gap: var(--hx-space-1);
+  margin-left: auto;
+}
+
+.hx-install__empty,
+.hx-install__msg {
+  margin: 0;
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}

@@ -16,13 +16,26 @@ import type { RecentProject } from './composer/PlusMenu.js';
 import { SubagentConfirm, subagentTarget } from './composer/SubagentConfirm.js';
 import type { EngineOption, SendPayload } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
-import { navigate } from './router.js';
+import { navigate, useRoute } from './router.js';
 import { PanelActionsContext } from './panels/panel-actions.js';
 import { usePanels } from './panels/usePanels.js';
 import { approvalsApi } from './panels/Approvals/api.js';
 import { ApprovalsArea } from './panels/Approvals/ApprovalsArea.js';
 import { Toasts } from './panels/Approvals/Toasts.js';
 import { ApprovalFocusContext, useApprovals, type ApprovalFocus } from './panels/Approvals/useApprovals.js';
+import { installApi } from './install/api.js';
+import { InstallManager, type InstallTab } from './install/InstallManager.js';
+import { InstallPlanCard, ResolveFailureCard } from './install/InstallPlanCard.js';
+import { useInstallCards } from './install/useInstallCards.js';
+import type { InstallPlanView } from './install/model.js';
+import {
+  installSelectedInOrder,
+  openUrlInstall,
+  toolPickerApi,
+  URL_INSTALL_ROUTE,
+} from './panels/ToolPicker/api.js';
+import { toolPickerExtraCards } from './panels/ToolPicker/ToolPickerCard.js';
+import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels/ToolPicker/model.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
@@ -42,6 +55,26 @@ const DEMO_ENGINES: EngineOption[] = [
 function demoParam(): number | undefined {
   const v = new URLSearchParams(location.search).get('demo');
   return v === null ? undefined : Number(v) || 1;
+}
+
+/** 도구 고르기 카드 이벤트 → 카드 데이터 (approvalId = 카드 id) */
+function pickersFromEvents(events: readonly unknown[]): ToolPickerData[] {
+  const out: ToolPickerData[] = [];
+  for (const e of events) {
+    const r = e as { type?: string; kind?: string; approvalId?: string; detail?: { result?: unknown } };
+    if (r.type !== 'approval_request' || r.kind !== TOOL_PICKER_KIND || !r.approvalId) continue;
+    const res = r.detail?.result as (Omit<ToolPickerData, 'id'> & { status?: string }) | undefined;
+    if (!res || res.status !== 'candidates' || !Array.isArray(res.candidates)) continue;
+    if (out.some((x) => x.id === r.approvalId)) continue;
+    out.push({
+      id: r.approvalId,
+      need: res.need,
+      candidates: res.candidates,
+      notices: res.notices ?? [],
+      ...(res.recommendedId ? { recommendedId: res.recommendedId } : {}),
+    });
+  }
+  return out;
 }
 
 const toWorkspace = (w: WorkspaceInfo): Workspace => ({
@@ -84,7 +117,38 @@ export function App() {
   const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
-  const approvals = useApprovals({ events, ...(apApi ? { api: apApi } : {}) });
+  // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
+  const instApi = useMemo(() => (client ? installApi(client) : undefined), [client]);
+  const installCards = useInstallCards({ events, ...(instApi ? { api: instApi } : {}) });
+  const [installNav, setInstallNav] = useState<{ tab: InstallTab; query: string }>({
+    tab: 'installed',
+    query: '',
+  });
+  // T-100 Part 3 도구 고르기 카드: 서버 ToolNeedHub → approval_request(kind 'tool.picker') 이벤트
+  const tpApi = useMemo(() => (client ? toolPickerApi(client) : undefined), [client]);
+  const [pickerDone, setPickerDone] = useState<ReadonlySet<string>>(() => new Set());
+  const pickers = useMemo(
+    () => pickersFromEvents(events).filter((p) => !pickerDone.has(p.id)),
+    [events, pickerDone],
+  );
+  const dismissPicker = (id: string) => setPickerDone((s) => new Set(s).add(id));
+  const extraPending = useMemo(
+    () => [...installCards.summaries, ...pickers.map((p) => ({ id: p.id, text: toolPickerToast(p).text }))],
+    [installCards.summaries, pickers],
+  );
+  const approvals = useApprovals({
+    events,
+    ...(apApi ? { api: apApi } : {}),
+    extra: extraPending,
+  });
+  // P3-C.5 [주소 직접 넣기] → #/install/url → 설치 관리 [주소로 설치]
+  const route = useRoute();
+  useEffect(() => {
+    if (route !== URL_INSTALL_ROUTE) return;
+    setInstallNav({ tab: 'url', query: '' });
+    setView('install');
+    navigate('/'); // 다음에 다시 눌러도 열리도록 경로를 되돌린다
+  }, [route]);
   const { setFocusId } = approvals;
   const approvalFocus = useMemo<ApprovalFocus>(() => ({ focus: (id) => setFocusId(id) }), [setFocusId]);
   const navSessions = useMemo(
@@ -226,6 +290,39 @@ export function App() {
             panelTop={
               <ApprovalsArea
                 cards={approvals.pending}
+                extraCards={toolPickerExtraCards(pickers, (d) => ({
+                  onInstallSelected: (cands) => {
+                    if (!tpApi) return;
+                    void installSelectedInOrder(tpApi, d.need, cands, (plan) =>
+                      installCards.add(plan as InstallPlanView),
+                    ).then(() => dismissPicker(d.id));
+                  },
+                  onOpenUrlInstall: () => openUrlInstall(),
+                  onContinueWithout: () => {
+                    void tpApi
+                      ?.continueWithout(d.need, { possible: true })
+                      .catch(() => {})
+                      .finally(() => dismissPicker(d.id));
+                  },
+                }))}
+                extra={installCards.cards.map((c) => ({
+                  id: c.id,
+                  render: ({ autoFocus }) =>
+                    c.type === 'plan' ? (
+                      <InstallPlanCard
+                        plan={c.plan}
+                        {...(instApi ? { api: instApi } : {})}
+                        autoFocus={autoFocus}
+                        onClose={() => installCards.remove(c.id)}
+                        onAlternatives={(p) => {
+                          setInstallNav({ tab: 'search', query: p.name });
+                          setView('install');
+                        }}
+                      />
+                    ) : (
+                      <ResolveFailureCard result={c.result} onClose={() => installCards.remove(c.id)} />
+                    ),
+                }))}
                 onChoose={(id, choice, remember) => void approvals.choose(id, choice, remember)}
                 {...(approvals.busy ? { busy: approvals.busy } : {})}
                 errors={approvals.errors}
@@ -251,7 +348,10 @@ export function App() {
                 activeSessionId={activeId ?? sessions[0]?.id}
                 onNavigate={(to) => {
                   if (to === 'agent-builder') navigate('/builder/new');
-                  else setView(to === 'engines' ? 'engines' : 'chat');
+                  else if (to === 'install') {
+                    setInstallNav({ tab: 'installed', query: '' });
+                    setView('install');
+                  } else setView(to === 'engines' ? 'engines' : 'chat');
                 }}
                 onSelectSession={(id) => {
                   setActiveId(id);
@@ -262,6 +362,13 @@ export function App() {
             main={
               view === 'engines' && engineSettings ? (
                 <EnginesSettings api={engineSettings} />
+              ) : view === 'install' && instApi ? (
+                <InstallManager
+                  api={instApi}
+                  cards={installCards}
+                  initialTab={installNav.tab}
+                  initialQuery={installNav.query}
+                />
               ) : (
                 <>
                   <ChatStream events={events} mode={mode} onModeChange={setMode} />
