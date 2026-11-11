@@ -22,6 +22,7 @@ import { DraftDecorContext } from './draft/decor.js';
 import { Checklist, DraftBanner, DraftList, GapLayer, ResumePrompt } from './draft/DraftCards.js';
 import { SaveDialog } from './draft/SaveDialog.js';
 import {
+  installSelectedInOrder,
   openToolPickerForGap,
   openUrlInstall,
   toolPickerApi,
@@ -29,6 +30,9 @@ import {
 } from '../panels/ToolPicker/api.js';
 import { ToolPickerCard } from '../panels/ToolPicker/ToolPickerCard.js';
 import type { ToolPickerData } from '../panels/ToolPicker/model.js';
+import { installApi, type InstallApi } from '../install/api.js';
+import { InstallPlanCard } from '../install/InstallPlanCard.js';
+import type { InstallPlanView } from '../install/model.js';
 import { animationEnabled, useDraftSession } from './draft/useDraftSession.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
@@ -56,8 +60,10 @@ export interface BuilderPageProps {
   onForge?: (gap: DraftGap) => void;
   /** 초안 자동 보관 지연 (테스트용) */
   autosaveMs?: number;
-  /** P3-D.3 [도구 찾기]가 쓰는 도구 찾기 API (없으면 토큰이 있을 때 HTTP) */
-  toolPicker?: Pick<ToolPickerApi, 'find'>;
+  /** P3-D.3 [도구 찾기]가 쓰는 도구 찾기 API (없으면 토큰이 있을 때 HTTP). planSelected가 있으면 [선택한 걸로 설치] */
+  toolPicker?: Pick<ToolPickerApi, 'find'> & Partial<Pick<ToolPickerApi, 'planSelected'>>;
+  /** P3-C.4 계획 카드 [설치] 실행 (클릭 토큰 → POST /api/install/execute). 없으면 토큰이 있을 때 HTTP */
+  install?: Pick<InstallApi, 'execute'>;
 }
 
 const defaultLoadStt = () => resolveStt().then((r) => r.stt);
@@ -78,6 +84,7 @@ export function BuilderPage({
   onForge,
   autosaveMs,
   toolPicker,
+  install,
 }: BuilderPageProps) {
   const catalog = useCatalog(given);
   const { save, gestureToken } = useSaveAgent(saveAgent, saveGestureToken);
@@ -88,6 +95,27 @@ export function BuilderPage({
   const finder = useToolPickerApi(toolPicker);
   const [pickerCards, setPickerCards] = useState<ToolPickerData[]>([]);
   const [pickerNote, setPickerNote] = useState<string>();
+  // P3-C.4 [선택한 걸로 설치] → 고른 후보마다 Part 2 설치 계획 카드 (실행은 카드의 [설치] 클릭으로만)
+  const installer = useInstallApi(install);
+  const [planCards, setPlanCards] = useState<InstallPlanView[]>([]);
+  const installSelected = useCallback(
+    (card: ToolPickerData, chosen: ToolPickerData['candidates']) => {
+      if (!finder?.planSelected) return;
+      const api = { planSelected: finder.planSelected };
+      setPickerNote(undefined);
+      void installSelectedInOrder(api, card.need, chosen, (plan) =>
+        setPlanCards((ps) =>
+          ps.some((x) => x.id === (plan as InstallPlanView).id) ? ps : [...ps, plan as InstallPlanView],
+        ),
+      )
+        .then((r) => {
+          setPickerCards((cs) => cs.filter((x) => x.id !== card.id));
+          if (r.skipped.length) setPickerNote(r.skipped.map((x) => x.reason).join(' '));
+        })
+        .catch(() => setPickerNote('설치 계획을 만들지 못했어요. 잠시 뒤 다시 눌러 주세요.'));
+    },
+    [finder],
+  );
   const findTool = useCallback(
     (gap: DraftGap) => {
       if (!finder) return;
@@ -243,15 +271,29 @@ export function BuilderPage({
             <DraftDecorContext.Provider value={draft.decor}>
               <Canvas graph={draft.canvasGraph} catalog={catalog} dispatch={editDispatch}>
                 <GapLayer gaps={draft.gaps} {...draft.gapActions} />
-                {(pickerCards.length > 0 || pickerNote) && (
+                {(pickerCards.length > 0 || pickerNote || planCards.length > 0) && (
                   <div className="hx-gap-picker" aria-label="도구 고르기">
                     {pickerNote && <p role="status">{pickerNote}</p>}
                     {pickerCards.map((c) => (
                       <ToolPickerCard
                         key={c.id}
                         data={c}
+                        {...(finder?.planSelected
+                          ? {
+                              onInstallSelected: (chosen: ToolPickerData['candidates']) =>
+                                installSelected(c, chosen),
+                            }
+                          : {})}
                         onOpenUrlInstall={() => openUrlInstall()}
                         onContinueWithout={() => setPickerCards((cs) => cs.filter((x) => x.id !== c.id))}
+                      />
+                    ))}
+                    {planCards.map((p) => (
+                      <InstallPlanCard
+                        key={p.id}
+                        plan={p}
+                        {...(installer ? { api: installer } : {})}
+                        onClose={() => setPlanCards((ps) => ps.filter((x) => x.id !== p.id))}
                       />
                     ))}
                   </div>
@@ -337,11 +379,21 @@ function useDesignerApi(given?: DesignerApi): DesignerApi | undefined {
   }, [given]);
 }
 
-function useToolPickerApi(given?: Pick<ToolPickerApi, 'find'>): Pick<ToolPickerApi, 'find'> | undefined {
+type BuilderToolPicker = Pick<ToolPickerApi, 'find'> & Partial<Pick<ToolPickerApi, 'planSelected'>>;
+
+function useToolPickerApi(given?: BuilderToolPicker): BuilderToolPicker | undefined {
   return useMemo(() => {
     if (given) return given;
     const token = resolveToken();
     return token ? toolPickerApi(new HarnessApiClient({ token })) : undefined;
+  }, [given]);
+}
+
+function useInstallApi(given?: Pick<InstallApi, 'execute'>): Pick<InstallApi, 'execute'> | undefined {
+  return useMemo(() => {
+    if (given) return given;
+    const token = resolveToken();
+    return token ? installApi(new HarnessApiClient({ token })) : undefined;
   }, [given]);
 }
 
