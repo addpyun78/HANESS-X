@@ -474,6 +474,27 @@ importers:
         specifier: workspace:*
         version: link:../verifiers/ladder
 
+  packages/plugins-core/verifiers/judge:
+    dependencies:
+      '@harness-x/engine-antigravity':
+        specifier: workspace:*
+        version: link:../../../engines/antigravity
+      '@harness-x/engine-claude-code':
+        specifier: workspace:*
+        version: link:../../../engines/claude-code
+      '@harness-x/engine-codex':
+        specifier: workspace:*
+        version: link:../../../engines/codex
+      '@harness-x/engine-openai-compat':
+        specifier: workspace:*
+        version: link:../../../engines/openai-compat
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../../kernel
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+
   packages/plugins-core/verifiers/ladder:
     dependencies:
       '@harness-x/checklist-ledger':
