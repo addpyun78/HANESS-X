@@ -275,3 +275,55 @@
   display: flex;
   gap: var(--hx-space-2);
 }
+
+/* T-101 1E.6 보낸 메시지: 첨부 썸네일·이름 */
+.hx-sent {
+  align-self: flex-end;
+  max-width: min(640px, 90%);
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border-radius: var(--hx-radius);
+  background: var(--hx-accent-soft);
+}
+
+.hx-sent__attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+  margin: 0 0 var(--hx-space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.hx-sent__attachment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: 96px;
+  font-size: var(--hx-font-12);
+}
+
+.hx-sent__thumb {
+  object-fit: cover;
+  border-radius: var(--hx-radius);
+}
+
+.hx-sent__icon {
+  font-size: 32px;
+}
+
+.hx-sent__name {
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-sent__size {
+  color: var(--hx-text-faint);
+}
+
+.hx-sent__text {
+  margin: 0;
+  white-space: pre-wrap;
+}
