@@ -158,10 +158,10 @@ export async function runLadderL4(prev: LadderResult, opts: L4Options): Promise<
   return r;
 }
 
-// ── 26.7 판정기 선택: 설정 verifier.l4 = jev | local | off ─────────────
-export const L4_MODES = ['jev', 'local', 'off'] as const;
+// ── 26.7 판정기 선택 (T-100 J.3: 외부 유료 판정기 분기 삭제 — 로컬 판정기만 남음) ─────
+export const L4_MODES = ['local', 'off'] as const;
 export type L4Mode = (typeof L4_MODES)[number];
-/** 기본값 off — 계획서 "결정 필요 사항"(Jev 유료 / 로컬 느림 / off)이 정해질 때까지 외부 호출 없음 */
+/** 기본값 off — 외부 호출 없음 */
 export const DEFAULT_L4_MODE: L4Mode = 'off';
 
 /** 설정 → L4 모드. { verifier: { l4 } } 또는 { 'verifier.l4' } 형태. 모르는 값이면 오류 */
@@ -174,7 +174,7 @@ export function l4ModeFrom(config: Record<string, unknown> = {}): L4Mode {
   return v as L4Mode;
 }
 
-/** 판정기 생성기 (verifier-jev·verifier-local 플러그인이 제공) — 선택된 것만 만든다 */
+/** 판정기 생성기 (verifier-local 플러그인이 제공) — 선택된 것만 만든다 */
 export type L4VerifierFactories = Partial<Record<Exclude<L4Mode, 'off'>, () => Verifier>>;
 
 /** 모드 → 판정기. off면 null(L5로 직행). 선택된 판정기가 설치되지 않았으면 오류 */

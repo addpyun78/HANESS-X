@@ -40,12 +40,13 @@ function factories() {
   return { fx, urls, made };
 }
 
-describe('26.7 판정기 선택: verifier.l4 = jev | local | off', () => {
+describe('26.7 판정기 선택: verifier.l4 = local | off', () => {
   it('설정 읽기', () => {
     expect(l4ModeFrom({})).toBe('off');
-    expect(l4ModeFrom({ verifier: { l4: 'jev' } })).toBe('jev');
     expect(l4ModeFrom({ 'verifier.l4': 'local' })).toBe('local');
     expect(() => l4ModeFrom({ verifier: { l4: 'gpt' } })).toThrow(RangeError);
+    // 삭제된 외부 판정기 모드는 더 이상 받지 않는다
+    expect(() => l4ModeFrom({ verifier: { l4: 'remote' } })).toThrow(/local \| off/);
   });
 
   it('off → 판정기 호출 없이 L5로 직행', async () => {
