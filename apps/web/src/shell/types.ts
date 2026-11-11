@@ -78,5 +78,5 @@ export const NAV_ITEMS: { id: NavTarget; label: string; icon: string; ready?: fa
   // T-100 P2-G.1 설치 관리 (앱·도구·모델·확장)
   { id: 'install', label: '설치 관리', icon: '⬇' },
   { id: 'engines', label: '엔진', icon: '⚙' },
-  { id: 'settings', label: '설정', icon: '☰' },
+  { id: 'settings', label: '설정', icon: '☰', ready: false },
 ];
