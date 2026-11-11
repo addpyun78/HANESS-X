@@ -38,7 +38,8 @@ import {
 import { toolPickerExtraCards } from './panels/ToolPicker/ToolPickerCard.js';
 import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels/ToolPicker/model.js';
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
-import { SettingsPage } from './settings/SettingsPage.js';
+import { settingsApi } from './settings/form/api.js';
+import { SettingsPage, type SettingsPageProps } from './settings/SettingsPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { agentSessionsFromEvents, fromDispatchSession } from './shell/agent-sessions.js';
@@ -133,13 +134,26 @@ export function App() {
       agents.map((a) => ({ command: a.command, name: a.displayName, ...(a.icon ? { icon: a.icon } : {}) })),
     [agents],
   );
+  // T-101 6B.14 프로젝트 설정 화면의 "이 프로젝트에서만 바꿀 설정" (0-1 설정 API, 범위 project)
+  const projSettings = useMemo(() => (client ? { api: settingsApi(client) } : undefined), [client]);
   const proj = useProjectShell({
     api: pApi,
     events,
     onWorkspace: setWorkspace,
     engines: available,
     agents: agentChoices,
+    ...(projSettings ? { settings: projSettings } : {}),
   });
+  // T-101 6B.10 설정 > 프로젝트 탭 목록 — [프로젝트 설정]은 채팅 영역의 프로젝트 설정 화면(0B.41)을 연다
+  const settingsProjects: SettingsPageProps['projects'] = proj.enabled
+    ? {
+        list: proj.projects,
+        onAction: (p, a) => {
+          void proj.projectAction(p, a);
+          if (a.type === 'settings') setView('chat');
+        },
+      }
+    : undefined;
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
   // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
@@ -437,6 +451,7 @@ export function App() {
                   engines={engines}
                   {...(desktop ? { pickFolder: (p?: string) => pickFolderDesktop(p) } : {})}
                   {...(proj.current ? { project: proj.current.id, projectName: proj.current.name } : {})}
+                  {...(settingsProjects ? { projects: settingsProjects } : {})}
                 />
               ) : view === 'install' && instApi ? (
                 <InstallManager

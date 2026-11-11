@@ -1,9 +1,16 @@
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import type { HarnessApiClient, PickFolderResponse } from '../api/client.js';
 import type { EngineOption } from '../composer/types.js';
+import type { ProjectView } from '../shell/projects/api.js';
+import type { ProjectAction } from '../shell/projects/ProjectSidebar.js';
 import { enginesApi } from './Engines/api.js';
 import { EnginesSettings } from './Engines/EnginesSettings.js';
 import { settingsApi, type SettingsWidgetContext } from './form/api.js';
+import { AboutSection } from './sections/AboutSection.js';
+import { settingsExtrasApi } from './sections/api.js';
+import { DataSection, type EngineKeySource } from './sections/DataSection.js';
+import { ProjectsSection } from './sections/ProjectsSection.js';
+import { TransferSection } from './sections/TransferSection.js';
 import { SettingsScreen } from './SettingsScreen.js';
 
 /**
@@ -22,6 +29,8 @@ export interface SettingsPageProps {
   initialTab?: string;
   project?: string;
   projectName?: string;
+  /** 6B.10 프로젝트 목록 (0-2가 켜져 있을 때) — 동작은 사이드바와 같은 projectAction */
+  projects?: { list: readonly ProjectView[]; onAction: (p: ProjectView, a: ProjectAction) => void };
   /** 탭별 덧붙임 화면 (기본 것 위에 덮어씀) */
   sections?: Readonly<Partial<Record<string, ReactNode>>>;
 }
@@ -29,7 +38,9 @@ export interface SettingsPageProps {
 export function SettingsPage(props: SettingsPageProps) {
   const { client, engines } = props;
   const api = useMemo(() => settingsApi(client), [client]);
+  const extras = useMemo(() => settingsExtrasApi(client), [client]);
   const engApi = useMemo(() => enginesApi(client), [client]);
+  const [version, setVersion] = useState(0);
   const pick = props.pickFolder ?? client.pickFolder?.bind(client);
   const ctx = useMemo<SettingsWidgetContext>(
     () => ({
@@ -40,14 +51,45 @@ export function SettingsPage(props: SettingsPageProps) {
     }),
     [engines, pick, engApi],
   );
+  const engineKeys = useMemo<EngineKeySource>(
+    () => ({
+      list: async () => {
+        const r = await engApi.list();
+        const label = (id: string) =>
+          r.adapters?.find((a) => a.id === id)?.displayName ?? engines?.find((e) => e.id === id)?.label ?? id;
+        return Object.entries(r.keys).flatMap(([id, k]) =>
+          k ? [{ id, label: label(id), masked: k.masked }] : [],
+        );
+      },
+      remove: (id) => engApi.deleteKey(id),
+    }),
+    [engApi, engines],
+  );
+  const sections = useMemo(
+    () => ({
+      ...(props.projects
+        ? { project: <ProjectsSection projects={props.projects.list} onAction={props.projects.onAction} /> }
+        : {}),
+      data: (
+        <>
+          <DataSection key={version} api={api} extras={extras} engineKeys={engineKeys} />
+          <TransferSection extras={extras} onImported={() => setVersion((v) => v + 1)} />
+        </>
+      ),
+      about: <AboutSection extras={extras} />,
+      ...props.sections,
+    }),
+    [props.projects, props.sections, api, extras, engineKeys, version],
+  );
   return (
     <SettingsScreen
       api={api}
       ctx={ctx}
+      sections={sections}
+      version={version}
       {...(props.initialTab ? { initialTab: props.initialTab } : {})}
       {...(props.project ? { project: props.project } : {})}
       {...(props.projectName ? { projectName: props.projectName } : {})}
-      {...(props.sections ? { sections: props.sections } : {})}
     />
   );
 }

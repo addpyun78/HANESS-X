@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { readSetting } from './registry.js';
 
 /**
@@ -44,4 +45,21 @@ export function checklistRunnerOptions(values: Record<string, unknown>): Checkli
 /** 6B.7 installer 플러그인 config (설치 도구 켜기) */
 export function installerConfig(values: Record<string, unknown>): { chocoEnabled: boolean } {
   return { chocoEnabled: readSetting<boolean>(values, 'installer.chocoEnabled') };
+}
+
+/** 6B.10 임시 작업 공간 위치 (빈 값 = <home>/scratch) — ProjectStore scratchRoot */
+export function scratchRootFrom(values: Record<string, unknown>): string {
+  return readSetting<string>(values, 'project.scratchDir');
+}
+
+/** 6B.13 하네스 버전 (커널 package.json) */
+export function kernelVersion(): string {
+  try {
+    const pkg = JSON.parse(
+      readFileSync(fileURLToPath(new URL('../../package.json', import.meta.url)), 'utf8'),
+    ) as { version?: unknown };
+    return typeof pkg.version === 'string' ? pkg.version : '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
 }

@@ -23,7 +23,8 @@ import {
   type SessionGroupView,
   type SortMode,
 } from './model.js';
-import { loadPrefs, savePrefs, type SidebarPrefs } from './prefs.js';
+import { BROWSER_SETTING_EVENT } from '../../design/ui-prefs.js';
+import { loadPrefs, savePrefs, SIDEBAR_GROUP_KEY, SIDEBAR_SORT_KEY, type SidebarPrefs } from './prefs.js';
 import './projects.css';
 
 /**
@@ -100,6 +101,16 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
   } = props;
   const store = props.prefs ?? { load: loadPrefs, save: savePrefs };
   const [prefs, setPrefsState] = useState<SidebarPrefs>(() => store.load());
+  // T-101 6B.10 설정 화면에서 묶기·정렬을 바꾸면 바로 반영
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const on = (e: Event) => {
+      const key = (e as CustomEvent<{ key?: string }>).detail?.key;
+      if (key === SIDEBAR_GROUP_KEY || key === SIDEBAR_SORT_KEY) setPrefsState(store.load());
+    };
+    window.addEventListener(BROWSER_SETTING_EVENT, on);
+    return () => window.removeEventListener(BROWSER_SETTING_EVENT, on);
+  }, [store]);
   const setPrefs = (p: Partial<SidebarPrefs>) => {
     const next = { ...prefs, ...p };
     setPrefsState(next);

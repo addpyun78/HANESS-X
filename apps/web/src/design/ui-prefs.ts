@@ -8,6 +8,8 @@ import { applyTheme, THEME_KEY, type ThemePref } from './theme.js';
 export const FONT_SIZE_KEY = 'hx.ui.font-size';
 export const REDUCE_MOTION_KEY = 'hx.ui.reduce-motion';
 export const LANGUAGE_KEY = 'hx.ui.language';
+/** 설정 화면에서 이 기기 설정이 바뀌면 알리는 창 이벤트 (detail: {key, value}) — 사이드바 묶기·정렬 등이 듣는다 */
+export const BROWSER_SETTING_EVENT = 'hx-browser-setting';
 
 const ALLOWED: Readonly<Record<string, readonly string[]>> = {
   [FONT_SIZE_KEY]: ['small', 'medium', 'large'],
@@ -39,6 +41,13 @@ export function applyBrowserSetting(
     if (v === 'on' || v === 'off') root.dataset.reduceMotion = v;
     else delete root.dataset.reduceMotion;
   } else if (browserKey === LANGUAGE_KEY) root.lang = ALLOWED[LANGUAGE_KEY]!.includes(v) ? v : 'ko';
+  try {
+    globalThis.dispatchEvent?.(
+      new CustomEvent(BROWSER_SETTING_EVENT, { detail: { key: browserKey, value: v } }),
+    );
+  } catch {
+    /* 이벤트를 못 보내도 저장은 됐다 */
+  }
 }
 
 /** 앱 시작 때 저장된 값 적용 */

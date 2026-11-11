@@ -113,3 +113,26 @@
   min-width: 0;
   overflow-wrap: anywhere;
 }
+
+.hx-settings-screen__about {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--hx-space-1) var(--hx-space-3);
+  margin: 0;
+}
+
+.hx-settings-screen__about dd {
+  margin: 0;
+}
+
+.hx-settings-screen__file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-settings-screen__issues {
+  margin: 0;
+  padding-left: var(--hx-space-4);
+  color: var(--hx-danger);
+}

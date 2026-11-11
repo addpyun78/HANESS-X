@@ -33,6 +33,8 @@ export const NOT_SETTING_BROWSER_KEYS: Readonly<Record<string, string>> = {
   'hx.builder.animation': 'builder.animation 설정의 화면 쪽 사본',
   'hx.stt.browser.consent': '브라우저 음성 인식 동의 기록 (한 번 묻기)',
   'hx.forge.prefill': 'Forge 화면에 넘기는 임시 글 (화면 상태)',
+  'hx-sidebar-prefs':
+    '사이드바에서 접은 묶음 (화면 상태) — 묶기·정렬은 project.sidebarGroup·project.sidebarSort',
 };
 
 /** 앞으로 다른 구역이 쓸 이름공간 (등록 전에 쓰면 바로 걸리도록) */
