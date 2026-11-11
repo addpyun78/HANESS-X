@@ -9,7 +9,7 @@ import { EngineSettingSchema } from '../engines-settings.js';
  * ▶ 새 설정 키 등록 방법 (다른 구역 작업자용): 아래 `CORE_SETTINGS` 배열의 알맞은 그룹 자리에
  * `defineSetting('<그룹>.<이름>', z.<형식>().default(<기본값>), { group, title, description, advanced,
  * restartRequired, scope, widget?, options? })` 한 줄을 추가한다. 키는 `settings.json` 안의 중첩 경로
- * (`mode.default` → `{ mode: { default } }`)이고, 스키마에는 반드시 `.default()`를 붙인다(되돌리기에 씀).
+ * (예: 키 mode.default → { mode: { default } })이고, 스키마에는 반드시 `.default()`를 붙인다(되돌리기에 씀).
  * title·description은 쉬운 말(존댓말, 개발 용어 금지 — approvals `checkPlainKorean` 통과)로 쓰고, 선택지
  * (enum)는 `options`에 화면 이름을 단다. 값을 읽는 코드는 `readSetting(values, '<키>')`를 쓰면 0A.10 검사가
  * 자동으로 찾는다. `scope`는 global(전체만) | project(프로젝트만) | both(프로젝트 값이 있으면 전체 값보다 우선).
@@ -366,7 +366,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
   // ── 판정
   defineSetting('judge.engine', engineId, {
     group: 'judge',
-    title: '판정에 쓸 AI',
+    title: '판정할 때 쓸 AI',
     description: '결과가 맞는지 따져 볼 AI예요. 비우면 알아서 골라요.',
     advanced: false,
     restartRequired: true,
@@ -469,15 +469,15 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
   }),
   defineSetting('tools.brave', z.boolean().default(false), {
     group: 'tools',
-    title: 'Brave 검색 쓰기',
-    description: '도구를 찾을 때 Brave 검색도 함께 써요. 키가 있어야 해요.',
+    title: '브레이브 검색 쓰기',
+    description: '도구를 찾을 때 브레이브 검색도 함께 써요. 키가 있어야 해요.',
     advanced: false,
     restartRequired: true,
     scope: 'global',
   }),
   defineSetting('tools.braveKey', z.string().min(1), {
     group: 'tools',
-    title: 'Brave 검색 키',
+    title: '브레이브 검색 키',
     description: '키는 컴퓨터의 안전한 보관함에만 저장돼요. 화면에는 가려서 보여요.',
     advanced: false,
     restartRequired: false,
