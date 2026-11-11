@@ -1,5 +1,7 @@
 import { memo } from 'react';
 import { ForgeCard, isForgeCard } from '../forge/ForgeCards.js';
+import { MiniApprovalCard } from '../panels/Approvals/MiniApprovalCard.js';
+import { APPROVAL_CARD_KIND, type ApprovalCardData } from '../panels/Approvals/model.js';
 import { usePanelActions } from '../panels/panel-actions.js';
 import type { ChatBlock } from './blocks.js';
 import { StopBlockCard } from './StopBlockCard.js';
@@ -71,6 +73,14 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
     case 'approval':
       // Forge 카드(질문·spec 확인·설치)는 선택지 버튼 UI로
       if (isForgeCard(b.approvalKind)) return <ForgeCard block={b} />;
+      // T-100 H.14 쉬운 말 승인 카드는 채팅에 축소 카드만 (누르면 패널 카드로)
+      if (b.approvalKind === APPROVAL_CARD_KIND)
+        return (
+          <MiniApprovalCard
+            approvalId={b.approvalId}
+            card={(b.detail as { card?: ApprovalCardData } | undefined)?.card}
+          />
+        );
       return (
         <div className="hx-approval" role="group" aria-label={`승인 요청: ${b.title}`}>
           <div className="hx-approval__head">
