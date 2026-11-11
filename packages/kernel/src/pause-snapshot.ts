@@ -83,12 +83,16 @@ export function listFileHashes(root: string): FileHash[] {
 
 function untrackedHashes(cwd: string): FileHash[] {
   const list = git(cwd, ['ls-files', '--others', '--exclude-standard', '-z']) ?? '';
-  return list
-    .split('\0')
-    .filter(Boolean)
-    .filter((p) => existsSync(join(cwd, p)) && statSync(join(cwd, p)).isFile())
-    .map((p) => ({ path: p, sha256: hashFile(join(cwd, p)) }))
-    .sort((a, b) => a.path.localeCompare(b.path));
+  return (
+    list
+      .split('\0')
+      .filter(Boolean)
+      // 하네스 자체 상태(.harness-x: 체크리스트 원장 등)는 사용자 파일이 아니다
+      .filter((p) => !p.split('/').some((seg) => SKIP_DIRS.has(seg)))
+      .filter((p) => existsSync(join(cwd, p)) && statSync(join(cwd, p)).isFile())
+      .map((p) => ({ path: p, sha256: hashFile(join(cwd, p)) }))
+      .sort((a, b) => a.path.localeCompare(b.path))
+  );
 }
 
 /** 지금 파일 상태 (작업 트리를 바꾸지 않는다) */
