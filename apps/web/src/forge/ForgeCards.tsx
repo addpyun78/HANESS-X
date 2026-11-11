@@ -92,6 +92,7 @@ export function ForgeQuestionCard({ block: b }: { block: ForgeCardBlock }) {
               data-suggested={suggested.has(c.value) || undefined}
               aria-pressed={multiple ? on : undefined}
               disabled={sent}
+              title={sent ? '이미 답했어요' : undefined}
               onClick={() =>
                 multiple
                   ? setPicked((p) => (p.includes(c.value) ? p.filter((x) => x !== c.value) : [...p, c.value]))
@@ -120,6 +121,9 @@ export function ForgeQuestionCard({ block: b }: { block: ForgeCardBlock }) {
               type="button"
               className="hx-forge__submit"
               disabled={sent || (multiple && picked.length === 0)}
+              title={
+                sent ? '이미 답했어요' : multiple && picked.length === 0 ? '하나 이상 골라 주세요' : undefined
+              }
               onClick={() =>
                 send({
                   value: multiple ? picked : 'text',
