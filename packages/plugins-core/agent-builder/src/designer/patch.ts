@@ -93,7 +93,7 @@ export function checkPatchedDraft(cur: AgentDraft, patch: readonly PatchOp[], in
   const reasons: string[] = [];
   const unknown = findUnknownRefs(d, inv);
   if (unknown.length)
-    reasons.push(`목록에 없는 것을 쓰려고 해요: ${[...new Set(unknown.map((u) => `"${u.id}"`))].join(', ')}`);
+    reasons.push(`${[...new Set(unknown.map((u) => `"${u.id}"`))].join(', ')}는 목록에 없어서 쓸 수 없어요.`);
   for (const s of checkDraftEngines(d, inv)) reasons.push(s.message);
   if (findCycleEdge(d)) reasons.push('되돌아가는 연결이 생겨요. 반복은 반복 블록으로만 할 수 있어요.');
   if (draftPlainIssues(d).length) reasons.push('바뀐 설명이 어려운 말이라 그대로 보여 드릴 수 없어요.');
