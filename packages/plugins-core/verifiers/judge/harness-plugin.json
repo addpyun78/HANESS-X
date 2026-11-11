@@ -1,0 +1,10 @@
+{
+  "id": "judge",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Semantic Judge Chain",
+  "description": "의미 판단 AI 체인 — 사용자 설정 AI → 로컬 Ollama → 로그인된 구독 엔진 → 승인 카드",
+  "main": "dist/index.js",
+  "provides": { "verifier": ["judge"] },
+  "permissions": { "fs": [], "net": ["127.0.0.1"], "shell": true }
+}

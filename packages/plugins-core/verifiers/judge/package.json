@@ -1,0 +1,25 @@
+{
+  "name": "@harness-x/judge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@harness-x/engine-antigravity": "workspace:*",
+    "@harness-x/engine-claude-code": "workspace:*",
+    "@harness-x/engine-codex": "workspace:*",
+    "@harness-x/engine-openai-compat": "workspace:*",
+    "@harness-x/kernel": "workspace:*",
+    "zod": "^4.6.7"
+  }
+}
