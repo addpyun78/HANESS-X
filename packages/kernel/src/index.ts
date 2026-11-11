@@ -25,3 +25,6 @@ export * from './native/folder-picker.js';
 export * from './workspaces.js';
 export * from './recover.js';
 export * from './quota.js';
+export * from './models.js';
+export * from './main-ai.js';
+export * from './api/models-routes.js';
