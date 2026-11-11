@@ -422,6 +422,9 @@ importers:
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
+      '@harness-x/comparators':
+        specifier: workspace:*
+        version: link:../verifiers/comparators
       '@harness-x/kernel':
         specifier: workspace:*
         version: link:../../kernel

@@ -2,6 +2,13 @@ import { spawn } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { isAbsolute, join, relative } from 'node:path';
 import type { Acceptance } from '@harness-x/checklist-ledger';
+import {
+  compareValues,
+  defaultCompareCtx,
+  textComparator,
+  type CompareCtx,
+  type CompareOutcome,
+} from '@harness-x/comparators';
 
 /**
  * 판정 사다리 L3 — 내용 증거 (25.4)
@@ -23,6 +30,13 @@ export interface AcceptanceOutcome {
   ok: boolean;
   skipped?: boolean;
   detail: string;
+  /** 비교기 결과 (T-100 D.6: 종료코드·기대 출력 비교) */
+  compare?: CompareOutcome;
+}
+
+/** 비교기 ctx (판정 사다리 밖 사전은 비어 있다) */
+function compareCtx(ctx: AcceptanceContext): CompareCtx {
+  return defaultCompareCtx({ workspaceRoot: ctx.root });
 }
 
 export type AcceptanceRunner = (acc: Acceptance, ctx: AcceptanceContext) => Promise<AcceptanceOutcome>;
@@ -113,7 +127,11 @@ export const defaultAcceptanceRunner: AcceptanceRunner = async (acc, ctx) => {
         } catch {
           continue;
         }
-        if (text.includes(acc.symbol))
+        const found = textComparator.equals(acc.symbol, text, compareCtx(ctx), {
+          ...acc.compare?.options,
+          mode: 'contains',
+        });
+        if (found.verdict === 'equal')
           return { type: acc.type, ok: true, detail: `${acc.symbol} @ ${relative(ctx.root, f)}` };
       }
       return { type: acc.type, ok: false, detail: `${acc.symbol} 없음` };
@@ -141,10 +159,21 @@ export const defaultAcceptanceRunner: AcceptanceRunner = async (acc, ctx) => {
         .replaceAll('{path}', shellQuote(ctx.artifactPath))
         .replaceAll('{rel}', shellQuote(rel));
       const { code, out } = await runShell(cmd, ctx.root, acc.timeoutMs ?? 120_000);
+      const cc = compareCtx(ctx);
+      const exit = compareValues('exitCode', acc.expectExit, code ?? 'killed', cc, { semantic: 'off' });
+      const output =
+        acc.expectOutput !== undefined
+          ? compareValues(acc.compare?.kind ?? 'auto', acc.expectOutput, out, cc, {
+              ...(acc.compare?.options ? { options: acc.compare.options } : {}),
+              ...(acc.compare?.semantic ? { semantic: acc.compare.semantic } : {}),
+            })
+          : undefined;
+      const tail = out.trim() ? ` — ${out.trim().split('\n').slice(-3).join(' | ')}` : '';
       return {
         type: acc.type,
-        ok: code === acc.expectExit,
-        detail: `exit ${code ?? 'killed'}${out.trim() ? ` — ${out.trim().split('\n').slice(-3).join(' | ')}` : ''}`,
+        ok: exit.next === 'pass' && (output === undefined || output.next === 'pass'),
+        detail: `exit ${code ?? 'killed'}${output ? ` · 출력 ${output.kind} ${output.verdict}` : ''}${tail}`,
+        compare: output ?? exit,
       };
     }
     case 'llm':
