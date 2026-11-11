@@ -9,3 +9,5 @@ export * from './structure.js';
 export * from './critic.js';
 export * from './patch.js';
 export * from './designer.js';
+export * from './route.js';
+export * from './wire.js';
