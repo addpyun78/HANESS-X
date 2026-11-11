@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { DispatchError, type Dispatcher, type DispatchModifiers } from '../dispatch.js';
+import { registerStopRoutes } from './stop-routes.js';
 
 /**
  * 48.1 / 실행 디스패치 API
@@ -26,6 +27,8 @@ function fail(reply: FastifyReply, err: unknown) {
 }
 
 export function registerSessionRoutes(app: FastifyInstance, dispatcher: Dispatcher): void {
+  // T-101 2A.2 정지 3종 (일시정지 / 지금 멈추기 / 전체 정지)
+  registerStopRoutes(app, dispatcher);
   app.post('/api/sessions', async (req, reply) => {
     const body = (req.body ?? {}) as { agent?: unknown; prompt?: unknown; modifiers?: unknown };
     try {

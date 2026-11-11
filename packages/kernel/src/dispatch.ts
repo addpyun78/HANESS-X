@@ -6,6 +6,15 @@ import {
   type PipelineNode,
 } from '@harness-x/protocol';
 import type { LogRecord } from './event-log.js';
+import {
+  isSafePoint,
+  PAUSE_TIMEOUT_QUESTION,
+  PauseGate,
+  type PausedInfo,
+  type PauseReason,
+  type StopKind,
+  type StopResult,
+} from './stop.js';
 
 /**
  * T-048 / 실행 디스패치
@@ -147,9 +156,12 @@ export interface DispatcherOptions {
   engines?: () => readonly string[];
   idGen?: () => string;
   now?: () => Date;
+  /** T-101 2A.3 일시정지 요청 뒤 "지금 멈출까요?"까지 기다리는 시간 (기본 60초) */
+  pauseTimeoutMs?: number;
 }
 
-export type DispatchSessionStatus = 'running' | 'completed' | 'incomplete' | 'failed' | 'error' | string;
+export type DispatchSessionStatus =
+  'running' | 'paused' | 'completed' | 'incomplete' | 'failed' | 'error' | string;
 
 export interface DispatchSession {
   sessionId: string;
@@ -169,6 +181,10 @@ export interface DispatchSession {
   haltedAt?: string;
   /** 48.4 추가된 서브에이전트 (/명령) */
   subagents: string[];
+  /** T-101 2A.2 일시정지 요청 뒤 안전한 지점을 기다리는 중 */
+  pausing?: boolean;
+  /** T-101 2A.6 멈춘 세션 (status 'paused') */
+  paused?: PausedInfo;
 }
 
 export type DispatchErrorCode =
@@ -196,6 +212,11 @@ interface Live {
   done: Promise<DispatchSession>;
   queue: DispatchAgent[];
   abort: AbortController;
+  /** T-101 2A 정지 요청 (abort 전에 정해 둔다 → 끝나면 paused로 기록) */
+  stop?: { kind: StopKind; by: string; reason: PauseReason; nodeId?: string };
+  pauseRequested?: { by: string; reason: PauseReason };
+  /** 2A.3 안전한 지점 대기 (60초 타이머) */
+  gate?: PauseGate;
 }
 
 export class Dispatcher {
@@ -296,7 +317,91 @@ export class Dispatcher {
     for (const l of this.live.values()) l.abort.abort();
   }
 
+  // ── T-101 2A.2 정지 3종 ───────────────────────────────────────
+  /** ⏸ 일시정지: 안전한 지점(도구 실행이 끝난 뒤, 다음 AI 턴 전)에서 멈춘다 */
+  pause(sessionId: string, by = 'user', reason: PauseReason = 'user'): StopResult {
+    const live = this.mustLive(sessionId);
+    if (live.session.status !== 'running') return { sessionId, kind: 'pause', state: 'not_running' };
+    if (!live.pauseRequested) {
+      live.pauseRequested = { by, reason };
+      live.session.pausing = true;
+      live.gate = new PauseGate({
+        ...(this.opts.pauseTimeoutMs !== undefined ? { timeoutMs: this.opts.pauseTimeoutMs } : {}),
+        // 2A.3 시간 안에 안전한 지점이 안 오면 "지금 멈출까요?" (카드가 [지금 멈추기] → POST …/stop)
+        onTimeout: () =>
+          live.session.status === 'running' &&
+          this.emit(sessionId, 'pause_timeout', {
+            title: PAUSE_TIMEOUT_QUESTION.title,
+            body: PAUSE_TIMEOUT_QUESTION.body,
+            choices: [...PAUSE_TIMEOUT_QUESTION.choices],
+          }),
+      });
+      live.gate.request();
+      this.emit(sessionId, 'pause_requested', { by, reason });
+    }
+    return { sessionId, kind: 'pause', state: 'pausing' };
+  }
+
+  /** ⏹ 지금 멈추기: 엔진 interrupt(→ 프로세스 그룹 종료). 끝나면 paused */
+  async stopNow(
+    sessionId: string,
+    by = 'user',
+    reason: PauseReason = 'user',
+    kind: StopKind = 'stop-now',
+  ): Promise<StopResult> {
+    const live = this.mustLive(sessionId);
+    if (live.session.status !== 'running') return { sessionId, kind, state: 'not_running' };
+    this.halt(live, kind, by, reason);
+    await live.done;
+    return { sessionId, kind, state: 'paused' };
+  }
+
+  /** 전체 정지: 실행 중인 세션 전부를 지금 멈춘다 */
+  async stopAll(by = 'user'): Promise<StopResult[]> {
+    const running = [...this.live.values()].filter((l) => l.session.status === 'running');
+    return Promise.all(running.map((l) => this.stopNow(l.session.sessionId, by, 'user', 'stop-all')));
+  }
+
+  /** 실행 중인 세션 수 (상단 바 [전체 정지] 표시 기준) */
+  runningCount(): number {
+    return [...this.live.values()].filter((l) => l.session.status === 'running').length;
+  }
+
   // ── 내부 ───────────────────────────────────────────────────
+  private mustLive(sessionId: string): Live {
+    const live = this.live.get(sessionId);
+    if (!live) throw new DispatchError('not_found', `세션 없음: ${sessionId}`);
+    return live;
+  }
+
+  /** 정지 사유를 정해 두고 abort (실행기가 끝나면 execute가 paused로 기록) */
+  private halt(live: Live, kind: StopKind, by: string, reason: PauseReason) {
+    if (live.stop) return;
+    live.stop = {
+      kind,
+      by,
+      reason,
+      ...(live.session.currentNode ? { nodeId: live.session.currentNode } : {}),
+    };
+    live.abort.abort();
+  }
+
+  private markPaused(live: Live) {
+    live.gate?.dispose();
+    const s = live.session;
+    const stop = live.stop!;
+    s.status = 'paused';
+    s.pausing = false;
+    s.currentNode = undefined;
+    s.paused = { reason: stop.reason, at: this.now().toISOString(), by: stop.by };
+    this.emit(s.sessionId, 'session_paused', {
+      kind: stop.kind,
+      paused: s.paused,
+      progress: s.progress,
+      ...(stop.nodeId ? { nodeId: stop.nodeId } : {}),
+    });
+  }
+
   private resolveAgent(nameOrCommand: string): DispatchAgent {
     const key = nameOrCommand.trim();
     const agent =
@@ -333,9 +438,14 @@ export class Dispatcher {
           pipeline,
           prompt,
           modifiers: s.modifiers,
-          onEvent: (rec) => this.track(s, rec, p),
+          onEvent: (rec) => this.track(live, rec, p),
           signal: live.abort.signal,
         });
+        if (live.stop) {
+          this.markPaused(live);
+          break;
+        }
+        live.gate?.dispose();
         s.currentNode = undefined;
         if (r.status !== 'completed' || live.queue.length === 0) {
           this.finish(s, r.status, r.reason, r.haltedAt);
@@ -347,13 +457,20 @@ export class Dispatcher {
         prompt = `${s.prompt}\n\n앞 단계 결과:\n${JSON.stringify(r.result ?? null)}`;
       }
     } catch (err) {
-      this.finish(s, 'error', err instanceof Error ? err.message : String(err));
+      if (live.stop) this.markPaused(live);
+      else this.finish(s, 'error', err instanceof Error ? err.message : String(err));
     }
     return s;
   }
 
   /** prefix: 서브에이전트 노드는 '<에이전트>/<노드>'로 센다 (본 파이프라인과 id가 겹쳐도 따로) */
-  private track(s: DispatchSession, rec: LogRecord, prefix: string) {
+  private track(live: Live, rec: LogRecord, prefix: string) {
+    const s = live.session;
+    // 2A.3 안전한 지점(도구 실행이 끝난 뒤·다음 AI 턴 전)에서 일시정지 요청을 실행
+    if (live.pauseRequested && isSafePoint(rec) && live.gate?.atSafePoint()) {
+      if (typeof rec.nodeId === 'string' && !s.currentNode) s.currentNode = prefix + rec.nodeId;
+      this.halt(live, 'pause', live.pauseRequested.by, live.pauseRequested.reason);
+    }
     const nodeId = typeof rec.nodeId === 'string' ? prefix + rec.nodeId : undefined;
     if (!nodeId) return;
     if (rec.type === 'node_start') s.currentNode = nodeId;
