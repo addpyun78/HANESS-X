@@ -8,3 +8,4 @@ export * from './agent-draft-diff.js';
 export * from './verifier.js';
 export * from './schema-compat.js';
 export * from './stt.js';
+export * from './models.js';
