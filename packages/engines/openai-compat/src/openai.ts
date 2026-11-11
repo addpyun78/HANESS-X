@@ -63,6 +63,17 @@ export function toOpenAIMessages(messages: ChatMessage[]): Record<string, unknow
         })),
       };
     }
+    // T-101 1D.4·1D.5 그림은 data URL image_url 블록 (Ollama 비전 모델도 같은 모양)
+    if (m.role === 'user' && m.media?.length)
+      return {
+        role: 'user',
+        content: [
+          { type: 'text', text: m.content },
+          ...m.media
+            .filter((x) => x.kind === 'image')
+            .map((x) => ({ type: 'image_url', image_url: { url: `data:${x.mime};base64,${x.data}` } })),
+        ],
+      };
     return { role: m.role, content: m.content };
   });
 }

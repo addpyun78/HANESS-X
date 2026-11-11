@@ -42,7 +42,14 @@ export function toGeminiContents(messages: ChatMessage[]): {
   const contents: { role: 'user' | 'model'; parts: Part[] }[] = [];
   for (const m of messages) {
     if (m.role === 'system') continue;
-    if (m.role === 'user') contents.push({ role: 'user', parts: [{ text: m.content }] });
+    if (m.role === 'user')
+      contents.push({
+        role: 'user',
+        parts: [
+          ...(m.media ?? []).map((x) => ({ inlineData: { mimeType: x.mime, data: x.data } })),
+          { text: m.content },
+        ],
+      });
     else if (m.role === 'assistant') {
       const parts: Part[] = [];
       if (m.content) parts.push({ text: m.content });
