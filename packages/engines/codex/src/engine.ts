@@ -5,6 +5,7 @@ import {
   readLines,
   runLineProcess,
   spawnGroup,
+  STOP_NOW_GRACE_MS,
   type EventBody,
   type LineRun,
 } from '@harness-x/kernel';
@@ -237,7 +238,7 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
           .catch(() => {});
       }
       s.client.close(new Error('interrupted'));
-      await killGroup(s.child, o.killGraceMs ?? 1000);
+      await killGroup(s.child, o.killGraceMs ?? STOP_NOW_GRACE_MS);
     };
     if (opts.signal) {
       if (opts.signal.aborted) void interrupt();

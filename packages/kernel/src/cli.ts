@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol';
@@ -9,6 +9,9 @@ import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
+import { registerResumeRoutes } from './api/resume-routes.js';
+import { createResumeService } from './resume-service.js';
+import { fallbackTable } from './resume-engine.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -148,6 +151,8 @@ interface AgentBuilderPluginModule {
             status?: 'ready' | 'incomplete';
           };
           pipeline: Pipeline;
+          /** agent.yaml이 있는 폴더 */
+          dir?: string;
         }
       | undefined;
   };
@@ -194,6 +199,7 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
   harness-x run <에이전트> <지시> [--project <id|경로>]
                              켜져 있는 서버에서 새 세션 시작 (화면 사이드바에 바로 보임)
   harness-x reindex          세션 색인 다시 만들기 (sessions/ 폴더를 다시 읽음)
+  harness-x resume <세션 id> 멈춘 작업을 확인한 뒤 이어서 하기 (켜진 서버에 요청)
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -257,6 +263,11 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       return 1;
     }
     return mod.installCli(argv, { input: process.stdin, output: process.stdout });
+  }
+  // T-101 2B.2 입구: 멈춘 작업 이어하기 (켜진 서버의 /api/resume에 점검 → 실행)
+  if (argv[0] === 'resume') {
+    const { resumeCli } = await import('./resume-cli.js');
+    return resumeCli(argv.slice(1), { input: process.stdin, output: process.stdout });
   }
   // T-101 0B.37 / 0B.9 세션 시작(서버의 createSession으로) · 색인 다시 만들기
   if (argv[0] === 'run' || argv[0] === 'reindex') {
@@ -443,6 +454,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const forge = () => loader.plugins.get('forge')?.module as ForgePluginModule | undefined;
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
+  const { takePauseSnapshot } = await import('./pause-snapshot.js');
+  const { pinRunVersion } = await import('./resume-pin.js');
   // T-101 0-2 프로젝트·세션 등록부: workspaces.json → projects.json(처음 1회), 옛 세션 가져오기(0B.5),
   // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 메인 AI(T-101 5C.3b), 없으면 첫 엔진
   const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
@@ -471,6 +484,33 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const dispatch = new Dispatcher({
     log,
     sessions: sessionRegistry,
+    // T-101 2A.6 멈추면 정지 스냅샷 (<logs>/sessions/<id>/pause.json, 작업 트리는 바꾸지 않음)
+    onPaused: (s, c) => {
+      const snap = takePauseSnapshot({
+        sessionId: s.sessionId,
+        paused: s.paused!,
+        // 0-2 세션의 작업 폴더 (프로젝트 폴더), 없으면 서버 워크스페이스
+        cwd: sessionRegistry.get(s.sessionId)?.cwd ?? workspace,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        ...(c.itemId ? { itemId: c.itemId } : {}),
+        ...(c.nodeId ? { nodeId: c.nodeId } : {}),
+      });
+      return { snapshot: { file: 'pause.json', kind: snap.files.kind } };
+    },
+    // T-101 2B.6 실행 시작 때 agent.yaml·파이프라인·엔진 설정을 고정 (<logs>/sessions/<id>/pinned.json)
+    onCreated: (s, c) => {
+      const dir = registry()?.get(c.agent.name)?.dir;
+      pinRunVersion({
+        sessionId: s.sessionId,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        agent: c.agent.name,
+        pipeline: c.pipeline,
+        files: [
+          ...(dir ? [{ label: 'agent.yaml', path: join(dir, 'agent.yaml') }] : []),
+          { label: 'engines-settings.yaml', path: join(home, 'engines-settings.yaml') },
+        ],
+      });
+    },
     engines: () => adapters().map((a) => a.id),
     resolve: (name) => {
       const a = registry()?.get(name);
@@ -504,6 +544,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         log,
         onEvent: i.onEvent,
         signal: i.signal,
+        // T-101 2B.9 엔진 자체 재개: 멈췄던 노드는 그 엔진 세션으로 (예: claude --resume)
+        ...(i.resume?.resumeIds ? { resumeIds: i.resume.resumeIds } : {}),
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
@@ -526,6 +568,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   // 새 도구 첫 실행 확인(permission-gate, <home>/tools/allowed.json) + 설치 도구 감지(읽기만)
   // P2-F.6 첫 실행 확인은 패널 카드(approval_request kind tool.first-run)로 묻는다
   const installWiring = wireInstaller({ plugins: loader.plugins, hooks, log });
+  // T-101 2A.5 전체 정지 → 진행 중인 설치도 중단 가능한 지점에서 멈추고 정리
+  if (installWiring) dispatch.addStopAllHook(() => installWiring.service.stopAll?.());
   // T-100 Part 3 도구 찾기: /api/tools/* + tools.request(MCP) + 도구 고르기 카드 이벤트 + 설치 후 자동 재개
   const toolWiring = installWiring
     ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })
@@ -593,6 +637,30 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         registerRecoveryRoutes(app, {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
+        });
+        // T-101 2B 이어하기: 프로젝트의 미완료 세션 (GET /api/resume?projectId=)
+        registerResumeRoutes(app, {
+          log,
+          service: createResumeService({
+            log,
+            dispatcher: dispatch,
+            agentFor: (name) => {
+              const a = registry()?.get(name);
+              return a
+                ? {
+                    name: a.name,
+                    command: a.command,
+                    displayName: a.agent.displayName,
+                    ...(a.agent.icon ? { icon: a.agent.icon } : {}),
+                    pipeline: a.pipeline,
+                  }
+                : undefined;
+            },
+            engines: () => adapters().map((a) => a.id),
+            engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
+            fallback: () => fallbackTable(loadEnginesSettings().engines),
+            ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
+          }),
         });
         // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
         inventory = builder()?.registerBuilderInventory?.(app, {

@@ -10,9 +10,11 @@ export interface TopBarProps {
   /** 좁은 화면에서 왼쪽(메뉴)·오른쪽(패널) 시트 여는 버튼 */
   leading?: ReactNode;
   trailing?: ReactNode;
+  /** T-101 2A.8 상단 바 동작 (예: [전체 정지]) */
+  actions?: ReactNode;
 }
 
-export function TopBar({ workspace, runState, quotas, leading, trailing }: TopBarProps) {
+export function TopBar({ workspace, runState, quotas, leading, trailing, actions }: TopBarProps) {
   return (
     <header className="hx-topbar" role="banner">
       {leading}
@@ -30,6 +32,7 @@ export function TopBar({ workspace, runState, quotas, leading, trailing }: TopBa
           <QuotaMeterView key={q.engineId} q={q} />
         ))}
       </div>
+      {actions}
       <ThemeToggle />
       {trailing}
     </header>

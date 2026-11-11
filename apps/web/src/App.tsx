@@ -11,6 +11,11 @@ import { isTauri, pickFolderDesktop, waitForDesktopServer } from './api/desktop.
 import { ChatStream } from './chat/ChatStream.js';
 import type { ViewMode } from './chat/blocks.js';
 import { Composer } from './composer/Composer.js';
+import { StopAllButton } from './shell/StopAllButton.js';
+import { ResumeFlow } from './recovery/ResumeFlow.js';
+import { parseResumeCommand, ResumeCountLink, resumeApi, resumeTarget } from './recovery/resume-entry.js';
+import { ProjectResumeCard } from './recovery/ProjectResumeCard.js';
+import { fetchProjectResumeList, type ResumableSessionData } from './recovery/resume-list.js';
 import { enginesFromPlugins } from './composer/engines.js';
 import type { RecentProject } from './composer/PlusMenu.js';
 import { SubagentConfirm, subagentTarget } from './composer/SubagentConfirm.js';
@@ -103,6 +108,8 @@ export function App() {
   const [workspace, setWorkspace] = useState<Workspace | undefined>(demo ? DEMO_WORKSPACE : undefined);
   // 48.1/48.3 / 디스패치 세션: POST 응답(즉시) + 이벤트(진행) → 사이드바
   const [dispatched, setDispatched] = useState<SessionSummary[]>([]);
+  // T-101 2B.2 이어하기 흐름을 연 세션 (⏸ 세션 줄 클릭 · /resume)
+  const [resumeId, setResumeId] = useState<string>();
   const [activeId, setActiveId] = useState<string>();
   const [confirm, setConfirm] = useState<{ payload: SendPayload; running: SessionSummary }>();
   const [sendError, setSendError] = useState<string>();
@@ -137,12 +144,29 @@ export function App() {
       agents.map((a) => ({ command: a.command, name: a.displayName, ...(a.icon ? { icon: a.icon } : {}) })),
     [agents],
   );
+  // T-101 2B.1 프로젝트를 열면 그 프로젝트의 미완료 세션 ("이어서 할 작업이 있어요")
+  const [projectResume, setProjectResume] = useState<ResumableSessionData[]>([]);
+  const [showProjectResume, setShowProjectResume] = useState(false);
   const proj = useProjectShell({
     api: pApi,
     events,
     onWorkspace: setWorkspace,
     engines: available,
     agents: agentChoices,
+    // 0B.32 프로젝트 클릭·폴더 선택·최근 프로젝트 → 미완료 세션 목록
+    onProjectOpen: (p) => {
+      if (!client) return;
+      fetchProjectResumeList((path) => client.request(path), p.id)
+        .then((list) => {
+          setProjectResume(list);
+          setShowProjectResume(list.length > 0);
+        })
+        .catch(() => setProjectResume([]));
+    },
+    // 0B.29 세션 … 메뉴 [이어하기] · ⏸ 멈춘 세션 줄 클릭
+    onResume: (s) => setResumeId(s.id),
+    // 0B.18 빈 세션 화면 "이어서 할 작업 N개"
+    emptyExtra: <ResumeCountLink count={projectResume.length} onOpen={() => setShowProjectResume(true)} />,
   });
   // T-101 5C.3b 프로젝트 기본 AI (project.defaults.engine/model)
   const projectAi = useProjectAi(proj.enabled ? proj.current : undefined, pApi?.patch);
@@ -162,6 +186,11 @@ export function App() {
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
   // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
   const instApi = useMemo(() => (client ? installApi(client) : undefined), [client]);
+  // T-101 2B.2 이어하기 API (점검 → 이어서 실행)
+  const rsApi = useMemo(
+    () => (client ? resumeApi((path, init) => client.request(path, init)) : undefined),
+    [client],
+  );
   const installCards = useInstallCards({ events, ...(instApi ? { api: instApi } : {}) });
   const [installNav, setInstallNav] = useState<{ tab: InstallTab; query: string }>({
     tab: 'installed',
@@ -324,6 +353,14 @@ export function App() {
     }
   };
   const onSend = (p: SendPayload) => {
+    // T-101 2B.2 입구: /resume [세션 id] → 이어하기 흐름
+    const resumeCmd = p.agent ? null : parseResumeCommand(p.text);
+    if (resumeCmd) {
+      const id = resumeTarget(resumeCmd, sessions);
+      if (id) setResumeId(id);
+      else setSendError('이어서 할 작업이 없어요.');
+      return;
+    }
     if (proj.handleSend(p)) return; // T-101 초안 첫 메시지·/new
     if (!p.agent) return; // 일반 턴 전송 API는 이후 티켓에서 연결
     const running = subagentTarget(p, sessions, activeId);
@@ -427,6 +464,13 @@ export function App() {
             topBar={{
               workspace,
               runState,
+              // T-101 2A.8 실행 세션 2개 이상이면 [전체 정지]
+              actions: (
+                <StopAllButton
+                  runningCount={sessions.filter((x) => x.status === 'running').length}
+                  onStopAll={() => void client?.stopAllSessions().catch(() => {})}
+                />
+              ),
               quotas:
                 quotas ??
                 available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
@@ -442,6 +486,8 @@ export function App() {
                   onSelectSession={(id) => {
                     setActiveId(id);
                     setView('chat');
+                    // T-101 2B.2 입구: ⏸ 멈춘 세션 줄 클릭 → 이어하기
+                    if (sessions.find((x) => x.id === id)?.status === 'paused') setResumeId(id);
                   }}
                 />
               )
@@ -459,6 +505,15 @@ export function App() {
               ) : (
                 <>
                   {proj.enabled && proj.main}
+                  {showProjectResume && (
+                    <ProjectResumeCard
+                      sessions={projectResume}
+                      onResume={(id) => {
+                        setShowProjectResume(false);
+                        setResumeId(id);
+                      }}
+                    />
+                  )}
                   {proj.enabled && proj.error && (
                     <div className="hx-ws-error" role="alert">
                       {proj.error}
@@ -475,6 +530,21 @@ export function App() {
                     <div className="hx-ws-error" role="alert">
                       {sendError}
                     </div>
+                  )}
+                  {resumeId && rsApi && (
+                    <ResumeFlow
+                      key={resumeId}
+                      api={rsApi}
+                      sessionId={resumeId}
+                      onDone={(r) => {
+                        setResumeId(undefined);
+                        setProjectResume((xs) => xs.filter((x) => x.sessionId !== resumeId));
+                        if (r)
+                          setDispatched((xs) =>
+                            xs.map((x) => (x.id === resumeId ? { ...x, status: 'running' } : x)),
+                          );
+                      }}
+                    />
                   )}
                   {confirm && (
                     <SubagentConfirm
@@ -508,6 +578,8 @@ export function App() {
                     }
                     agents={agents}
                     onSend={onSend}
+                    // T-101 2A.8 실행 중이면 [■ 정지] → 일시정지·지금 멈추기 (Esc 두 번)
+                    stop={stopControls(sessions, activeId, client)}
                     {...((proj.composer.fill ?? forgeFill) ? { fill: proj.composer.fill ?? forgeFill } : {})}
                     {...(proj.composer.pin ? { pinAgent: proj.composer.pin } : {})}
                     focusSeq={proj.composer.focusSeq}
@@ -522,4 +594,19 @@ export function App() {
       </ApprovalFocusContext.Provider>
     </ForgeAnswerContext.Provider>
   );
+}
+
+/** T-101 2A.8 보고 있는 세션(없으면 첫 세션)이 실행 중이면 정지 조작 */
+function stopControls(
+  sessions: SessionSummary[],
+  activeId: string | undefined,
+  client:
+    { pauseSession(id: string): Promise<unknown>; stopSession(id: string): Promise<unknown> } | undefined,
+) {
+  const s = sessions.find((x) => x.id === (activeId ?? sessions[0]?.id));
+  return {
+    running: !!client && s?.status === 'running',
+    onPause: () => void (s && client?.pauseSession(s.id).catch(() => {})),
+    onStopNow: () => void (s && client?.stopSession(s.id).catch(() => {})),
+  };
 }
