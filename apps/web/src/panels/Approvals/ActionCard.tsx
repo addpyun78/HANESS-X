@@ -100,6 +100,15 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
             data-choice={b.id}
             aria-keyshortcuts={String(i + 1)}
             disabled={busy || !onChoose || (b.requiresCheck && !checked)}
+            title={
+              busy
+                ? '처리하는 중이에요'
+                : !onChoose
+                  ? '지금은 답할 수 없어요'
+                  : b.requiresCheck && !checked
+                    ? '먼저 확인 칸에 체크해 주세요'
+                    : undefined
+            }
             onClick={() => choose(b.id)}
           >
             <span className="hx-action-card__key" aria-hidden="true">

@@ -57,6 +57,13 @@ export function ResumeCard({ card, onResume }: ResumeCardProps) {
         className="hx-resume__button"
         onClick={() => void resume()}
         disabled={state === 'pending' || state === 'done'}
+        title={
+          state === 'pending'
+            ? '이어서 하는 중이에요'
+            : state === 'done'
+              ? '이미 이어서 하고 있어요'
+              : undefined
+        }
       >
         {state === 'done' ? '재개됨' : state === 'pending' ? '재개 중…' : '이어서 하기'}
       </button>

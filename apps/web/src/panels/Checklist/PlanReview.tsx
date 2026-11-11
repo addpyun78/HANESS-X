@@ -49,6 +49,15 @@ export function PlanReview({ violations, onApprove, busy, error, children }: Pla
           type="button"
           className="hx-ck-btn hx-ck-btn--primary"
           disabled={blocked || busy || !onApprove}
+          title={
+            blocked
+              ? '계획의 문제를 먼저 고쳐 주세요'
+              : busy
+                ? '처리하는 중이에요'
+                : !onApprove
+                  ? '지금은 승인할 수 없어요'
+                  : undefined
+          }
           onClick={onApprove}
         >
           승인

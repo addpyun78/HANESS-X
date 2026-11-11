@@ -36,6 +36,7 @@ export function ApprovalCard({ approval: a, onDecide, busy, error }: ApprovalCar
             className="hx-ck-btn"
             data-decision={b.id}
             disabled={busy || !onDecide}
+            title={busy ? '처리하는 중이에요' : !onDecide ? '지금은 답할 수 없어요' : undefined}
             onClick={() => onDecide?.(b.id)}
           >
             {b.label}
