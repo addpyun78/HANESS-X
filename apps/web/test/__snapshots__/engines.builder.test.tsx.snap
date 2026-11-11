@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`T-101 5D 에이전트 만들기 연결 > 5D.3 노드 엔진 칩: 따라가기면 메인(claude-code), 직접이면 고정 이름 1`] = `
+[
+  "<span class="hx-engine-chip" data-engine="main" aria-label="역할 엔진 main">메인(claude-code)</span>",
+  "<span class="hx-engine-chip" data-engine="antigravity" aria-label="역할 엔진 antigravity">antigravity</span>",
+]
+`;
