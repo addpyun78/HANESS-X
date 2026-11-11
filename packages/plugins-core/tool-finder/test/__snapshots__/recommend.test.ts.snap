@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`P3-C.2 추천 이유 1~2문장 + 아쉬운 점 1문장, 쉬운 말 검사 통과 > 스냅샷 + 전부 검사 통과 1`] = `
+[
+  {
+    "con": "화면 없이 명령으로만 쓸 수도 있어요.",
+    "name": "ffmpeg",
+    "reason": "Windows 공식 앱 저장소에 있어서 설치·삭제가 쉬워요. 무료로 쓸 수 있어요.",
+    "replaced": false,
+  },
+  {
+    "con": "화면 없이 명령으로만 쓸 수도 있어요.",
+    "name": "HandBrake",
+    "reason": "Windows 공식 앱 저장소에 있어서 설치·삭제가 쉬워요. 무료로 쓸 수 있어요.",
+    "replaced": false,
+  },
+  {
+    "con": "돈을 내야 쓸 수 있어요.",
+    "name": "Adobe Media Encoder",
+    "reason": "이 일에 쓸 수 있는 유료 도구예요.",
+    "replaced": false,
+  },
+  {
+    "con": "무료인지 직접 확인해야 해요.",
+    "name": "whisper",
+    "reason": "내 컴퓨터에서 바로 돌릴 수 있어요.",
+    "replaced": false,
+  },
+  {
+    "con": "화면 없이 명령으로만 쓸 수도 있어요.",
+    "name": "moviepy",
+    "reason": "한 줄로 설치하고 지울 수 있어요. 무료로 쓸 수 있어요.",
+    "replaced": false,
+  },
+  {
+    "con": "체험 기간이 끝나면 돈을 내야 해요.",
+    "name": "trialware",
+    "reason": "먼저 무료로 써 볼 수 있어요.",
+    "replaced": false,
+  },
+  {
+    "con": "만든 곳에서 더 이상 고치지 않아요.",
+    "name": "old-tool",
+    "reason": "한 줄로 설치하고 지울 수 있어요. 무료로 쓸 수 있어요.",
+    "replaced": false,
+  },
+]
+`;
