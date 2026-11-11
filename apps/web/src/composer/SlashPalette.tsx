@@ -259,6 +259,12 @@ export function useSlashPalette({ agents = [], skills = [], text, setText }: Use
     activeIndex: active,
     agent,
     clearAgent: () => setAgent(undefined),
+    /** T-101 0B.18 바깥에서 / 칩 고르기 (명령 이름으로) */
+    pick: (command: string) => {
+      const it = all.find((x) => x.command === command);
+      if (it) select(it);
+      return !!it;
+    },
     onKeyDown,
     popover,
     chip,

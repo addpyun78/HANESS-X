@@ -36,3 +36,7 @@ export * from './resume-engine.js';
 export * from './resume-pin.js';
 export * from './resume-run.js';
 export * from './resume-conflict.js';
+export * from './path-normalize.js';
+export * from './projects/index.js';
+export * from './settings/index.js';
+export * from './api/settings-routes.js';
