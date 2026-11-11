@@ -11,3 +11,4 @@ export * from './comparators/number.js';
 export * from './comparators/version.js';
 export * from './comparators/regex.js';
 export * from './comparators/exit-code.js';
+export * from './infer.js';
