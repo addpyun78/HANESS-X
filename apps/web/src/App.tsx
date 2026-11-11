@@ -38,8 +38,6 @@ import {
 import { toolPickerExtraCards } from './panels/ToolPicker/ToolPickerCard.js';
 import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels/ToolPicker/model.js';
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
-import { enginesApi } from './settings/Engines/api.js';
-import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { SettingsPage } from './settings/SettingsPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
@@ -125,7 +123,6 @@ export function App() {
   const [view, setView] = useState<'chat' | NavTarget>('chat');
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
   const quotas = useQuota(client, events, available);
-  const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
   // T-101 0-2 프로젝트·새 세션 (서버에 /api/projects가 있을 때만 켜진다 — 없으면 예전 사이드바)
   const pApi = useMemo(
     () => (client ? projectsApi(client, desktop ? (p) => pickFolderDesktop(p) : undefined) : undefined),
@@ -432,12 +429,11 @@ export function App() {
               )
             }
             main={
-              view === 'engines' && engineSettings ? (
-                <EnginesSettings api={engineSettings} />
-              ) : view === 'settings' && client ? (
-                // T-101 6번 설정 화면 (13개 탭 · 검색 · 고급 설정 보기)
+              (view === 'settings' || view === 'engines') && client ? (
+                // T-101 6번 설정 화면 (13개 탭 · 검색 · 고급 설정 보기). [엔진] 메뉴는 AI·엔진 탭(6B.2 — T-038 화면을 옮김)
                 <SettingsPage
                   client={client}
+                  initialTab={view === 'engines' ? 'ai' : 'general'}
                   engines={engines}
                   {...(desktop ? { pickFolder: (p?: string) => pickFolderDesktop(p) } : {})}
                   {...(proj.current ? { project: proj.current.id, projectName: proj.current.name } : {})}

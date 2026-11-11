@@ -56,11 +56,11 @@ export function EnginesSettings({ api }: EnginesSettingsProps) {
         <h2>엔진</h2>
         {scannedAt && (
           <span className="hx-engines__scanned">
-            마지막 스캔 <time dateTime={scannedAt}>{scannedAt.slice(0, 16).replace('T', ' ')}</time>
+            마지막으로 찾은 때 <time dateTime={scannedAt}>{scannedAt.slice(0, 16).replace('T', ' ')}</time>
           </span>
         )}
         <button type="button" className="hx-icon-btn" onClick={rescan} disabled={scanning}>
-          {scanning ? '스캔 중…' : '다시 스캔'}
+          {scanning ? '찾는 중…' : '다시 찾기'}
         </button>
       </header>
       {error && (

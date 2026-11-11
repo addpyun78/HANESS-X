@@ -1,4 +1,9 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  CORE_SETTINGS,
+  SettingsRegistry,
+  type SettingDef,
+} from '../../../packages/kernel/src/settings/registry.js';
 import { SettingsScreen, type SettingsScreenProps } from '../src/settings/SettingsScreen.js';
 import { memorySettings, memoryStorage, type MemorySettings } from './settings-form-fixtures.js';
 
@@ -32,3 +37,17 @@ export const tabTitles = () =>
   within(screen.getByRole('tablist', { name: '설정 묶음' }))
     .getAllByRole('tab')
     .map((t) => t.textContent);
+
+/**
+ * 다른 구역이 나중에 등록할 키를 미리 넣은 레지스트리 — "그 구역이 등록하면 이 탭에 저절로 나타난다"를 보이는 데 쓴다
+ */
+export function registryWith(...extra: SettingDef[]): SettingsRegistry {
+  // 그 구역이 이미 등록했으면(병합 뒤) 진짜 등록을 쓴다
+  const core = new Set(CORE_SETTINGS.map((d) => d.key));
+  return new SettingsRegistry([...CORE_SETTINGS, ...extra.filter((d) => !core.has(d.key))]);
+}
+
+/** 영역 안에서 이 키들의 항목만 (다른 구역이 같은 탭에 키를 더해도 스냅샷이 흔들리지 않게) */
+export function rowsOf(el: HTMLElement, keys: readonly string[]): HTMLElement[] {
+  return keys.map((k) => el.querySelector(`[data-setting-key="${k}"]`) as HTMLElement);
+}
