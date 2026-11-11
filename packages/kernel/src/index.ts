@@ -28,3 +28,5 @@ export * from './quota.js';
 export * from './stop.js';
 export * from './api/stop-routes.js';
 export * from './pause-snapshot.js';
+export * from './resume.js';
+export * from './api/resume-routes.js';

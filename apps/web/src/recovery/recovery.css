@@ -26,3 +26,37 @@
 .hx-resume__button {
   margin-top: var(--hx-space-2);
 }
+
+/* T-101 2B.1 프로젝트의 "이어서 할 작업이 있어요" 목록 */
+.hx-resume__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  margin: var(--hx-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-resume__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+  font-size: var(--hx-font-13);
+}
+
+.hx-resume__title {
+  font-weight: 600;
+}
+
+.hx-resume__agent,
+.hx-resume__reason,
+.hx-resume__time {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-resume__item .hx-resume__button {
+  margin-top: 0;
+  margin-left: auto;
+}

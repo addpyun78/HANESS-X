@@ -9,6 +9,7 @@ import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
+import { registerResumeRoutes } from './api/resume-routes.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -543,6 +544,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
         });
+        // T-101 2B 이어하기: 프로젝트의 미완료 세션 (GET /api/resume?projectId=)
+        registerResumeRoutes(app, { log });
         // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
         inventory = builder()?.registerBuilderInventory?.(app, {
           plugins: () => loader.plugins.values(),
