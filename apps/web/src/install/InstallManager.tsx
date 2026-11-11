@@ -16,6 +16,7 @@ import {
   type ToolEntryView,
 } from './model.js';
 import './install.css';
+import { act } from '../actions/registry.js';
 
 export const INSTALL_TABS = [
   { id: 'installed', label: '설치됨' },
@@ -86,6 +87,7 @@ export function InstallManager({
       <div className="hx-install__tabs" role="tablist" aria-label="설치 관리 탭" onKeyDown={onTabKey}>
         {INSTALL_TABS.map((t) => (
           <button
+            {...act('install.tab')}
             key={t.id}
             type="button"
             role="tab"
@@ -177,10 +179,20 @@ function InstalledTab({ api, cards }: { api: InstallApi; cards: InstallCardSink 
               <span className="hx-install__version">{t.version || '—'}</span>
               {t.origin === 'imported' && <span className="hx-install__origin">이미 있던 도구</span>}
               <span className="hx-install__actions">
-                <button type="button" className="hx-install__btn" onClick={() => void update(t)}>
+                <button
+                  {...act('install.update')}
+                  type="button"
+                  className="hx-install__btn"
+                  onClick={() => void update(t)}
+                >
                   업데이트
                 </button>
-                <button type="button" className="hx-install__btn" onClick={() => void remove(t)}>
+                <button
+                  {...act('install.remove')}
+                  type="button"
+                  className="hx-install__btn"
+                  onClick={() => void remove(t)}
+                >
                   지우기
                 </button>
               </span>
@@ -329,7 +341,7 @@ function SearchTab({
             </option>
           ))}
         </select>
-        <button type="submit" className="hx-install__btn" disabled={busy}>
+        <button {...act('install.search')} type="submit" className="hx-install__btn" disabled={busy}>
           {busy ? '찾는 중…' : '찾기'}
         </button>
       </form>
@@ -354,7 +366,12 @@ function SearchTab({
                 {r.candidate.trust && <span className="hx-install__trust">{r.candidate.trust.level}</span>}
                 <span className="hx-install__actions">
                   {r.plan ? (
-                    <button type="button" className="hx-install__btn" onClick={() => cards.add(r.plan!)}>
+                    <button
+                      {...act('install.add-plan')}
+                      type="button"
+                      className="hx-install__btn"
+                      onClick={() => cards.add(r.plan!)}
+                    >
                       이걸로 설치
                     </button>
                   ) : (
@@ -415,7 +432,7 @@ function UrlTab({ api, cards }: { api: InstallApi; cards: InstallCardSink }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <button type="submit" className="hx-install__btn" disabled={busy}>
+        <button {...act('install.url-check')} type="submit" className="hx-install__btn" disabled={busy}>
           {busy ? '살펴보는 중…' : '확인'}
         </button>
       </form>
@@ -439,7 +456,12 @@ function UrlTab({ api, cards }: { api: InstallApi; cards: InstallCardSink }) {
                   <span className="hx-install__kind">{KIND_LABEL[c.kind]}</span>
                   {c.trust && <span className="hx-install__trust">{c.trust.level}</span>}
                   <span className="hx-install__actions">
-                    <button type="button" className="hx-install__btn" onClick={() => void pick(c)}>
+                    <button
+                      {...act('install.pick-method')}
+                      type="button"
+                      className="hx-install__btn"
+                      onClick={() => void pick(c)}
+                    >
                       이 방법으로 계획 보기
                     </button>
                   </span>
