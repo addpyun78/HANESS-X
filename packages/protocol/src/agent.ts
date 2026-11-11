@@ -43,6 +43,8 @@ export const AgentSchema = z
     icon: z.string().min(1).max(32).optional(),
     command: SlashCommandSchema,
     defaultEngine: EngineRefSchema.default('auto'),
+    /** T-100 P4-F.6 빈 칸이 남은 채 저장되면 incomplete — 목록에 회색, 실행은 막힌다 */
+    status: z.enum(['ready', 'incomplete']).optional(),
     pipeline: PipelineRefSchema,
   })
   .strict();
@@ -101,6 +103,8 @@ export const AgentSummarySchema = z
     pluginId: z.string().optional(),
     defaultEngine: z.string().min(1),
     nodeCount: z.number().int().min(1),
+    /** T-100 P4-F.6 incomplete = 빈 칸을 채워야 실행된다 */
+    status: z.enum(['ready', 'incomplete']).optional(),
   })
   .strict();
 export type AgentSummary = z.infer<typeof AgentSummarySchema>;
@@ -109,6 +113,9 @@ export const AgentListResponseSchema = z.object({ agents: z.array(AgentSummarySc
 export type AgentListResponse = z.infer<typeof AgentListResponseSchema>;
 
 /** 명령 기본값 제안: 이름 → /이름 */
+/** T-100 P4-F.6 incomplete 에이전트를 부르면 보여 줄 안내 */
+export const INCOMPLETE_AGENT_MESSAGE = '빈 칸을 먼저 채워 주세요.';
+
 export function commandForName(name: string): string {
   return `/${name}`;
 }

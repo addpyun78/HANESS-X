@@ -3,6 +3,8 @@ export * from './manifest.js';
 export * from './engine.js';
 export * from './pipeline.js';
 export * from './agent.js';
+export * from './agent-draft.js';
+export * from './agent-draft-diff.js';
 export * from './verifier.js';
 export * from './schema-compat.js';
 export * from './stt.js';

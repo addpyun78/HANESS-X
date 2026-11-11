@@ -29,6 +29,8 @@ export interface PaletteItem {
   icon?: string;
   nodeCount?: number;
   defaultEngine?: string;
+  /** T-100 P4-F.6 빈 칸이 남은 에이전트 (회색, 실행 안 됨) */
+  incomplete?: boolean;
 }
 
 export interface PaletteSkill {
@@ -80,6 +82,7 @@ export function paletteItems(
     ...(a.icon ? { icon: a.icon } : {}),
     nodeCount: a.nodeCount,
     defaultEngine: a.defaultEngine,
+    ...(a.status === 'incomplete' ? { incomplete: true } : {}),
   });
   return [
     ...agents.map(fromAgent),
@@ -146,6 +149,7 @@ export function SlashPalette({ items, activeIndex, onSelect, onHover }: SlashPal
                   role="option"
                   aria-selected={idx === activeIndex}
                   className="hx-slash__row"
+                  data-status={it.incomplete ? 'incomplete' : undefined}
                   onMouseDown={(e) => e.preventDefault()}
                   onMouseEnter={() => onHover?.(idx)}
                   onClick={() => onSelect(it)}
@@ -162,6 +166,7 @@ export function SlashPalette({ items, activeIndex, onSelect, onHover }: SlashPal
                       <span className="hx-slash__nodes">노드 {it.nodeCount}</span>
                     )}
                     {it.defaultEngine && <span className="hx-slash__engine">{it.defaultEngine}</span>}
+                    {it.incomplete && <span className="hx-slash__incomplete">빈 칸을 먼저 채워 주세요</span>}
                   </span>
                 </div>
               );

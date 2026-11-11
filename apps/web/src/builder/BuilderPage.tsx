@@ -1,5 +1,5 @@
 import '@xyflow/react/dist/style.css';
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { HarnessApiClient, resolveToken } from '../api/client.js';
 import { navigate } from '../router.js';
 import { Canvas } from './Canvas.js';
@@ -16,6 +16,20 @@ import { SaveBar, type SaveAgentFn } from './inspector/SaveBar.js';
 import type { PipelineMeta } from './inspector/yaml.js';
 import { canRedo, canUndo, initHistory, withHistory } from './lego/history.js';
 import { startGraph, type StartResult } from './start.js';
+import type { DraftGap } from '@harness-x/protocol';
+import { httpDesignerApi, type DesignerApi, type SaveDraftResponse } from './draft/api.js';
+import { DraftDecorContext } from './draft/decor.js';
+import { Checklist, DraftBanner, DraftList, GapLayer, ResumePrompt } from './draft/DraftCards.js';
+import { SaveDialog } from './draft/SaveDialog.js';
+import {
+  openToolPickerForGap,
+  openUrlInstall,
+  toolPickerApi,
+  type ToolPickerApi,
+} from '../panels/ToolPicker/api.js';
+import { ToolPickerCard } from '../panels/ToolPicker/ToolPickerCard.js';
+import type { ToolPickerData } from '../panels/ToolPicker/model.js';
+import { animationEnabled, useDraftSession } from './draft/useDraftSession.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
 
@@ -30,6 +44,18 @@ export interface BuilderPageProps {
   dryRunStepMs?: number;
   /** 대화 탭 음성 입력 (기본: 설정 stt.provider + 감지 결과로 고른다) */
   loadStt?: () => Promise<SttHandle | undefined>;
+  /** T-100 P4 대화로 만들기 서버 API (없으면 토큰이 있을 때 HTTP) */
+  designerApi?: DesignerApi;
+  /** P4-D.2 조립 애니메이션 (기본: 설정 hx.builder.animation ≠ off) */
+  animate?: boolean;
+  /** P4-C.10 빈 칸 [도구 찾기] — Part 3(D.3) 도구 고르기 카드가 연결한다 */
+  onFindTool?: (gap: DraftGap) => void;
+  /** P4-C.11 빈 칸 [Forge로 만들기] (기본: Forge 입력창에 채우고 이동) */
+  onForge?: (gap: DraftGap) => void;
+  /** 초안 자동 보관 지연 (테스트용) */
+  autosaveMs?: number;
+  /** P3-D.3 [도구 찾기]가 쓰는 도구 찾기 API (없으면 토큰이 있을 때 HTTP) */
+  toolPicker?: Pick<ToolPickerApi, 'find'>;
 }
 
 const defaultLoadStt = () => resolveStt().then((r) => r.stt);
@@ -43,9 +69,37 @@ export function BuilderPage({
   saveAgent,
   dryRunStepMs,
   loadStt = defaultLoadStt,
+  designerApi,
+  animate,
+  onFindTool,
+  onForge,
+  autosaveMs,
+  toolPicker,
 }: BuilderPageProps) {
   const catalog = useCatalog(given);
   const save = useSaveAgent(saveAgent);
+  const api = useDesignerApi(designerApi);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState<SaveDraftResponse>();
+  // P4-C.10 ↔ P3-D.3 빈 칸 [도구 찾기] → 도구 고르기 카드
+  const finder = useToolPickerApi(toolPicker);
+  const [pickerCards, setPickerCards] = useState<ToolPickerData[]>([]);
+  const [pickerNote, setPickerNote] = useState<string>();
+  const findTool = useCallback(
+    (gap: DraftGap) => {
+      if (!finder) return;
+      setPickerNote(undefined);
+      void openToolPickerForGap(
+        { nodeId: gap.nodeId ?? gap.id, capability: gap.need },
+        {
+          api: finder,
+          show: (card) => setPickerCards((cs) => [...cs, card]),
+          onHave: (r) => setPickerNote(r.message),
+        },
+      ).catch(() => setPickerNote('도구를 찾지 못했어요. 잠시 뒤 다시 눌러 주세요.'));
+    },
+    [finder],
+  );
   const [start, setStart] = useState<StartResult>();
   const [meta, setMeta] = useState<AgentMeta>({ name: 'new-agent', displayName: '새 에이전트' });
   const [overlay, setOverlay] = useState<Overlay>();
@@ -56,6 +110,22 @@ export function BuilderPage({
   };
   const [history, dispatch] = useReducer(builderReducer, undefined, () => initHistory(emptyGraph()));
   const graph = history.present;
+  const onDraftMeta = useCallback(
+    (m: { name: string; displayName: string; command: string }) => setMeta((cur) => ({ ...cur, ...m })),
+    [],
+  );
+  const draft = useDraftSession({
+    api,
+    graph,
+    dispatch: dispatch as (a: { type: string } & Record<string, unknown>) => void,
+    catalog,
+    onMeta: onDraftMeta,
+    animate: animate ?? animationEnabled(),
+    onFindTool: onFindTool ?? findTool,
+    ...(onForge ? { onForge } : {}),
+    ...(autosaveMs !== undefined ? { autosaveMs } : {}),
+  });
+  const editDispatch = draft.session ? draft.track : dispatch;
 
   useEffect(() => {
     if (!start) return;
@@ -111,22 +181,83 @@ export function BuilderPage({
           </span>
         )}
       </header>
-      {start && <SaveBar graph={graph} meta={meta} onMeta={setMeta} {...(save ? { save } : {})} />}
+      {start && draft.session && (
+        <>
+          <DraftBanner
+            version={draft.session.version}
+            versions={draft.session.record?.versions ?? []}
+            onRevert={(v) => void draft.revert(v)}
+          />
+          <div className="hx-savebar" aria-label="초안 저장">
+            <button
+              type="button"
+              className="hx-insp-btn"
+              disabled={!api || graph.nodes.length === 0}
+              onClick={() => setSaving(true)}
+            >
+              저장
+            </button>
+            {saved && (
+              <span role="status">
+                저장됐어요 · {saved.command}로 부를 수 있어요
+                {saved.status === 'incomplete' ? ' (빈 칸을 채워야 실행돼요)' : ''}
+              </span>
+            )}
+          </div>
+          {saving && draft.current && api && (
+            <SaveDialog
+              draftId={draft.session.id}
+              draft={draft.current}
+              api={api}
+              onClose={() => setSaving(false)}
+              onFillGaps={() => setSaving(false)}
+              onSaved={(r) => {
+                setSaving(false);
+                setSaved(r);
+                draft.markSaved();
+              }}
+            />
+          )}
+        </>
+      )}
+      {start && !draft.session && (
+        <SaveBar graph={graph} meta={meta} onMeta={setMeta} {...(save ? { save } : {})} />
+      )}
       {start ? (
         <div className="hx-builder__cols">
           <BuilderSidebar
             catalog={catalog}
             initialMode={start.mode === 'chat' ? 'chat' : 'blocks'}
-            chat={{ loadStt }}
+            chat={{ loadStt, ...draft.chat }}
           />
           <RunOverlayContext.Provider value={overlay}>
-            <Canvas graph={graph} catalog={catalog} dispatch={dispatch} />
+            <DraftDecorContext.Provider value={draft.decor}>
+              <Canvas graph={draft.canvasGraph} catalog={catalog} dispatch={editDispatch}>
+                <GapLayer gaps={draft.gaps} {...draft.gapActions} />
+                {(pickerCards.length > 0 || pickerNote) && (
+                  <div className="hx-gap-picker" aria-label="도구 고르기">
+                    {pickerNote && <p role="status">{pickerNote}</p>}
+                    {pickerCards.map((c) => (
+                      <ToolPickerCard
+                        key={c.id}
+                        data={c}
+                        onOpenUrlInstall={() => openUrlInstall()}
+                        onContinueWithout={() => setPickerCards((cs) => cs.filter((x) => x.id !== c.id))}
+                      />
+                    ))}
+                  </div>
+                )}
+              </Canvas>
+            </DraftDecorContext.Provider>
           </RunOverlayContext.Provider>
           <InspectorPanel
             graph={graph}
             catalog={catalog}
             meta={pipelineMeta}
-            dispatch={dispatch}
+            dispatch={editDispatch}
+            {...(draft.session
+              ? { reasons: draft.reasons, footer: <Checklist rows={draft.checklist} /> }
+              : {})}
             onMeta={(m) => setMeta((cur) => mergePipelineMeta(cur, m))}
             overlay={overlay}
             onOverlay={setOverlay}
@@ -135,15 +266,38 @@ export function BuilderPage({
           />
         </div>
       ) : (
-        <StartChoice
-          catalog={catalog}
-          onChoose={(c) => {
-            const r = startGraph(c, catalog);
-            dispatch({ type: 'load', graph: r.graph });
-            setMeta({ name: r.name, displayName: r.name, command: suggestCommand(r.name) });
-            setStart(r);
-          }}
-        />
+        <>
+          {draft.resume && (
+            <ResumePrompt
+              item={draft.resume}
+              onResume={() => {
+                const r = startGraph({ kind: 'chat' }, catalog);
+                setStart(r);
+                void draft.resumeDraft(draft.resume!.id);
+              }}
+              onDismiss={draft.dismissResume}
+            />
+          )}
+          {draft.drafts.length > 0 && (
+            <DraftList
+              items={draft.drafts}
+              onResume={(id) => {
+                setStart(startGraph({ kind: 'chat' }, catalog));
+                void draft.resumeDraft(id);
+              }}
+              onDelete={(id) => void draft.deleteDraft(id)}
+            />
+          )}
+          <StartChoice
+            catalog={catalog}
+            onChoose={(c) => {
+              const r = startGraph(c, catalog);
+              dispatch({ type: 'load', graph: r.graph });
+              setMeta({ name: r.name, displayName: r.name, command: suggestCommand(r.name) });
+              setStart(r);
+            }}
+          />
+        </>
       )}
     </div>
   );
@@ -164,6 +318,22 @@ function useCatalog(given?: BuilderCatalog): BuilderCatalog {
     };
   }, [given]);
   return catalog;
+}
+
+function useDesignerApi(given?: DesignerApi): DesignerApi | undefined {
+  return useMemo(() => {
+    if (given) return given;
+    const token = resolveToken();
+    return token ? httpDesignerApi(new HarnessApiClient({ token })) : undefined;
+  }, [given]);
+}
+
+function useToolPickerApi(given?: Pick<ToolPickerApi, 'find'>): Pick<ToolPickerApi, 'find'> | undefined {
+  return useMemo(() => {
+    if (given) return given;
+    const token = resolveToken();
+    return token ? toolPickerApi(new HarnessApiClient({ token })) : undefined;
+  }, [given]);
 }
 
 function useSaveAgent(given?: SaveAgentFn): SaveAgentFn | undefined {

@@ -366,12 +366,21 @@ importers:
 
   packages/plugins-core/agent-builder:
     dependencies:
+      '@harness-x/approvals':
+        specifier: workspace:*
+        version: link:../approvals
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
+      '@harness-x/engine-openai-compat':
+        specifier: workspace:*
+        version: link:../../engines/openai-compat
       '@harness-x/engine-scanner':
         specifier: workspace:*
         version: link:../engine-scanner
+      '@harness-x/judge':
+        specifier: workspace:*
+        version: link:../verifiers/judge
       '@harness-x/kernel':
         specifier: workspace:*
         version: link:../../kernel

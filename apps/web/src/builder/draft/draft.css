@@ -1,0 +1,192 @@
+/* 대화로 만들기 초안 (T-100 P4-C~F) — 색은 토큰 변수만 */
+
+.hx-draft-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+  align-items: center;
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border-bottom: 1px dashed var(--hx-warning);
+  background: var(--hx-warning-soft);
+  font-size: var(--hx-font-13);
+}
+
+.hx-draft-banner__text {
+  font-weight: 600;
+}
+
+.hx-draft-versions,
+.hx-draft-peek {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-draft-versions li {
+  display: flex;
+  gap: var(--hx-space-2);
+  align-items: center;
+  padding: var(--hx-space-1) 0;
+}
+
+.hx-draft-versions li[data-current] {
+  font-weight: 600;
+}
+
+/* 초안 노드: 테두리 점선 (P4-D.1) */
+.hx-node[data-draft] {
+  border-style: dashed;
+}
+
+/* 조립 애니메이션 (P4-D.2) */
+.hx-node[data-hidden] {
+  visibility: hidden;
+}
+
+.hx-node[data-draft]:not([data-hidden]) {
+  animation: hx-draft-in 0.2s ease-out;
+}
+
+@keyframes hx-draft-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* 바뀐 노드·칩 노란색 (P4-E.4) */
+.hx-node[data-changed],
+.hx-skill-chip[data-changed],
+.hx-engine-chip[data-changed] {
+  border-color: var(--hx-warning);
+  background: var(--hx-warning-soft);
+}
+
+/* 빈 칸: 빨간 점선 노드 (P4-C.10) */
+.hx-gap-layer {
+  position: absolute;
+  right: var(--hx-space-3);
+  bottom: var(--hx-space-3);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  max-width: 320px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-gap-node {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  padding: var(--hx-space-2);
+  border: 2px dashed var(--hx-danger);
+  border-radius: var(--hx-radius);
+  background: var(--hx-danger-soft);
+  font-size: var(--hx-font-13);
+}
+
+.hx-gap-node__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+}
+
+.hx-draft-card,
+.hx-draft-check,
+.hx-draft-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+  font-size: var(--hx-font-14);
+}
+
+.hx-draft-card ul,
+.hx-draft-check ul,
+.hx-draft-list ul {
+  margin: 0;
+  padding-left: var(--hx-space-4);
+}
+
+.hx-draft-card__title {
+  margin: 0;
+  font-size: var(--hx-font-14);
+}
+
+.hx-draft-card__sub {
+  margin: var(--hx-space-1) 0 0;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-13);
+}
+
+.hx-draft-card__warn {
+  color: var(--hx-warning);
+}
+
+.hx-draft-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+}
+
+.hx-draft-check li[data-ok='false'] {
+  color: var(--hx-danger);
+}
+
+.hx-draft-card--preview li[data-conflict] {
+  font-weight: 600;
+}
+
+.hx-draft-q {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.hx-draft-q button[aria-pressed='true'] {
+  border-color: var(--hx-accent);
+  color: var(--hx-accent);
+}
+
+.hx-draft-reason {
+  margin: var(--hx-space-2) 0;
+  padding: var(--hx-space-2);
+  border-left: 3px solid var(--hx-accent);
+  background: var(--hx-accent-soft);
+  font-size: var(--hx-font-14);
+}
+
+.hx-save-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  max-width: 480px;
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+}
+
+/* 빈 칸 [도구 찾기] → 도구 고르기 카드 (P3-D.3) */
+.hx-gap-picker {
+  position: absolute;
+  top: var(--hx-space-3);
+  right: var(--hx-space-3);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  max-width: 420px;
+  max-height: 70%;
+  overflow: auto;
+}

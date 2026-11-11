@@ -9,6 +9,7 @@ import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
+import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
 
@@ -94,7 +95,12 @@ interface AgentBuilderPluginModule {
       | {
           name: string;
           command: string;
-          agent: { displayName: string; icon?: string; defaultEngine: string };
+          agent: {
+            displayName: string;
+            icon?: string;
+            defaultEngine: string;
+            status?: 'ready' | 'incomplete';
+          };
           pipeline: Pipeline;
         }
       | undefined;
@@ -107,7 +113,20 @@ interface AgentBuilderPluginModule {
   registerBuilderInventory?: (
     app: { get(path: string, handler: () => Promise<unknown>): unknown },
     o: { plugins: () => Iterable<unknown>; agents?: () => unknown[]; home?: string; workspace?: string },
-  ) => { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void };
+  ) => {
+    attachHotReload(src: { on(event: string, fn: () => void): unknown }): void;
+    get(): Promise<unknown>;
+  };
+  /** T-100 P4 대화로 만들기: /api/builder/design·edit·drafts + POST /api/agents/save(사람 클릭 토큰) */
+  registerBuilderDesignerRoutes?: (
+    app: unknown,
+    o: {
+      home: string;
+      inventory: { get(): Promise<unknown> };
+      gestures: HumanGestureTokens;
+      agents: () => readonly { name: string; command: string }[];
+    },
+  ) => unknown;
 }
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
@@ -304,6 +323,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             displayName: a.agent.displayName,
             ...(a.agent.icon ? { icon: a.agent.icon } : {}),
             defaultEngine: a.agent.defaultEngine,
+            ...(a.agent.status ? { status: a.agent.status } : {}),
             pipeline: a.pipeline,
           }
         : undefined;
@@ -348,7 +368,11 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })
     : undefined;
   let server;
-  let inventory: { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void } | undefined;
+  let inventory:
+    | { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void; get(): Promise<unknown> }
+    | undefined;
+  // T-100 사람 클릭 토큰: 설치(Part 2)와 에이전트 저장(P4-F.2)이 같은 저장소를 쓴다
+  const gestures = new HumanGestureTokens();
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
     const workspaces = new WorkspaceStore();
@@ -363,6 +387,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       agents: () => registry()?.summaries() ?? [],
       dispatch,
       agentsHome: home,
+      gestures,
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {
         const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
@@ -393,6 +418,14 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           home,
           workspace,
         });
+        // T-100 P4 대화로 만들기 (설계 AI는 도구 없이 읽기 전용, 저장은 사람 클릭 토큰으로만)
+        if (inventory)
+          builder()?.registerBuilderDesignerRoutes?.(app, {
+            home,
+            inventory,
+            gestures,
+            agents: () => registry()?.summaries() ?? [],
+          });
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
         const register = mod()?.registerRescanRoute;

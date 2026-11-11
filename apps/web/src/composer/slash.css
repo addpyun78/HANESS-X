@@ -81,3 +81,13 @@
   background: transparent;
   cursor: pointer;
 }
+
+/* T-100 P4-F.6 빈 칸이 남은 에이전트: 회색 */
+.hx-slash__row[data-status='incomplete'] {
+  color: var(--hx-text-faint);
+}
+
+.hx-slash__incomplete {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}

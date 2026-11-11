@@ -1,5 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { EngineRefSchema, type Pipeline, type PipelineNode } from '@harness-x/protocol';
+import {
+  EngineRefSchema,
+  INCOMPLETE_AGENT_MESSAGE,
+  type Pipeline,
+  type PipelineNode,
+} from '@harness-x/protocol';
 import type { LogRecord } from './event-log.js';
 
 /**
@@ -105,6 +110,8 @@ export interface DispatchAgent {
   displayName: string;
   icon?: string;
   defaultEngine?: string;
+  /** T-100 P4-F.6 빈 칸이 남은 에이전트는 실행하지 않는다 */
+  status?: 'ready' | 'incomplete';
   pipeline: Pipeline;
 }
 
@@ -165,7 +172,7 @@ export interface DispatchSession {
 }
 
 export type DispatchErrorCode =
-  'invalid_request' | 'unknown_agent' | 'unknown_engine' | 'not_found' | 'not_running';
+  'invalid_request' | 'unknown_agent' | 'unknown_engine' | 'not_found' | 'not_running' | 'incomplete_agent';
 
 export class DispatchError extends Error {
   constructor(
@@ -295,6 +302,7 @@ export class Dispatcher {
     const agent =
       this.opts.resolve(key) ?? (key.startsWith('/') ? this.opts.resolve(key.slice(1)) : undefined);
     if (!agent) throw new DispatchError('unknown_agent', `에이전트 없음: ${nameOrCommand}`);
+    if (agent.status === 'incomplete') throw new DispatchError('incomplete_agent', INCOMPLETE_AGENT_MESSAGE);
     return agent;
   }
 

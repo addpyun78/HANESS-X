@@ -1,0 +1,51 @@
+{
+  "id": "02-kotlin-style",
+  "category": "clear",
+  "request": "코틀린 코드 스타일을 맞춰 주는 에이전트를 만들어 줘.",
+  "replies": [
+    {
+      "name": "kotlin-style-fix",
+      "displayName": "코틀린 스타일 맞추기",
+      "command": "/kotlin-style-fix",
+      "summary": "코틀린 코드 모양을 규칙에 맞춰요.\n고친 다음 다른 AI가 확인해요.\n프로젝트 폴더 안에서만 고쳐요.",
+      "nodes": [
+        {
+          "id": "fix",
+          "kind": "role",
+          "role": "고치기 담당",
+          "duty": "write",
+          "engine": "codex",
+          "skills": ["kotlin-compose"],
+          "tools": [],
+          "permission": "workspace-write",
+          "reason": "고치기 담당에 맞는 AI와 스킬을 골랐어요."
+        },
+        {
+          "id": "check",
+          "kind": "role",
+          "role": "검사 담당",
+          "duty": "check",
+          "engine": "claude-code",
+          "skills": ["ui-audit"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "검사 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [
+        {
+          "from": "fix",
+          "to": "check"
+        }
+      ],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "expect": {
+    "kind": "draft",
+    "nodes": ["fix", "check"],
+    "criticDiffers": true,
+    "gaps": 0
+  }
+}

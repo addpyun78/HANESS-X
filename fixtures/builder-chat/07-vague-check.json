@@ -1,0 +1,57 @@
+{
+  "id": "07-vague-check",
+  "category": "ambiguous",
+  "request": "뭔가 확인해 주는 거 만들어 줘.",
+  "replies": [
+    {
+      "questions": [
+        {
+          "id": "q1",
+          "text": "무엇을 확인할까요?",
+          "choices": ["화면 디자인", "코드 모양"]
+        },
+        {
+          "id": "q2",
+          "text": "결과를 어떻게 알려 드릴까요?",
+          "choices": ["목록으로", "짧은 글로"]
+        }
+      ]
+    },
+    {
+      "name": "checker",
+      "displayName": "확인 도우미",
+      "command": "/checker",
+      "summary": "화면 디자인을 확인해요.\n고치지는 않고 결과만 알려 드려요.\n결과는 목록으로 보여 드려요.",
+      "nodes": [
+        {
+          "id": "check",
+          "kind": "role",
+          "role": "검사 담당",
+          "duty": "check",
+          "engine": "claude-code",
+          "skills": ["ui-audit"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "검사 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "answers": [
+    {
+      "question": "무엇을 확인할까요?",
+      "answer": "화면 디자인"
+    }
+  ],
+  "expect": {
+    "kind": "questions",
+    "maxQuestions": 3,
+    "afterAnswers": {
+      "kind": "draft",
+      "nodes": ["check"]
+    }
+  }
+}

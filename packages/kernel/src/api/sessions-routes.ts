@@ -16,6 +16,7 @@ const STATUS: Record<DispatchError['code'], number> = {
   unknown_agent: 404,
   not_found: 404,
   not_running: 409,
+  incomplete_agent: 409,
 };
 
 function fail(reply: FastifyReply, err: unknown) {
