@@ -46,6 +46,8 @@ export interface InstallApi {
   updates(): Promise<{ checkedAt: string; skipped: boolean; updates: InstallPlanView[] }>;
   tools(): Promise<{ tools: ToolEntryView[] }>;
   history(): Promise<{ records: InstallLogRecordView[] }>;
+  /** P2-F.6 새 도구 첫 실행 카드 버튼 (once 이번만 · always 앞으로 · deny 허락 안 함) */
+  firstRunAnswer?(id: string, choice: 'once' | 'always' | 'deny'): Promise<unknown>;
 }
 
 export function installApi(c: Pick<HarnessApiClient, 'request'>): InstallApi {
@@ -67,6 +69,7 @@ export function installApi(c: Pick<HarnessApiClient, 'request'>): InstallApi {
     updates: () => post('/api/install/updates', {}),
     tools: () => c.request('/api/install/tools'),
     history: () => c.request('/api/install/history'),
+    firstRunAnswer: (id, choice) => post(`/api/install/first-run/${encodeURIComponent(id)}`, { choice }),
   };
 }
 

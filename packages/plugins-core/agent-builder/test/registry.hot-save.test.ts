@@ -27,10 +27,18 @@ describe('46.5 저장 즉시 / 목록에 등장 (핫리로드)', () => {
         .agents;
     try {
       expect((await list()).map((a) => a.name)).toEqual(['hello']);
+      // P4-F.2: 저장은 사람 클릭 토큰(save-agent)이 있어야 한다
+      const gesture = (await (
+        await fetch(server.url + '/api/gesture-tokens', {
+          method: 'POST',
+          headers: { ...auth, 'content-type': 'application/json' },
+          body: JSON.stringify({ kind: 'save-agent' }),
+        })
+      ).json()) as { token: string };
       const t0 = Date.now();
       const res = await fetch(server.url + '/api/agents/ui-review', {
         method: 'PUT',
-        headers: { ...auth, 'content-type': 'application/json' },
+        headers: { ...auth, 'content-type': 'application/json', 'x-harness-gesture': gesture.token },
         body: JSON.stringify({
           agent: { name: 'ui-review', displayName: 'UI 리뷰', icon: '🔍' },
           pipeline: {

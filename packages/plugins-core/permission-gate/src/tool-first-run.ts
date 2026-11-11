@@ -8,6 +8,7 @@ import { SHELL_TOOLS } from './plan-gate.js';
  *  - 셸 도구 호출의 명령이 도구 목록(설치 관리자 registry)의 도구(이름 또는 절대 경로)를 실행하면
  *    아직 허락 기록이 없을 때 ask 콜백으로 묻는다.
  *  - 'always'(앞으로 허락)는 파일에 기억 → 다음부터 묻지 않는다. 'once'는 이번만 허락. 'deny'는 거부.
+ *  - 기억 파일은 검사마다 다시 읽는다 (재시작 없이 반영). ask가 없거나 실패하면 거부 (자동 허락 없음).
  */
 
 export interface KnownTool {
@@ -78,9 +79,16 @@ export class ToolFirstRunGate {
   private readonly allowed = new Set<string>();
 
   constructor(private readonly o: ToolFirstRunOptions) {
-    if (existsSync(o.file))
+    this.reload();
+  }
+
+  /** 기억 파일 다시 읽기 — 검사마다 부른다 (CLI `tools allow`나 다른 프로세스의 기록도 재시작 없이 반영) */
+  reload(): void {
+    this.allowed.clear();
+    if (existsSync(this.o.file))
       try {
-        for (const id of (JSON.parse(readFileSync(o.file, 'utf8')) as { allowed?: string[] }).allowed ?? [])
+        for (const id of (JSON.parse(readFileSync(this.o.file, 'utf8')) as { allowed?: string[] }).allowed ??
+          [])
           this.allowed.add(id);
       } catch {
         /* 깨진 파일 = 빈 목록 */
@@ -88,10 +96,13 @@ export class ToolFirstRunGate {
   }
 
   isAllowed(toolId: string): boolean {
+    this.reload();
     return this.allowed.has(toolId);
   }
 
+  /** "앞으로 허락" → 바로 파일에 기록 (다른 기록을 지우지 않도록 먼저 다시 읽는다) */
   remember(toolId: string): void {
+    this.reload();
     this.allowed.add(toolId);
     mkdirSync(dirname(this.o.file), { recursive: true });
     const tmp = `${this.o.file}.${process.pid}.tmp`;
@@ -105,13 +116,16 @@ export class ToolFirstRunGate {
     const command = commandOf(ctx.input);
     if (!command) return;
     const known = matchKnownTool(command, this.o.tools());
-    if (!known || this.allowed.has(known.id)) return;
+    if (!known || this.isAllowed(known.id)) return;
     if (!this.o.ask)
       return {
         decision: 'deny',
         reason: `first_run_approval: 새로 설치한 도구 ${known.name}은(는) 처음 실행할 때 사용자 허락이 필요해요.`,
       };
-    const answer = await this.o.ask({ toolId: known.id, toolName: known.name, command });
+    // 답을 못 받으면(오류) 허락하지 않는다
+    const answer = await Promise.resolve(
+      this.o.ask({ toolId: known.id, toolName: known.name, command }),
+    ).catch((): FirstRunAnswer => 'deny');
     if (answer === 'always') {
       this.remember(known.id);
       return;

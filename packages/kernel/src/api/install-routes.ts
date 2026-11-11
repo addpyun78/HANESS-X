@@ -22,6 +22,8 @@ import {
  *  POST /api/install/import {ids}                  — 사용자가 고른 것만 등록 (import 토큰 필수)
  *  GET  /api/install/tools · /api/install/history  — 도구 목록 · installs.jsonl
  *  WS   /ws/install                                — 실행 출력 스트림 {type:'output', jobId, data}
+ *  GET  /api/install/first-run                     — 답을 기다리는 새 도구 첫 실행 카드 (P2-F.6)
+ *  POST /api/install/first-run/:id {choice}        — 카드 버튼: once(이번만) | always(앞으로) | deny
  */
 
 export interface InstallApprovalInfo {
@@ -52,7 +54,12 @@ export interface InstallApi {
   tools(): unknown;
   history(): unknown;
   onOutput(cb: (ev: InstallOutputEvent) => void): () => void;
+  /** P2-F.6 첫 실행 확인 카드에 답 (기다리는 카드가 없으면 false) */
+  firstRunAnswer?(id: string, choice: 'once' | 'always' | 'deny'): boolean;
+  firstRunPending?(): unknown[];
 }
+
+const FIRST_RUN_CHOICES = ['once', 'always', 'deny'] as const;
 
 export interface InstallRoutesOptions {
   gestures: HumanGestureTokens;
@@ -158,6 +165,20 @@ export function registerInstallRoutes(app: FastifyInstance, o: InstallRoutesOpti
 
   app.get('/api/install/tools', async () => svc.tools());
   app.get('/api/install/history', async () => svc.history());
+
+  // P2-F.6 새 도구 첫 실행 확인 카드 (사람이 패널에서 누른 버튼)
+  app.get('/api/install/first-run', async () => ({ pending: svc.firstRunPending?.() ?? [] }));
+  app.post('/api/install/first-run/:id', async (req, reply) => {
+    const { id } = req.params as { id: string };
+    const choice = (req.body as { choice?: unknown } | undefined)?.choice;
+    if (typeof choice !== 'string' || !(FIRST_RUN_CHOICES as readonly string[]).includes(choice))
+      return reply.code(400).send({ error: 'invalid_choice', allowed: FIRST_RUN_CHOICES });
+    if (!svc.firstRunAnswer?.(id, choice as (typeof FIRST_RUN_CHOICES)[number]))
+      return reply
+        .code(404)
+        .send({ error: 'not_found', message: '이미 끝난 확인이에요. 다시 실행하면 새로 물어봐요.' });
+    return { id, choice };
+  });
 
   app.get('/ws/install', { websocket: true }, (socket) => {
     const off = svc.onOutput((ev) => {

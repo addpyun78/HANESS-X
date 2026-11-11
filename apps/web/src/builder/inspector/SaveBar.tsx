@@ -3,7 +3,13 @@ import { ApiError, type SaveAgentRequest, type SaveAgentResponse } from '../../a
 import type { BuilderGraph } from '../graph.js';
 import { buildSaveRequest, suggestCommand, toAgentName, validateAgentName, type AgentMeta } from './save.js';
 
-export type SaveAgentFn = (name: string, body: SaveAgentRequest) => Promise<SaveAgentResponse>;
+export type SaveAgentFn = (
+  name: string,
+  body: SaveAgentRequest,
+  gestureToken: string,
+) => Promise<SaveAgentResponse>;
+/** P4-F.2 사람 클릭 토큰 받기 (POST /api/gesture-tokens {kind:'save-agent'}) */
+export type GestureTokenFn = (kind: 'save-agent') => Promise<string>;
 
 export interface SaveBarProps {
   graph: BuilderGraph;
@@ -11,6 +17,8 @@ export interface SaveBarProps {
   onMeta: (m: AgentMeta) => void;
   /** PUT /api/agents/:name (없으면 저장 버튼 비활성) */
   save?: SaveAgentFn;
+  /** 저장 클릭 때 먼저 받는 사람 클릭 토큰 (없으면 저장 버튼 비활성) */
+  gestureToken?: GestureTokenFn;
   onSaved?: (r: SaveAgentResponse) => void;
 }
 
@@ -22,7 +30,7 @@ type Status =
   | { kind: 'error'; message: string };
 
 /** 46.3 저장 줄: 이름 → /명령 자동 제안, 저장 → ~/.harness-x/agents/<이름>/ */
-export function SaveBar({ graph, meta, onMeta, save, onSaved }: SaveBarProps) {
+export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: SaveBarProps) {
   const [commandTouched, setCommandTouched] = useState(false);
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const nameError = validateAgentName(meta.name);
@@ -34,10 +42,12 @@ export function SaveBar({ graph, meta, onMeta, save, onSaved }: SaveBarProps) {
   };
 
   const doSave = async (overwrite: boolean) => {
-    if (!save || nameError || graph.nodes.length === 0) return;
+    if (!save || !gestureToken || nameError || graph.nodes.length === 0) return;
     setStatus({ kind: 'saving' });
     try {
-      const r = await save(meta.name, buildSaveRequest(graph, { ...meta, command }, overwrite));
+      // P4-F.2: 클릭마다 새 1회용 토큰 → 저장 (세션 토큰만으로는 저장 못 함)
+      const token = await gestureToken('save-agent');
+      const r = await save(meta.name, buildSaveRequest(graph, { ...meta, command }, overwrite), token);
       setStatus({ kind: 'saved', r });
       onSaved?.(r);
     } catch (err) {
@@ -98,7 +108,9 @@ export function SaveBar({ graph, meta, onMeta, save, onSaved }: SaveBarProps) {
       <button
         type="submit"
         className="hx-insp-btn"
-        disabled={!save || !!nameError || graph.nodes.length === 0 || status.kind === 'saving'}
+        disabled={
+          !save || !gestureToken || !!nameError || graph.nodes.length === 0 || status.kind === 'saving'
+        }
       >
         저장
       </button>

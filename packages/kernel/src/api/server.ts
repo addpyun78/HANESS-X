@@ -201,9 +201,11 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
 
   // 43.5 에이전트 목록 (agent-builder가 제공)
   app.get('/api/agents', async () => ({ agents: opts.agents ? await opts.agents() : [] }));
-  // 46.3 빌더 저장 → <home>/agents/<name>/agent.yaml + pipeline.yaml
+  // 46.3 빌더 저장 → <home>/agents/<name>/agent.yaml + pipeline.yaml (P4-F.2 사람 클릭 토큰 save-agent 필수)
+  const gestures = opts.gestures ?? new HumanGestureTokens();
   registerAgentSaveRoute(app, {
     home: () => opts.agentsHome ?? harnessHome(),
+    gestures,
     ...(opts.onAgentSaved ? { onSaved: opts.onAgentSaved } : {}),
   });
 
@@ -266,7 +268,6 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
-  const gestures = opts.gestures ?? new HumanGestureTokens();
   registerGestureRoute(app, gestures);
   registerInstallRoutes(app, { gestures, ...(opts.install ? { install: opts.install } : {}) });
   if (opts.toolFinder) registerToolRoutes(app, opts.toolFinder);

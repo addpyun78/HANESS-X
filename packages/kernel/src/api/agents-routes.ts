@@ -13,6 +13,7 @@ import {
   type AgentInput,
   type PipelineInput,
 } from '@harness-x/protocol';
+import { gestureTokenFrom, type HumanGestureTokens } from '../human-gesture-token.js';
 
 /**
  * 46.3 PUT /api/agents/:name — 빌더 저장
@@ -21,12 +22,15 @@ import {
  * - 이름은 소문자 kebab-case, body.agent.name과 같아야 한다 (400)
  * - command가 없으면 /<이름>을 넣는다 (슬래시 명령 자동 제안과 같은 규칙)
  * - 이미 있으면 overwrite: true일 때만 덮어쓴다 (아니면 409)
+ * - T-100 P4-F.2: 사람 클릭 토큰(save-agent, 헤더 x-harness-gesture) 필수 — 없음·재사용·만료·다른 종류면 403
  * 파일은 사용자가 보낸 그대로(기본값을 채우지 않고) YAML로 쓴다.
  */
 
 export interface AgentSaveOptions {
   /** 하네스 홈 (요청마다 평가 — 기본 harnessHome()) */
   home: () => string;
+  /** 사람 클릭 토큰 저장소 (서버의 공용 저장소 — POST /api/gesture-tokens가 발급) */
+  gestures: HumanGestureTokens;
   /** 저장 뒤 알림 (예: 레지스트리 다시 읽기) */
   onSaved?: (info: SavedAgent) => void;
 }
@@ -50,6 +54,10 @@ function atomicWrite(file: string, text: string) {
 
 export function registerAgentSaveRoute(app: FastifyInstance, o: AgentSaveOptions): void {
   app.put('/api/agents/:name', async (req, reply) => {
+    // 토큰 검사가 먼저: 세션 토큰만으로는 저장할 수 없다 (AI는 제안만, 저장은 사람 클릭)
+    const g = o.gestures.consume(gestureTokenFrom(req.headers, req.body), 'save-agent');
+    if (!g.ok)
+      return reply.code(403).send({ error: 'gesture_required', reason: g.reason, message: g.message });
     const { name } = req.params as { name: string };
     const nameOk = AgentNameSchema.safeParse(name);
     if (!nameOk.success)

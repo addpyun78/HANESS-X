@@ -3,13 +3,15 @@ import type { InstallApi } from './api/install-routes.js';
 import type { ToolFinderApi } from './api/tool-routes.js';
 import type { LogRecord } from './event-log.js';
 import type { BlockingHandler } from './hooks.js';
+import { FirstRunAsker, type FirstRunRequest } from './tool-first-run-asker.js';
 
 /**
  * T-100 Part 2 실제 앱 연결 (커널은 설치 관리자·mcp-host·permission-gate 패키지에 의존하지 않는다 —
  * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다. 핫리로드 뒤에도 요청 시점의 모듈을 쓴다)
  *  1) API 서버: startApiServer({ install }) — /api/install/…
  *  2) MCP: mcp-host가 띄우는 하네스 MCP 서버에 install.search·resolve·plan (같은 InstallService → 계획 id 공유)
- *  3) permission-gate: 새로 설치한 도구의 첫 실행은 한 번 묻기 (<home>/tools/allowed.json에 "앞으로 허락" 기억)
+ *  3) permission-gate: 새로 설치한 도구의 첫 실행은 한 번 묻기 — 패널 카드(approval_request kind
+ *     'tool.first-run')로 묻고 클릭을 기다린다(시간 초과 = 거부). "앞으로 허락"은 <home>/tools/allowed.json에 바로 기록
  *  4) 설치 도구 감지(읽기만)를 기동 때 한 번
  */
 
@@ -28,7 +30,15 @@ interface McpHostModule {
 interface PermissionGateModule {
   installToolFirstRunGate?(
     hooks: { onBlocking(name: 'tool.before', h: BlockingHandler, o?: Record<string, unknown>): () => void },
-    opts: { tools: () => { id: string; name: string; command?: string }[]; file: string },
+    opts: {
+      tools: () => { id: string; name: string; command?: string }[];
+      file: string;
+      ask?: (req: {
+        toolId: string;
+        toolName: string;
+        command: string;
+      }) => Promise<'always' | 'once' | 'deny'>;
+    },
   ): { dispose(): void };
 }
 
@@ -38,6 +48,10 @@ export interface InstallWiringOptions {
   hooks: { onBlocking(name: 'tool.before', h: BlockingHandler, o?: Record<string, unknown>): () => void };
   /** 설치 도구 감지를 건너뛴다 (테스트) */
   detect?: boolean;
+  /** 첫 실행 확인 카드 이벤트 기록 (EventLog.append). 없으면 카드를 못 띄우므로 첫 실행은 거부 */
+  log?: { append(ev: LogRecord): unknown };
+  /** 첫 실행 확인 카드 대기 시간 (기본 5분, 지나면 거부) */
+  firstRunTimeoutMs?: number;
 }
 
 export interface InstallWiring {
@@ -46,6 +60,8 @@ export interface InstallWiring {
   /** 연결할 때의 InstallService (tool-finder 연결용) */
   service: InstallServiceLike;
   allowedFile: string;
+  /** 첫 실행 확인 카드 (POST /api/install/first-run/:id가 답한다) */
+  firstRun: FirstRunAsker;
   dispose(): void;
 }
 
@@ -61,6 +77,10 @@ export function wireInstaller(o: InstallWiringOptions): InstallWiring | undefine
       throw Object.assign(new Error('설치 관리자가 꺼져 있어요.'), { status: 503, code: 'INSTALLER_OFF' });
     return s;
   };
+  const firstRun = new FirstRunAsker({
+    ...(o.log ? { log: o.log } : {}),
+    ...(o.firstRunTimeoutMs !== undefined ? { timeoutMs: o.firstRunTimeoutMs } : {}),
+  });
   const install: InstallApi = {
     search: (q, k) => svc().search(q, k),
     resolve: (u) => svc().resolve(u),
@@ -76,6 +96,8 @@ export function wireInstaller(o: InstallWiringOptions): InstallWiring | undefine
     tools: () => svc().tools(),
     history: () => svc().history(),
     onOutput: (cb) => first.onOutput(cb),
+    firstRunAnswer: (id, choice) => firstRun.answer(id, choice),
+    firstRunPending: () => firstRun.pending(),
   };
   // AI에게는 찾기·주소 해석·계획만 (A.7)
   mod<McpHostModule>('mcp-host')?.setInstallToolsProvider?.({
@@ -91,14 +113,18 @@ export function wireInstaller(o: InstallWiringOptions): InstallWiring | undefine
         .filter((t) => t.origin !== 'imported')
         .map((t) => ({ id: t.id, name: t.name, ...(t.command ? { command: t.command } : {}) })),
     file: allowedFile,
+    // 카드를 띄울 곳이 있을 때만 묻는다 (없으면 permission-gate 기본 동작 = 거부 + `tools allow` 안내)
+    ...(o.log ? { ask: (req: FirstRunRequest) => firstRun.ask(req) } : {}),
   });
   if (o.detect !== false) void first.detect?.().catch(() => {});
   return {
     install,
     service: first,
     allowedFile,
+    firstRun,
     dispose: () => {
       gate?.dispose();
+      firstRun.dispose();
       mod<McpHostModule>('mcp-host')?.setInstallToolsProvider?.(undefined);
     },
   };
