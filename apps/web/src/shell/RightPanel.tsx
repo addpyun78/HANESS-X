@@ -1,5 +1,6 @@
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { moveTab, PANEL_TABS, type PanelTabId } from './layout-store.js';
+import { act } from '../actions/registry.js';
 
 export interface RightPanelProps {
   order: PanelTabId[];
@@ -48,6 +49,7 @@ export function RightPanel({
       <div className="hx-panel__tabs" role="tablist" aria-label="패널 탭 (끌어서 순서 변경)">
         {order.map((id) => (
           <button
+            {...act('panel.tab')}
             key={id}
             type="button"
             role="tab"

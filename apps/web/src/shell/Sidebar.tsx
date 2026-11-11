@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { NAV_ITEMS, SESSION_STATUS_LABEL, type NavTarget, type SessionSummary } from './types.js';
+import { act } from '../actions/registry.js';
 
 export interface SessionGroup {
   project: string;
@@ -27,7 +28,12 @@ export function Sidebar({
   const empty = groups.every((g) => g.sessions.length === 0);
   return (
     <nav className="hx-sidebar" aria-label="사이드바">
-      <button type="button" className="hx-sidebar__new" onClick={onNewSession}>
+      <button
+        {...act('sidebar.new-session')}
+        type="button"
+        className="hx-sidebar__new"
+        onClick={onNewSession}
+      >
         + 새 세션
       </button>
       {filters}
@@ -42,6 +48,7 @@ export function Sidebar({
                 {g.sessions.map((s) => (
                   <li key={s.id}>
                     <button
+                      {...act('sidebar.select-session')}
                       type="button"
                       className={`hx-session hx-status--${s.status}`}
                       aria-current={s.id === activeSessionId ? 'true' : undefined}
@@ -76,6 +83,7 @@ export function Sidebar({
       <div className="hx-sidebar__nav" role="menu" aria-label="하단 메뉴">
         {NAV_ITEMS.map((n) => (
           <button
+            {...act(`nav.${n.id}` as const)}
             key={n.id}
             type="button"
             role="menuitem"
