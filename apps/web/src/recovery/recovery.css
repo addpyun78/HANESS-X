@@ -60,3 +60,20 @@
   margin-top: 0;
   margin-left: auto;
 }
+
+/* T-101 2B.3~2B.8 이어하기 전 점검 카드 */
+.hx-resume-check__list {
+  margin: var(--hx-space-1) 0 0;
+  padding-left: var(--hx-space-4);
+  font-size: var(--hx-font-12);
+}
+
+.hx-resume-check__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+}
+
+.hx-resume__button--primary {
+  font-weight: 600;
+}
