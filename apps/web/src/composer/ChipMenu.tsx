@@ -78,6 +78,7 @@ export function ChipMenu<T extends string>({
               role="menuitemradio"
               aria-checked={o.value === value}
               disabled={o.disabled}
+              title={o.disabled ? '지금은 고를 수 없어요' : undefined}
               className="hx-popover__item"
               onClick={() => {
                 onChange(o.value);

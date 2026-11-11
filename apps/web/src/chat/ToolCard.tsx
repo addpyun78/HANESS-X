@@ -49,6 +49,7 @@ export function CollapsibleCard({
           className="hx-card__toggle"
           aria-expanded={hasBody ? open : undefined}
           disabled={!hasBody}
+          title={hasBody ? undefined : '펼쳐 볼 내용이 없어요'}
           onClick={() => setOpen(!open)}
         >
           <span className="hx-card__chev" aria-hidden="true">
