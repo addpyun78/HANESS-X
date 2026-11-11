@@ -30,3 +30,4 @@ export * from './api/stop-routes.js';
 export * from './pause-snapshot.js';
 export * from './resume.js';
 export * from './api/resume-routes.js';
+export * from './resume-check.js';
