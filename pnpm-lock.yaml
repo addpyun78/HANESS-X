@@ -441,6 +441,34 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
 
+  packages/plugins-core/installer:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/mcp-host':
+        specifier: workspace:*
+        version: link:../mcp-host
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+      '@harness-x/sdk':
+        specifier: workspace:*
+        version: link:../../sdk
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@harness-x/permission-gate':
+        specifier: workspace:*
+        version: link:../permission-gate
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.32.2
+        version: 1.32.2(supports-color@7.2.0)(zod@4.6.7)
+      fastify:
+        specifier: ^5.12.8
+        version: 5.12.8
+
   packages/plugins-core/mcp-host:
     dependencies:
       '@harness-x/checklist-ledger':
