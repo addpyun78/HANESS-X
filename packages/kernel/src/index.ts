@@ -40,3 +40,7 @@ export * from './path-normalize.js';
 export * from './projects/index.js';
 export * from './settings/index.js';
 export * from './api/settings-routes.js';
+export * from './resume-policy.js';
+export * from './resume-cleanup.js';
+export * from './resume-service.js';
+export * from './resume-cli.js';

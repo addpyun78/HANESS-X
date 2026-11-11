@@ -291,7 +291,7 @@ export class Dispatcher {
     this.checkEngine(modifiers.engine);
     const pipeline = applyModifiers(agent.pipeline, modifiers);
     // 0B.37 세션 등록은 createSession() 하나로 (id·projectId·사이드바 반영이 모두 여기서)
-    const { id: sessionId } = this.registry.createSession({
+    const { id: sessionId, projectId } = this.registry.createSession({
       origin: req.origin ?? 'slash',
       idPrefix: 'dispatch-',
       idGen: this.idGen,
@@ -329,6 +329,8 @@ export class Dispatcher {
       nodeCount: session.nodeCount,
       prompt: session.prompt,
       modifiers,
+      // T-101 2B.1 이어하기는 프로젝트로 찾는다
+      ...(projectId ? { projectId } : {}),
     });
     try {
       this.opts.onCreated?.(snapshot(session), { agent, pipeline: agent.pipeline });
@@ -375,6 +377,7 @@ export class Dispatcher {
       startedAt: prev?.session.startedAt ?? this.now().toISOString(),
       subagents: [],
     };
+    this.registry.setStatus(req.sessionId, 'running');
     this.emit(req.sessionId, 'session_resumed', {
       mode: req.resume.mode,
       ...(modifiers.engine ? { engine: modifiers.engine } : {}),
@@ -518,6 +521,8 @@ export class Dispatcher {
     s.pausing = false;
     s.currentNode = undefined;
     s.paused = { reason: stop.reason, at: this.now().toISOString(), by: stop.by };
+    // T-101 2A.9 사이드바(0-2 등록부)에도 "멈춤"
+    this.registry.setStatus(s.sessionId, 'paused');
     const itemId = live.lastItemId;
     let extra: Record<string, unknown> = {};
     try {

@@ -141,6 +141,10 @@ export interface ResumeChoices {
   engine?: string;
   /** 2B.6 기본 'pinned' */
   version?: 'pinned' | 'latest';
+  /** 2B.4 [바뀐 걸 반영해서 계속]: 멈춘 뒤 바뀐 파일 (지시에 알려 준다) */
+  changedFiles?: string[];
+  /** 2B.4 [계획부터 다시]: 요약 컨텍스트로 새로 계획 */
+  replan?: boolean;
 }
 
 export interface ResumeRunResult {
@@ -186,7 +190,7 @@ export async function resumeSession(
   // 2B.9 재개 방식
   const target = choices.engine ?? s.engineId;
   const ids = engineSessionIds(events, s.engineId);
-  const mode = chooseResumeMode({
+  const chosen = chooseResumeMode({
     pausedEngine: s.engineId,
     targetEngine: target,
     engineCanResume: !!target && (deps.engineCanResume?.(target) ?? false),
@@ -194,11 +198,15 @@ export async function resumeSession(
     pausedAt: s.paused.at,
     now,
   });
+  const mode: ResumeMode = choices.replan ? 'summary' : chosen;
   const items = deps.ledger?.(sessionId)?.read()?.items ?? [];
-  const prompt =
+  let prompt =
     mode === 'engine'
       ? engineResumePrompt(interrupted)
       : buildSummaryContext(s, events, items, interrupted ? { interrupted } : {});
+  if (choices.changedFiles?.length)
+    prompt += `\n멈춘 뒤 사용자가 바꾼 파일: ${choices.changedFiles.join(', ')} — 지금 파일 내용을 기준으로 이어서 하세요.`;
+  if (choices.replan) prompt = `계획부터 다시 세우세요. 지금 파일 상태를 먼저 살펴보세요.\n${prompt}`;
   const session = deps.dispatcher.resume({
     sessionId,
     agent: agent.name,
@@ -206,7 +214,12 @@ export async function resumeSession(
     pipeline,
     ...(choices.engine ? { engine: choices.engine } : {}),
     resume: { mode, ...(mode === 'engine' ? { resumeIds: ids } : {}) },
-    note: { version, ...(interrupted ? { interrupted } : {}) },
+    note: {
+      version,
+      ...(interrupted ? { interrupted } : {}),
+      ...(choices.changedFiles?.length ? { changedFiles: choices.changedFiles } : {}),
+      ...(choices.replan ? { replan: true } : {}),
+    },
   });
   return { session, mode, prompt, version, ...(interrupted ? { interrupted } : {}) };
 }

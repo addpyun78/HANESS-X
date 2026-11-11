@@ -197,6 +197,7 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
   harness-x run <에이전트> <지시> [--project <id|경로>]
                              켜져 있는 서버에서 새 세션 시작 (화면 사이드바에 바로 보임)
   harness-x reindex          세션 색인 다시 만들기 (sessions/ 폴더를 다시 읽음)
+  harness-x resume <세션 id> 멈춘 작업을 확인한 뒤 이어서 하기 (켜진 서버에 요청)
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -260,6 +261,11 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       return 1;
     }
     return mod.installCli(argv, { input: process.stdin, output: process.stdout });
+  }
+  // T-101 2B.2 입구: 멈춘 작업 이어하기 (켜진 서버의 /api/resume에 점검 → 실행)
+  if (argv[0] === 'resume') {
+    const { resumeCli } = await import('./resume-cli.js');
+    return resumeCli(argv.slice(1), { input: process.stdin, output: process.stdout });
   }
   // T-101 0B.37 / 0B.9 세션 시작(서버의 createSession으로) · 색인 다시 만들기
   if (argv[0] === 'run' || argv[0] === 'reindex') {
@@ -469,7 +475,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       const snap = takePauseSnapshot({
         sessionId: s.sessionId,
         paused: s.paused!,
-        cwd: workspace,
+        // 0-2 세션의 작업 폴더 (프로젝트 폴더), 없으면 서버 워크스페이스
+        cwd: sessionRegistry.get(s.sessionId)?.cwd ?? workspace,
         sessionDir: dirname(log.sessionFile(s.sessionId)),
         ...(c.itemId ? { itemId: c.itemId } : {}),
         ...(c.nodeId ? { nodeId: c.nodeId } : {}),
