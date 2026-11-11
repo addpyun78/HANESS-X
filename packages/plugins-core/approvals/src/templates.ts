@@ -92,7 +92,7 @@ function texts(input: CardInput): { whatHappened: string; whyAsking: string } {
     case 'no-judge':
       return {
         whatHappened: `계획에는 "${e}"${ieonneunde(e)}, 실제로는 "${a}"${euro(a)} 나왔어요.`,
-        whyAsking: '이 차이를 대신 판단해 줄 AI를 찾지 못했어요.',
+        whyAsking: '판정해 줄 AI가 연결돼 있지 않아요.',
       };
     case 'limit-exceeded':
       return {
