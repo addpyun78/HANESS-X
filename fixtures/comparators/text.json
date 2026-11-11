@@ -1,0 +1,89 @@
+{
+  "kind": "text",
+  "cases": [
+    {
+      "name": "CRLF → LF",
+      "expected": "line1\r\nline2",
+      "actual": "line1\nline2",
+      "expect": "equal"
+    },
+    {
+      "name": "줄 끝 공백",
+      "expected": "hello   \nworld",
+      "actual": "hello\nworld",
+      "expect": "equal"
+    },
+    {
+      "name": "마지막 빈 줄",
+      "expected": "done\n\n",
+      "actual": "done",
+      "expect": "equal"
+    },
+    {
+      "name": "연속 공백",
+      "expected": "a    b",
+      "actual": "a b",
+      "expect": "equal"
+    },
+    {
+      "name": "NFD 한글",
+      "expected": "모바일",
+      "actual": "모바일",
+      "expect": "equal",
+      "actualForm": "NFD"
+    },
+    {
+      "name": "contains 모드",
+      "expected": "Tests: 12 passed",
+      "actual": "Run 1\nTests: 12 passed\nok",
+      "expect": "equal",
+      "options": {
+        "mode": "contains"
+      }
+    },
+    {
+      "name": "lines 순서 무시",
+      "expected": "b\na",
+      "actual": "a\nb",
+      "expect": "equal",
+      "options": {
+        "mode": "lines",
+        "ignoreOrder": true
+      }
+    },
+    {
+      "name": "ignoreCase",
+      "expected": "DONE",
+      "actual": "done",
+      "expect": "equal",
+      "options": {
+        "ignoreCase": true
+      }
+    },
+    {
+      "name": "contains 없음",
+      "expected": "build ok",
+      "actual": "build failed",
+      "expect": "different",
+      "options": {
+        "mode": "contains"
+      }
+    },
+    {
+      "name": "lines 빠진 줄",
+      "expected": "a\nb\nc",
+      "actual": "a\nc",
+      "expect": "different",
+      "options": {
+        "mode": "lines"
+      }
+    },
+    {
+      "name": "다른 글(semantic off)",
+      "expected": "완료",
+      "actual": "실패",
+      "expect": "different",
+      "semantic": "off"
+    }
+  ]
+}

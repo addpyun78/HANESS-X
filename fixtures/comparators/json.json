@@ -1,0 +1,71 @@
+{
+  "kind": "json",
+  "cases": [
+    {
+      "name": "키 순서",
+      "expected": "{\"a\":1,\"b\":2}",
+      "actual": "{\"b\":2,\"a\":1}",
+      "expect": "equal"
+    },
+    {
+      "name": "1 = 1.0",
+      "expected": "{\"n\":1}",
+      "actual": "{\"n\":1.0}",
+      "expect": "equal"
+    },
+    {
+      "name": "공백·줄바꿈",
+      "expected": "{\"a\": [1, 2]}",
+      "actual": "{\n  \"a\": [1,2]\n}",
+      "expect": "equal"
+    },
+    {
+      "name": "ignoreKeys",
+      "expected": "{\"id\":1,\"ts\":\"x\"}",
+      "actual": "{\"id\":1,\"ts\":\"y\"}",
+      "expect": "equal",
+      "options": {
+        "ignoreKeys": ["ts"]
+      }
+    },
+    {
+      "name": "arrayOrder ignore",
+      "expected": "[1,2,3]",
+      "actual": "[3,1,2]",
+      "expect": "equal",
+      "options": {
+        "arrayOrder": "ignore"
+      }
+    },
+    {
+      "name": "중첩 객체",
+      "expected": "{\"a\":{\"b\":{\"c\":true}}}",
+      "actual": "{ \"a\": { \"b\": { \"c\": true } } }",
+      "expect": "equal"
+    },
+    {
+      "name": "값 다름",
+      "expected": "{\"status\":200}",
+      "actual": "{\"status\":500}",
+      "expect": "different"
+    },
+    {
+      "name": "키 빠짐",
+      "expected": "{\"a\":1,\"b\":2}",
+      "actual": "{\"a\":1}",
+      "expect": "different"
+    },
+    {
+      "name": "배열 순서(strict)",
+      "expected": "[1,2]",
+      "actual": "[2,1]",
+      "expect": "different"
+    },
+    {
+      "name": "타입 다름",
+      "expected": "{\"a\":\"1\"}",
+      "actual": "{\"a\":1}",
+      "expect": "different"
+    }
+  ]
+}

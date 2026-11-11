@@ -1,0 +1,66 @@
+{
+  "kind": "path",
+  "cases": [
+    {
+      "name": "./ 접두",
+      "expected": "./src/app.ts",
+      "actual": "src/app.ts",
+      "expect": "equal"
+    },
+    {
+      "name": "끝 슬래시",
+      "expected": "src/",
+      "actual": "src",
+      "expect": "equal"
+    },
+    {
+      "name": "역슬래시",
+      "expected": "src\\lib\\a.ts",
+      "actual": "src/lib/a.ts",
+      "expect": "equal"
+    },
+    {
+      "name": "작업 폴더 절대 경로",
+      "expected": "/work/src/a.ts",
+      "actual": "src/a.ts",
+      "expect": "equal"
+    },
+    {
+      "name": "glossary 한글 별칭",
+      "expected": "하네스/모바일",
+      "actual": "harness/mobile",
+      "expect": "equal"
+    },
+    {
+      "name": "NFD 한글",
+      "expected": "하네스/문서",
+      "actual": "하네스/문서",
+      "expect": "equal",
+      "actualForm": "NFD"
+    },
+    {
+      "name": "중복 구분자·./",
+      "expected": "src//./lib/a.ts",
+      "actual": "src/lib/a.ts",
+      "expect": "equal"
+    },
+    {
+      "name": "다른 폴더(서버 vs 클라이언트)",
+      "expected": "harness/server",
+      "actual": "harness/client",
+      "expect": "different"
+    },
+    {
+      "name": "다른 파일",
+      "expected": "src/a.ts",
+      "actual": "src/b.ts",
+      "expect": "different"
+    },
+    {
+      "name": "- _ 차이(규칙 없음)",
+      "expected": "src/my-app",
+      "actual": "src/my_app",
+      "expect": "different"
+    }
+  ]
+}
