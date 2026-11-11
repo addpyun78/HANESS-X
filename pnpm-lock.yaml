@@ -248,6 +248,9 @@ importers:
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../packages/protocol
+      '@harness-x/stt-browser':
+        specifier: workspace:*
+        version: link:../../packages/plugins/stt-browser
       '@testing-library/dom':
         specifier: ^10.4.2
         version: 10.4.2
