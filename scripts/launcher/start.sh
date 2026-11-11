@@ -23,6 +23,28 @@ if [ ! -f packages/kernel/dist/cli.js ]; then
   pnpm -r --filter '!@harness-x/web' build >"$RUN/build.log" 2>&1 || { say "빌드 실패 (로그: $RUN/build.log)"; exit 1; }
 fi
 
+# 1-2) 이 저장소의 기본 플러그인(packages/plugins-core) 지문을 새로 고친다.
+#      코드를 업데이트하면 지문이 바뀌어 "plugins.lock 불일치: 파일이 변조됨"으로 막히기 때문.
+#      사용자가 따로 설치한 플러그인(저장소 밖)의 변조 검사는 그대로 유지된다.
+node --no-warnings -e '
+const { readFileSync, readdirSync, existsSync } = require("node:fs");
+const { join } = require("node:path");
+const [root, lock] = process.argv.slice(1);
+const ids = [];
+const base = join(root, "packages", "plugins-core");
+const walk = (d, depth) => { for (const n of readdirSync(d, { withFileTypes: true })) {
+  if (!n.isDirectory() || n.name === "node_modules") continue;
+  const m = join(d, n.name, "harness-plugin.json");
+  if (existsSync(m)) ids.push(JSON.parse(readFileSync(m, "utf8")).id);
+  else if (depth < 1) walk(join(d, n.name), depth + 1);
+} };
+walk(base, 0);
+import(join(root, "packages/kernel/dist/index.js")).then((k) => {
+  const removed = existsSync(lock) ? k.removeLockEntries(lock, ids) : [];
+  if (removed.length) console.log("기본 플러그인 지문 새로 고침: " + removed.join(", "));
+});
+' "$ROOT" "$HOME_DIR/plugins.lock" 2>>"$RUN/server.log" | while read -r l; do say "$l"; done
+
 # 2) 하네스 서버
 if api_up; then
   say "하네스 서버 실행 중 ($API)"
