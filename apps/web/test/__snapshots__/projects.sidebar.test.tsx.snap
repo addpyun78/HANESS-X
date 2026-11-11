@@ -12,6 +12,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
   >
     <button
       class="hx-newsession__main"
+      data-action="projects.new-session"
       title="지금 프로젝트에서 새 세션 (Ctrl+N)"
       type="button"
     >
@@ -22,6 +23,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
       aria-haspopup="menu"
       aria-label="프로젝트 골라서 새 세션"
       class="hx-newsession__more"
+      data-action="projects.pick-new"
       title="프로젝트 골라서 새 세션 (Ctrl+Shift+N)"
       type="button"
     >
@@ -42,6 +44,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
       프로젝트
     </h2>
     <button
+      data-action="projects.open-folder"
       type="button"
     >
       폴더 열기
@@ -64,12 +67,14 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-expanded="true"
           aria-label="imjang-note 접기"
           class="hx-pgroup__toggle"
+          data-action="projects.group-toggle"
           type="button"
         >
           ▾
         </button>
         <button
           class="hx-pgroup__name"
+          data-action="projects.select"
           type="button"
         >
           <span
@@ -101,6 +106,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         <button
           aria-label="imjang-note에서 새 세션"
           class="hx-pgroup__new"
+          data-action="projects.new-in-project"
           type="button"
         >
           +
@@ -110,6 +116,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-haspopup="menu"
           aria-label="imjang-note 메뉴"
           class="hx-pgroup__more"
+          data-action="projects.menu"
           type="button"
         >
           …
@@ -126,6 +133,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           <button
             aria-current="true"
             class="hx-srow__main"
+            data-action="conversation.select"
             type="button"
           >
             <span
@@ -165,6 +173,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
             aria-haspopup="menu"
             aria-label="design-qa 메뉴"
             class="hx-srow__more"
+            data-action="conversation.menu"
             type="button"
           >
             …
@@ -176,6 +185,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         >
           <button
             class="hx-srow__main"
+            data-action="conversation.select"
             type="button"
           >
             <span
@@ -202,6 +212,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
             aria-haspopup="menu"
             aria-label="API 리팩터 메뉴"
             class="hx-srow__more"
+            data-action="conversation.menu"
             type="button"
           >
             …
@@ -213,6 +224,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         >
           <button
             class="hx-srow__main"
+            data-action="conversation.select"
             type="button"
           >
             <span
@@ -239,6 +251,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
             aria-haspopup="menu"
             aria-label="로고 수정 메뉴"
             class="hx-srow__more"
+            data-action="conversation.menu"
             type="button"
           >
             …
@@ -249,6 +262,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         >
           <button
             aria-expanded="false"
+            data-action="projects.done-toggle"
             type="button"
           >
             ▸
@@ -271,12 +285,14 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-expanded="true"
           aria-label="harness-x 접기"
           class="hx-pgroup__toggle"
+          data-action="projects.group-toggle"
           type="button"
         >
           ▾
         </button>
         <button
           class="hx-pgroup__name"
+          data-action="projects.select"
           type="button"
         >
           <span
@@ -295,6 +311,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         <button
           aria-label="harness-x에서 새 세션"
           class="hx-pgroup__new"
+          data-action="projects.new-in-project"
           type="button"
         >
           +
@@ -304,6 +321,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-haspopup="menu"
           aria-label="harness-x 메뉴"
           class="hx-pgroup__more"
+          data-action="projects.menu"
           type="button"
         >
           …
@@ -319,6 +337,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         >
           <button
             class="hx-srow__main"
+            data-action="conversation.select"
             type="button"
           >
             <span
@@ -345,6 +364,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
             aria-haspopup="menu"
             aria-label="하네스 작업 메뉴"
             class="hx-srow__more"
+            data-action="conversation.menu"
             type="button"
           >
             …
@@ -365,12 +385,14 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-expanded="true"
           aria-label="a2a 접기"
           class="hx-pgroup__toggle"
+          data-action="projects.group-toggle"
           type="button"
         >
           ▾
         </button>
         <button
           class="hx-pgroup__name"
+          data-action="projects.select"
           type="button"
         >
           <span
@@ -383,7 +405,9 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         <button
           aria-label="a2a에서 새 세션"
           class="hx-pgroup__new"
+          data-action="projects.new-in-project"
           disabled=""
+          title="폴더를 찾을 수 없어요. 먼저 다시 연결해 주세요"
           type="button"
         >
           +
@@ -393,6 +417,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
           aria-haspopup="menu"
           aria-label="a2a 메뉴"
           class="hx-pgroup__more"
+          data-action="projects.menu"
           type="button"
         >
           …
@@ -403,6 +428,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
         >
           ⚠ 폴더를 찾을 수 없어요
           <button
+            data-action="projects.relink"
             type="button"
           >
             다시 연결
@@ -543,6 +569,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
   >
     <button
       class="hx-nav-item"
+      data-action="nav.agent-builder"
       role="menuitem"
       type="button"
     >
@@ -555,7 +582,10 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     </button>
     <button
       class="hx-nav-item"
+      data-action="nav.plugins"
+      disabled=""
       role="menuitem"
+      title="준비 중이에요"
       type="button"
     >
       <span
@@ -567,7 +597,10 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     </button>
     <button
       class="hx-nav-item"
+      data-action="nav.skills"
+      disabled=""
       role="menuitem"
+      title="준비 중이에요"
       type="button"
     >
       <span
@@ -579,6 +612,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     </button>
     <button
       class="hx-nav-item"
+      data-action="nav.install"
       role="menuitem"
       type="button"
     >
@@ -591,6 +625,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     </button>
     <button
       class="hx-nav-item"
+      data-action="nav.engines"
       role="menuitem"
       type="button"
     >
@@ -603,7 +638,10 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     </button>
     <button
       class="hx-nav-item"
+      data-action="nav.settings"
+      disabled=""
       role="menuitem"
+      title="준비 중이에요"
       type="button"
     >
       <span
@@ -618,7 +656,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
 `;
 
 exports[`0B.24 세션 줄 > 상태 아이콘 ● ✋ ⏸ ✓, 제목, 에이전트 아이콘, 모드 배지, 마지막 활동 시각 (스냅샷) 1`] = `
-"<li class="hx-srow hx-srow--running" data-session-id="s1"><button type="button" class="hx-srow__main" aria-current="true"><span class="hx-srow__state" role="img" aria-label="진행 중">●</span><span class="hx-srow__title">design-qa</span><span class="hx-srow__agent" role="img" aria-label="에이전트 design-qa">🎨</span><span class="hx-srow__mode" aria-label="모드 오토">오토</span><time class="hx-srow__time" datetime="2026-11-12T11:58:00.000Z">2분 전</time></button><button type="button" class="hx-srow__more" aria-label="design-qa 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
-<li class="hx-srow hx-srow--needs-approval" data-session-id="s2"><button type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="확인 필요">✋</span><span class="hx-srow__title">API 리팩터</span><time class="hx-srow__time" datetime="2026-11-12T11:30:00.000Z">30분 전</time></button><button type="button" class="hx-srow__more" aria-label="API 리팩터 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
-<li class="hx-srow hx-srow--paused" data-session-id="s3"><button type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="멈춤">⏸</span><span class="hx-srow__title">로고 수정</span><time class="hx-srow__time" datetime="2026-11-12T07:00:00.000Z">5시간 전</time></button><button type="button" class="hx-srow__more" aria-label="로고 수정 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>"
+"<li class="hx-srow hx-srow--running" data-session-id="s1"><button data-action="conversation.select" type="button" class="hx-srow__main" aria-current="true"><span class="hx-srow__state" role="img" aria-label="진행 중">●</span><span class="hx-srow__title">design-qa</span><span class="hx-srow__agent" role="img" aria-label="에이전트 design-qa">🎨</span><span class="hx-srow__mode" aria-label="모드 오토">오토</span><time class="hx-srow__time" datetime="2026-11-12T11:58:00.000Z">2분 전</time></button><button data-action="conversation.menu" type="button" class="hx-srow__more" aria-label="design-qa 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
+<li class="hx-srow hx-srow--needs-approval" data-session-id="s2"><button data-action="conversation.select" type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="확인 필요">✋</span><span class="hx-srow__title">API 리팩터</span><time class="hx-srow__time" datetime="2026-11-12T11:30:00.000Z">30분 전</time></button><button data-action="conversation.menu" type="button" class="hx-srow__more" aria-label="API 리팩터 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
+<li class="hx-srow hx-srow--paused" data-session-id="s3"><button data-action="conversation.select" type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="멈춤">⏸</span><span class="hx-srow__title">로고 수정</span><time class="hx-srow__time" datetime="2026-11-12T07:00:00.000Z">5시간 전</time></button><button data-action="conversation.menu" type="button" class="hx-srow__more" aria-label="로고 수정 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>"
 `;
