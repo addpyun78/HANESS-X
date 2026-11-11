@@ -1,0 +1,19 @@
+{
+  "ts": "2026-11-11T14:33:08.898Z",
+  "expected": "완료",
+  "actual": "작업이 끝났습니다",
+  "settings": {
+    "engine": "claude-code",
+    "model": "",
+    "samples": 3
+  },
+  "selectedStep": 1,
+  "engineId": "claude-code",
+  "verdict": "equal",
+  "confidence": 1,
+  "samples": 3,
+  "differenceKind": "equivalent",
+  "plainReason": "'완료'와 '작업이 끝났습니다'는 표현만 다를 뿐 둘 다 일이 다 끝났다는 같은 뜻입니다.",
+  "reason": "same_meaning yes 3/3 via engine:claude-code",
+  "elapsedMs": 5625
+}
