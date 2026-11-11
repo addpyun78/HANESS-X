@@ -92,6 +92,8 @@ export interface CreateSessionRequest {
   agent: string;
   prompt: string;
   modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean };
+  /** T-101 0B.39 만들 때 저장할 프로젝트 */
+  projectId?: string;
 }
 
 export class ApiError extends Error {
