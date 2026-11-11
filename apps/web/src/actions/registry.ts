@@ -149,10 +149,56 @@ export const ACTIONS = {
   'inspector.yaml-apply': { description: '고친 설정 글을 블록 그림에 적용해요', effect: 'state' },
   'inspector.yaml-reset': { description: '고친 설정 글을 되돌려요', effect: 'state' },
 
-  'dev.dismiss-banner': { description: '개발 경고 띠를 닫아요', effect: 'state' },
-
   'lego.detach-plugin': { description: '플러그인 묶음을 떼어내요', effect: 'state' },
   'lego.remove-skill': { description: '블록에서 스킬을 빼요', effect: 'state' },
+
+  'dev.dismiss-banner': { description: '개발 경고 띠를 닫아요', effect: 'state' },
+
+  'settings.toggle': { description: '설정을 켜거나 꺼요', effect: 'api' },
+  'settings.list-add': { description: '목록에 항목을 더해요', effect: 'api' },
+  'settings.list-remove': { description: '목록에서 항목을 빼요', effect: 'api' },
+  'settings.pick-folder': { description: '폴더를 고르는 창을 열어요', effect: 'open' },
+  'settings.secret-save': { description: '열쇠 값을 안전한 보관함에 저장해요', effect: 'api' },
+  'settings.secret-delete': { description: '저장한 열쇠 값을 지워요', effect: 'api' },
+  'settings.reset-field': { description: '이 설정을 기본값으로 되돌려요', effect: 'api' },
+  'settings.reset-group': { description: '이 묶음의 설정을 기본값으로 되돌려요', effect: 'api' },
+  'settings.reset-all': { description: '모든 설정을 되돌릴지 물어요', effect: 'state' },
+  'settings.reset-all-confirm': { description: '모든 설정을 기본값으로 되돌려요', effect: 'api' },
+  'settings.reset-all-cancel': { description: '되돌리기를 그만둬요', effect: 'state' },
+
+  'projects.new-session': { description: '지금 프로젝트에서 새 대화를 시작해요', effect: 'api' },
+  'projects.pick-new': { description: '어느 프로젝트에서 시작할지 고르는 메뉴를 열어요', effect: 'open' },
+  'projects.new-in-project': { description: '고른 프로젝트에서 새 대화를 시작해요', effect: 'api' },
+  'projects.open-folder': { description: '작업할 폴더를 고르는 창을 열어요', effect: 'open' },
+  'projects.archive-stale': { description: '오래된 대화를 보관해요', effect: 'api' },
+  'projects.group-toggle': { description: '프로젝트 묶음을 펼치거나 접어요', effect: 'state' },
+  'projects.select': { description: '프로젝트를 골라요', effect: 'state' },
+  'projects.menu': { description: '프로젝트 메뉴를 열어요', effect: 'open' },
+  'projects.menu-item': { description: '프로젝트 메뉴의 항목을 실행해요', effect: 'api' },
+  'projects.relink': { description: '찾을 수 없는 폴더를 다시 연결해요', effect: 'open' },
+  'projects.done-toggle': { description: '끝난 대화 목록을 펼치거나 접어요', effect: 'state' },
+
+  'conversation.select': { description: '고른 대화를 보여 줘요', effect: 'state' },
+  'conversation.menu': { description: '대화 메뉴를 열어요', effect: 'open' },
+  'conversation.menu-item': { description: '대화 메뉴의 항목을 실행해요', effect: 'api' },
+
+  'confirm.ok': { description: '확인 질문에 예라고 답해요', effect: 'api' },
+  'confirm.cancel': { description: '확인 질문을 닫아요', effect: 'state' },
+
+  'empty.example': { description: '예시 글을 입력창에 채워요', effect: 'state' },
+  'empty.agent': { description: '최근 쓴 에이전트를 입력창에 채워요', effect: 'state' },
+
+  'project-settings.relink': { description: '프로젝트 폴더를 다시 연결해요', effect: 'open' },
+  'project-settings.save': { description: '프로젝트 설정을 저장해요', effect: 'api' },
+  'project-settings.close': { description: '프로젝트 설정을 닫아요', effect: 'state' },
+
+  'where.open-folder': { description: '작업할 폴더를 고르는 창을 열어요', effect: 'open' },
+  'where.recent': { description: '최근 프로젝트 목록을 펼쳐요', effect: 'state' },
+  'where.scratch': { description: '임시 작업 공간에서 시작해요', effect: 'api' },
+  'where.pick-project': { description: '고른 프로젝트에서 시작해요', effect: 'api' },
+  'where.cancel': { description: '어디서 일할지 묻는 카드를 닫아요', effect: 'state' },
+  'where.use-top': { description: '맨 위 폴더를 프로젝트로 써요', effect: 'api' },
+  'where.keep': { description: '고른 폴더를 그대로 써요', effect: 'api' },
 } as const satisfies Record<string, ActionSpec>;
 
 export type ActionId = keyof typeof ACTIONS;

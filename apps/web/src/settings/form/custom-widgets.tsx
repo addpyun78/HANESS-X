@@ -141,7 +141,13 @@ export function SecretKeyInput({ field, disabled, inputId, ctx, masked, onMasked
           if (e.key === 'Enter' && !e.nativeEvent.isComposing) void save();
         }}
       />
-      <button type="button" data-action="settings.secret-save" disabled={disabled || busy} onClick={save}>
+      <button
+        type="button"
+        data-action="settings.secret-save"
+        disabled={disabled || busy}
+        title={busy ? '저장하는 중이에요' : disabled ? '지금은 바꿀 수 없어요' : undefined}
+        onClick={save}
+      >
         저장
       </button>
       {masked && (
@@ -150,6 +156,7 @@ export function SecretKeyInput({ field, disabled, inputId, ctx, masked, onMasked
           className="hx-setting__link"
           data-action="settings.secret-delete"
           disabled={disabled || busy}
+          title={busy ? '저장하는 중이에요' : disabled ? '지금은 바꿀 수 없어요' : undefined}
           onClick={remove}
         >
           지우기
@@ -182,7 +189,13 @@ export function FolderPicker(p: CustomWidgetProps) {
     <span className="hx-setting__folder">
       <StringWidget {...p} />
       {ctx.pickFolder && (
-        <button type="button" data-action="settings.pick-folder" disabled={disabled} onClick={pick}>
+        <button
+          type="button"
+          data-action="settings.pick-folder"
+          disabled={disabled}
+          title={disabled ? '지금은 바꿀 수 없어요' : undefined}
+          onClick={pick}
+        >
           폴더 고르기
         </button>
       )}

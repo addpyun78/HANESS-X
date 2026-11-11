@@ -149,6 +149,7 @@ export function ArrayWidget({ field, value, onCommit, disabled, inputId }: Widge
               className="hx-setting__link"
               data-action="settings.list-remove"
               disabled={disabled}
+              title={disabled ? '지금은 바꿀 수 없어요' : undefined}
               aria-label={`${it} 빼기`}
               onClick={() => onCommit(items.filter((_x, j) => j !== i).map(conv))}
             >
@@ -171,7 +172,13 @@ export function ArrayWidget({ field, value, onCommit, disabled, inputId }: Widge
             if (e.key === 'Enter' && !e.nativeEvent.isComposing) add();
           }}
         />
-        <button type="button" data-action="settings.list-add" disabled={disabled} onClick={add}>
+        <button
+          type="button"
+          data-action="settings.list-add"
+          disabled={disabled}
+          title={disabled ? '지금은 바꿀 수 없어요' : undefined}
+          onClick={add}
+        >
           추가
         </button>
       </span>
