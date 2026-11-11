@@ -6,6 +6,7 @@ import { usePanelActions } from '../panels/panel-actions.js';
 import type { ChatBlock } from './blocks.js';
 import { StopBlockCard } from './StopBlockCard.js';
 import { CollapsibleCard, formatValue, ItemTag, ToolCard, truncate } from './ToolCard.js';
+import { act } from '../actions/registry.js';
 
 const CHANGE_LABEL = { create: '생성', modify: '수정', delete: '삭제', rename: '이름 변경' } as const;
 const TURN_END_LABEL = {
@@ -90,7 +91,13 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
           <p>{b.title}</p>
           <div className="hx-approval__options">
             {b.options.map((o) => (
-              <button key={o} type="button" className="hx-icon-btn" data-option={o}>
+              <button
+                {...act('chat.approval-option')}
+                key={o}
+                type="button"
+                className="hx-icon-btn"
+                data-option={o}
+              >
                 {o}
               </button>
             ))}
@@ -123,6 +130,7 @@ function FileCard({ block: b }: { block: Extract<ChatBlock, { kind: 'file' }> })
       actions={
         panel && (
           <button
+            {...act('chat.open-diff')}
             type="button"
             className="hx-icon-btn hx-card__action"
             aria-label={`Diff 열기: ${b.path}`}
