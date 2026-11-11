@@ -15,6 +15,7 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@harness-x/approvals": "workspace:*",
     "@harness-x/checklist-ledger": "workspace:*",
     "@harness-x/engine-openai-compat": "workspace:*",
     "@harness-x/engine-scanner": "workspace:*",

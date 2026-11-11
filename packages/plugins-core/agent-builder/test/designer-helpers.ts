@@ -1,3 +1,4 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import type { AgentDraftInput } from '@harness-x/protocol';
 import { emptyWorkspaceContext, type EngineAsset, type Inventory } from '../src/inventory/schema.js';
 
@@ -133,4 +134,34 @@ export function replayAsk(answers: readonly (string | object | undefined)[]) {
     return Promise.resolve(a === undefined ? undefined : typeof a === 'string' ? a : JSON.stringify(a));
   };
   return { ask, prompts, calls: () => i };
+}
+
+/** fixtures/builder-chat/*.json (P4-G.1) */
+export interface ChatFixture {
+  id: string;
+  category: 'clear' | 'ambiguous' | 'missing';
+  request: string;
+  replies: object[];
+  answers?: { question: string; answer: string }[];
+  expect: {
+    kind: 'draft' | 'questions';
+    nodes?: string[];
+    engines?: Record<string, string>;
+    permissions?: Record<string, string>;
+    criticDiffers?: boolean;
+    gaps?: number;
+    gapsMin?: number;
+    fakeIds?: string[];
+    maxQuestions?: number;
+    afterAnswers?: { kind: 'draft'; nodes: string[] };
+  };
+}
+
+const FIXTURE_DIR = new URL('../../../../fixtures/builder-chat/', import.meta.url);
+
+export function chatFixtures(): ChatFixture[] {
+  return readdirSync(FIXTURE_DIR)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+    .map((f) => JSON.parse(readFileSync(new URL(f, FIXTURE_DIR), 'utf8')) as ChatFixture);
 }

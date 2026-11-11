@@ -1,0 +1,78 @@
+{
+  "id": "08-vague-auto",
+  "category": "ambiguous",
+  "request": "자동으로 다 해 주는 에이전트.",
+  "replies": [
+    {
+      "questions": [
+        {
+          "id": "q1",
+          "text": "어떤 일을 자동으로 할까요?",
+          "choices": ["화면 고치기", "계획 세우기"]
+        },
+        {
+          "id": "q2",
+          "text": "고친 뒤 검사할까요?",
+          "choices": ["네", "아니요"]
+        },
+        {
+          "id": "q3",
+          "text": "어느 폴더에서 일할까요?",
+          "choices": ["지금 프로젝트", "다른 폴더"]
+        }
+      ]
+    },
+    {
+      "name": "auto-helper",
+      "displayName": "자동 도우미",
+      "command": "/auto-helper",
+      "summary": "계획을 세우고 화면을 고쳐요.\n지금 프로젝트 폴더에서 일해요.\n고친 내용은 캔버스에서 볼 수 있어요.",
+      "nodes": [
+        {
+          "id": "plan",
+          "kind": "role",
+          "role": "계획 담당",
+          "duty": "plan",
+          "engine": "claude-code",
+          "skills": ["plan-writer"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "계획 담당에 맞는 AI와 스킬을 골랐어요."
+        },
+        {
+          "id": "build",
+          "kind": "role",
+          "role": "고치기 담당",
+          "duty": "write",
+          "engine": "codex",
+          "skills": ["kotlin-compose"],
+          "tools": [],
+          "permission": "workspace-write",
+          "reason": "고치기 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [
+        {
+          "from": "plan",
+          "to": "build"
+        }
+      ],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "answers": [
+    {
+      "question": "어떤 일을 자동으로 할까요?",
+      "answer": "화면 고치기"
+    }
+  ],
+  "expect": {
+    "kind": "questions",
+    "maxQuestions": 3,
+    "afterAnswers": {
+      "kind": "draft",
+      "nodes": ["plan", "build"]
+    }
+  }
+}

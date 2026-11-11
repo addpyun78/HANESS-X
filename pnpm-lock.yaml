@@ -366,6 +366,9 @@ importers:
 
   packages/plugins-core/agent-builder:
     dependencies:
+      '@harness-x/approvals':
+        specifier: workspace:*
+        version: link:../approvals
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
