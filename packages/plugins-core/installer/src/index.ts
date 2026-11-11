@@ -13,4 +13,5 @@ export * from './registry.js';
 export * from './abs-path.js';
 export * from './installed-tools-skill.js';
 export * from './service.js';
+export * from './cli.js';
 export * from './plugin.js';
