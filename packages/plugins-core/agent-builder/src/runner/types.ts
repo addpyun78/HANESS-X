@@ -136,6 +136,8 @@ export interface PipelineRunnerOptions {
   env?: Record<string, string | undefined>;
   /** 차단 뒤 자동 전송 최대 턴 (runWithStopGuard, 기본 20) */
   maxAutoTurns?: number;
+  /** 정체 감지 기준 (T-101 6B.4 설정 checklist.stall*, 기본 2턴·3턴) */
+  stall?: { changeApproachTurns?: number; blockTurns?: number };
   /** subagent 노드: 에이전트 이름 → 파이프라인 (예: AgentRegistry.get(name)?.pipeline) */
   resolveAgent?: (name: string) => Pipeline | undefined;
   /** 노드 출력 추출기 (주면 계약 검증·재요청을 하지 않는다) */

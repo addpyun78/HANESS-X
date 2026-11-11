@@ -408,7 +408,7 @@ export class PipelineRunner {
     const stream = runWithStopGuard({
       engine,
       guard: new StopGuard(ctx.ledger),
-      stall: new StallDetector(ctx.ledger),
+      stall: new StallDetector(ctx.ledger, this.opts.stall),
       maxAutoTurns: this.opts.maxAutoTurns ?? 20,
       run: {
         sessionId: this.sessionId,
