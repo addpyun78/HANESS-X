@@ -58,6 +58,8 @@ const objParticle = (w: string) => (finalOf(w) ? '을' : '를');
 const iraneun = (w: string) => (finalOf(w) ? '이라는' : '라는');
 /** 으로/로 (ㄹ 받침은 로) */
 const euro = (w: string) => (finalOf(w) === 1 ? '으로' : '로');
+/** 과/와 */
+const gwa = (w: string) => (finalOf(w) ? '과' : '와');
 /** 이었는데/였는데 */
 const ieonneunde = (w: string) => (finalOf(w) ? '이었는데' : '였는데');
 
@@ -174,7 +176,7 @@ export function buildProposalCard(input: ProposalInput): ApprovalCard {
     kind: 'dictionary-proposal',
     ...(input.sessionId ? { sessionId: input.sessionId } : {}),
     title: CARD_TITLE,
-    whatHappened: `AI가 "${e}"와 "${a}"를 ${times} 같은 걸로 인정했어요.`,
+    whatHappened: `AI가 "${e}"${gwa(e)} "${a}"${objParticle(a)} ${times} 같은 걸로 인정했어요.`,
     whyAsking: '다음부터 묻지 않도록 사전에 넣을지 정해 주세요.',
     confidenceWord: confidenceWord(undefined),
     options: [option('register'), option('skip')],
