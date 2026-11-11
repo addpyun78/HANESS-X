@@ -19,6 +19,7 @@ import { registerAgentSaveRoute, type SavedAgent } from './agents-routes.js';
 import { registerSessionRoutes } from './sessions-routes.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
+import { registerSettingsRoutes, type SettingsRoutesOptions } from './settings-routes.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } from './approvals-routes.js';
 import { HumanGestureTokens } from '../human-gesture-token.js';
@@ -70,6 +71,8 @@ export interface ApiServerOptions {
   terminal?: TerminalOptions;
   /** T-038 설정 > 엔진 API (/api/engines…). 없으면 라우트 없음 */
   engines?: EnginesApiOptions;
+  /** T-101 0-1 설정 화면 API (/api/settings…). 없으면 라우트 없음 */
+  settings?: SettingsRoutesOptions;
   /** T-060 GET /api/quota (엔진별 사용량 집계). 없으면 라우트 없음 */
   quota?: QuotaApiOptions;
   /** T-100 A.6 사람 클릭 토큰 저장소 (기본: 서버마다 새로). POST /api/gesture-tokens */
@@ -268,6 +271,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
+  if (opts.settings) registerSettingsRoutes(app, opts.settings);
   registerGestureRoute(app, gestures);
   registerInstallRoutes(app, { gestures, ...(opts.install ? { install: opts.install } : {}) });
   if (opts.toolFinder) registerToolRoutes(app, opts.toolFinder);

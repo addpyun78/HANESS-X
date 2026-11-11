@@ -501,6 +501,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       dispatch,
       agentsHome: home,
       gestures,
+      // T-101 0-1 설정 화면 API (/api/settings…): 키는 키체인에만, 플러그인 configSchema 자동 포함
+      settings: {
+        file: join(home, 'settings.json'),
+        secrets,
+        engines: () => loadEnginesSettings().engines,
+        plugins: () => [...loader.plugins.values()].map((p) => p.manifest),
+      },
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {
         const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
