@@ -483,7 +483,8 @@ export class PipelineRunner {
       ...(this.opts.log ? { log: this.opts.log } : {}),
     });
     const items = this.opts.checklists?.(node, node.checklistTemplate);
-    if (items?.length) ledger.create(items);
+    // T-101 2C.2 이어하기: 같은 세션·같은 노드 원장이 이미 있으면 그대로 둔다 (체크리스트 유지)
+    if (items?.length && !ledger.read()) ledger.create(items);
     this.nodeStart(node, visitNo, engine.id);
     const visit: NodeVisit = {
       nodeId: node.id,
