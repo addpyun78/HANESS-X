@@ -24,6 +24,7 @@ import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } f
 import { HumanGestureTokens } from '../human-gesture-token.js';
 import { registerGestureRoute, registerInstallRoutes, type InstallApi } from './install-routes.js';
 import { registerToolRoutes, type ToolFinderApi } from './tool-routes.js';
+import { registerProjectRoutes, type ProjectRoutesOptions } from '../projects/routes.js';
 
 /**
  * 로컬 API 서버
@@ -78,6 +79,8 @@ export interface ApiServerOptions {
   install?: InstallApi;
   /** T-100 Part 3 도구 찾기 API (/api/tools/…). 없으면 라우트 없음 */
   toolFinder?: ToolFinderApi;
+  /** T-101 0-2 프로젝트·초안 세션 API (/api/projects…, POST /api/sessions {projectId?}). 없으면 라우트 없음 */
+  projects?: ProjectRoutesOptions;
 }
 
 export {
@@ -152,7 +155,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       if (req.method === 'OPTIONS') {
         return reply
           .code(204)
-          .header('access-control-allow-methods', 'GET, POST, PUT, OPTIONS')
+          .header('access-control-allow-methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
           .header('access-control-allow-headers', 'authorization, content-type, x-harness-token')
           .header('access-control-max-age', '600')
           .send();
@@ -264,7 +267,8 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     }
   });
 
-  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch);
+  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch, opts.projects?.sessions);
+  if (opts.projects) registerProjectRoutes(app, opts.projects);
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
