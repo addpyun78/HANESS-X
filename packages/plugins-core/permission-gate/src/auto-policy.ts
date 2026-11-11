@@ -25,8 +25,11 @@ export function autoPolicy(ask: Pick<ApprovalAsk, 'reason'>): AutoDecision {
   return ask.reason === '워크스페이스 밖' ? 'deny' : 'allow';
 }
 
+/** 쉬운 말 이유 (경로는 기술 정보 detail.paths에만 — 화면 문구에 경로·기호를 넣지 않는다) */
 export function outsideReason(paths: readonly string[]): string {
-  return `작업 폴더 밖에 파일을 쓰려고 해서 하지 않았어요: ${paths.join(', ')}`;
+  return paths.length > 1
+    ? `작업 폴더 밖에 파일 ${paths.length}개를 쓰려고 해서 하지 않았어요.`
+    : '작업 폴더 밖에 파일을 쓰려고 해서 하지 않았어요.';
 }
 
 export function createAutoApprover(opts: AutoApproverOptions): (ask: ApprovalAsk) => boolean {
