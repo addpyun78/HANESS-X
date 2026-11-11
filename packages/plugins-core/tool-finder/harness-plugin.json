@@ -1,0 +1,23 @@
+{
+  "id": "tool-finder",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Tool Finder",
+  "description": "필요한 도구 찾기: 능력 설명만으로 패키지 저장소·웹을 찾아 무료/유료를 표시한 후보 2~5개를 쉬운 말로 추천한다. 설치는 사람이 고른 뒤 설치 관리자 계획 카드로만",
+  "main": "dist/index.js",
+  "provides": {
+    "tool": ["tools-request", "search.package-repos", "search.user-ai-web", "search.searxng", "search.brave"],
+    "command": ["/tools"]
+  },
+  "permissions": {
+    "fs": [],
+    "net": [
+      "registry.npmjs.org",
+      "pypi.org",
+      "ollama.com",
+      "registry.modelcontextprotocol.io",
+      "api.search.brave.com"
+    ],
+    "shell": true
+  }
+}

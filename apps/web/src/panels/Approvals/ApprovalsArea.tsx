@@ -32,6 +32,11 @@ export interface ApprovalsAreaProps {
   onFocused?: () => void;
   /** 강제 배치 (기본: 768px 미만이면 하단 시트) */
   variant?: 'panel' | 'sheet';
+  /**
+   * 같은 영역에 함께 띄울 다른 카드 (T-100 P3-C.8 도구 고르기 카드 등).
+   * 승인 카드와 같은 자리(패널 맨 위)·개수 배지·좁은 화면 하단 시트를 그대로 쓴다.
+   */
+  extraCards?: readonly { id: string; node: ReactNode }[];
 }
 
 /**
@@ -51,12 +56,13 @@ export function ApprovalsArea({
   focusId,
   onFocused,
   variant,
+  extraCards = [],
 }: ApprovalsAreaProps) {
   const narrow = useMediaQuery(NARROW_QUERY);
   const v = variant ?? (narrow ? 'sheet' : 'panel');
   const root = useRef<HTMLElement>(null);
   const firstId = cards[0]?.id ?? extra[0]?.id;
-  const total = cards.length + extra.length;
+  const total = cards.length + extra.length + extraCards.length;
 
   useEffect(() => {
     if (!focusId) return;
@@ -116,6 +122,11 @@ export function ApprovalsArea({
       ))}
       {extra.map((x) => (
         <Fragment key={x.id}>{x.render({ autoFocus: x.id === firstId })}</Fragment>
+      ))}
+      {extraCards.map((x) => (
+        <div key={x.id} className="hx-approvals__extra" data-extra-id={x.id}>
+          {x.node}
+        </div>
       ))}
       {last && (
         <p className="hx-approvals__last" role="status">

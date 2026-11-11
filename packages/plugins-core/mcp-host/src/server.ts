@@ -57,6 +57,19 @@ export interface HarnessMcpOptions {
   nodeOutput?: boolean;
   /** T-100 A.7: 설치 관리자 도구 install.search·install.resolve·install.plan 등록 */
   install?: InstallToolsProvider;
+  /** T-100 P3-A.1 ④ 도구 찾기 요청 tools.request 등록 */
+  tools?: ToolsRequestProvider;
+}
+
+/**
+ * T-100 P3-A.1 ④ 도구 찾기 요청: 엔진이 작업 중 필요한 능력을 설명하면 사람에게 "도구 고르기" 카드가 뜬다.
+ * 찾기·추천만 하고 설치는 하지 않는다.
+ */
+export const TOOLS_REQUEST_TOOL = 'tools.request';
+
+/** @harness-x/tool-finder의 ToolNeedHub.mcpProvider()가 구현 */
+export interface ToolsRequestProvider {
+  request(args: { capability: string; why?: string; itemId?: string }): unknown;
 }
 
 /** 파이프라인 노드 출력 도구 이름 (nodeOutput 옵션) */
@@ -200,6 +213,34 @@ export function createHarnessMcpServer(deps: HarnessToolDeps, opts: HarnessMcpOp
     );
 
   if (opts.install) registerInstallTools(server, opts.install, opts.toolNames);
+  if (opts.tools) {
+    const p = opts.tools;
+    server.registerTool(
+      opts.toolNames === 'underscore' ? TOOLS_REQUEST_TOOL.replace(/\./g, '_') : TOOLS_REQUEST_TOOL,
+      {
+        title: '필요한 도구 요청',
+        description:
+          '작업에 필요한 프로그램 능력을 쉬운 말로 설명하면(코드·파일 내용·비밀 금지) 이미 있는 도구를 알려 주거나, 사람에게 무료/유료가 표시된 후보 카드를 띄운다. 설치는 사람이 고른 뒤에만 된다.',
+        inputSchema: {
+          capability: z
+            .string()
+            .min(2)
+            .max(80)
+            .describe('쉬운 말 능력 설명 (예: 동영상에서 소리만 뽑아내기)'),
+          why: z.string().optional(),
+          itemId: z.string().optional(),
+        },
+      },
+      (args) =>
+        run(() =>
+          p.request({
+            capability: args.capability,
+            ...(args.why ? { why: args.why } : {}),
+            ...(args.itemId ? { itemId: args.itemId } : {}),
+          }),
+        ),
+    );
+  }
 
   return server;
 }

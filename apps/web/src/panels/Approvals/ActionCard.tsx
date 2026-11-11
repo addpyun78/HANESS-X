@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { badgeLabel, type ActionCardModel } from './model.js';
 
 export interface ActionCardProps {
@@ -8,6 +8,8 @@ export interface ActionCardProps {
   error?: string;
   /** 처음 나타날 때 첫 버튼으로 포커스 (H.16) */
   autoFocus?: boolean;
+  /** 문단 아래·버튼 위에 넣을 내용 (예: Part 3 도구 후보 목록) */
+  children?: ReactNode;
 }
 
 /**
@@ -15,7 +17,7 @@ export interface ActionCardProps {
  *  - 제목·배지 / 쉬운 말 문단 / 버튼(①②③, 숫자 키 1·2·3…) / 체크 상자 / 자세히 보기(기본 접힘)
  *  - 기술 정보는 펼치기 전에는 DOM에 그리지 않는다
  */
-export function ActionCard({ card, onChoose, busy, error, autoFocus }: ActionCardProps) {
+export function ActionCard({ card, onChoose, busy, error, autoFocus, children }: ActionCardProps) {
   const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
   const first = useRef<HTMLButtonElement>(null);
@@ -84,6 +86,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus }: ActionCar
           <p>{s.text}</p>
         </section>
       ))}
+      {children}
       {gated && checkbox}
       <div className="hx-action-card__buttons">
         {card.buttons.map((b, i) => (
