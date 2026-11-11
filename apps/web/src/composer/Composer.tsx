@@ -12,6 +12,7 @@ import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js
 import { ChipMenu } from './ChipMenu.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
+import { StopButton, type StopControls } from './StopButton.js';
 import {
   AUTH_LABEL,
   PERMISSION_DESC,
@@ -58,6 +59,8 @@ export interface ComposerProps {
   fill?: { text: string; seq: number };
   /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
   toolbarExtra?: ReactNode;
+  /** T-101 2A.8 실행 중이면 전송 버튼 자리가 [■ 정지] (일시정지·지금 멈추기, Esc 두 번) */
+  stop?: StopControls;
 }
 
 const isEnter = (e: KeyboardEvent) => e.key === 'Enter';
@@ -89,6 +92,7 @@ export function Composer({
   inputLabel = '지시 입력',
   fill,
   toolbarExtra,
+  stop,
 }: ComposerProps) {
   const [text, setText] = useState('');
   // 바깥 채우기: 같은 seq는 한 번만 반영
@@ -291,9 +295,13 @@ export function Composer({
         )}
         <span className="hx-composer__spacer" />
         {toolbarExtra}
-        <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
-          ↑
-        </button>
+        {stop?.running ? (
+          <StopButton onPause={stop.onPause} onStopNow={stop.onStopNow} />
+        ) : (
+          <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
+            ↑
+          </button>
+        )}
       </div>
       {!compact && (
         <div className="hx-verdict" aria-live="polite" data-testid="verdict">

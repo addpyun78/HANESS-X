@@ -240,6 +240,30 @@ export class HarnessApiClient {
     });
   }
 
+  /** T-101 2A.2 ⏸ 일시정지 (안전한 지점에서 멈춤) */
+  pauseSession(sessionId: string) {
+    return this.request<{ state: string }>(`/api/sessions/${encodeURIComponent(sessionId)}/pause`, {
+      method: 'POST',
+      body: '{}',
+    });
+  }
+
+  /** T-101 2A.2 ⏹ 지금 멈추기 */
+  stopSession(sessionId: string) {
+    return this.request<{ state: string }>(`/api/sessions/${encodeURIComponent(sessionId)}/stop`, {
+      method: 'POST',
+      body: '{}',
+    });
+  }
+
+  /** T-101 2A.2 전체 정지 (실행 중 세션 전부) */
+  stopAllSessions() {
+    return this.request<{ results: { sessionId: string; state: string }[] }>('/api/sessions/stop-all', {
+      method: 'POST',
+      body: '{}',
+    });
+  }
+
   eventsUrl(q: { sessionId?: string; type?: string } = {}): string {
     const u = new URL(this.baseUrl.replace(/^http/, 'ws') + '/ws/events');
     u.searchParams.set('token', this.token);

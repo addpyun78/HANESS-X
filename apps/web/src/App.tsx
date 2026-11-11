@@ -11,6 +11,7 @@ import { isTauri, pickFolderDesktop, waitForDesktopServer } from './api/desktop.
 import { ChatStream } from './chat/ChatStream.js';
 import type { ViewMode } from './chat/blocks.js';
 import { Composer } from './composer/Composer.js';
+import { StopAllButton } from './shell/StopAllButton.js';
 import { enginesFromPlugins } from './composer/engines.js';
 import type { RecentProject } from './composer/PlusMenu.js';
 import { SubagentConfirm, subagentTarget } from './composer/SubagentConfirm.js';
@@ -379,6 +380,13 @@ export function App() {
             topBar={{
               workspace,
               runState,
+              // T-101 2A.8 실행 세션 2개 이상이면 [전체 정지]
+              actions: (
+                <StopAllButton
+                  runningCount={sessions.filter((x) => x.status === 'running').length}
+                  onStopAll={() => void client?.stopAllSessions().catch(() => {})}
+                />
+              ),
               quotas:
                 quotas ??
                 available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
@@ -449,6 +457,8 @@ export function App() {
                     }}
                     agents={agents}
                     onSend={onSend}
+                    // T-101 2A.8 실행 중이면 [■ 정지] → 일시정지·지금 멈추기 (Esc 두 번)
+                    stop={stopControls(sessions, activeId, client)}
                     {...(forgeFill ? { fill: forgeFill } : {})}
                     verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
                   />
@@ -461,4 +471,19 @@ export function App() {
       </ApprovalFocusContext.Provider>
     </ForgeAnswerContext.Provider>
   );
+}
+
+/** T-101 2A.8 보고 있는 세션(없으면 첫 세션)이 실행 중이면 정지 조작 */
+function stopControls(
+  sessions: SessionSummary[],
+  activeId: string | undefined,
+  client:
+    { pauseSession(id: string): Promise<unknown>; stopSession(id: string): Promise<unknown> } | undefined,
+) {
+  const s = sessions.find((x) => x.id === (activeId ?? sessions[0]?.id));
+  return {
+    running: !!client && s?.status === 'running',
+    onPause: () => void (s && client?.pauseSession(s.id).catch(() => {})),
+    onStopNow: () => void (s && client?.stopSession(s.id).catch(() => {})),
+  };
 }
