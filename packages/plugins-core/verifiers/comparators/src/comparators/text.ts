@@ -6,6 +6,7 @@ import {
   type CompareDiff,
   type Comparator,
 } from '../types.js';
+import { numberConflict, statusConflict } from '../guards.js';
 
 /**
  * C.4~C.6 text
@@ -78,6 +79,9 @@ export const textComparator: Comparator<TextOptions> = {
     if (na === nb) return result('equal', 'normalize', '정규화 후 텍스트 일치');
     if (inDictionary('text', na, nb, ctx, norm))
       return result('equal', 'dictionary', '사전에 등록된 같은 표현');
+    // G.2 코드로 확정되는 진짜 틀림 (AI 오판으로 통과하지 않도록 의미 판단 전에 끝낸다)
+    const conflict = statusConflict(na, nb) ?? numberConflict(na, nb);
+    if (conflict) return result('different', 'normalize', conflict, { diff: firstDiffLine(na, nb) });
     return result('uncertain', 'normalize', '정규화 후에도 텍스트가 다름 — 의미 판단 필요', {
       diff: firstDiffLine(na, nb),
     });

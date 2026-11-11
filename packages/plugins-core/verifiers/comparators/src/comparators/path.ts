@@ -1,3 +1,4 @@
+import { folderConflict } from '../guards.js';
 import { aliasKeyOf, type AliasOptions } from '../path-alias.js';
 import {
   asText,
@@ -95,6 +96,9 @@ export const pathComparator: Comparator<PathOptions> = {
     }
     if (inDictionary('path', na, nb, ctx, (s) => normalizePath(s, n)))
       return result('equal', 'dictionary', '사전에 등록된 같은 경로');
+    // G.2 서로 다른 glossary 단어 폴더(harness/server vs harness/client)는 코드로 확정 — AI 오판 방지
+    const folder = folderConflict(ka, kb, ctx.glossary);
+    if (folder) return result('different', 'dictionary', folder, { diff: firstSegmentDiff(na, nb) });
     return result(
       'uncertain',
       'dictionary',

@@ -7,3 +7,4 @@ export * from './record.js';
 export * from './l4.js';
 export * from './settings.js';
 export * from './cleanup.js';
+export * from './pipeline.js';
