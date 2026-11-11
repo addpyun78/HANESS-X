@@ -1,3 +1,4 @@
+import { release } from 'node:os';
 import type { Glossary, GlossaryIndex } from '@harness-x/checklist-ledger';
 import { z } from 'zod';
 
@@ -83,6 +84,29 @@ export interface CompareCtx {
   /** 항목 제목 (의미 판단에 넘기는 메타데이터) */
   itemTitle: string;
   sessionId: string;
+}
+
+/** 현재 실행 환경의 os 종류 (WSL은 커널 이름에 microsoft가 들어 있다) */
+export function detectCompareOs(
+  platform: string = process.platform,
+  kernelRelease: string = release(),
+): CompareOs {
+  if (platform === 'win32') return 'win';
+  if (platform === 'linux' && /microsoft/i.test(kernelRelease)) return 'wsl';
+  return 'posix';
+}
+
+/** 빈 사전·현재 os로 만든 기본 ctx (판정 사다리 밖 호출용) */
+export function defaultCompareCtx(extra: Partial<CompareCtx> = {}): CompareCtx {
+  return {
+    os: detectCompareOs(),
+    workspaceRoot: '',
+    glossary: { version: 1, terms: [] },
+    equivalences: EMPTY_EQUIVALENCES,
+    itemTitle: '',
+    sessionId: '',
+    ...extra,
+  };
 }
 
 // ── B.1 Comparator ────────────────────────────────────────────
