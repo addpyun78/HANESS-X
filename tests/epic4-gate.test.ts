@@ -105,7 +105,15 @@ describe('48.5 EPIC 4 게이트: 빌더로 만든 3노드 에이전트를 /로 �
     };
 
     try {
-      const saved = await api('PUT', '/api/agents/ui-review', req);
+      // T-100 보강-1: 저장은 사람 클릭 토큰(save-agent)이 있어야만 된다
+      const gesture = await api('POST', '/api/gesture-tokens', { kind: 'save-agent' });
+      expect(gesture.status).toBe(201);
+      const savedRes = await fetch(server.url + '/api/agents/ui-review', {
+        method: 'PUT',
+        headers: { ...auth, 'x-harness-gesture': String(gesture.body.token) },
+        body: JSON.stringify(req),
+      });
+      const saved = { status: savedRes.status };
       expect(saved.status).toBe(201);
 
       // 3) / 목록에 등장
