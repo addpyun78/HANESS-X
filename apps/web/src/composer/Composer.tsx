@@ -10,7 +10,15 @@ import {
 } from 'react';
 import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
-import { MODE_CHIP_NAME, modeOptions, RUN_MODE_LABEL } from './run-mode.js';
+import {
+  MODE_CHIP_NAME,
+  modeOptions,
+  permissionView,
+  PLAN_LOCK_REASON,
+  planModeChange,
+  RUN_MODE_LABEL,
+  type ModeChange,
+} from './run-mode.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
 import {
@@ -138,6 +146,15 @@ export function Composer({
     });
   }, [engines]);
 
+  // T-101 3A.4 모드-권한 연동: 계획이면 권한 칩을 읽기 전용으로 잠근다, 오토 + 읽기 전용이면 먼저 묻는다
+  const [modeAsk, setModeAsk] = useState<Extract<ModeChange, { kind: 'confirm-write' }>>();
+  const perm = permissionView(settings.mode ?? 'normal', settings.permission);
+  const chooseMode = (mode: NonNullable<ComposerSettings['mode']>) => {
+    const c = planModeChange(mode, settings.permission);
+    if (c.kind === 'apply') update({ mode });
+    else setModeAsk(c);
+  };
+
   const update = (patch: Partial<ComposerSettings>) => {
     const next = { ...settings, ...patch };
     setSettings(next);
@@ -156,7 +173,7 @@ export function Composer({
     if (!canSend) return;
     onSend({
       text: text.trim(),
-      settings,
+      settings: { ...settings, permission: perm.permission },
       attachments,
       ...(slash.agent ? { agent: slash.agent.command } : {}),
     });
@@ -298,8 +315,9 @@ export function Composer({
               name="권한"
               className="hx-chip--permission"
               icon="◎"
-              value={settings.permission}
-              valueLabel={PERMISSION_LABEL[settings.permission]}
+              value={perm.permission}
+              valueLabel={PERMISSION_LABEL[perm.permission]}
+              {...(perm.locked ? { locked: PLAN_LOCK_REASON } : {})}
               options={(Object.keys(PERMISSION_LABEL) as PermissionMode[]).map((v) => ({
                 value: v,
                 label: PERMISSION_LABEL[v],
@@ -313,7 +331,7 @@ export function Composer({
               value={settings.mode ?? 'normal'}
               valueLabel={RUN_MODE_LABEL[settings.mode ?? 'normal']}
               options={modeOptions()}
-              onChange={(mode) => update({ mode })}
+              onChange={chooseMode}
             />
           </>
         )}
@@ -323,6 +341,24 @@ export function Composer({
           ↑
         </button>
       </div>
+      {modeAsk && (
+        <div className="hx-mode-confirm" role="alertdialog" aria-label="모드 바꾸기 확인">
+          <p>{modeAsk.question}</p>
+          <button
+            type="button"
+            className="hx-mode-confirm__yes"
+            onClick={() => {
+              update({ mode: modeAsk.mode, permission: modeAsk.upgradeTo });
+              setModeAsk(undefined);
+            }}
+          >
+            워크스페이스 쓰기로 바꾸기
+          </button>
+          <button type="button" className="hx-mode-confirm__no" onClick={() => setModeAsk(undefined)}>
+            그대로 두기
+          </button>
+        </div>
+      )}
       {!compact && (
         <div className="hx-verdict" aria-live="polite" data-testid="verdict">
           {verdict ? (
