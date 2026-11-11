@@ -1,4 +1,5 @@
 import type { HarnessEvent } from '@harness-x/protocol';
+import { pauseMarkFrom, type PauseMarkBlock } from './pause-timeline.js';
 
 /**
  * HarnessEvent 9종 → 채팅 메시지 블록.
@@ -51,7 +52,9 @@ export type ChatBlock =
       detail?: Record<string, unknown>;
       options: string[];
     })
-  | (Base & { kind: 'checklist'; changedItemId: string; from: string | null; to: string; version: number });
+  | (Base & { kind: 'checklist'; changedItemId: string; from: string | null; to: string; version: number })
+  /** T-101 2B.12 "멈춤 → 이어감" 표시 줄 */
+  | PauseMarkBlock;
 
 export type ChatBlockKind = ChatBlock['kind'];
 
@@ -73,6 +76,12 @@ export function eventsToBlocks(events: readonly HarnessEvent[]): ChatBlock[] {
   const out: ChatBlock[] = [];
   const tools = new Map<string, Extract<ChatBlock, { kind: 'tool' }>>();
   for (const e of events) {
+    // T-101 2B.12 session_paused / session_resumed (커널 기록) → 타임라인 표시 줄
+    const mark = pauseMarkFrom(e);
+    if (mark) {
+      out.push(mark);
+      continue;
+    }
     switch (e.type) {
       case 'assistant_text': {
         const last = out[out.length - 1];
@@ -191,9 +200,19 @@ export const MODE_KINDS: Record<ViewMode, ReadonlySet<ChatBlockKind>> = {
     'stop_block',
     'approval',
     'checklist',
+    'pause_mark',
   ]),
-  normal: new Set<ChatBlockKind>(['text', 'tool', 'tool_result', 'file', 'error', 'stop_block', 'approval']),
-  summary: new Set<ChatBlockKind>(['text', 'error', 'stop_block', 'approval']),
+  normal: new Set<ChatBlockKind>([
+    'text',
+    'tool',
+    'tool_result',
+    'file',
+    'error',
+    'stop_block',
+    'approval',
+    'pause_mark',
+  ]),
+  summary: new Set<ChatBlockKind>(['text', 'error', 'stop_block', 'approval', 'pause_mark']),
 };
 
 export function visibleBlocks(blocks: readonly ChatBlock[], mode: ViewMode): ChatBlock[] {

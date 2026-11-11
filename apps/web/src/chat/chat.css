@@ -275,3 +275,15 @@
   display: flex;
   gap: var(--hx-space-2);
 }
+
+/* T-101 2B.12 세션 타임라인 "멈춤 → 이어감" */
+.hx-pause-mark {
+  margin: var(--hx-space-2) 0;
+  color: var(--hx-warning);
+  font-size: var(--hx-font-12);
+  text-align: center;
+}
+
+.hx-pause-mark--resumed {
+  color: var(--hx-success);
+}
