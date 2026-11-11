@@ -143,6 +143,8 @@ export interface PipelineRunnerOptions {
   /** outputSchema 검증 실패 시 같은 노드에 재요청할 최대 횟수 (기본 2) */
   maxContractRetries?: number;
   signal?: AbortSignal;
+  /** T-101 2B.9 엔진 자체 재개: 노드 id → 엔진 세션 id (그 노드 첫 턴에 resumeId로 넘김) */
+  resumeIds?: Record<string, string>;
   idGen?: () => string;
   now?: () => Date;
 }

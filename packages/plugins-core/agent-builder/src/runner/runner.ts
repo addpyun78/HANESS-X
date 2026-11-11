@@ -433,6 +433,17 @@ export class PipelineRunner {
       this.emit(e as LogRecord);
     }
     const sid = lastRun?.engineSessionId();
+    // T-101 2B.9 엔진 자체 재개용: 노드의 엔진 세션 id를 기록해 둔다
+    if (sid)
+      this.emit({
+        id: this.idGen(),
+        ts: this.now().toISOString(),
+        sessionId: this.sessionId,
+        engineId: base.id,
+        type: 'engine_session',
+        nodeId: ctx.node.id,
+        engineSessionId: sid,
+      });
     return { events, ...(sid ? { engineSessionId: sid } : {}) };
   }
 
@@ -517,7 +528,9 @@ export class PipelineRunner {
         throw new Halt('error', node.id, visit.reason);
       }
     };
-    const res = await turn(prompt, undefined);
+    // T-101 2B.9 이어하기(엔진 자체 재개): 멈췄던 노드는 그 엔진 세션으로 첫 턴을 이어 간다
+    const resumeFrom = ctx.engine.capabilities.resume ? this.opts.resumeIds?.[node.id] : undefined;
+    const res = await turn(prompt, resumeFrom);
     const done = this.completion(ctx.ledger, res.events);
     if (!done.ok) {
       visit.status = 'incomplete';

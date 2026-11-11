@@ -10,6 +10,8 @@ import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { registerResumeRoutes } from './api/resume-routes.js';
+import { createResumeService } from './resume-service.js';
+import { fallbackTable } from './resume-engine.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -485,6 +487,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         log,
         onEvent: i.onEvent,
         signal: i.signal,
+        // T-101 2B.9 엔진 자체 재개: 멈췄던 노드는 그 엔진 세션으로 (예: claude --resume)
+        ...(i.resume?.resumeIds ? { resumeIds: i.resume.resumeIds } : {}),
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
@@ -562,7 +566,29 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
         });
         // T-101 2B 이어하기: 프로젝트의 미완료 세션 (GET /api/resume?projectId=)
-        registerResumeRoutes(app, { log });
+        registerResumeRoutes(app, {
+          log,
+          service: createResumeService({
+            log,
+            dispatcher: dispatch,
+            agentFor: (name) => {
+              const a = registry()?.get(name);
+              return a
+                ? {
+                    name: a.name,
+                    command: a.command,
+                    displayName: a.agent.displayName,
+                    ...(a.agent.icon ? { icon: a.agent.icon } : {}),
+                    pipeline: a.pipeline,
+                  }
+                : undefined;
+            },
+            engines: () => adapters().map((a) => a.id),
+            engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
+            fallback: () => fallbackTable(loadEnginesSettings().engines),
+            ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
+          }),
+        });
         // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
         inventory = builder()?.registerBuilderInventory?.(app, {
           plugins: () => loader.plugins.values(),
