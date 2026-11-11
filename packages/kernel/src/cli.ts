@@ -22,10 +22,10 @@ const DEFAULT_API_PORT = 3790;
  * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
  */
 interface ScannerPluginModule {
-  activeScanner?(): { scan(): Promise<unknown> } | undefined;
+  activeScanner?(): { scan(reason?: string): Promise<unknown>; readonly progress?: unknown } | undefined;
   registerRescanRoute?(
-    app: { post(path: string, handler: () => Promise<unknown>): unknown },
-    scanner: { scan(): Promise<unknown> },
+    app: { post(path: string, handler: (req: { body?: unknown }) => Promise<unknown>): unknown },
+    scanner: { scan(reason?: string): Promise<unknown>; readonly progress?: unknown },
   ): void;
 }
 
@@ -102,6 +102,8 @@ export interface LadderRuntimeModule {
     approvals?: () => unknown;
     judge: {
       listEngines(): Promise<unknown[]>;
+      /** T-101 5C.3 judge.engine이 "자동"이면 메인 AI */
+      mainEngine?(): string | undefined;
       ollamaBaseUrl?: string;
       secretStore?: unknown;
     };
@@ -311,6 +313,14 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
 
   const home = harnessHome();
   const log = new EventLog({ root: join(home, 'logs') });
+  // T-101 5 메인 AI(settings.json main.*) · 모델 목록(/api/models)
+  const [mainAiMod, { ModelCatalog }, { registerModelRoutes }] = await Promise.all([
+    import('./main-ai.js'),
+    import('./models.js'),
+    import('./api/models-routes.js'),
+  ]);
+  const mainEngine = () => mainAiMod.readMainAi(join(home, 'settings.json'))?.engine;
+  const sessionAi = new mainAiMod.SessionAiOverrides(log);
   const hooks = new HookBus({ log });
   const enginesCache = join(home, 'engines.json');
 
@@ -347,6 +357,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     removeLockEntries: (ids) => removeLockEntries(join(home, 'plugins.lock'), ids),
     approvals: () => approvalCards,
     judge: {
+      // T-101 5C.3 judge.engine이 "자동"이면 메인 AI
+      mainEngine,
       listEngines: async () => {
         const scan = existsSync(enginesCache)
           ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
@@ -444,8 +456,12 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       const Runner = builder()?.PipelineRunner;
       if (!Runner) throw new Error('agent-builder 플러그인이 활성 상태가 아닙니다');
       const list = adapters();
-      const fallback =
-        i.agent.defaultEngine && i.agent.defaultEngine !== 'auto' ? i.agent.defaultEngine : list[0]?.id;
+      // T-101 5C.3/5C.5 기본 엔진: 에이전트 지정 → 메인 AI → 첫 엔진. @엔진 수식어(modifiers.engine)는 이번 실행만
+      const fallback = mainAiMod.pickRunEngine({
+        agentDefault: i.agent.defaultEngine,
+        main: mainEngine(),
+        available: list.map((a) => a.id),
+      });
       const runner = new Runner({
         engines: (id: string) => list.find((a) => a.id === id),
         ...((i.modifiers.engine ?? fallback) ? { defaultEngine: i.modifiers.engine ?? fallback } : {}),
@@ -549,15 +565,39 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             gestures,
             agents: () => registry()?.summaries() ?? [],
           });
+        // T-101 5B.4 GET /api/models · /api/main-ai · PUT /api/sessions/:id/ai
+        registerModelRoutes(app, {
+          catalog: new ModelCatalog({
+            scan: () =>
+              existsSync(enginesCache)
+                ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
+                : null,
+            adapters,
+            authMode: (id) => {
+              try {
+                return loadEnginesSettings().engines[id]?.mode;
+              } catch {
+                return undefined;
+              }
+            },
+            cwd: workspace,
+          }),
+          settingsFile: join(home, 'settings.json'),
+          sessions: sessionAi,
+        });
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
         const register = mod()?.registerRescanRoute;
         if (!register) return;
         register(app, {
-          scan: async () => {
+          scan: async (reason) => {
             const s = mod()?.activeScanner?.();
             if (!s) throw new Error('engine-scanner가 활성 상태가 아닙니다');
-            return s.scan();
+            return s.scan(reason);
+          },
+          // T-101 5A 가운데 말풍선: GET /api/engines/scan-status
+          get progress() {
+            return mod()?.activeScanner?.()?.progress;
           },
         });
       },
