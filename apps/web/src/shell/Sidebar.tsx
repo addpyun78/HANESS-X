@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { NAV_ITEMS, SESSION_STATUS_LABEL, type NavTarget, type SessionSummary } from './types.js';
-import { act } from '../actions/registry.js';
+import { act, NOT_READY } from '../actions/registry.js';
 
 export interface SessionGroup {
   project: string;
@@ -32,6 +32,8 @@ export function Sidebar({
         {...act('sidebar.new-session')}
         type="button"
         className="hx-sidebar__new"
+        disabled={!onNewSession}
+        title={onNewSession ? undefined : NOT_READY}
         onClick={onNewSession}
       >
         + 새 세션
@@ -88,6 +90,8 @@ export function Sidebar({
             type="button"
             role="menuitem"
             className="hx-nav-item"
+            disabled={n.ready === false}
+            title={n.ready === false ? NOT_READY : undefined}
             onClick={() => onNavigate?.(n.id)}
           >
             <span aria-hidden="true">{n.icon}</span>

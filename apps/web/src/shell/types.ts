@@ -70,7 +70,8 @@ export interface SessionAgent {
 
 export type NavTarget = 'agent-builder' | 'plugins' | 'skills' | 'install' | 'engines' | 'settings';
 
-export const NAV_ITEMS: { id: NavTarget; label: string; icon: string }[] = [
+/** `ready: false` = 아직 화면이 없음 → 비활성 + "준비 중이에요" (T-101 0C.8). 화면을 연결하면 지운다 */
+export const NAV_ITEMS: { id: NavTarget; label: string; icon: string; ready?: false }[] = [
   { id: 'agent-builder', label: '에이전트 만들기', icon: '✦' },
   { id: 'plugins', label: '플러그인', icon: '⧉' },
   { id: 'skills', label: '스킬', icon: '◇' },

@@ -170,6 +170,9 @@ export function actionEffects(id: ActionId): readonly ActionEffect[] {
   return typeof e === 'string' ? [e] : e;
 }
 
+/** T-101 0C.8 아직 기능이 없는 버튼: 숨기거나 비활성 + 이 이유(툴팁). 누를 수 있는데 아무 일 없는 상태 금지 */
+export const NOT_READY = '준비 중이에요';
+
 /** JSX에 펼쳐 쓰는 도우미: `<button {...act('chat.send')}>` (id 오타는 타입 오류) */
 export function act(id: ActionId): { 'data-action': ActionId } {
   return { 'data-action': id };
