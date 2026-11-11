@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
-    "@harness-x/protocol": "workspace:*"
+    "@harness-x/protocol": "workspace:*",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@harness-x/verifier-local": "workspace:*"
