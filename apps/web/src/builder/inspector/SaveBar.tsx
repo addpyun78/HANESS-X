@@ -113,6 +113,17 @@ export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: Sa
         disabled={
           !save || !gestureToken || !!nameError || graph.nodes.length === 0 || status.kind === 'saving'
         }
+        title={
+          status.kind === 'saving'
+            ? '저장하는 중이에요'
+            : graph.nodes.length === 0
+              ? '블록을 하나 이상 놓아 주세요'
+              : nameError
+                ? '이름을 먼저 고쳐 주세요'
+                : !save || !gestureToken
+                  ? '저장할 곳에 연결되지 않았어요'
+                  : undefined
+        }
       >
         저장
       </button>

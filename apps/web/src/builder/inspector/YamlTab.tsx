@@ -49,6 +49,7 @@ export function YamlTab({ graph, meta, dispatch, onMeta }: YamlTabProps) {
           type="button"
           className="hx-insp-btn"
           disabled={!dirty}
+          title={dirty ? undefined : '고친 내용이 없어요'}
           onClick={apply}
         >
           그래프에 적용
@@ -58,6 +59,7 @@ export function YamlTab({ graph, meta, dispatch, onMeta }: YamlTabProps) {
           type="button"
           className="hx-insp-btn hx-insp-btn--ghost"
           disabled={!dirty}
+          title={dirty ? undefined : '고친 내용이 없어요'}
           onClick={() => {
             setDirty(false);
             setErrors([]);

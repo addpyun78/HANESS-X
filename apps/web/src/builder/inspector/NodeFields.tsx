@@ -112,6 +112,7 @@ export function NodeFields({ node, engines, dispatch }: NodeFieldsProps) {
                     className="hx-icon-btn"
                     aria-label={`${s} 위로`}
                     disabled={i === 0}
+                    title={i === 0 ? '이미 맨 위예요' : undefined}
                     onClick={() => dispatch({ type: 'reorderSkill', nodeId: node.id, from: i, to: i - 1 })}
                   >
                     ↑
@@ -122,6 +123,7 @@ export function NodeFields({ node, engines, dispatch }: NodeFieldsProps) {
                     className="hx-icon-btn"
                     aria-label={`${s} 아래로`}
                     disabled={i === skills.length - 1}
+                    title={i === skills.length - 1 ? '이미 맨 아래예요' : undefined}
                     onClick={() => dispatch({ type: 'reorderSkill', nodeId: node.id, from: i, to: i + 1 })}
                   >
                     ↓

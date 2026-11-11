@@ -91,6 +91,7 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
           type="button"
           className="hx-insp-btn"
           disabled={running}
+          title={running ? '시험 실행 중이에요' : undefined}
           onClick={run}
         >
           시험 실행
