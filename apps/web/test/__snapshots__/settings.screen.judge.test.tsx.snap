@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.5 판정 > 기본: 판정 AI·뜻으로 판정하기 / 고급: 반복 횟수·호출 한도 (스냅샷) 1`] = `
+<section
+  aria-label="판정"
+  class="hx-settings-form__section"
+  data-setting-group="judge"
+>
+  <header
+    class="hx-settings-form__section-head"
+  >
+    <h3>
+      판정
+    </h3>
+    <button
+      class="hx-setting__link"
+      data-action="settings.reset-group"
+      type="button"
+    >
+      이 묶음 기본값으로
+    </button>
+  </header>
+  <p
+    class="hx-settings-form__section-desc"
+  >
+    결과가 맞는지 확인하는 방법을 정해요.
+  </p>
+  <div
+    class="hx-setting"
+    data-setting-key="judge.engine"
+    data-widget="engine"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-judge-engine"
+      >
+        판정할 때 쓸 AI
+      </label>
+      <span
+        class="hx-setting__tag"
+      >
+        다시 시작 필요
+      </span>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      결과가 맞는지 따져 볼 AI예요. 비우면 알아서 골라요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-judge-engine"
+      >
+        <option
+          value=""
+        >
+          자동으로 고르기
+        </option>
+        <option
+          value="claude-code"
+        >
+          Claude Code
+        </option>
+        <option
+          value="codex"
+        >
+          Codex
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="judge.semantic"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-judge-semantic"
+      >
+        뜻으로 판정하기
+      </label>
+      <span
+        class="hx-setting__tag"
+      >
+        다시 시작 필요
+      </span>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      글자가 달라도 뜻이 같으면 맞다고 볼지 정해요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-judge-semantic"
+      >
+        <option
+          value="on"
+        >
+          켜기
+        </option>
+        <option
+          value="off"
+        >
+          끄기
+        </option>
+      </select>
+    </div>
+  </div>
+</section>
+`;
