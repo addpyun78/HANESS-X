@@ -1,4 +1,4 @@
-import type { McpServerRef, PermissionMode } from '@harness-x/protocol';
+import type { McpServerRef, PermissionMode, RunMode } from '@harness-x/protocol';
 
 export type CodexSandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access';
 
@@ -9,7 +9,12 @@ export const CODEX_SANDBOX: Record<PermissionMode, CodexSandboxMode> = {
   'full-access': 'danger-full-access',
 };
 
-export function codexSandbox(permission: PermissionMode | undefined): CodexSandboxMode {
+/**
+ * T-101 실행 모드가 권한보다 먼저다.
+ *  3B.3 계획 → read-only
+ */
+export function codexSandbox(permission: PermissionMode | undefined, mode?: RunMode): CodexSandboxMode {
+  if (mode === 'plan') return 'read-only';
   return CODEX_SANDBOX[permission ?? 'workspace-write'];
 }
 
@@ -30,6 +35,7 @@ export interface CodexRunInput {
   cwd: string;
   model?: string;
   permission?: PermissionMode;
+  mode?: RunMode;
   resumeId?: string;
   mcpServers?: McpServerRef[];
 }
@@ -40,7 +46,7 @@ export function threadParams(input: CodexRunInput): Record<string, unknown> {
   return {
     ...(input.resumeId ? { threadId: input.resumeId } : {}),
     cwd: input.cwd,
-    sandbox: codexSandbox(input.permission),
+    sandbox: codexSandbox(input.permission, input.mode),
     approvalPolicy: 'never',
     ...(input.model ? { model: input.model } : {}),
     ...(Object.keys(mcp).length ? { config: { mcp_servers: mcp } } : {}),
@@ -62,7 +68,7 @@ function toToml(v: unknown): string {
  * 옵션은 resume 서브커맨드 앞에 두고, 프롬프트는 `--` 뒤 마지막 인자
  */
 export function buildExecArgs(input: CodexRunInput): string[] {
-  const args = ['exec', '--json', '--sandbox', codexSandbox(input.permission), '--cd', input.cwd];
+  const args = ['exec', '--json', '--sandbox', codexSandbox(input.permission, input.mode), '--cd', input.cwd];
   args.push('--skip-git-repo-check');
   if (input.model) args.push('--model', input.model);
   for (const [name, cfg] of Object.entries(codexMcpServers(input.mcpServers)))
