@@ -10,6 +10,7 @@ import {
   type ChecklistItem,
 } from '@harness-x/checklist-ledger';
 import {
+  attachmentRefs,
   pipelineEntry,
   type EngineAdapter,
   type EngineRun,
@@ -398,6 +399,7 @@ export class PipelineRunner {
                 '--session',
                 this.sessionId,
                 ...(node.outputSchema ? ['--node-output'] : []),
+                ...(this.opts.attachments?.dir ? ['--attachments', this.opts.attachments.dir] : []),
               ],
             },
           ]
@@ -423,6 +425,10 @@ export class PipelineRunner {
           HARNESS_X_CHECKLIST_DIR: ctx.ledgerDir,
         },
         ...(mcp.length ? { mcpServers: mcp } : {}),
+        // 1D.7 첫 단계에만 첨부 목록 (엔진이 자기 방식으로 전달), 뒤 단계는 MCP로 읽는다
+        ...(this.opts.attachments?.list.length && node.id === pipelineEntry(this.pipeline) && ctx.visit === 1
+          ? { attachments: this.opts.attachments.list }
+          : {}),
         ...(resumeId ? { resumeId } : {}),
         ...(this.opts.signal ? { signal: this.opts.signal } : {}),
       },
@@ -495,8 +501,18 @@ export class PipelineRunner {
       ledgerDir: dir,
       ledger,
     };
-    await this.execRole(ctx, visit, this.buildPrompt(node, input, ledger), t);
+    await this.execRole(ctx, visit, this.buildPrompt(node, this.withAttachmentInput(node, input), ledger), t);
     return visit.output;
+  }
+
+  /** 1D.7 inputSchema에 attachments 필드가 있으면 입력 값에 첨부 목록(id·이름·종류·경로)을 넣는다 */
+  private withAttachmentInput(node: RoleNode, input: unknown): unknown {
+    const list = this.opts.attachments?.list;
+    const props = (node.inputSchema as { properties?: Record<string, unknown> } | undefined)?.properties;
+    if (!list?.length || !props || !('attachments' in props)) return input;
+    const base =
+      input && typeof input === 'object' && !Array.isArray(input) ? (input as Record<string, unknown>) : {};
+    return base.attachments === undefined ? { ...base, attachments: attachmentRefs(list) } : input;
   }
 
   /** role 노드 턴 실행 → 완료 판정 → 출력 추출. 실패면 Halt */
