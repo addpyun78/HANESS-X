@@ -1,0 +1,146 @@
+import { useState } from 'react';
+import { PERMISSION_LABEL, type EngineOption, type PermissionMode } from '../../composer/types.js';
+import type { ProjectDefaults, ProjectInfo, ProjectView } from './api.js';
+import { MODE_LABEL } from './model.js';
+
+/**
+ * 0B.41 프로젝트 설정 ("프로젝트 범위" 화면)
+ * 0-1 설정 틀(설정 렌더러)이 아직 없어서 간단한 폼으로 만든다. 값 모양(ProjectSettingsValue)과
+ * 저장 콜백(onSave)만 바깥에 드러내므로, 0-1 렌더러가 생기면 이 컴포넌트만 바꿔 끼우면 된다.
+ */
+
+export interface ProjectSettingsValue {
+  name: string;
+  defaults: ProjectDefaults;
+}
+
+export interface ProjectSettingsProps {
+  project: ProjectView;
+  info?: ProjectInfo;
+  engines: EngineOption[];
+  agents: { command: string; name: string }[];
+  onSave: (v: ProjectSettingsValue) => void | Promise<void>;
+  onRelink: () => void;
+  onClose: () => void;
+}
+
+const FOLLOW = '';
+const FOLLOW_LABEL = '전체 설정 따르기';
+
+export function ProjectSettings({
+  project,
+  info,
+  engines,
+  agents,
+  onSave,
+  onRelink,
+  onClose,
+}: ProjectSettingsProps) {
+  const [name, setName] = useState(project.name);
+  const [d, setD] = useState<ProjectDefaults>(project.defaults ?? {});
+  const [saved, setSaved] = useState(false);
+  const set = (k: keyof ProjectDefaults, v: string) => {
+    setSaved(false);
+    setD((cur) => {
+      const next = { ...cur };
+      if (v) next[k] = v;
+      else delete next[k];
+      return next;
+    });
+  };
+  return (
+    <section className="hx-project-settings" role="dialog" aria-label={`${project.name} 프로젝트 설정`}>
+      <h2>프로젝트 설정</h2>
+      <p className="hx-project-settings__scope">
+        여기 값은 이 프로젝트에서 새로 여는 세션에만 쓰여요. 비워 두면 전체 설정을 따라요.
+      </p>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          void Promise.resolve(onSave({ name: name.trim() || project.name, defaults: d })).then(() =>
+            setSaved(true),
+          );
+        }}
+      >
+        <label>
+          이름
+          <input value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <div className="hx-project-settings__folder">
+          <span>폴더</span>
+          <code>{project.rootPath}</code>
+          {project.missing && <span role="status">⚠ 폴더를 찾을 수 없어요</span>}
+          <button type="button" onClick={onRelink}>
+            폴더 다시 연결
+          </button>
+        </div>
+        <label>
+          기본 AI
+          <select value={d.engine ?? FOLLOW} onChange={(e) => set('engine', e.target.value)}>
+            <option value={FOLLOW}>{FOLLOW_LABEL}</option>
+            {engines.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.label}
+              </option>
+            ))}
+            {d.engine && !engines.some((x) => x.id === d.engine) && (
+              <option value={d.engine}>{d.engine}</option>
+            )}
+          </select>
+        </label>
+        <label>
+          기본 모델
+          <input
+            value={d.model ?? ''}
+            placeholder={FOLLOW_LABEL}
+            onChange={(e) => set('model', e.target.value)}
+          />
+        </label>
+        <label>
+          기본 모드
+          <select value={d.mode ?? FOLLOW} onChange={(e) => set('mode', e.target.value)}>
+            <option value={FOLLOW}>{FOLLOW_LABEL}</option>
+            {Object.entries(MODE_LABEL).map(([k, v]) => (
+              <option key={k} value={k}>
+                {v}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          기본 권한
+          <select value={d.permission ?? FOLLOW} onChange={(e) => set('permission', e.target.value)}>
+            <option value={FOLLOW}>{FOLLOW_LABEL}</option>
+            {(Object.keys(PERMISSION_LABEL) as PermissionMode[]).map((k) => (
+              <option key={k} value={k}>
+                {PERMISSION_LABEL[k]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          기본 에이전트
+          <select value={d.agent ?? FOLLOW} onChange={(e) => set('agent', e.target.value)}>
+            <option value={FOLLOW}>{FOLLOW_LABEL}</option>
+            {agents.map((a) => (
+              <option key={a.command} value={a.command}>
+                {a.name} ({a.command})
+              </option>
+            ))}
+          </select>
+        </label>
+        <ul className="hx-project-settings__files" aria-label="지침 파일">
+          <li>AGENTS.md {info?.hasAgentsMd ? '있음' : '없음'}</li>
+          <li>CLAUDE.md {info?.hasClaudeMd ? '있음' : '없음'}</li>
+        </ul>
+        <div className="hx-project-settings__actions">
+          <button type="submit">저장</button>
+          <button type="button" onClick={onClose}>
+            닫기
+          </button>
+          {saved && <span role="status">저장했어요</span>}
+        </div>
+      </form>
+    </section>
+  );
+}

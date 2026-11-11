@@ -56,6 +56,10 @@ export interface ComposerProps {
    * 채우기만 하고 전송하지 않는다 — 전송은 사용자가 한다.
    */
   fill?: { text: string; seq: number };
+  /** T-101 0B.18 바깥에서 / 에이전트 칩 고르기 (seq가 바뀔 때마다) */
+  pinAgent?: { command: string; seq: number };
+  /** T-101 0B.14 바뀔 때마다 입력창에 커서 */
+  focusSeq?: number;
   /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
   toolbarExtra?: ReactNode;
 }
@@ -88,6 +92,8 @@ export function Composer({
   compact,
   inputLabel = '지시 입력',
   fill,
+  pinAgent,
+  focusSeq,
   toolbarExtra,
 }: ComposerProps) {
   const [text, setText] = useState('');
@@ -99,6 +105,17 @@ export function Composer({
     setText((cur) => (cur.trim() ? `${cur.replace(/\s+$/, '')} ${fill.text}` : fill.text));
   }, [fill]);
   const slash = useSlashPalette({ agents, skills, text, setText });
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const pinned = useRef(0);
+  const { pick } = slash;
+  useEffect(() => {
+    if (!pinAgent || pinAgent.seq === pinned.current) return;
+    pinned.current = pinAgent.seq;
+    if (!pick(pinAgent.command)) setText(`${pinAgent.command} `);
+  }, [pinAgent, pick]);
+  useEffect(() => {
+    if (focusSeq) inputRef.current?.focus();
+  }, [focusSeq]);
   const [settings, setSettings] = useState<ComposerSettings>(() => ({
     engineId: pickEngine(engines, initialSettings?.engineId),
     auth: initialSettings?.auth ?? 'subscription',
@@ -201,6 +218,7 @@ export function Composer({
       {slash.popover}
       {slash.chip}
       <textarea
+        ref={inputRef}
         {...slash.inputProps}
         className="hx-composer__input"
         aria-label={inputLabel}
