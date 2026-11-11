@@ -28,6 +28,8 @@ export default defineConfig({
     include,
     exclude: ['**/node_modules/**', '**/dist/**'],
     environment: 'node',
+    // T-100 P1-J.9: 테스트 중 외부 호스트로 나가는 fetch 차단 (loopback만 허용)
+    setupFiles: ['./tests/setup/block-network.ts'],
     // WSL의 /mnt/c(NTFS) 위에서는 모듈 로딩이 수 초씩 걸리므로 넉넉하게 둔다
     testTimeout: 90_000,
     hookTimeout: 120_000,
