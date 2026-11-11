@@ -296,6 +296,8 @@ export function App() {
         agent: p.agent,
         prompt: p.text,
         ...(proj.currentId ? { projectId: proj.currentId } : {}),
+        // T-101 3E.3 입력창 모드 칩을 직접 골랐으면 그 값 (수식어 다음, 에이전트·프로젝트·전체 기본값보다 먼저)
+        ...(p.settings.mode ? { mode: p.settings.mode } : {}),
       });
       setDispatched((xs) => [fromDispatchSession(d, workspace?.name ?? '프로젝트'), ...xs]);
       setActiveId(d.sessionId);

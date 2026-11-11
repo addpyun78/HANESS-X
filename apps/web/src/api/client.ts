@@ -94,6 +94,8 @@ export interface CreateSessionRequest {
   modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean; mode?: 'plan' | 'normal' | 'auto' };
   /** T-101 0B.39 만들 때 저장할 프로젝트 */
   projectId?: string;
+  /** T-101 3E.3 입력창 모드 칩 값 (직접 고른 때만) */
+  mode?: 'plan' | 'normal' | 'auto';
 }
 
 export class ApiError extends Error {

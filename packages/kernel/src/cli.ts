@@ -143,6 +143,7 @@ interface AgentBuilderPluginModule {
             displayName: string;
             icon?: string;
             defaultEngine: string;
+            defaultMode?: 'plan' | 'normal' | 'auto';
             status?: 'ready' | 'incomplete';
           };
           pipeline: Pipeline;
@@ -471,6 +472,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             displayName: a.agent.displayName,
             ...(a.agent.icon ? { icon: a.agent.icon } : {}),
             defaultEngine: a.agent.defaultEngine,
+            ...(a.agent.defaultMode ? { defaultMode: a.agent.defaultMode } : {}),
             ...(a.agent.status ? { status: a.agent.status } : {}),
             pipeline: a.pipeline,
           }

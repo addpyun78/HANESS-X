@@ -20,7 +20,7 @@ export interface ComposerSettings {
   engineId: string;
   auth: AuthMode;
   permission: PermissionMode;
-  /** T-101 3A.3 실행 모드 (계획/일반/오토). Composer가 늘 채운다 (기본 normal) */
+  /** T-101 3A.3 실행 모드 (계획/일반/오토). 칩을 직접 고를 때만 채운다 (없으면 화면은 '일반', 서버가 기본값 순서로 정함 — 3E.3) */
   mode?: RunMode;
 }
 

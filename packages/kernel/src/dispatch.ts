@@ -8,6 +8,7 @@ import {
   type PipelineNode,
 } from '@harness-x/protocol';
 import type { LogRecord } from './event-log.js';
+import { resolveRunMode } from './run-mode/resolve.js';
 import { SessionRegistry } from './projects/session-registry.js';
 import type { SessionOrigin, SessionState } from './projects/schema.js';
 
@@ -122,6 +123,8 @@ export interface DispatchAgent {
   displayName: string;
   icon?: string;
   defaultEngine?: string;
+  /** T-101 3E.2 agent.yaml defaultMode */
+  defaultMode?: RunMode;
   /** T-100 P4-F.6 빈 칸이 남은 에이전트는 실행하지 않는다 */
   status?: 'ready' | 'incomplete';
   pipeline: Pipeline;
@@ -207,6 +210,8 @@ export interface DispatchRequest {
   projectId?: string;
   /** 어디서 시작했나 (기본 'slash' = 입력창 / 실행) */
   origin?: SessionOrigin;
+  /** T-101 3E.3 입력창 모드 칩 값 (수식어보다 뒤, 에이전트 기본값보다 앞) */
+  mode?: RunMode;
 }
 
 interface Live {
@@ -250,6 +255,8 @@ export class Dispatcher {
       agent: agent.name,
       ...(agent.icon ? { agentIcon: agent.icon } : {}),
       ...(modifiers.engine ? { engine: modifiers.engine } : {}),
+      // T-101 3E.3 수식어 > 칩 > 에이전트 기본값. 셋 다 없으면 세션 등록이 프로젝트 > 전체 기본값으로 채운다(0B.40)
+      ...(runModeOf(modifiers, req.mode, agent.defaultMode) ?? {}),
       status: 'running',
       firstMessage: parsed.prompt || req.prompt,
     });
@@ -428,6 +435,12 @@ function registryState(status: string): SessionState {
 function progressOf(s: DispatchSession): number {
   if (s.nodeCount <= 0) return 0;
   return Math.min(1, new Set(s.completedNodes).size / s.nodeCount);
+}
+
+/** 3E.3 디스패치에서 정할 수 있는 앞 세 단계 (나머지 두 단계는 SessionRegistry 기본값) */
+function runModeOf(m: DispatchModifiers, chip: unknown, agent: unknown): { mode: RunMode } | undefined {
+  const r = resolveRunMode({ modifier: m.mode, chip, agent });
+  return r.from === 'fallback' ? undefined : { mode: r.mode };
 }
 
 function clean(m: Partial<DispatchModifiers> | undefined): Partial<DispatchModifiers> {

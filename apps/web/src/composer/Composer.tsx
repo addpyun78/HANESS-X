@@ -129,7 +129,8 @@ export function Composer({
     engineId: pickEngine(engines, initialSettings?.engineId),
     auth: initialSettings?.auth ?? 'subscription',
     permission: initialSettings?.permission ?? 'workspace-write',
-    mode: initialSettings?.mode ?? 'normal',
+    // T-101 3E.3 고르기 전에는 비워 둔다(화면은 '일반') — 칩을 직접 고른 값만 에이전트·프로젝트 기본값보다 앞선다
+    ...(initialSettings?.mode ? { mode: initialSettings.mode } : {}),
   }));
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [dragOver, setDragOver] = useState(false);

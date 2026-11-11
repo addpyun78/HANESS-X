@@ -2,10 +2,11 @@ import type { FastifyInstance, FastifyReply } from 'fastify';
 import { DispatchError, type Dispatcher, type DispatchModifiers } from '../dispatch.js';
 import { createDraftFromRequest, sendProjectError } from '../projects/routes.js';
 import type { SessionRegistry } from '../projects/session-registry.js';
+import { isRunMode } from '@harness-x/protocol';
 
 /**
  * 48.1 / 실행 디스패치 API
- * - POST /api/sessions {agent, prompt, modifiers?} → 201 세션 (session_created 이벤트). 수식어는 prompt 안(@엔진 #strict !plan)
+ * - POST /api/sessions {agent, prompt, modifiers?} → 201 세션 (session_created 이벤트). 수식어는 prompt 안(@엔진 #strict !plan !auto)
  *   또는 modifiers 객체 {engine?, strict?, planOnly?}로 준다.
  * - GET  /api/sessions            → {sessions: [...]} (현재 노드·진행률)
  * - GET  /api/sessions/:id        → 세션
@@ -40,6 +41,7 @@ export function registerSessionRoutes(
       modifiers?: unknown;
       projectId?: unknown;
       origin?: unknown;
+      mode?: unknown;
     };
     if (registry && body.agent === undefined) {
       try {
@@ -53,6 +55,7 @@ export function registerSessionRoutes(
         agent: typeof body.agent === 'string' ? body.agent : '',
         prompt: typeof body.prompt === 'string' ? body.prompt : '',
         ...(typeof body.projectId === 'string' && body.projectId ? { projectId: body.projectId } : {}),
+        ...(isRunMode(body.mode) ? { mode: body.mode } : {}),
         ...(body.origin === 'cli' || body.origin === 'api' || body.origin === 'resume'
           ? { origin: body.origin }
           : {}),
