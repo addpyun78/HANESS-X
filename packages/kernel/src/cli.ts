@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol';
@@ -9,6 +9,9 @@ import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
+import { registerResumeRoutes } from './api/resume-routes.js';
+import { createResumeService } from './resume-service.js';
+import { fallbackTable } from './resume-engine.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -22,10 +25,10 @@ const DEFAULT_API_PORT = 3790;
  * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
  */
 interface ScannerPluginModule {
-  activeScanner?(): { scan(): Promise<unknown> } | undefined;
+  activeScanner?(): { scan(reason?: string): Promise<unknown>; readonly progress?: unknown } | undefined;
   registerRescanRoute?(
-    app: { post(path: string, handler: () => Promise<unknown>): unknown },
-    scanner: { scan(): Promise<unknown> },
+    app: { post(path: string, handler: (req: { body?: unknown }) => Promise<unknown>): unknown },
+    scanner: { scan(reason?: string): Promise<unknown>; readonly progress?: unknown },
   ): void;
 }
 
@@ -102,6 +105,8 @@ export interface LadderRuntimeModule {
     approvals?: () => unknown;
     judge: {
       listEngines(): Promise<unknown[]>;
+      /** T-101 5C.3 judge.engine이 "자동"이면 메인 AI */
+      mainEngine?(): string | undefined;
       ollamaBaseUrl?: string;
       secretStore?: unknown;
     };
@@ -146,6 +151,8 @@ interface AgentBuilderPluginModule {
             status?: 'ready' | 'incomplete';
           };
           pipeline: Pipeline;
+          /** agent.yaml이 있는 폴더 */
+          dir?: string;
         }
       | undefined;
   };
@@ -189,6 +196,10 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
                              설치 계획을 글로 보고 y/n으로 설치 (화면 없이)
   harness-x tools list       설치된 도구 목록
   harness-x tools allow <id> 새 도구 첫 실행을 앞으로 허락
+  harness-x run <에이전트> <지시> [--project <id|경로>]
+                             켜져 있는 서버에서 새 세션 시작 (화면 사이드바에 바로 보임)
+  harness-x reindex          세션 색인 다시 만들기 (sessions/ 폴더를 다시 읽음)
+  harness-x resume <세션 id> 멈춘 작업을 확인한 뒤 이어서 하기 (켜진 서버에 요청)
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -253,6 +264,16 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     }
     return mod.installCli(argv, { input: process.stdin, output: process.stdout });
   }
+  // T-101 2B.2 입구: 멈춘 작업 이어하기 (켜진 서버의 /api/resume에 점검 → 실행)
+  if (argv[0] === 'resume') {
+    const { resumeCli } = await import('./resume-cli.js');
+    return resumeCli(argv.slice(1), { input: process.stdin, output: process.stdout });
+  }
+  // T-101 0B.37 / 0B.9 세션 시작(서버의 createSession으로) · 색인 다시 만들기
+  if (argv[0] === 'run' || argv[0] === 'reindex') {
+    const { runCli, reindexCli } = await import('./projects/cli-commands.js');
+    return argv[0] === 'run' ? runCli(argv.slice(1)) : reindexCli();
+  }
   const { values, positionals } = parseArgs({
     args: argv,
     allowPositionals: true,
@@ -311,6 +332,14 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
 
   const home = harnessHome();
   const log = new EventLog({ root: join(home, 'logs') });
+  // T-101 5 메인 AI(settings.json main.*) · 모델 목록(/api/models)
+  const [mainAiMod, { ModelCatalog }, { registerModelRoutes }] = await Promise.all([
+    import('./main-ai.js'),
+    import('./models.js'),
+    import('./api/models-routes.js'),
+  ]);
+  const mainEngine = () => mainAiMod.readMainAi(join(home, 'settings.json'))?.engine;
+  const sessionAi = new mainAiMod.SessionAiOverrides(log);
   const hooks = new HookBus({ log });
   const enginesCache = join(home, 'engines.json');
 
@@ -347,6 +376,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     removeLockEntries: (ids) => removeLockEntries(join(home, 'plugins.lock'), ids),
     approvals: () => approvalCards,
     judge: {
+      // T-101 5C.3 judge.engine이 "자동"이면 메인 AI
+      mainEngine,
       listEngines: async () => {
         const scan = existsSync(enginesCache)
           ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
@@ -423,8 +454,63 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const forge = () => loader.plugins.get('forge')?.module as ForgePluginModule | undefined;
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
+  const { takePauseSnapshot } = await import('./pause-snapshot.js');
+  const { pinRunVersion } = await import('./resume-pin.js');
+  // T-101 0-2 프로젝트·세션 등록부: workspaces.json → projects.json(처음 1회), 옛 세션 가져오기(0B.5),
+  // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 메인 AI(T-101 5C.3b), 없으면 첫 엔진
+  const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
+  const projects = new ProjectStore({ home });
+  const plainTitle = (
+    loader.plugins.get('approvals')?.module as
+      { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
+  )?.checkPlainKorean;
+  const sessionRegistry = new SessionRegistry({
+    home,
+    projects,
+    log,
+    // T-101 5C.3b 전체 기본값 = 메인 AI (프로젝트 기본 AI가 있으면 그것이 먼저)
+    defaults: () =>
+      mainAiMod.mainAiSessionDefaults(
+        mainAiMod.readMainAi(join(home, 'settings.json')),
+        adapters().map((a) => a.id),
+      ),
+    ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
+  });
+  const imported = sessionRegistry.importLegacy(log);
+  if (projects.migrated !== undefined)
+    process.stderr.write(`워크스페이스 ${projects.migrated}개를 프로젝트로 옮겼어요 (workspaces.json.bak)\n`);
+  if (sessionRegistry.reindexed) process.stderr.write('세션 색인을 폴더에서 다시 만들었어요\n');
+  if (imported) process.stderr.write(`옛 세션 ${imported}개를 프로젝트에 연결했어요\n`);
   const dispatch = new Dispatcher({
     log,
+    sessions: sessionRegistry,
+    // T-101 2A.6 멈추면 정지 스냅샷 (<logs>/sessions/<id>/pause.json, 작업 트리는 바꾸지 않음)
+    onPaused: (s, c) => {
+      const snap = takePauseSnapshot({
+        sessionId: s.sessionId,
+        paused: s.paused!,
+        // 0-2 세션의 작업 폴더 (프로젝트 폴더), 없으면 서버 워크스페이스
+        cwd: sessionRegistry.get(s.sessionId)?.cwd ?? workspace,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        ...(c.itemId ? { itemId: c.itemId } : {}),
+        ...(c.nodeId ? { nodeId: c.nodeId } : {}),
+      });
+      return { snapshot: { file: 'pause.json', kind: snap.files.kind } };
+    },
+    // T-101 2B.6 실행 시작 때 agent.yaml·파이프라인·엔진 설정을 고정 (<logs>/sessions/<id>/pinned.json)
+    onCreated: (s, c) => {
+      const dir = registry()?.get(c.agent.name)?.dir;
+      pinRunVersion({
+        sessionId: s.sessionId,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        agent: c.agent.name,
+        pipeline: c.pipeline,
+        files: [
+          ...(dir ? [{ label: 'agent.yaml', path: join(dir, 'agent.yaml') }] : []),
+          { label: 'engines-settings.yaml', path: join(home, 'engines-settings.yaml') },
+        ],
+      });
+    },
     engines: () => adapters().map((a) => a.id),
     resolve: (name) => {
       const a = registry()?.get(name);
@@ -444,8 +530,12 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       const Runner = builder()?.PipelineRunner;
       if (!Runner) throw new Error('agent-builder 플러그인이 활성 상태가 아닙니다');
       const list = adapters();
-      const fallback =
-        i.agent.defaultEngine && i.agent.defaultEngine !== 'auto' ? i.agent.defaultEngine : list[0]?.id;
+      // T-101 5C.3/5C.5 기본 엔진: 에이전트 지정 → 메인 AI → 첫 엔진. @엔진 수식어(modifiers.engine)는 이번 실행만
+      const fallback = mainAiMod.pickRunEngine({
+        agentDefault: i.agent.defaultEngine,
+        main: mainEngine(),
+        available: list.map((a) => a.id),
+      });
       const runner = new Runner({
         engines: (id: string) => list.find((a) => a.id === id),
         ...((i.modifiers.engine ?? fallback) ? { defaultEngine: i.modifiers.engine ?? fallback } : {}),
@@ -454,6 +544,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         log,
         onEvent: i.onEvent,
         signal: i.signal,
+        // T-101 2B.9 엔진 자체 재개: 멈췄던 노드는 그 엔진 세션으로 (예: claude --resume)
+        ...(i.resume?.resumeIds ? { resumeIds: i.resume.resumeIds } : {}),
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
@@ -476,6 +568,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   // 새 도구 첫 실행 확인(permission-gate, <home>/tools/allowed.json) + 설치 도구 감지(읽기만)
   // P2-F.6 첫 실행 확인은 패널 카드(approval_request kind tool.first-run)로 묻는다
   const installWiring = wireInstaller({ plugins: loader.plugins, hooks, log });
+  // T-101 2A.5 전체 정지 → 진행 중인 설치도 중단 가능한 지점에서 멈추고 정리
+  if (installWiring) dispatch.addStopAllHook(() => installWiring.service.stopAll?.());
   // T-100 Part 3 도구 찾기: /api/tools/* + tools.request(MCP) + 도구 고르기 카드 이벤트 + 설치 후 자동 재개
   const toolWiring = installWiring
     ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })
@@ -489,6 +583,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
     const workspaces = new WorkspaceStore();
+    // 0B.31 프로젝트를 고르면 워크스페이스(쓰기 경계·터미널 cwd)도 같은 폴더로
+    projects.onChange((c) => {
+      if (c.type !== 'current' || !c.project || c.project.missing) return;
+      try {
+        workspaces.open(c.project.rootPath);
+      } catch {
+        /* 검증 거부 폴더는 워크스페이스로 쓰지 않는다 */
+      }
+    });
     const envToken = process.env.HARNESS_X_TOKEN;
     server = await startApiServer({
       loader,
@@ -501,6 +604,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       dispatch,
       agentsHome: home,
       gestures,
+      // T-101 0-1 설정 화면 API (/api/settings…): 키는 키체인에만, 플러그인 configSchema 자동 포함
+      settings: {
+        file: join(home, 'settings.json'),
+        secrets,
+        engines: () => loadEnginesSettings().engines,
+        plugins: () => [...loader.plugins.values()].map((p) => p.manifest),
+      },
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {
         const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
@@ -528,6 +638,30 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
         });
+        // T-101 2B 이어하기: 프로젝트의 미완료 세션 (GET /api/resume?projectId=)
+        registerResumeRoutes(app, {
+          log,
+          service: createResumeService({
+            log,
+            dispatcher: dispatch,
+            agentFor: (name) => {
+              const a = registry()?.get(name);
+              return a
+                ? {
+                    name: a.name,
+                    command: a.command,
+                    displayName: a.agent.displayName,
+                    ...(a.agent.icon ? { icon: a.agent.icon } : {}),
+                    pipeline: a.pipeline,
+                  }
+                : undefined;
+            },
+            engines: () => adapters().map((a) => a.id),
+            engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
+            fallback: () => fallbackTable(loadEnginesSettings().engines),
+            ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
+          }),
+        });
         // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
         inventory = builder()?.registerBuilderInventory?.(app, {
           plugins: () => loader.plugins.values(),
@@ -549,19 +683,44 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             gestures,
             agents: () => registry()?.summaries() ?? [],
           });
+        // T-101 5B.4 GET /api/models · /api/main-ai · PUT /api/sessions/:id/ai
+        registerModelRoutes(app, {
+          catalog: new ModelCatalog({
+            scan: () =>
+              existsSync(enginesCache)
+                ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
+                : null,
+            adapters,
+            authMode: (id) => {
+              try {
+                return loadEnginesSettings().engines[id]?.mode;
+              } catch {
+                return undefined;
+              }
+            },
+            cwd: workspace,
+          }),
+          settingsFile: join(home, 'settings.json'),
+          sessions: sessionAi,
+        });
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
         const register = mod()?.registerRescanRoute;
         if (!register) return;
         register(app, {
-          scan: async () => {
+          scan: async (reason) => {
             const s = mod()?.activeScanner?.();
             if (!s) throw new Error('engine-scanner가 활성 상태가 아닙니다');
-            return s.scan();
+            return s.scan(reason);
+          },
+          // T-101 5A 가운데 말풍선: GET /api/engines/scan-status
+          get progress() {
+            return mod()?.activeScanner?.()?.progress;
           },
         });
       },
       workspaces,
+      projects: { projects, sessions: sessionRegistry },
       ...(envToken && envToken.length >= 32 ? { token: envToken } : {}),
       ...(values['token-file'] ? { tokenFile: resolve(values['token-file']) } : {}),
       // 37.2 터미널 셸 cwd = 현재 워크스페이스 (폴더 선택기로 바꾸면 다음 셸부터 반영)

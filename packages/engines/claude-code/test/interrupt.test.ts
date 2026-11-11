@@ -75,9 +75,9 @@ describe.skipIf(process.platform === 'win32')('14.6 interrupt (프로세스 그�
     });
   });
 
-  it('SIGTERM을 무시해도 SIGKILL 승격으로 2초 내 종료 (AbortSignal 경로)', async () => {
+  it('SIGTERM을 무시해도 SIGKILL 승격으로 유예 3초(T-101 2A.4) 뒤 종료 (AbortSignal 경로)', async () => {
     const r = await runAndInterrupt({ HX_IGNORE_TERM: '1' }, 'signal');
-    expect(r.elapsed).toBeLessThan(2000);
+    expect(r.elapsed).toBeLessThan(5000);
     expect(isAlive(r.child)).toBe(false);
     expect(isAlive(r.grandchild)).toBe(false);
     expect(r.events.map((e) => e.type)).toEqual(['turn_end']);

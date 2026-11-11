@@ -12,14 +12,13 @@ import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js
 import { ChipMenu } from './ChipMenu.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
+import { StopButton, type StopControls } from './StopButton.js';
 import {
-  AUTH_LABEL,
   PERMISSION_DESC,
   PERMISSION_LABEL,
   RUNG_LABEL,
   type AttachEvent,
   type Attachment,
-  type AuthMode,
   type ComposerSettings,
   type EngineOption,
   type PermissionMode,
@@ -56,8 +55,18 @@ export interface ComposerProps {
    * 채우기만 하고 전송하지 않는다 — 전송은 사용자가 한다.
    */
   fill?: { text: string; seq: number };
+  /** T-101 0B.18 바깥에서 / 에이전트 칩 고르기 (seq가 바뀔 때마다) */
+  pinAgent?: { command: string; seq: number };
+  /** T-101 0B.14 바뀔 때마다 입력창에 커서 */
+  focusSeq?: number;
   /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
   toolbarExtra?: ReactNode;
+  /** T-101 5C.1 아래 줄 오른쪽(전송 버튼 왼쪽) `[엔진 · 모델 ▾]` — 예전 왼쪽 엔진 칩·인증 칩을 대신한다 */
+  modelPicker?: ReactNode;
+  /** 지금 고른 AI (메인 AI 등) — 보내는 지시의 엔진 */
+  ai?: { engine: string; model?: string } | undefined;
+  /** T-101 2A.8 실행 중이면 전송 버튼 자리가 [■ 정지] (일시정지·지금 멈추기, Esc 두 번) */
+  stop?: StopControls;
 }
 
 const isEnter = (e: KeyboardEvent) => e.key === 'Enter';
@@ -69,7 +78,7 @@ function pickEngine(engines: EngineOption[], wanted?: string): string {
 
 /**
  * 지시 입력창.
- * 아래 도구줄 순서 고정(컨셉 A): + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → (오른쪽 끝) 전송.
+ * 아래 도구줄 순서 고정: + → 권한 칩 → … (오른쪽) [엔진 · 모델 ▾] → 전송 (T-101 5C.1).
  * 그 아래 오른쪽에 판정 줄.
  */
 export function Composer({
@@ -88,7 +97,12 @@ export function Composer({
   compact,
   inputLabel = '지시 입력',
   fill,
+  pinAgent,
+  focusSeq,
   toolbarExtra,
+  modelPicker,
+  ai,
+  stop,
 }: ComposerProps) {
   const [text, setText] = useState('');
   // 바깥 채우기: 같은 seq는 한 번만 반영
@@ -99,6 +113,17 @@ export function Composer({
     setText((cur) => (cur.trim() ? `${cur.replace(/\s+$/, '')} ${fill.text}` : fill.text));
   }, [fill]);
   const slash = useSlashPalette({ agents, skills, text, setText });
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const pinned = useRef(0);
+  const { pick } = slash;
+  useEffect(() => {
+    if (!pinAgent || pinAgent.seq === pinned.current) return;
+    pinned.current = pinAgent.seq;
+    if (!pick(pinAgent.command)) setText(`${pinAgent.command} `);
+  }, [pinAgent, pick]);
+  useEffect(() => {
+    if (focusSeq) inputRef.current?.focus();
+  }, [focusSeq]);
   const [settings, setSettings] = useState<ComposerSettings>(() => ({
     engineId: pickEngine(engines, initialSettings?.engineId),
     auth: initialSettings?.auth ?? 'subscription',
@@ -114,10 +139,10 @@ export function Composer({
   // 엔진 목록이 늦게 도착하면(API) 사용 가능한 첫 엔진으로
   useEffect(() => {
     setSettings((s) => {
-      const engineId = pickEngine(engines, s.engineId);
+      const engineId = ai?.engine ?? pickEngine(engines, s.engineId);
       return engineId === s.engineId ? s : { ...s, engineId };
     });
-  }, [engines]);
+  }, [engines, ai?.engine]);
 
   const update = (patch: Partial<ComposerSettings>) => {
     const next = { ...settings, ...patch };
@@ -161,13 +186,6 @@ export function Composer({
     addFiles(Array.from(e.dataTransfer?.files ?? []), 'drop');
   };
 
-  const engine = engines.find((x) => x.id === settings.engineId);
-  const authOptions = (Object.keys(AUTH_LABEL) as AuthMode[]).map((v) => ({
-    value: v,
-    label: AUTH_LABEL[v],
-    disabled: engine?.auth ? !engine.auth.includes(v) : false,
-  }));
-
   return (
     <div
       className="hx-composer"
@@ -201,6 +219,7 @@ export function Composer({
       {slash.popover}
       {slash.chip}
       <textarea
+        ref={inputRef}
         {...slash.inputProps}
         className="hx-composer__input"
         aria-label={inputLabel}
@@ -252,29 +271,6 @@ export function Composer({
         {!compact && (
           <>
             <ChipMenu
-              name="엔진"
-              className="hx-chip--engine"
-              icon="◆"
-              value={settings.engineId}
-              valueLabel={engine?.label ?? '엔진 없음'}
-              options={engines.map((x) => ({
-                value: x.id,
-                label: x.label,
-                disabled: !x.available,
-                ...(x.available ? {} : { description: '감지 안 됨' }),
-              }))}
-              emptyText="감지된 엔진이 없습니다"
-              onChange={(engineId) => update({ engineId })}
-            />
-            <ChipMenu
-              name="인증"
-              className="hx-chip--auth"
-              value={settings.auth}
-              valueLabel={AUTH_LABEL[settings.auth]}
-              options={authOptions}
-              onChange={(auth) => update({ auth })}
-            />
-            <ChipMenu
               name="권한"
               className="hx-chip--permission"
               icon="◎"
@@ -290,10 +286,15 @@ export function Composer({
           </>
         )}
         <span className="hx-composer__spacer" />
+        {!compact && modelPicker}
         {toolbarExtra}
-        <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
-          ↑
-        </button>
+        {stop?.running ? (
+          <StopButton onPause={stop.onPause} onStopNow={stop.onStopNow} />
+        ) : (
+          <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
+            ↑
+          </button>
+        )}
       </div>
       {!compact && (
         <div className="hx-verdict" aria-live="polite" data-testid="verdict">

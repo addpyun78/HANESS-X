@@ -5,6 +5,7 @@ import { DryRunTab } from './DryRunTab.js';
 import type { Overlay } from './dryrun.js';
 import type { InspectorAction } from './model.js';
 import { NodeFields } from './NodeFields.js';
+import { AiChoiceField } from './AiChoiceField.js';
 import { YamlTab } from './YamlTab.js';
 import type { PipelineMeta } from './yaml.js';
 
@@ -63,7 +64,10 @@ export function InspectorPanel(p: InspectorPanelProps) {
             <NodeFields node={node} engines={p.catalog.engines} dispatch={p.dispatch} />
           </>
         ) : (
-          <p className="hx-inspector__empty">노드를 선택하세요</p>
+          <>
+            <p className="hx-inspector__empty">노드를 선택하세요</p>
+            <AiChoiceField graph={p.graph} mainEngine={p.catalog.mainEngine} dispatch={p.dispatch} />
+          </>
         ))}
       {tab === 'yaml' && <YamlTab graph={p.graph} meta={p.meta} dispatch={p.dispatch} onMeta={p.onMeta} />}
       {tab === 'dryrun' && (

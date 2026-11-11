@@ -38,7 +38,8 @@ export function EngineCard({ card, api, fallbackOptions, onSaved }: EngineCardPr
 }
 
 function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps) {
-  const [login, setLogin] = useState<LoginState>();
+  // T-101 5D.7 자동 상태: 스캔이 이미 확인했으면 그대로 보여 주고, 모를 때만 상태 명령으로 묻는다
+  const [login, setLogin] = useState<LoginState | undefined>(card.login);
   const [mode, setMode] = useState<AuthMode>(card.mode);
   const [keyInput, setKeyInput] = useState('');
   const [masked, setMasked] = useState(card.key?.masked);
@@ -48,6 +49,7 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
   const [error, setError] = useState<string>();
 
   useEffect(() => {
+    if (card.login) return;
     let live = true;
     api
       .login(card.id)
@@ -56,7 +58,7 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
     return () => {
       live = false;
     };
-  }, [api, card.id]);
+  }, [api, card.id, card.login]);
 
   const guard = async (fn: () => Promise<unknown>) => {
     setError(undefined);
@@ -204,9 +206,16 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
       </div>
 
       <div className="hx-engine-card__row">
-        <button type="button" className="hx-icon-btn" disabled={ping === 'running'} onClick={runPing}>
+        <button
+          type="button"
+          className="hx-icon-btn"
+          disabled={ping === 'running'}
+          onClick={runPing}
+          title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
+        >
           테스트 실행
         </button>
+        <span className="hx-engine-card__note">선택 · 상태는 자동으로 확인해요</span>
         {ping && (
           <span role="status" data-testid="ping-result" data-ok={ping !== 'running' && ping.ok}>
             {ping === 'running'

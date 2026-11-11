@@ -9,3 +9,4 @@ export * from './wsl.js';
 export * from './probes/index.js';
 export * from './scanner.js';
 export * from './plugin.js';
+export * from './progress.js';

@@ -12,35 +12,18 @@ const sendText = (t: string) => {
   fireEvent.keyDown(input(), { key: 'Enter' });
 };
 
-describe('엔진 칩 → 감지된 엔진 팝오버', () => {
-  it('클릭하면 목록이 뜨고, 고르면 다음 턴 엔진이 바뀐다', () => {
-    const { onSend, onSettingsChange } = renderComposer();
+describe('보내는 지시의 엔진 (T-101 5C: 엔진 칩 대신 오른쪽 아래 모델 버튼)', () => {
+  it('ai(메인 AI 등)를 주면 그 엔진으로 보낸다, 바뀌면 다음 턴부터', () => {
+    const { onSend, container } = renderComposer({ ai: { engine: 'codex', model: 'gpt-5.5' } });
+    expect(container.querySelector('.hx-chip--engine')).toBeNull();
     sendText('첫 턴');
-    expect(onSend.mock.calls[0]![0].settings.engineId).toBe('claude-code');
-
-    const chip = screen.getByLabelText('엔진: Claude Code');
-    expect(chip.getAttribute('aria-expanded')).toBe('false');
-    fireEvent.click(chip);
-    expect(chip.getAttribute('aria-expanded')).toBe('true');
-    const items = screen.getAllByRole('menuitemradio');
-    expect(items.map((i) => i.textContent)).toEqual(['✓Claude Code', 'Codex', 'Antigravity감지 안 됨']);
-    expect((items[2] as HTMLButtonElement).disabled).toBe(true); // 감지 안 된 엔진은 선택 불가
-    fireEvent.click(items[1]!);
-    expect(screen.queryByRole('menu')).toBeNull();
-    expect(onSettingsChange).toHaveBeenLastCalledWith(expect.objectContaining({ engineId: 'codex' }));
-
-    sendText('둘째 턴');
-    expect(onSend.mock.calls[1]![0].settings.engineId).toBe('codex');
+    expect(onSend.mock.calls[0]![0].settings.engineId).toBe('codex');
   });
 
-  it('Esc·바깥 클릭으로 닫힘', () => {
-    renderComposer();
-    fireEvent.click(screen.getByLabelText('엔진: Claude Code'));
-    fireEvent.keyDown(document, { key: 'Escape' });
-    expect(screen.queryByRole('menu')).toBeNull();
-    fireEvent.click(screen.getByLabelText('엔진: Claude Code'));
-    fireEvent.mouseDown(document.body);
-    expect(screen.queryByRole('menu')).toBeNull();
+  it('ai가 없으면 감지된 첫 엔진', () => {
+    const { onSend } = renderComposer();
+    sendText('첫 턴');
+    expect(onSend.mock.calls[0]![0].settings.engineId).toBe('claude-code');
   });
 
   it('GET /api/plugins 응답에서 엔진 감지', () => {

@@ -92,6 +92,8 @@ export interface CreateSessionRequest {
   agent: string;
   prompt: string;
   modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean };
+  /** T-101 0B.39 만들 때 저장할 프로젝트 */
+  projectId?: string;
 }
 
 export class ApiError extends Error {
@@ -237,6 +239,30 @@ export class HarnessApiClient {
     return this.request<DispatchSessionLike>(`/api/sessions/${encodeURIComponent(sessionId)}/subagents`, {
       method: 'POST',
       body: JSON.stringify({ agent }),
+    });
+  }
+
+  /** T-101 2A.2 ⏸ 일시정지 (안전한 지점에서 멈춤) */
+  pauseSession(sessionId: string) {
+    return this.request<{ state: string }>(`/api/sessions/${encodeURIComponent(sessionId)}/pause`, {
+      method: 'POST',
+      body: '{}',
+    });
+  }
+
+  /** T-101 2A.2 ⏹ 지금 멈추기 */
+  stopSession(sessionId: string) {
+    return this.request<{ state: string }>(`/api/sessions/${encodeURIComponent(sessionId)}/stop`, {
+      method: 'POST',
+      body: '{}',
+    });
+  }
+
+  /** T-101 2A.2 전체 정지 (실행 중 세션 전부) */
+  stopAllSessions() {
+    return this.request<{ results: { sessionId: string; state: string }[] }>('/api/sessions/stop-all', {
+      method: 'POST',
+      body: '{}',
     });
   }
 

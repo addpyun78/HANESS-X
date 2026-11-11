@@ -134,6 +134,16 @@
   background: var(--hx-success);
 }
 
+/* T-101 2A.9 멈춘 세션: "⏸ 멈춤 (사용자가 멈춤)" */
+.hx-status--paused .hx-dot {
+  background: var(--hx-warning);
+}
+
+.hx-session__paused {
+  color: var(--hx-warning);
+  font-size: var(--hx-font-12);
+}
+
 .hx-quotas {
   display: flex;
   gap: var(--hx-space-3);
@@ -409,5 +419,16 @@
   border-radius: var(--hx-radius);
   background: var(--hx-danger-soft);
   color: var(--hx-danger);
+  font-size: var(--hx-font-12);
+}
+
+/* T-101 2A.8 실행 세션 2개 이상: 상단 바 [전체 정지] */
+.hx-stop-all {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-danger);
+  border-radius: var(--hx-radius);
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+  cursor: pointer;
   font-size: var(--hx-font-12);
 }
