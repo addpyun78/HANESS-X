@@ -136,6 +136,7 @@ export class AttachmentStore {
     if (existing) {
       this.opts.events?.append({
         type: 'attachment_reused',
+        sessionId,
         attachmentId: id,
         sha256,
         path: existing.storedPath,
@@ -165,6 +166,7 @@ export class AttachmentStore {
     this.save(attachment);
     this.opts.events?.append({
       type: 'attachment_added',
+      sessionId,
       attachmentId: id,
       sha256,
       kind: det.kind,
