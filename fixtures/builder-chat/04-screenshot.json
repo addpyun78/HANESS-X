@@ -1,0 +1,50 @@
+{
+  "id": "04-screenshot",
+  "category": "clear",
+  "request": "화면을 찍어서 디자인 토큰이 맞는지 봐 주는 에이전트 만들어 줘.",
+  "replies": [
+    {
+      "name": "token-check",
+      "displayName": "디자인 토큰 확인",
+      "command": "/token-check",
+      "summary": "화면을 찍어서 살펴봐요.\n디자인 토큰이 맞는지 확인해요.\n고치지는 않고 결과만 알려 드려요.",
+      "nodes": [
+        {
+          "id": "shot",
+          "kind": "role",
+          "role": "화면 찍기 담당",
+          "duty": "other",
+          "engine": "claude-code",
+          "skills": [],
+          "tools": ["screenshot"],
+          "permission": "read-only",
+          "reason": "화면 찍기 담당에 맞는 AI와 스킬을 골랐어요."
+        },
+        {
+          "id": "check",
+          "kind": "role",
+          "role": "검사 담당",
+          "duty": "check",
+          "engine": "antigravity",
+          "skills": ["ui-tokens"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "검사 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [
+        {
+          "from": "shot",
+          "to": "check"
+        }
+      ],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "expect": {
+    "kind": "draft",
+    "nodes": ["shot", "check"],
+    "gaps": 0
+  }
+}

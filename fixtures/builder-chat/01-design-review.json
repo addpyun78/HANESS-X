@@ -1,0 +1,69 @@
+{
+  "id": "01-design-review",
+  "category": "clear",
+  "request": "임장노트 화면 디자인을 검수해 주는 에이전트 만들어 줘. 고치는 건 codex로.",
+  "replies": [
+    {
+      "name": "design-review",
+      "displayName": "화면 디자인 검수",
+      "command": "/design-review",
+      "summary": "임장노트 화면 디자인을 살펴보고 고쳐요.\n고치는 일은 codex가 맡아요.\n다른 AI가 결과를 검사해요.",
+      "nodes": [
+        {
+          "id": "plan",
+          "kind": "role",
+          "role": "계획 담당",
+          "duty": "plan",
+          "engine": "claude-code",
+          "skills": ["plan-writer"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "계획 담당에 맞는 AI와 스킬을 골랐어요."
+        },
+        {
+          "id": "build",
+          "kind": "role",
+          "role": "고치기 담당",
+          "duty": "write",
+          "engine": "codex",
+          "skills": ["kotlin-compose", "ui-tokens"],
+          "tools": [],
+          "permission": "workspace-write",
+          "reason": "말씀하신 대로 고치는 일은 codex에게 맡겼어요."
+        },
+        {
+          "id": "critic",
+          "kind": "role",
+          "role": "검사 담당",
+          "duty": "check",
+          "engine": "codex",
+          "skills": ["ui-audit"],
+          "tools": [],
+          "permission": "read-only",
+          "reason": "검사 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [
+        {
+          "from": "plan",
+          "to": "build"
+        },
+        {
+          "from": "build",
+          "to": "critic"
+        }
+      ],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "expect": {
+    "kind": "draft",
+    "nodes": ["plan", "build", "critic"],
+    "engines": {
+      "build": "codex"
+    },
+    "criticDiffers": true,
+    "gaps": 0
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "03-plan-only",
+  "category": "clear",
+  "request": "새 기능 작업 계획만 세워 주는 에이전트 만들어 줘.",
+  "replies": [
+    {
+      "name": "feature-plan",
+      "displayName": "작업 계획",
+      "command": "/feature-plan",
+      "summary": "새 기능을 만들기 전에 계획을 세워요.\n파일은 고치지 않고 읽기만 해요.\n계획은 글로 정리해 드려요.",
+      "nodes": [
+        {
+          "id": "plan",
+          "kind": "role",
+          "role": "계획 담당",
+          "duty": "plan",
+          "engine": "claude-code",
+          "skills": ["plan-writer"],
+          "tools": [],
+          "permission": "workspace-write",
+          "reason": "계획 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "expect": {
+    "kind": "draft",
+    "nodes": ["plan"],
+    "permissions": {
+      "plan": "read-only"
+    },
+    "gaps": 0
+  }
+}

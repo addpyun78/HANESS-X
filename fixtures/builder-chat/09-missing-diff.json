@@ -1,0 +1,35 @@
+{
+  "id": "09-missing-diff",
+  "category": "missing",
+  "request": "화면 스크린샷 두 장을 비교해서 달라진 곳을 알려 주는 에이전트 만들어 줘.",
+  "replies": [
+    {
+      "name": "shot-compare",
+      "displayName": "스크린샷 비교",
+      "command": "/shot-compare",
+      "summary": "스크린샷 두 장을 비교해요.\n달라진 곳을 알려 드려요.\n파일은 고치지 않아요.",
+      "nodes": [
+        {
+          "id": "compare",
+          "kind": "role",
+          "role": "비교 담당",
+          "duty": "check",
+          "engine": "claude-code",
+          "skills": ["screenshot-diff"],
+          "tools": ["screenshot"],
+          "permission": "read-only",
+          "reason": "비교 담당에 맞는 AI와 스킬을 골랐어요."
+        }
+      ],
+      "edges": [],
+      "gaps": [],
+      "estimatedCostHint": "구독 범위 안에서 한 번에 10분 정도 걸려요."
+    }
+  ],
+  "expect": {
+    "kind": "draft",
+    "nodes": ["compare"],
+    "gapsMin": 1,
+    "fakeIds": ["screenshot-diff"]
+  }
+}
