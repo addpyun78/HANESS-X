@@ -1,5 +1,7 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { DispatchError, type Dispatcher, type DispatchModifiers } from '../dispatch.js';
+import { createDraftFromRequest, sendProjectError } from '../projects/routes.js';
+import type { SessionRegistry } from '../projects/session-registry.js';
 
 /**
  * 48.1 / 실행 디스패치 API
@@ -8,6 +10,7 @@ import { DispatchError, type Dispatcher, type DispatchModifiers } from '../dispa
  * - GET  /api/sessions            → {sessions: [...]} (현재 노드·진행률)
  * - GET  /api/sessions/:id        → 세션
  * - POST /api/sessions/:id/subagents {agent} → 48.4 실행 중 세션에 서브에이전트 추가
+ * - T-101 0B.11 POST /api/sessions {projectId?} (agent 없음) → 초안 세션 (registry가 있을 때)
  */
 
 const STATUS: Record<DispatchError['code'], number> = {
@@ -25,13 +28,34 @@ function fail(reply: FastifyReply, err: unknown) {
   throw err;
 }
 
-export function registerSessionRoutes(app: FastifyInstance, dispatcher: Dispatcher): void {
+export function registerSessionRoutes(
+  app: FastifyInstance,
+  dispatcher: Dispatcher,
+  registry?: SessionRegistry,
+): void {
   app.post('/api/sessions', async (req, reply) => {
-    const body = (req.body ?? {}) as { agent?: unknown; prompt?: unknown; modifiers?: unknown };
+    const body = (req.body ?? {}) as {
+      agent?: unknown;
+      prompt?: unknown;
+      modifiers?: unknown;
+      projectId?: unknown;
+      origin?: unknown;
+    };
+    if (registry && body.agent === undefined) {
+      try {
+        return reply.code(201).send(createDraftFromRequest(registry, body));
+      } catch (err) {
+        return sendProjectError(reply, err);
+      }
+    }
     try {
       const session = dispatcher.dispatch({
         agent: typeof body.agent === 'string' ? body.agent : '',
         prompt: typeof body.prompt === 'string' ? body.prompt : '',
+        ...(typeof body.projectId === 'string' && body.projectId ? { projectId: body.projectId } : {}),
+        ...(body.origin === 'cli' || body.origin === 'api' || body.origin === 'resume'
+          ? { origin: body.origin }
+          : {}),
         ...(body.modifiers && typeof body.modifiers === 'object'
           ? { modifiers: body.modifiers as Partial<DispatchModifiers> }
           : {}),

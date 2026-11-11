@@ -1,0 +1,624 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝트 머리글 + [폴더 열기] / 프로젝트 묶음 / 묶기·필터 / 하단 메뉴 (스냅샷) 1`] = `
+<nav
+  aria-label="사이드바"
+  class="hx-sidebar hx-psidebar"
+>
+  <div
+    aria-label="새 세션"
+    class="hx-newsession"
+    role="group"
+  >
+    <button
+      class="hx-newsession__main"
+      title="지금 프로젝트에서 새 세션 (Ctrl+N)"
+      type="button"
+    >
+      + 새 세션
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      aria-label="프로젝트 골라서 새 세션"
+      class="hx-newsession__more"
+      title="프로젝트 골라서 새 세션 (Ctrl+Shift+N)"
+      type="button"
+    >
+      ▾
+    </button>
+  </div>
+  <input
+    aria-label="세션·프로젝트 찾기"
+    class="hx-psidebar__search"
+    placeholder="🔍 세션·프로젝트 찾기"
+    type="search"
+    value=""
+  />
+  <div
+    class="hx-psidebar__head"
+  >
+    <h2>
+      프로젝트
+    </h2>
+    <button
+      type="button"
+    >
+      폴더 열기
+    </button>
+  </div>
+  <ul
+    aria-label="프로젝트 목록"
+    class="hx-psidebar__groups"
+  >
+    <li
+      class="hx-pgroup"
+      data-group="p1"
+      draggable="true"
+    >
+      <div
+        aria-current="true"
+        class="hx-pgroup__row"
+      >
+        <button
+          aria-expanded="true"
+          aria-label="imjang-note 접기"
+          class="hx-pgroup__toggle"
+          type="button"
+        >
+          ▾
+        </button>
+        <button
+          class="hx-pgroup__name"
+          type="button"
+        >
+          <span
+            aria-label="고정됨"
+            class="hx-pgroup__pin"
+          >
+            📌
+          </span>
+          <span
+            aria-hidden="true"
+          >
+            📁 
+          </span>
+          imjang-note
+        </button>
+        <span
+          aria-label="브랜치 main"
+          class="hx-pgroup__branch"
+        >
+          main
+        </span>
+        <span
+          aria-label="진행 중 2개"
+          class="hx-pgroup__running"
+        >
+          ●
+          2
+        </span>
+        <button
+          aria-label="imjang-note에서 새 세션"
+          class="hx-pgroup__new"
+          type="button"
+        >
+          +
+        </button>
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          aria-label="imjang-note 메뉴"
+          class="hx-pgroup__more"
+          type="button"
+        >
+          …
+        </button>
+      </div>
+      <ul
+        aria-label="imjang-note 세션"
+        class="hx-pgroup__sessions"
+      >
+        <li
+          class="hx-srow hx-srow--running"
+          data-session-id="s1"
+        >
+          <button
+            aria-current="true"
+            class="hx-srow__main"
+            type="button"
+          >
+            <span
+              aria-label="진행 중"
+              class="hx-srow__state"
+              role="img"
+            >
+              ●
+            </span>
+            <span
+              class="hx-srow__title"
+            >
+              design-qa
+            </span>
+            <span
+              aria-label="에이전트 design-qa"
+              class="hx-srow__agent"
+              role="img"
+            >
+              🎨
+            </span>
+            <span
+              aria-label="모드 오토"
+              class="hx-srow__mode"
+            >
+              오토
+            </span>
+            <time
+              class="hx-srow__time"
+              datetime="2026-11-12T11:58:00.000Z"
+            >
+              2분 전
+            </time>
+          </button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            aria-label="design-qa 메뉴"
+            class="hx-srow__more"
+            type="button"
+          >
+            …
+          </button>
+        </li>
+        <li
+          class="hx-srow hx-srow--needs-approval"
+          data-session-id="s2"
+        >
+          <button
+            class="hx-srow__main"
+            type="button"
+          >
+            <span
+              aria-label="확인 필요"
+              class="hx-srow__state"
+              role="img"
+            >
+              ✋
+            </span>
+            <span
+              class="hx-srow__title"
+            >
+              API 리팩터
+            </span>
+            <time
+              class="hx-srow__time"
+              datetime="2026-11-12T11:30:00.000Z"
+            >
+              30분 전
+            </time>
+          </button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            aria-label="API 리팩터 메뉴"
+            class="hx-srow__more"
+            type="button"
+          >
+            …
+          </button>
+        </li>
+        <li
+          class="hx-srow hx-srow--paused"
+          data-session-id="s3"
+        >
+          <button
+            class="hx-srow__main"
+            type="button"
+          >
+            <span
+              aria-label="멈춤"
+              class="hx-srow__state"
+              role="img"
+            >
+              ⏸
+            </span>
+            <span
+              class="hx-srow__title"
+            >
+              로고 수정
+            </span>
+            <time
+              class="hx-srow__time"
+              datetime="2026-11-12T07:00:00.000Z"
+            >
+              5시간 전
+            </time>
+          </button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            aria-label="로고 수정 메뉴"
+            class="hx-srow__more"
+            type="button"
+          >
+            …
+          </button>
+        </li>
+        <li
+          class="hx-pgroup__done"
+        >
+          <button
+            aria-expanded="false"
+            type="button"
+          >
+            ▸
+             완료됨 (
+            12
+            )
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="hx-pgroup"
+      data-group="p2"
+      draggable="true"
+    >
+      <div
+        class="hx-pgroup__row"
+      >
+        <button
+          aria-expanded="true"
+          aria-label="harness-x 접기"
+          class="hx-pgroup__toggle"
+          type="button"
+        >
+          ▾
+        </button>
+        <button
+          class="hx-pgroup__name"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            📁 
+          </span>
+          harness-x
+        </button>
+        <span
+          aria-label="브랜치 main"
+          class="hx-pgroup__branch"
+        >
+          main
+        </span>
+        <button
+          aria-label="harness-x에서 새 세션"
+          class="hx-pgroup__new"
+          type="button"
+        >
+          +
+        </button>
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          aria-label="harness-x 메뉴"
+          class="hx-pgroup__more"
+          type="button"
+        >
+          …
+        </button>
+      </div>
+      <ul
+        aria-label="harness-x 세션"
+        class="hx-pgroup__sessions"
+      >
+        <li
+          class="hx-srow hx-srow--idle"
+          data-session-id="s4"
+        >
+          <button
+            class="hx-srow__main"
+            type="button"
+          >
+            <span
+              aria-label="대기"
+              class="hx-srow__state"
+              role="img"
+            >
+              ○
+            </span>
+            <span
+              class="hx-srow__title"
+            >
+              하네스 작업
+            </span>
+            <time
+              class="hx-srow__time"
+              datetime="2026-11-09T12:00:00.000Z"
+            >
+              3일 전
+            </time>
+          </button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            aria-label="하네스 작업 메뉴"
+            class="hx-srow__more"
+            type="button"
+          >
+            …
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="hx-pgroup"
+      data-group="p3"
+      data-missing="true"
+      draggable="true"
+    >
+      <div
+        class="hx-pgroup__row"
+      >
+        <button
+          aria-expanded="true"
+          aria-label="a2a 접기"
+          class="hx-pgroup__toggle"
+          type="button"
+        >
+          ▾
+        </button>
+        <button
+          class="hx-pgroup__name"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            📁 
+          </span>
+          a2a
+        </button>
+        <button
+          aria-label="a2a에서 새 세션"
+          class="hx-pgroup__new"
+          disabled=""
+          type="button"
+        >
+          +
+        </button>
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          aria-label="a2a 메뉴"
+          class="hx-pgroup__more"
+          type="button"
+        >
+          …
+        </button>
+        <span
+          class="hx-pgroup__missing"
+          role="status"
+        >
+          ⚠ 폴더를 찾을 수 없어요
+          <button
+            type="button"
+          >
+            다시 연결
+          </button>
+        </span>
+      </div>
+      <ul
+        aria-label="a2a 세션"
+        class="hx-pgroup__sessions"
+      />
+    </li>
+  </ul>
+  <div
+    aria-label="묶기와 필터"
+    class="hx-psidebar__controls"
+    role="group"
+  >
+    <label>
+      묶기
+      <select
+        aria-label="묶기"
+      >
+        <option
+          value="project"
+        >
+          프로젝트
+        </option>
+        <option
+          value="status"
+        >
+          상태
+        </option>
+        <option
+          value="date"
+        >
+          날짜
+        </option>
+        <option
+          value="none"
+        >
+          묶지 않음
+        </option>
+      </select>
+    </label>
+    <label>
+      정렬
+      <select
+        aria-label="정렬"
+      >
+        <option
+          value="recent"
+        >
+          최근 활동
+        </option>
+        <option
+          value="name"
+        >
+          이름순
+        </option>
+        <option
+          value="manual"
+        >
+          내가 정한 순서
+        </option>
+      </select>
+    </label>
+    <label>
+      필터
+      <select
+        aria-label="상태 필터"
+      >
+        <option
+          value="all"
+        >
+          전체
+        </option>
+        <option
+          value="running"
+        >
+          진행 중
+        </option>
+        <option
+          value="needs-approval"
+        >
+          확인 필요
+        </option>
+        <option
+          value="paused"
+        >
+          멈춤
+        </option>
+        <option
+          value="done"
+        >
+          완료
+        </option>
+        <option
+          value="idle"
+        >
+          대기
+        </option>
+        <option
+          value="error"
+        >
+          문제 있음
+        </option>
+      </select>
+    </label>
+    <select
+      aria-label="엔진 필터"
+    >
+      <option
+        value="all"
+      >
+        모든 AI
+      </option>
+      <option>
+        claude-code
+      </option>
+    </select>
+    <select
+      aria-label="에이전트 필터"
+    >
+      <option
+        value="all"
+      >
+        모든 에이전트
+      </option>
+      <option>
+        design-qa
+      </option>
+    </select>
+  </div>
+  <div
+    aria-label="하단 메뉴"
+    class="hx-sidebar__nav"
+    role="menu"
+  >
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ✦
+      </span>
+      에이전트 만들기
+    </button>
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ⧉
+      </span>
+      플러그인
+    </button>
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ◇
+      </span>
+      스킬
+    </button>
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ⬇
+      </span>
+      설치 관리
+    </button>
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ⚙
+      </span>
+      엔진
+    </button>
+    <button
+      class="hx-nav-item"
+      role="menuitem"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ☰
+      </span>
+      설정
+    </button>
+  </div>
+</nav>
+`;
+
+exports[`0B.24 세션 줄 > 상태 아이콘 ● ✋ ⏸ ✓, 제목, 에이전트 아이콘, 모드 배지, 마지막 활동 시각 (스냅샷) 1`] = `
+"<li class="hx-srow hx-srow--running" data-session-id="s1"><button type="button" class="hx-srow__main" aria-current="true"><span class="hx-srow__state" role="img" aria-label="진행 중">●</span><span class="hx-srow__title">design-qa</span><span class="hx-srow__agent" role="img" aria-label="에이전트 design-qa">🎨</span><span class="hx-srow__mode" aria-label="모드 오토">오토</span><time class="hx-srow__time" datetime="2026-11-12T11:58:00.000Z">2분 전</time></button><button type="button" class="hx-srow__more" aria-label="design-qa 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
+<li class="hx-srow hx-srow--needs-approval" data-session-id="s2"><button type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="확인 필요">✋</span><span class="hx-srow__title">API 리팩터</span><time class="hx-srow__time" datetime="2026-11-12T11:30:00.000Z">30분 전</time></button><button type="button" class="hx-srow__more" aria-label="API 리팩터 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>
+<li class="hx-srow hx-srow--paused" data-session-id="s3"><button type="button" class="hx-srow__main"><span class="hx-srow__state" role="img" aria-label="멈춤">⏸</span><span class="hx-srow__title">로고 수정</span><time class="hx-srow__time" datetime="2026-11-12T07:00:00.000Z">5시간 전</time></button><button type="button" class="hx-srow__more" aria-label="로고 수정 메뉴" aria-haspopup="menu" aria-expanded="false">…</button></li>"
+`;

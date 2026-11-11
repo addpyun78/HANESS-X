@@ -163,3 +163,16 @@ export function pickRunEngine(o: {
   if (o.main && (o.available.length === 0 || o.available.includes(o.main))) return o.main;
   return o.available[0];
 }
+
+/**
+ * 5C.3b 새 세션의 전체 기본값(0-2 GlobalDefaultsSource): 메인 AI → (메인이 없거나 못 쓰면) 첫 엔진.
+ * 프로젝트 기본 AI(project.defaults.engine/model)가 있으면 resolveSessionDefaults가 이 값보다 먼저 쓴다.
+ */
+export function mainAiSessionDefaults(
+  main: MainAi | undefined,
+  available: readonly string[],
+): { engine?: string; model?: string } {
+  const engine = pickRunEngine({ main: main?.engine, available });
+  if (!engine) return {};
+  return engine === main?.engine && main.model ? { engine, model: main.model } : { engine };
+}

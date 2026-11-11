@@ -28,3 +28,7 @@ export * from './quota.js';
 export * from './models.js';
 export * from './main-ai.js';
 export * from './api/models-routes.js';
+export * from './path-normalize.js';
+export * from './projects/index.js';
+export * from './settings/index.js';
+export * from './api/settings-routes.js';

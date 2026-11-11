@@ -191,6 +191,9 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
                              설치 계획을 글로 보고 y/n으로 설치 (화면 없이)
   harness-x tools list       설치된 도구 목록
   harness-x tools allow <id> 새 도구 첫 실행을 앞으로 허락
+  harness-x run <에이전트> <지시> [--project <id|경로>]
+                             켜져 있는 서버에서 새 세션 시작 (화면 사이드바에 바로 보임)
+  harness-x reindex          세션 색인 다시 만들기 (sessions/ 폴더를 다시 읽음)
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -254,6 +257,11 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       return 1;
     }
     return mod.installCli(argv, { input: process.stdin, output: process.stdout });
+  }
+  // T-101 0B.37 / 0B.9 세션 시작(서버의 createSession으로) · 색인 다시 만들기
+  if (argv[0] === 'run' || argv[0] === 'reindex') {
+    const { runCli, reindexCli } = await import('./projects/cli-commands.js');
+    return argv[0] === 'run' ? runCli(argv.slice(1)) : reindexCli();
   }
   const { values, positionals } = parseArgs({
     args: argv,
@@ -435,8 +443,34 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const forge = () => loader.plugins.get('forge')?.module as ForgePluginModule | undefined;
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
+  // T-101 0-2 프로젝트·세션 등록부: workspaces.json → projects.json(처음 1회), 옛 세션 가져오기(0B.5),
+  // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 메인 AI(T-101 5C.3b), 없으면 첫 엔진
+  const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
+  const projects = new ProjectStore({ home });
+  const plainTitle = (
+    loader.plugins.get('approvals')?.module as
+      { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
+  )?.checkPlainKorean;
+  const sessionRegistry = new SessionRegistry({
+    home,
+    projects,
+    log,
+    // T-101 5C.3b 전체 기본값 = 메인 AI (프로젝트 기본 AI가 있으면 그것이 먼저)
+    defaults: () =>
+      mainAiMod.mainAiSessionDefaults(
+        mainAiMod.readMainAi(join(home, 'settings.json')),
+        adapters().map((a) => a.id),
+      ),
+    ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
+  });
+  const imported = sessionRegistry.importLegacy(log);
+  if (projects.migrated !== undefined)
+    process.stderr.write(`워크스페이스 ${projects.migrated}개를 프로젝트로 옮겼어요 (workspaces.json.bak)\n`);
+  if (sessionRegistry.reindexed) process.stderr.write('세션 색인을 폴더에서 다시 만들었어요\n');
+  if (imported) process.stderr.write(`옛 세션 ${imported}개를 프로젝트에 연결했어요\n`);
   const dispatch = new Dispatcher({
     log,
+    sessions: sessionRegistry,
     engines: () => adapters().map((a) => a.id),
     resolve: (name) => {
       const a = registry()?.get(name);
@@ -505,6 +539,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
     const workspaces = new WorkspaceStore();
+    // 0B.31 프로젝트를 고르면 워크스페이스(쓰기 경계·터미널 cwd)도 같은 폴더로
+    projects.onChange((c) => {
+      if (c.type !== 'current' || !c.project || c.project.missing) return;
+      try {
+        workspaces.open(c.project.rootPath);
+      } catch {
+        /* 검증 거부 폴더는 워크스페이스로 쓰지 않는다 */
+      }
+    });
     const envToken = process.env.HARNESS_X_TOKEN;
     server = await startApiServer({
       loader,
@@ -517,6 +560,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       dispatch,
       agentsHome: home,
       gestures,
+      // T-101 0-1 설정 화면 API (/api/settings…): 키는 키체인에만, 플러그인 configSchema 자동 포함
+      settings: {
+        file: join(home, 'settings.json'),
+        secrets,
+        engines: () => loadEnginesSettings().engines,
+        plugins: () => [...loader.plugins.values()].map((p) => p.manifest),
+      },
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {
         const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
@@ -602,6 +652,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         });
       },
       workspaces,
+      projects: { projects, sessions: sessionRegistry },
       ...(envToken && envToken.length >= 32 ? { token: envToken } : {}),
       ...(values['token-file'] ? { tokenFile: resolve(values['token-file']) } : {}),
       // 37.2 터미널 셸 cwd = 현재 워크스페이스 (폴더 선택기로 바꾸면 다음 셸부터 반영)

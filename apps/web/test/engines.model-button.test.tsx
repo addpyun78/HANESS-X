@@ -14,6 +14,7 @@ import {
 import { ModelButton } from '../src/engines/ModelButton.js';
 import { useEngines } from '../src/engines/useEngines.js';
 import type { ProjectDefaults } from '../src/engines/useMainAi.js';
+import { useProjectAi } from '../src/engines/useProjectAi.js';
 import { ENGINES } from './composer.helpers.js';
 import { done, fakeScanApi, MODELS } from './engines-fixtures.js';
 
@@ -206,5 +207,24 @@ describe('T-101 5C 입력창 오른쪽 아래 모델 선택 = 메인 AI', () => 
       audio: false,
     });
     expect(mainAiInputs({ engine: 'nope' }, MODELS)).toBeUndefined();
+  });
+});
+
+describe('T-101 5C.3b 실제 프로젝트 기본값(0-2 project.defaults) 연결', () => {
+  it('useProjectAi: project.defaults.engine/model을 읽고 [이 프로젝트 기본으로]는 PATCH /api/projects/:id (다른 기본값 유지)', async () => {
+    const patch = vi.fn(async () => ({}));
+    const project = { id: 'p1', defaults: { engine: 'claude-code', model: 'opus', mode: 'plan' } };
+    function Host() {
+      const src = useProjectAi(project, patch);
+      return <Screen api={fakeScanApi([done()])} {...(src ? { project: src } : {})} sessionId="s9" />;
+    }
+    render(<Host />);
+    const menu = await openMenu('AI: claude-code · opus (이 프로젝트 기본)');
+    fireEvent.click(within(menu).getByText('llama3'));
+    fireEvent.click(within(menu).getByText('이 프로젝트 기본으로'));
+    await screen.findByLabelText('AI: ollama · llama3 (이 프로젝트 기본)');
+    expect(patch).toHaveBeenCalledWith('p1', {
+      defaults: { engine: 'ollama', model: 'llama3', mode: 'plan' },
+    });
   });
 });

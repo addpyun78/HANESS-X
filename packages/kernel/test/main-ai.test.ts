@@ -115,3 +115,25 @@ describe('T-101 5C.5 @엔진 수식어는 이번 실행만 (메인 불변)', () 
     expect(readMainAi(f)).toEqual({ engine: 'claude-code', model: 'sonnet' });
   });
 });
+
+describe('T-101 5C.3b 0-2 프로젝트 기본값과 연결 (GlobalDefaultsSource = 메인 AI)', () => {
+  it('전체 기본값은 메인 AI, 프로젝트 기본 AI가 있으면 그것이 먼저 ("이 프로젝트 기본" 표시용 from)', async () => {
+    const { mainAiSessionDefaults } = await import('../src/main-ai.js');
+    const { resolveSessionDefaults } = await import('../src/projects/defaults.js');
+    const main = { engine: 'codex', model: 'gpt-5.5' };
+    const global = mainAiSessionDefaults(main, ['claude-code', 'codex']);
+    expect(global).toEqual({ engine: 'codex', model: 'gpt-5.5' });
+    expect(resolveSessionDefaults(undefined, global)).toMatchObject({
+      engine: 'codex',
+      model: 'gpt-5.5',
+      from: { engine: 'global', model: 'global' },
+    });
+    expect(
+      resolveSessionDefaults({ defaults: { engine: 'claude-code', model: 'opus' } }, global),
+    ).toMatchObject({ engine: 'claude-code', model: 'opus', from: { engine: 'project', model: 'project' } });
+    // 메인이 없거나 못 쓰면 첫 엔진 (모델은 비움)
+    expect(mainAiSessionDefaults(undefined, ['claude-code'])).toEqual({ engine: 'claude-code' });
+    expect(mainAiSessionDefaults(main, ['claude-code'])).toEqual({ engine: 'claude-code' });
+    expect(mainAiSessionDefaults(undefined, [])).toEqual({});
+  });
+});

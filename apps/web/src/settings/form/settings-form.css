@@ -1,0 +1,159 @@
+/* T-101 0-1 설정 폼 자동 렌더러 — 색은 토큰 변수만 */
+
+.hx-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-5);
+  font-size: var(--hx-font-13);
+}
+
+.hx-settings-form__top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hx-settings-form__confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-settings-form__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-3);
+}
+
+.hx-settings-form__section-head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-3);
+}
+
+.hx-settings-form__section-head h3 {
+  margin: 0;
+  font-size: var(--hx-font-16);
+}
+
+.hx-settings-form__section-desc,
+.hx-settings-form__empty,
+.hx-setting__desc,
+.hx-setting__hint,
+.hx-setting__range {
+  margin: 0;
+  color: var(--hx-text-muted);
+}
+
+.hx-settings-form__plugin h4 {
+  margin: var(--hx-space-2) 0;
+  font-size: var(--hx-font-14);
+}
+
+.hx-setting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+}
+
+.hx-setting__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-setting__title {
+  font-weight: 600;
+}
+
+.hx-setting__tag {
+  padding: 0 var(--hx-space-1);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-setting__reset {
+  margin-left: auto;
+}
+
+.hx-setting__link {
+  border: 0;
+  background: none;
+  color: var(--hx-accent);
+  cursor: pointer;
+}
+
+.hx-setting__control,
+.hx-setting__number,
+.hx-setting__secret,
+.hx-setting__folder,
+.hx-setting__list-add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-setting__input,
+.hx-setting__select {
+  min-width: 200px;
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+}
+
+.hx-setting__input--number {
+  min-width: 100px;
+  width: 120px;
+}
+
+.hx-setting__switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+  color: var(--hx-text);
+  cursor: pointer;
+}
+
+.hx-setting__switch-knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--hx-text-muted);
+}
+
+.hx-setting__switch[aria-checked='true'] .hx-setting__switch-knob {
+  background: var(--hx-accent);
+}
+
+.hx-setting__list-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-setting__list-item {
+  display: flex;
+  gap: var(--hx-space-2);
+}
+
+.hx-setting__error {
+  margin: 0;
+  color: var(--hx-danger);
+}
+
+.hx-setting__warn,
+.hx-setting__notice {
+  margin: 0;
+  color: var(--hx-text-muted);
+}
