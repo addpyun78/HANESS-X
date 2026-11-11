@@ -10,6 +10,12 @@ import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
+import {
+  checklistRunnerOptions,
+  installerConfig,
+  readSettingsFile,
+  sessionDefaultsFromSettings,
+} from './settings/runtime.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
 
@@ -391,6 +397,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     hooks,
     log,
     roots,
+    // T-101 6B.7 설치 도구 켜기 (설정 installer.chocoEnabled — 다시 시작하면 적용)
+    config: { installer: installerConfig(readSettingsFile(join(home, 'settings.json'))) },
     logger: (l) => process.stderr.write(l + '\n'),
   });
   const active = await loader.loadAll();
@@ -445,7 +453,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     log,
     defaults: () => {
       const first = adapters()[0]?.id;
-      return first ? { engine: first } : {};
+      // T-101 6B.3 기본 허락 범위 (설정 permission.default)
+      const fromSettings = sessionDefaultsFromSettings(readSettingsFile(join(home, 'settings.json')));
+      return first ? { engine: first, ...fromSettings } : fromSettings;
     },
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
@@ -486,6 +496,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         log,
         onEvent: i.onEvent,
         signal: i.signal,
+        // T-101 6B.4 체크리스트 설정(엄격하게 확인하기·정체 감지 기준·최대 횟수) — 실행마다 다시 읽음
+        ...checklistRunnerOptions(readSettingsFile(join(home, 'settings.json'))),
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,

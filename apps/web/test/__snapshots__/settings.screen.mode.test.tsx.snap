@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.3 모드·권한 > 기본 허락 범위가 보이고 바꾸면 settings.json에 저장된다 (스냅샷) 1`] = `
+[
+  <div
+    class="hx-setting"
+    data-setting-key="permission.default"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-permission-default"
+      >
+        기본 허락 범위
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      새 작업이 처음에 가질 허락 범위예요. 프로젝트 설정에서 프로젝트마다 바꿀 수도 있어요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-permission-default"
+      >
+        <option
+          value="read-only"
+        >
+          읽기만
+        </option>
+        <option
+          value="workspace-write"
+        >
+          작업 폴더 안에서 고치기
+        </option>
+        <option
+          value="full"
+        >
+          모두 허락
+        </option>
+      </select>
+    </div>
+  </div>,
+]
+`;
