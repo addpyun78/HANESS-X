@@ -85,6 +85,78 @@
   font-size: 15px;
 }
 
+/* Part 2 D.2 무료/유료 배지: 초록·파랑·주황·빨강·노랑 */
+.hx-action-card__badge--green,
+.hx-action-card__badge--blue,
+.hx-action-card__badge--orange,
+.hx-action-card__badge--red,
+.hx-action-card__badge--yellow {
+  padding: 0 var(--hx-space-1);
+  border: 1px solid currentcolor;
+  border-radius: var(--hx-radius);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hx-action-card__badge--green {
+  background: var(--hx-success-soft);
+  color: var(--hx-success);
+}
+
+.hx-action-card__badge--blue {
+  background: var(--hx-info-soft);
+  color: var(--hx-info);
+}
+
+.hx-action-card__badge--orange {
+  background: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--hx-warning) 50%, var(--hx-danger)) 16%,
+    var(--hx-bg)
+  );
+  color: color-mix(in srgb, var(--hx-warning) 50%, var(--hx-danger));
+}
+
+.hx-action-card__badge--red {
+  background: var(--hx-danger-soft);
+  color: var(--hx-danger);
+}
+
+.hx-action-card__badge--yellow {
+  background: var(--hx-warning-soft);
+  color: var(--hx-text);
+}
+
+.hx-action-card__subtitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hx-action-card__status {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  margin: 0;
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}
+
+.hx-action-card__spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--hx-border);
+  border-top-color: var(--hx-accent);
+  border-radius: 50%;
+  animation: hx-action-card-spin 1s linear infinite;
+}
+
+@keyframes hx-action-card-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .hx-action-card__section h4 {
   margin: 0;
   font-size: 15px;
