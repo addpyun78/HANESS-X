@@ -1,0 +1,65 @@
+{
+  "kind": "exitCode",
+  "cases": [
+    {
+      "name": "0 vs 0",
+      "expected": 0,
+      "actual": 0,
+      "expect": "equal"
+    },
+    {
+      "name": "문자열 0",
+      "expected": "0",
+      "actual": 0,
+      "expect": "equal"
+    },
+    {
+      "name": "1 vs 1",
+      "expected": 1,
+      "actual": 1,
+      "expect": "equal"
+    },
+    {
+      "name": "2 vs \"2\"",
+      "expected": 2,
+      "actual": "2",
+      "expect": "equal"
+    },
+    {
+      "name": "127",
+      "expected": 127,
+      "actual": 127,
+      "expect": "equal"
+    },
+    {
+      "name": "0 vs 1",
+      "expected": 0,
+      "actual": 1,
+      "expect": "different"
+    },
+    {
+      "name": "1 vs 0",
+      "expected": 1,
+      "actual": 0,
+      "expect": "different"
+    },
+    {
+      "name": "공백 포함",
+      "expected": 0,
+      "actual": " 0",
+      "expect": "different"
+    },
+    {
+      "name": "killed",
+      "expected": 0,
+      "actual": "killed",
+      "expect": "different"
+    },
+    {
+      "name": "신호 종료 137",
+      "expected": 0,
+      "actual": 137,
+      "expect": "different"
+    }
+  ]
+}

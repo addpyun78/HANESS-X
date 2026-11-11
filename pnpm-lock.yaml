@@ -607,12 +607,18 @@ importers:
 
   packages/plugins-core/verifiers/ladder:
     dependencies:
+      '@harness-x/approvals':
+        specifier: workspace:*
+        version: link:../../approvals
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../../checklist-ledger
       '@harness-x/comparators':
         specifier: workspace:*
         version: link:../comparators
+      '@harness-x/judge':
+        specifier: workspace:*
+        version: link:../judge
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../../protocol

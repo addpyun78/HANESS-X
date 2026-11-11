@@ -9,6 +9,7 @@ import {
   type CompareCtx,
   type CompareOutcome,
 } from '@harness-x/comparators';
+import type { PipelineResult } from './pipeline.js';
 
 /**
  * 판정 사다리 L3 — 내용 증거 (25.4)
@@ -23,6 +24,14 @@ export interface AcceptanceContext {
   /** 작업 폴더 루트 (명령 cwd) */
   root: string;
   kind: 'file' | 'dir';
+  /**
+   * 비교기가 "의미 판단 필요"(next: semantic)라고 하면 부르는 다음 단계 — 비교 파이프라인
+   * (사전 → judge 체인 → 승인 카드, pipeline.ts createComparePipeline().resolve). 없으면 실패로 본다.
+   */
+  semantic?: (
+    outcome: CompareOutcome,
+    raw: { expected: unknown; actual: unknown },
+  ) => Promise<PipelineResult>;
 }
 
 export interface AcceptanceOutcome {
@@ -32,6 +41,10 @@ export interface AcceptanceOutcome {
   detail: string;
   /** 비교기 결과 (T-100 D.6: 종료코드·기대 출력 비교) */
   compare?: CompareOutcome;
+  /** 사람 승인 대기 (승인 카드를 올렸다) */
+  awaiting?: boolean;
+  /** 비교 파이프라인 결과 (의미 판단·승인 카드까지 갔을 때) */
+  pipeline?: PipelineResult;
 }
 
 /** 비교기 ctx (판정 사다리 밖 사전은 비어 있다) */
@@ -44,6 +57,8 @@ export type AcceptanceRunner = (acc: Acceptance, ctx: AcceptanceContext) => Prom
 export interface ContentEvidence {
   /** 기계 검증 조건이 1개 이상 있고 모두 통과 */
   ok: boolean;
+  /** 실패한 조건은 없고 사람 승인을 기다리는 조건이 있다 */
+  awaiting: boolean;
   outcomes: AcceptanceOutcome[];
 }
 
@@ -161,19 +176,29 @@ export const defaultAcceptanceRunner: AcceptanceRunner = async (acc, ctx) => {
       const { code, out } = await runShell(cmd, ctx.root, acc.timeoutMs ?? 120_000);
       const cc = compareCtx(ctx);
       const exit = compareValues('exitCode', acc.expectExit, code ?? 'killed', cc, { semantic: 'off' });
-      const output =
+      const first =
         acc.expectOutput !== undefined
           ? compareValues(acc.compare?.kind ?? 'auto', acc.expectOutput, out, cc, {
               ...(acc.compare?.options ? { options: acc.compare.options } : {}),
               ...(acc.compare?.semantic ? { semantic: acc.compare.semantic } : {}),
             })
           : undefined;
+      // 정규화로 못 정하면 사전 → 의미 판단 → 승인 카드 (종료코드가 이미 틀렸으면 묻지 않는다)
+      const pipeline =
+        first?.next === 'semantic' && exit.next === 'pass' && ctx.semantic
+          ? await ctx.semantic(first, { expected: acc.expectOutput, actual: out })
+          : undefined;
+      const output = pipeline?.outcome ?? first;
+      const outputOk =
+        output === undefined || (pipeline ? pipeline.status === 'pass' : output.next === 'pass');
       const tail = out.trim() ? ` — ${out.trim().split('\n').slice(-3).join(' | ')}` : '';
       return {
         type: acc.type,
-        ok: exit.next === 'pass' && (output === undefined || output.next === 'pass'),
-        detail: `exit ${code ?? 'killed'}${output ? ` · 출력 ${output.kind} ${output.verdict}` : ''}${tail}`,
+        ok: exit.next === 'pass' && outputOk,
+        detail: `exit ${code ?? 'killed'}${output ? ` · 출력 ${output.kind} ${output.verdict} (${output.level})` : ''}${tail}`,
         compare: output ?? exit,
+        ...(pipeline?.status === 'awaiting' ? { awaiting: true } : {}),
+        ...(pipeline ? { pipeline } : {}),
       };
     }
     case 'llm':
@@ -192,5 +217,9 @@ export async function checkContentEvidence(
   const outcomes: AcceptanceOutcome[] = [];
   for (const acc of acceptance) outcomes.push(await runner(acc, c));
   const machine = outcomes.filter((o) => !o.skipped);
-  return { ok: machine.length > 0 && machine.every((o) => o.ok), outcomes };
+  return {
+    ok: machine.length > 0 && machine.every((o) => o.ok),
+    awaiting: machine.some((o) => o.awaiting) && machine.every((o) => o.ok || o.awaiting),
+    outcomes,
+  };
 }

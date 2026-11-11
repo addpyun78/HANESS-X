@@ -18,7 +18,8 @@ export const ApprovalFocusContext = createContext<ApprovalFocus | undefined>(und
 
 export interface Toast {
   id: string;
-  cardId: string;
+  /** 승인 카드 토스트면 그 카드 (누르면 패널의 카드로). 안내 토스트(notice)는 없음 */
+  cardId?: string;
   text: string;
 }
 

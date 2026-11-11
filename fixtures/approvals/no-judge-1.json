@@ -5,7 +5,7 @@
   "sessionId": "s-fixture",
   "title": "확인이 필요해요",
   "whatHappened": "계획에는 \"저장 완료\"였는데, 실제로는 \"저장됨\"으로 나왔어요.",
-  "whyAsking": "이 차이를 대신 판단해 줄 AI를 찾지 못했어요.",
+  "whyAsking": "판정해 줄 AI가 연결돼 있지 않아요.",
   "confidenceWord": "알 수 없음",
   "options": [
     {

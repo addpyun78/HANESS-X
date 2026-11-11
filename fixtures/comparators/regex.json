@@ -1,0 +1,65 @@
+{
+  "kind": "regex",
+  "cases": [
+    {
+      "name": "CRLF 출력",
+      "expected": "/^Tests: \\d+ passed$/m",
+      "actual": "Run\r\nTests: 12 passed\r\n",
+      "expect": "equal"
+    },
+    {
+      "name": "부분 일치",
+      "expected": "passed",
+      "actual": "3 passed, 0 failed",
+      "expect": "equal"
+    },
+    {
+      "name": "flags i",
+      "expected": "/ok/i",
+      "actual": "OK",
+      "expect": "equal"
+    },
+    {
+      "name": "숫자 패턴",
+      "expected": "^\\d{3}$",
+      "actual": "200",
+      "expect": "equal"
+    },
+    {
+      "name": "줄 끝 공백 제거 후",
+      "expected": "^done$",
+      "actual": "done   ",
+      "expect": "equal"
+    },
+    {
+      "name": "여러 줄 m",
+      "expected": "/^b$/m",
+      "actual": "a\nb\nc",
+      "expect": "equal"
+    },
+    {
+      "name": "불일치",
+      "expected": "^\\d+ passed$",
+      "actual": "failed",
+      "expect": "different"
+    },
+    {
+      "name": "대소문자(플래그 없음)",
+      "expected": "^ok$",
+      "actual": "OK",
+      "expect": "different"
+    },
+    {
+      "name": "잘못된 정규식",
+      "expected": "/(/",
+      "actual": "anything",
+      "expect": "different"
+    },
+    {
+      "name": "앵커 불일치",
+      "expected": "^200$",
+      "actual": "HTTP 200",
+      "expect": "different"
+    }
+  ]
+}

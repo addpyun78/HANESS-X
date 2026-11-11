@@ -1,0 +1,71 @@
+{
+  "kind": "number",
+  "cases": [
+    {
+      "name": "천 단위 쉼표",
+      "expected": "1,000",
+      "actual": "1000",
+      "expect": "equal"
+    },
+    {
+      "name": "밑줄 구분",
+      "expected": "1_000_000",
+      "actual": "1000000",
+      "expect": "equal"
+    },
+    {
+      "name": "소수 0",
+      "expected": "1.5",
+      "actual": "1.50",
+      "expect": "equal"
+    },
+    {
+      "name": "정수 = 실수",
+      "expected": "3",
+      "actual": "3.0",
+      "expect": "equal"
+    },
+    {
+      "name": "tolerance",
+      "expected": "10.2",
+      "actual": "10",
+      "expect": "equal",
+      "options": {
+        "tolerance": 0.5
+      }
+    },
+    {
+      "name": "음수",
+      "expected": "-7",
+      "actual": "-7",
+      "expect": "equal"
+    },
+    {
+      "name": "200 vs 500",
+      "expected": "200",
+      "actual": "500",
+      "expect": "different"
+    },
+    {
+      "name": "tolerance 밖",
+      "expected": "10.6",
+      "actual": "10",
+      "expect": "different",
+      "options": {
+        "tolerance": 0.5
+      }
+    },
+    {
+      "name": "부호 다름",
+      "expected": "5",
+      "actual": "-5",
+      "expect": "different"
+    },
+    {
+      "name": "세 자리 묶음 아님",
+      "expected": "1,00",
+      "actual": "100",
+      "expect": "different"
+    }
+  ]
+}

@@ -49,7 +49,7 @@ describe('27.4 "동치 인정" → glossary·manifest 별칭 자동 추가 → �
 
     const l3 = await judge();
     expect(l3).toMatchObject({ level: 3, verdict: 'relocated', escalate: true, actualPath: 'ai/mobile' });
-    const l4 = await runLadderL4(l3, { verifier: null, itemTitle: '모바일 앱 스캐폴드' });
+    const l4 = await runLadderL4(l3, { judge: null, itemTitle: '모바일 앱 스캐폴드' });
     expect(l4).toMatchObject({ level: 4, escalate: true });
 
     const esc = new Escalator({ dir: hx, sessionId: 's1', ledger, manifest, glossaryFile });

@@ -1,7 +1,7 @@
-import { LocalVerifier } from '@harness-x/verifier-local';
+import { createJudgeChain } from '@harness-x/judge';
 import { describe, expect, it } from 'vitest';
 import type { LadderResult } from '../src/ladder.js';
-import { runLadderL4, selectL4Verifier, type L4VerifierFactories } from '../src/l4.js';
+import { runLadderL4, selectL4Judge } from '../src/l4.js';
 import { judgeSettingsFrom } from '../src/settings.js';
 
 const prev: LadderResult = {
@@ -15,55 +15,56 @@ const prev: LadderResult = {
   escalate: true,
 };
 
-function factories() {
+/** 로컬 Ollama 흉내 (fetch 주입 — 실제 네트워크 없음). 판정 질문마다 '예' */
+function ollamaChain() {
   const urls: string[] = [];
-  const made: string[] = [];
-  const f = (reply: (body: { messages?: unknown; format?: unknown }) => unknown) =>
-    (async (url: string, init: RequestInit) => {
-      urls.push(url);
-      return new Response(JSON.stringify(reply(JSON.parse(String(init.body)))));
-    }) as unknown as typeof fetch;
-  // 질문 종류에 맞춰 답한다 (json_schema의 required[0] = noul | choice)
-  const answer = (schema: { required: string[] }) =>
-    schema.required[0] === 'noul'
-      ? { noul: 0.95, confidence: 0.9 }
-      : { choice: 'equivalent', confidence: 0.9 };
-  const fx: L4VerifierFactories = {
-    local: () => {
-      made.push('local');
-      return new LocalVerifier({
-        fetch: f((b) => ({
-          message: { content: JSON.stringify(answer(b.format as { required: string[] })) },
-        })),
-      });
-    },
-  };
-  return { fx, urls, made };
+  const fetchFake = (async (url: string) => {
+    urls.push(url);
+    if (url.endsWith('/api/tags'))
+      return new Response(JSON.stringify({ models: [{ name: 'qwen2.5-coder:7b' }] }));
+    return new Response(
+      JSON.stringify({
+        message: {
+          content: JSON.stringify({
+            same_meaning: 'yes',
+            difference_kind: 'equivalent',
+            plain_reason: '같은 폴더예요.',
+          }),
+        },
+      }),
+    );
+  }) as unknown as typeof fetch;
+  const chain = createJudgeChain({}, { listEngines: () => [], fetch: fetchFake });
+  return { chain, urls };
 }
 
-describe('판정기 선택 (J.4: verifier.l4 폐기 → judge.*)', () => {
-  it('judge.semantic = off → 판정기 호출 없이 L5로 직행', async () => {
-    const { fx, urls, made } = factories();
-    const v = selectL4Verifier(judgeSettingsFrom({ judge: { semantic: 'off' } }), fx);
-    expect(v).toBeNull();
-    const r = await runLadderL4(prev, { verifier: v, itemTitle: '모바일 앱' });
+describe('판정기 선택 (J.4: verifier.l4 폐기 → judge.*, E.14: L4 = judge 체인)', () => {
+  it('judge.semantic = off → 체인 호출 없이 L5로 직행', async () => {
+    const { chain, urls } = ollamaChain();
+    const j = selectL4Judge(judgeSettingsFrom({ judge: { semantic: 'off' } }), chain);
+    expect(j).toBeNull();
+    const r = await runLadderL4(prev, { judge: j, itemTitle: '모바일 앱' });
     expect(r).toMatchObject({ level: 4, decision: 'skipped', escalate: true, verdict: 'relocated' });
     expect(r.reason).toMatch(/off → L5/);
-    expect(made).toEqual([]);
     expect(urls).toEqual([]);
   });
 
-  it('judge.semantic = on(기본) → 로컬 판정기만 만들어 질문 2개를 보낸다', async () => {
-    const { fx, urls, made } = factories();
-    const v = selectL4Verifier(judgeSettingsFrom({}), fx);
-    expect(v?.id).toBe('local');
-    expect(made).toEqual(['local']);
-    const r = await runLadderL4(prev, { verifier: v, itemTitle: '모바일 앱' });
-    expect(r).toMatchObject({ level: 4, decision: 'accept', verdict: 'equal', escalate: false });
-    expect(urls).toEqual(['http://127.0.0.1:11434/api/chat', 'http://127.0.0.1:11434/api/chat']);
+  it('judge.semantic = on(기본) → 체인(② 로컬 Ollama)이 판정', async () => {
+    const { chain, urls } = ollamaChain();
+    const j = selectL4Judge(judgeSettingsFrom({}), chain);
+    expect(j).toBe(chain);
+    const r = await runLadderL4(prev, { judge: j, itemTitle: '모바일 앱' });
+    expect(r).toMatchObject({
+      level: 4,
+      decision: 'accept',
+      verdict: 'equal',
+      escalate: false,
+      verifierId: 'ollama',
+    });
+    expect(urls.filter((u) => u.endsWith('/api/chat'))).toHaveLength(3);
   });
 
-  it('로컬 판정기가 없으면 null (L5로)', () => {
-    expect(selectL4Verifier(judgeSettingsFrom({}), {})).toBeNull();
+  it('체인이 없으면 null (L5로)', () => {
+    expect(selectL4Judge(judgeSettingsFrom({}), undefined)).toBeNull();
   });
 });

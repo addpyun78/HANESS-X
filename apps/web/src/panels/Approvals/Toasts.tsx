@@ -10,7 +10,7 @@ export interface ToastsProps {
   timeoutMs?: number;
 }
 
-/** 새 승인 카드 토스트 (T-100 H.12) — 누르면 패널의 그 카드로 */
+/** 새 승인 카드 토스트 (T-100 H.12) — 누르면 패널의 그 카드로. 안내(notice, J.6) 토스트는 누르면 닫힌다 */
 export function Toasts({ toasts, onOpen, onDismiss, timeoutMs = 8000 }: ToastsProps) {
   useEffect(() => {
     if (toasts.length === 0) return;
@@ -26,7 +26,7 @@ export function Toasts({ toasts, onOpen, onDismiss, timeoutMs = 8000 }: ToastsPr
           type="button"
           className="hx-toast"
           onClick={() => {
-            onOpen?.(t.cardId);
+            if (t.cardId) onOpen?.(t.cardId);
             onDismiss(t.id);
           }}
         >

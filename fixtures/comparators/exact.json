@@ -1,0 +1,65 @@
+{
+  "kind": "exact",
+  "cases": [
+    {
+      "name": "같은 글자",
+      "expected": "done",
+      "actual": "done",
+      "expect": "equal"
+    },
+    {
+      "name": "한글 그대로",
+      "expected": "작업 완료",
+      "actual": "작업 완료",
+      "expect": "equal"
+    },
+    {
+      "name": "숫자 문자열",
+      "expected": "42",
+      "actual": "42",
+      "expect": "equal"
+    },
+    {
+      "name": "여러 줄",
+      "expected": "a\nb",
+      "actual": "a\nb",
+      "expect": "equal"
+    },
+    {
+      "name": "기호 포함",
+      "expected": "v1:abc-1",
+      "actual": "v1:abc-1",
+      "expect": "equal"
+    },
+    {
+      "name": "빈 값",
+      "expected": "",
+      "actual": "",
+      "expect": "equal"
+    },
+    {
+      "name": "끝 공백 다름",
+      "expected": "a ",
+      "actual": "a",
+      "expect": "different"
+    },
+    {
+      "name": "대소문자 다름",
+      "expected": "Done",
+      "actual": "done",
+      "expect": "different"
+    },
+    {
+      "name": "CRLF 다름",
+      "expected": "a\r\nb",
+      "actual": "a\nb",
+      "expect": "different"
+    },
+    {
+      "name": "완전히 다름",
+      "expected": "success",
+      "actual": "error",
+      "expect": "different"
+    }
+  ]
+}

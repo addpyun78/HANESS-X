@@ -27,6 +27,8 @@ D.6 검사(`packages/plugins-core/verifiers/comparators/test/compare-sites.test.
 - allow: packages/plugins-core/forge/src/sandbox.ts|if (ex.expect.decision === undefined) { — 기대값이 없는지 확인(비교 아님)
 - allow: apps/web/src/panels/Checklist/model.ts|a.expectExit !== undefined && a.expectExit !== 0 — 화면 표시 문구(기본값 0이면 생략)
 - allow: packages/plugins-core/verifiers/ladder/src/ladder.ts|target === expKey — 판정 사유 문구 선택(기대 경로 자체인지 manifest 별칭 경로인지), 판정 아님
+- allow: packages/plugins-core/installer/src/adapters/download.ts|meta.sha256 && meta.sha256 !== actual — 내려받은 파일 무결성(sha256) 검사, D.4 자동 엄격 대상과 같은 성격(해시는 정확히 같아야 함) (P1-G.1 때 추가, Part 2 코드)
+- allow: packages/plugins-core/installer/src/adapter.ts|output.includes(plan.verify.expect) — 설치 확인 명령 출력에 기대 문구 포함 여부 (Part 2 코드, P1-G.1 때 추가 — 제안: Part 2에서 text 비교기 contains로 교체)
 - allow: packages/plugins-core/verifiers/comparators/src/ — 비교기 구현 자체 (C.2에서 옮긴 경로 정규화 `isWithinKey`의 `childKey === parentKey` 포함)
 
 ## 해당 없음으로 분류한 것 (참고)
