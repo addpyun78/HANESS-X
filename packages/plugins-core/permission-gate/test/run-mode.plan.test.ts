@@ -41,7 +41,8 @@ describe('3B.1 계획 모드 쓰기 차단', () => {
       if (r.decision === 'allow') passed++;
       else {
         expect(r.hookId).toBe(RUN_MODE_GATE_HOOK_ID);
-        expect(r.reason).toContain(PLAN_MODE_DENY);
+        // 설치처럼 사람 전용 작업은 3D.4 사유(human_only)로 먼저 막힌다
+        if (!r.reason!.startsWith('human_only')) expect(r.reason).toContain(PLAN_MODE_DENY);
       }
     }
     expect(passed).toBe(0);
