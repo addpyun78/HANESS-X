@@ -3,7 +3,8 @@ import type { Attachment } from '@harness-x/protocol';
 import type { ConvertContext, ConvertOutput, Converter } from './context.js';
 import { warn } from './context.js';
 import { MESSAGES } from './messages.js';
-import type { AttachmentStore } from './store.js';
+import { withSecretWarning, type SecretCard } from './secrets.js';
+import type { AttachmentEventSink, AttachmentStore } from './store.js';
 import { systemTools } from './tools.js';
 
 /**
@@ -21,6 +22,10 @@ export interface ConversionQueueOptions {
   concurrency?: number;
   context?: Partial<Omit<ConvertContext, 'dir'>>;
   onProgress?: ProgressListener;
+  /** 1C.2 비밀이 들어 있으면 카드 (값은 넣지 않음) */
+  onSecret?: (card: SecretCard) => void;
+  /** 1C.3 기록은 경로·해시·종류만 (원문 금지) */
+  events?: AttachmentEventSink;
 }
 
 export class ConversionQueue {
@@ -87,7 +92,22 @@ export class ConversionQueue {
         warnings: [...a.warnings, warn('convert-failed', MESSAGES.convertFailed)],
       };
     }
+    if (next.status === 'ready') {
+      const checked = withSecretWarning(next);
+      next = checked.attachment;
+      if (checked.card) this.o.onSecret?.(checked.card);
+    }
     this.o.store.save(next);
+    this.o.events?.append({
+      type: 'attachment_converted',
+      sessionId: sid,
+      attachmentId: next.id,
+      sha256: next.sha256,
+      status: next.status,
+      path: next.storedPath,
+      forms: next.representations.map((r) => r.form),
+      warnings: next.warnings.map((w) => w.code),
+    });
     this.o.onProgress?.(next);
     return next;
   }
