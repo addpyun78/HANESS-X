@@ -25,3 +25,4 @@ export * from './native/folder-picker.js';
 export * from './workspaces.js';
 export * from './recover.js';
 export * from './quota.js';
+export * from './settings/index.js';
