@@ -1,5 +1,13 @@
 import type { AgentSummary } from '@harness-x/protocol';
-import { useCallback, useEffect, useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type DragEvent,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
@@ -39,6 +47,17 @@ export interface ComposerProps {
   agents?: readonly AgentSummary[];
   /** / 팔레트 스킬 묶음 */
   skills?: readonly PaletteSkill[];
+  /** 간단 모드 (빌더 대화 탭): 엔진·인증·권한 칩과 판정 줄을 숨긴다 */
+  compact?: boolean;
+  /** 입력창 접근성 이름 (기본 '지시 입력') */
+  inputLabel?: string;
+  /**
+   * 바깥에서 입력창 채우기 (예: 음성 → 글). seq가 바뀔 때마다 지금 글 뒤에 이어 붙인다.
+   * 채우기만 하고 전송하지 않는다 — 전송은 사용자가 한다.
+   */
+  fill?: { text: string; seq: number };
+  /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
+  toolbarExtra?: ReactNode;
 }
 
 const isEnter = (e: KeyboardEvent) => e.key === 'Enter';
@@ -66,8 +85,19 @@ export function Composer({
   placeholder = '지시를 입력하세요 (Enter 전송 · Shift+Enter 줄바꿈)',
   agents,
   skills,
+  compact,
+  inputLabel = '지시 입력',
+  fill,
+  toolbarExtra,
 }: ComposerProps) {
   const [text, setText] = useState('');
+  // 바깥 채우기: 같은 seq는 한 번만 반영
+  const filled = useRef(0);
+  useEffect(() => {
+    if (!fill || fill.seq === filled.current) return;
+    filled.current = fill.seq;
+    setText((cur) => (cur.trim() ? `${cur.replace(/\s+$/, '')} ${fill.text}` : fill.text));
+  }, [fill]);
   const slash = useSlashPalette({ agents, skills, text, setText });
   const [settings, setSettings] = useState<ComposerSettings>(() => ({
     engineId: pickEngine(engines, initialSettings?.engineId),
@@ -173,7 +203,7 @@ export function Composer({
       <textarea
         {...slash.inputProps}
         className="hx-composer__input"
-        aria-label="지시 입력"
+        aria-label={inputLabel}
         rows={2}
         value={text}
         placeholder={placeholder}
@@ -219,57 +249,64 @@ export function Composer({
         >
           +
         </button>
-        <ChipMenu
-          name="엔진"
-          className="hx-chip--engine"
-          icon="◆"
-          value={settings.engineId}
-          valueLabel={engine?.label ?? '엔진 없음'}
-          options={engines.map((x) => ({
-            value: x.id,
-            label: x.label,
-            disabled: !x.available,
-            ...(x.available ? {} : { description: '감지 안 됨' }),
-          }))}
-          emptyText="감지된 엔진이 없습니다"
-          onChange={(engineId) => update({ engineId })}
-        />
-        <ChipMenu
-          name="인증"
-          className="hx-chip--auth"
-          value={settings.auth}
-          valueLabel={AUTH_LABEL[settings.auth]}
-          options={authOptions}
-          onChange={(auth) => update({ auth })}
-        />
-        <ChipMenu
-          name="권한"
-          className="hx-chip--permission"
-          icon="◎"
-          value={settings.permission}
-          valueLabel={PERMISSION_LABEL[settings.permission]}
-          options={(Object.keys(PERMISSION_LABEL) as PermissionMode[]).map((v) => ({
-            value: v,
-            label: PERMISSION_LABEL[v],
-            description: PERMISSION_DESC[v],
-          }))}
-          onChange={(permission) => update({ permission })}
-        />
+        {!compact && (
+          <>
+            <ChipMenu
+              name="엔진"
+              className="hx-chip--engine"
+              icon="◆"
+              value={settings.engineId}
+              valueLabel={engine?.label ?? '엔진 없음'}
+              options={engines.map((x) => ({
+                value: x.id,
+                label: x.label,
+                disabled: !x.available,
+                ...(x.available ? {} : { description: '감지 안 됨' }),
+              }))}
+              emptyText="감지된 엔진이 없습니다"
+              onChange={(engineId) => update({ engineId })}
+            />
+            <ChipMenu
+              name="인증"
+              className="hx-chip--auth"
+              value={settings.auth}
+              valueLabel={AUTH_LABEL[settings.auth]}
+              options={authOptions}
+              onChange={(auth) => update({ auth })}
+            />
+            <ChipMenu
+              name="권한"
+              className="hx-chip--permission"
+              icon="◎"
+              value={settings.permission}
+              valueLabel={PERMISSION_LABEL[settings.permission]}
+              options={(Object.keys(PERMISSION_LABEL) as PermissionMode[]).map((v) => ({
+                value: v,
+                label: PERMISSION_LABEL[v],
+                description: PERMISSION_DESC[v],
+              }))}
+              onChange={(permission) => update({ permission })}
+            />
+          </>
+        )}
         <span className="hx-composer__spacer" />
+        {toolbarExtra}
         <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
           ↑
         </button>
       </div>
-      <div className="hx-verdict" aria-live="polite" data-testid="verdict">
-        {verdict ? (
-          <span data-passed={verdict.passed}>
-            판정 · 항목 <span className="hx-mono">{verdict.itemId}</span> {verdict.passed ? '통과' : '실패'} ·
-            사다리 {verdict.rung}번째 칸({RUNG_LABEL[verdict.rung]})
-          </span>
-        ) : (
-          <span className="hx-verdict__empty">판정 대기</span>
-        )}
-      </div>
+      {!compact && (
+        <div className="hx-verdict" aria-live="polite" data-testid="verdict">
+          {verdict ? (
+            <span data-passed={verdict.passed}>
+              판정 · 항목 <span className="hx-mono">{verdict.itemId}</span> {verdict.passed ? '통과' : '실패'}{' '}
+              · 사다리 {verdict.rung}번째 칸({RUNG_LABEL[verdict.rung]})
+            </span>
+          ) : (
+            <span className="hx-verdict__empty">판정 대기</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
