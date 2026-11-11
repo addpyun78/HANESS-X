@@ -8,3 +8,4 @@ export * from './comparators/path.js';
 export * from './comparators/text.js';
 export * from './comparators/json.js';
 export * from './comparators/number.js';
+export * from './comparators/version.js';
