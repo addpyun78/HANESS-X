@@ -308,6 +308,7 @@ export function toSummary(a: RegisteredAgent): AgentSummary {
     ...(a.pluginId ? { pluginId: a.pluginId } : {}),
     defaultEngine: a.agent.defaultEngine,
     nodeCount: a.pipeline.nodes.length,
+    ...(a.agent.status ? { status: a.agent.status } : {}),
   };
 }
 
