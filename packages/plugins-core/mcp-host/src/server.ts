@@ -59,6 +59,17 @@ export interface HarnessMcpOptions {
   install?: InstallToolsProvider;
   /** T-100 P3-A.1 ④ 도구 찾기 요청 tools.request 등록 */
   tools?: ToolsRequestProvider;
+  /** T-101 1D.6 첨부 읽기 attachments.list·attachments.read 등록 (모든 엔진·모든 에이전트 단계 공통) */
+  attachments?: AttachmentsToolsProvider;
+}
+
+/** T-101 1D.6 첨부 도구 이름 */
+export const ATTACHMENTS_MCP_TOOLS = ['attachments.list', 'attachments.read'] as const;
+
+/** @harness-x/attachments의 attachmentsProvider(세션 첨부 폴더)가 구현 */
+export interface AttachmentsToolsProvider {
+  list(): unknown;
+  read(args: { id: string; form?: string; index?: number; offset?: number; length?: number }): unknown;
 }
 
 /**
@@ -213,6 +224,7 @@ export function createHarnessMcpServer(deps: HarnessToolDeps, opts: HarnessMcpOp
     );
 
   if (opts.install) registerInstallTools(server, opts.install, opts.toolNames);
+  if (opts.attachments) registerAttachmentTools(server, opts.attachments, opts.toolNames);
   if (opts.tools) {
     const p = opts.tools;
     server.registerTool(
@@ -243,6 +255,52 @@ export function createHarnessMcpServer(deps: HarnessToolDeps, opts: HarnessMcpOp
   }
 
   return server;
+}
+
+function registerAttachmentTools(
+  server: McpServer,
+  p: AttachmentsToolsProvider,
+  style: HarnessMcpOptions['toolNames'] = 'dotted',
+): void {
+  const n = (b: (typeof ATTACHMENTS_MCP_TOOLS)[number]) =>
+    style === 'underscore' ? b.replace(/\./g, '_') : b;
+  server.registerTool(
+    n('attachments.list'),
+    {
+      title: '첨부 목록',
+      description:
+        '사용자가 이 세션에 첨부한 파일 목록(id·이름·종류·크기·읽을 수 있는 형태·안내)을 돌려준다.',
+      inputSchema: {},
+    },
+    () => run(() => ({ attachments: p.list() })),
+  );
+  server.registerTool(
+    n('attachments.read'),
+    {
+      title: '첨부 읽기',
+      description:
+        '첨부 파일 내용을 읽는다. form 기본은 글 형태(가린 글 → 글 → 받아쓰기 → 목록), 없으면 원본. 큰 파일은 offset·length로 나눠 읽고 nextOffset이 있으면 이어 읽는다. 글이 아니면 base64. 첨부는 실행하지 않는다.',
+      inputSchema: {
+        id: z.string().describe('attachments.list의 id (att_로 시작)'),
+        form: z
+          .enum([
+            'original',
+            'text',
+            'thumbnail',
+            'page-image',
+            'frame',
+            'transcript',
+            'listing',
+            'masked-text',
+          ])
+          .optional(),
+        index: z.number().int().min(1).optional().describe('페이지·장면 그림 순번'),
+        offset: z.number().int().min(0).optional(),
+        length: z.number().int().min(1).max(262144).optional(),
+      },
+    },
+    (args) => run(() => p.read(args)),
+  );
 }
 
 function registerInstallTools(

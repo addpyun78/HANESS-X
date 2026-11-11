@@ -532,6 +532,9 @@ importers:
 
   packages/plugins-core/mcp-host:
     dependencies:
+      '@harness-x/attachments':
+        specifier: workspace:*
+        version: link:../attachments
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
