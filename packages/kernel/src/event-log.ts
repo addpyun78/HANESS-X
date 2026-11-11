@@ -8,9 +8,10 @@ import {
   openSync,
   readFileSync,
   readSync,
+  rmSync,
   writeSync,
 } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { DatabaseSync, type StatementSync } from 'node:sqlite';
 import {
@@ -250,6 +251,17 @@ export class EventLog {
       length: number;
     }[];
     return rows.map((r) => this.readAt(r.session_id, r.offset, r.length));
+  }
+
+  /** T-101 6B.11 기록 보관 기간: 세션의 이벤트 기록(파일·색인)을 지운다. 지웠으면 true */
+  removeSession(sessionId: string): boolean {
+    const file = this.sessionFile(sessionId);
+    this.flush();
+    this.db.prepare('DELETE FROM events WHERE session_id = ?').run(sessionId);
+    const dir = dirname(file);
+    if (!existsSync(dir)) return false;
+    rmSync(dir, { recursive: true, force: true });
+    return true;
   }
 
   /** 세션 목록 */
