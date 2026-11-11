@@ -38,6 +38,10 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
           <strong>기존 에이전트 복제</strong>
           <span>등록된 에이전트를 복사해 고칩니다</span>
         </button>
+        <button type="button" className="hx-start__option" onClick={() => onChoose({ kind: 'chat' })}>
+          <strong>말이나 글로 설명해서 만들기</strong>
+          <span>AI에게 원하는 에이전트를 설명하면 초안을 만들어 줘요</span>
+        </button>
       </div>
       {mode === 'plugin' && (
         <ul className="hx-start__list" aria-label="플러그인 목록">
