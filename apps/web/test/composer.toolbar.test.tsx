@@ -6,7 +6,7 @@ import { renderComposer } from './composer.helpers.js';
 afterEach(cleanup);
 
 describe('하단 도구줄 배치 (컨셉 A)', () => {
-  it('순서: + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → (오른쪽 끝) 전송, 아래 판정 줄 (스냅샷)', () => {
+  it('순서: + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → 모드 칩 → (오른쪽 끝) 전송, 아래 판정 줄 (스냅샷)', () => {
     const { container, onPlus } = renderComposer({ verdict: { itemId: '2.1', rung: 2, passed: true } });
     const bar = screen.getByRole('toolbar', { name: '입력 도구' });
     const order = [...bar.children].map(
@@ -22,6 +22,7 @@ describe('하단 도구줄 배치 (컨셉 A)', () => {
       'chip--engine',
       'chip--auth',
       'chip--permission',
+      'chip--mode',
       'composer__spacer',
       'send',
     ]);

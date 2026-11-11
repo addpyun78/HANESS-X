@@ -21,6 +21,7 @@ describe('권한 칩 (읽기 전용 / 워크스페이스 쓰기 / 전체)', () =
       engineId: 'claude-code',
       auth: 'subscription',
       permission: 'full',
+      mode: 'normal',
     });
     expect(screen.getByLabelText('권한: 전체')).toBeTruthy();
 
@@ -30,6 +31,7 @@ describe('권한 칩 (읽기 전용 / 워크스페이스 쓰기 / 전체)', () =
       engineId: 'claude-code',
       auth: 'subscription',
       permission: 'full',
+      mode: 'normal',
     });
   });
 

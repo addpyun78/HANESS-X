@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
+import { MODE_CHIP_NAME, modeOptions, RUN_MODE_LABEL } from './run-mode.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
 import {
@@ -73,7 +74,7 @@ function pickEngine(engines: EngineOption[], wanted?: string): string {
 
 /**
  * 지시 입력창.
- * 아래 도구줄 순서 고정(컨셉 A): + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → (오른쪽 끝) 전송.
+ * 아래 도구줄 순서 고정(컨셉 A): + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → 모드 칩(T-101 3A.3) → (오른쪽 끝) 전송.
  * 그 아래 오른쪽에 판정 줄.
  */
 export function Composer({
@@ -120,6 +121,7 @@ export function Composer({
     engineId: pickEngine(engines, initialSettings?.engineId),
     auth: initialSettings?.auth ?? 'subscription',
     permission: initialSettings?.permission ?? 'workspace-write',
+    mode: initialSettings?.mode ?? 'normal',
   }));
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [dragOver, setDragOver] = useState(false);
@@ -304,6 +306,14 @@ export function Composer({
                 description: PERMISSION_DESC[v],
               }))}
               onChange={(permission) => update({ permission })}
+            />
+            <ChipMenu
+              name={MODE_CHIP_NAME}
+              className="hx-chip--mode"
+              value={settings.mode ?? 'normal'}
+              valueLabel={RUN_MODE_LABEL[settings.mode ?? 'normal']}
+              options={modeOptions()}
+              onChange={(mode) => update({ mode })}
             />
           </>
         )}

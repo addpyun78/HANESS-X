@@ -1,3 +1,5 @@
+import type { RunMode } from '@harness-x/protocol';
+
 export type AuthMode = 'subscription' | 'api';
 export type PermissionMode = 'read-only' | 'workspace-write' | 'full';
 
@@ -18,6 +20,8 @@ export interface ComposerSettings {
   engineId: string;
   auth: AuthMode;
   permission: PermissionMode;
+  /** T-101 3A.3 실행 모드 (계획/일반/오토). Composer가 늘 채운다 (기본 normal) */
+  mode?: RunMode;
 }
 
 export interface EngineOption {
