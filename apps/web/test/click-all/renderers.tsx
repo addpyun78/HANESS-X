@@ -196,6 +196,8 @@ export const RENDERERS: Record<string, Renderer> = {
         media: q,
         addEventListener() {},
         removeEventListener() {},
+        addListener() {},
+        removeListener() {},
       }) as unknown as MediaQueryList) as typeof window.matchMedia;
     app(h, SESSION_EVENTS);
     return { scope: '.hx-topbar' };

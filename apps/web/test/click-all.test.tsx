@@ -15,9 +15,20 @@ import { mockChatLayout } from './layout-mock.js';
 const only = process.env.HX_DEAD_BUTTONS_SCREENS?.split(',').filter(Boolean);
 const all: ClickResult[] = [];
 let restoreLayout = () => {};
-const origMatchMedia = window.matchMedia;
+// jsdom에는 matchMedia가 없다. 터미널(xterm)·좁은 화면 판정이 쓰므로 넓은 화면 기본값을 둔다
+const wideMatchMedia = ((q: string) =>
+  ({
+    matches: false,
+    media: q,
+    addEventListener() {},
+    removeEventListener() {},
+    addListener() {},
+    removeListener() {},
+  }) as unknown as MediaQueryList) as typeof window.matchMedia;
+const origMatchMedia = wideMatchMedia;
 
 beforeAll(() => {
+  window.matchMedia = wideMatchMedia;
   mockReactFlowDom();
   restoreLayout = mockChatLayout({ viewport: { width: 800, height: 4000 } });
   (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
