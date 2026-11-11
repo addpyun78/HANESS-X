@@ -74,7 +74,7 @@ export type NavTarget = 'agent-builder' | 'plugins' | 'skills' | 'install' | 'en
 export const NAV_ITEMS: { id: NavTarget; label: string; icon: string; ready?: false }[] = [
   { id: 'agent-builder', label: '에이전트 만들기', icon: '✦' },
   { id: 'plugins', label: '플러그인', icon: '⧉', ready: false },
-  { id: 'skills', label: '스킬', icon: '◇' },
+  { id: 'skills', label: '스킬', icon: '◇', ready: false },
   // T-100 P2-G.1 설치 관리 (앱·도구·모델·확장)
   { id: 'install', label: '설치 관리', icon: '⬇' },
   { id: 'engines', label: '엔진', icon: '⚙' },
