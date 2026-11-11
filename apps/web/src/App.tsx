@@ -47,6 +47,8 @@ import { ForgeAnswerContext, type ForgeActions } from './forge/ForgeCards.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
 import { useQuota } from './shell/useQuota.js';
+import { projectsApi } from './shell/projects/api.js';
+import { useProjectShell } from './shell/projects/useProjectShell.js';
 import { takeForgePrefill } from './builder/draft/forge-handoff.js';
 
 const DEMO_ENGINES: EngineOption[] = [
@@ -123,6 +125,23 @@ export function App() {
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
   const quotas = useQuota(client, events, available);
   const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
+  // T-101 0-2 프로젝트·새 세션 (서버에 /api/projects가 있을 때만 켜진다 — 없으면 예전 사이드바)
+  const pApi = useMemo(
+    () => (client ? projectsApi(client, desktop ? (p) => pickFolderDesktop(p) : undefined) : undefined),
+    [client, desktop],
+  );
+  const agentChoices = useMemo(
+    () =>
+      agents.map((a) => ({ command: a.command, name: a.displayName, ...(a.icon ? { icon: a.icon } : {}) })),
+    [agents],
+  );
+  const proj = useProjectShell({
+    api: pApi,
+    events,
+    onWorkspace: setWorkspace,
+    engines: available,
+    agents: agentChoices,
+  });
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
   // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
@@ -265,7 +284,11 @@ export function App() {
   const startSession = async (p: SendPayload) => {
     if (!client || !p.agent) return;
     try {
-      const d = await client.createSession({ agent: p.agent, prompt: p.text });
+      const d = await client.createSession({
+        agent: p.agent,
+        prompt: p.text,
+        ...(proj.currentId ? { projectId: proj.currentId } : {}),
+      });
       setDispatched((xs) => [fromDispatchSession(d, workspace?.name ?? '프로젝트'), ...xs]);
       setActiveId(d.sessionId);
       setSendError(undefined);
@@ -285,10 +308,19 @@ export function App() {
     }
   };
   const onSend = (p: SendPayload) => {
+    if (proj.handleSend(p)) return; // T-101 초안 첫 메시지·/new
     if (!p.agent) return; // 일반 턴 전송 API는 이후 티켓에서 연결
     const running = subagentTarget(p, sessions, activeId);
     if (running) setConfirm({ payload: p, running });
     else void startSession(p);
+  };
+
+  const navigateTo = (to: NavTarget) => {
+    if (to === 'agent-builder') navigate('/builder/new');
+    else if (to === 'install') {
+      setInstallNav({ tab: 'installed', query: '' });
+      setView('install');
+    } else setView(to === 'engines' ? 'engines' : 'chat');
   };
 
   const togglePin = async (p: RecentProject) => {
@@ -384,21 +416,19 @@ export function App() {
                 available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
             }}
             sidebar={
-              <SessionNav
-                sessions={navSessions}
-                activeSessionId={activeId ?? sessions[0]?.id}
-                onNavigate={(to) => {
-                  if (to === 'agent-builder') navigate('/builder/new');
-                  else if (to === 'install') {
-                    setInstallNav({ tab: 'installed', query: '' });
-                    setView('install');
-                  } else setView(to === 'engines' ? 'engines' : 'chat');
-                }}
-                onSelectSession={(id) => {
-                  setActiveId(id);
-                  setView('chat');
-                }}
-              />
+              proj.enabled ? (
+                proj.renderSidebar({ onNavigate: navigateTo, needsApproval: approvals.bySession })
+              ) : (
+                <SessionNav
+                  sessions={navSessions}
+                  activeSessionId={activeId ?? sessions[0]?.id}
+                  onNavigate={navigateTo}
+                  onSelectSession={(id) => {
+                    setActiveId(id);
+                    setView('chat');
+                  }}
+                />
+              )
             }
             main={
               view === 'engines' && engineSettings ? (
@@ -412,6 +442,12 @@ export function App() {
                 />
               ) : (
                 <>
+                  {proj.enabled && proj.main}
+                  {proj.enabled && proj.error && (
+                    <div className="hx-ws-error" role="alert">
+                      {proj.error}
+                    </div>
+                  )}
                   <ChatStream events={events} mode={mode} onModeChange={setMode} />
                   {wsError && (
                     <div className="hx-ws-error" role="alert">
@@ -440,16 +476,22 @@ export function App() {
                   )}
                   <Composer
                     engines={engines}
-                    plusMenu={{
-                      mobile,
-                      recent,
-                      onOpenFolder: () => void openFolder(),
-                      onPickRecent: (p) => void openWorkspace(p.path),
-                      onTogglePin: (p) => void togglePin(p),
-                    }}
+                    plusMenu={
+                      proj.enabled
+                        ? { mobile, ...proj.plusMenu }
+                        : {
+                            mobile,
+                            recent,
+                            onOpenFolder: () => void openFolder(),
+                            onPickRecent: (p) => void openWorkspace(p.path),
+                            onTogglePin: (p) => void togglePin(p),
+                          }
+                    }
                     agents={agents}
                     onSend={onSend}
-                    {...(forgeFill ? { fill: forgeFill } : {})}
+                    {...((proj.composer.fill ?? forgeFill) ? { fill: proj.composer.fill ?? forgeFill } : {})}
+                    {...(proj.composer.pin ? { pinAgent: proj.composer.pin } : {})}
+                    focusSeq={proj.composer.focusSeq}
                     verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
                   />
                 </>
