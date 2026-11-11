@@ -65,6 +65,8 @@ grep -rn "configSchema\|secrets\.get\|BRAVE_SECRET_ACCOUNT" packages
 | `hx-token`                   | 서버 접속 열쇠                  | 설정 아님 (비밀, 화면 노출 금지)                  |
 | `hx-layout`                  | 열 너비·패널 순서               | 설정 아님 (화면 상태)                             |
 | `hx.approvals.notify-asked`  | 알림 권한을 이미 물었는지       | 설정 아님 (한 번 묻기 기록)                       |
+| `hx.stt.browser.consent`    | 브라우저 음성 인식 동의 기록 (packages/plugins/stt-browser) | 설정 아님 (한 번 묻기 기록) — 0A.10 검사에서 추가로 찾음 |
+| `hx.forge.prefill`           | Forge 화면에 넘기는 임시 글     | 설정 아님 (화면 상태) — 0A.10 검사에서 추가로 찾음 |
 
 ## 5. 설정이 아닌 것 (조사했지만 레지스트리 밖)
 
