@@ -12,7 +12,7 @@ import type { Overlay } from './inspector/dryrun.js';
 import { inspectorReducer } from './inspector/model.js';
 import { RunOverlayContext } from './inspector/overlay-context.js';
 import { mergePipelineMeta, suggestCommand, type AgentMeta } from './inspector/save.js';
-import { SaveBar, type SaveAgentFn } from './inspector/SaveBar.js';
+import { SaveBar, type GestureTokenFn, type SaveAgentFn } from './inspector/SaveBar.js';
 import type { PipelineMeta } from './inspector/yaml.js';
 import { canRedo, canUndo, initHistory, withHistory } from './lego/history.js';
 import { startGraph, type StartResult } from './start.js';
@@ -40,6 +40,8 @@ export interface BuilderPageProps {
   catalog?: BuilderCatalog;
   /** 저장 API (없으면 토큰이 있을 때 HarnessApiClient.saveAgent) */
   saveAgent?: SaveAgentFn;
+  /** P4-F.2 저장 클릭 때 받는 사람 클릭 토큰 (없으면 토큰이 있을 때 POST /api/gesture-tokens) */
+  saveGestureToken?: GestureTokenFn;
   /** 시험 실행 리플레이 간격 (테스트용) */
   dryRunStepMs?: number;
   /** 대화 탭 음성 입력 (기본: 설정 stt.provider + 감지 결과로 고른다) */
@@ -67,6 +69,7 @@ export function BuilderPage({
   route,
   catalog: given,
   saveAgent,
+  saveGestureToken,
   dryRunStepMs,
   loadStt = defaultLoadStt,
   designerApi,
@@ -77,7 +80,7 @@ export function BuilderPage({
   toolPicker,
 }: BuilderPageProps) {
   const catalog = useCatalog(given);
-  const save = useSaveAgent(saveAgent);
+  const { save, gestureToken } = useSaveAgent(saveAgent, saveGestureToken);
   const api = useDesignerApi(designerApi);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState<SaveDraftResponse>();
@@ -221,7 +224,13 @@ export function BuilderPage({
         </>
       )}
       {start && !draft.session && (
-        <SaveBar graph={graph} meta={meta} onMeta={setMeta} {...(save ? { save } : {})} />
+        <SaveBar
+          graph={graph}
+          meta={meta}
+          onMeta={setMeta}
+          {...(save ? { save } : {})}
+          {...(gestureToken ? { gestureToken } : {})}
+        />
       )}
       {start ? (
         <div className="hx-builder__cols">
@@ -336,14 +345,19 @@ function useToolPickerApi(given?: Pick<ToolPickerApi, 'find'>): Pick<ToolPickerA
   }, [given]);
 }
 
-function useSaveAgent(given?: SaveAgentFn): SaveAgentFn | undefined {
+function useSaveAgent(
+  given?: SaveAgentFn,
+  givenGesture?: GestureTokenFn,
+): { save?: SaveAgentFn; gestureToken?: GestureTokenFn } {
   return useMemo(() => {
-    if (given) return given;
     const token = resolveToken();
-    if (!token) return undefined;
-    const client = new HarnessApiClient({ token });
-    return (name, body) => client.saveAgent(name, body);
-  }, [given]);
+    const client = token ? new HarnessApiClient({ token }) : undefined;
+    const save: SaveAgentFn | undefined =
+      given ?? (client ? (name, body, gesture) => client.saveAgent(name, body, gesture) : undefined);
+    const gestureToken: GestureTokenFn | undefined =
+      givenGesture ?? (client ? (kind) => client.gestureToken(kind) : undefined);
+    return { ...(save ? { save } : {}), ...(gestureToken ? { gestureToken } : {}) };
+  }, [given, givenGesture]);
 }
 
 export function isEditable(t: EventTarget | null): boolean {

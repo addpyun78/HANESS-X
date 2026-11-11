@@ -204,11 +204,23 @@ export class HarnessApiClient {
     return this.request<AgentListResponse>('/api/agents');
   }
 
-  /** 46.3 PUT /api/agents/:name — 빌더 저장 (~/.harness-x/agents/<name>/agent.yaml + pipeline.yaml) */
-  saveAgent(name: string, body: SaveAgentRequest) {
+  /** T-100 P2-A.6 사람 클릭 토큰 (1회용·60초) — 버튼 클릭 처리기 안에서만 부른다 */
+  gestureToken(kind: 'save-agent') {
+    return this.request<{ token: string }>('/api/gesture-tokens', {
+      method: 'POST',
+      body: JSON.stringify({ kind }),
+    }).then((r) => r.token);
+  }
+
+  /**
+   * 46.3 PUT /api/agents/:name — 빌더 저장 (~/.harness-x/agents/<name>/agent.yaml + pipeline.yaml)
+   * P4-F.2: 사람 클릭 토큰(save-agent)을 헤더 x-harness-gesture로 보낸다 (없으면 403)
+   */
+  saveAgent(name: string, body: SaveAgentRequest, gestureToken: string) {
     return this.request<SaveAgentResponse>(`/api/agents/${encodeURIComponent(name)}`, {
       method: 'PUT',
       body: JSON.stringify(body),
+      headers: { 'x-harness-gesture': gestureToken },
     });
   }
 

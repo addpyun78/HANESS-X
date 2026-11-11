@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { parseAgentYaml, parsePipelineYaml } from '@harness-x/protocol';
 import { bootApi } from './api-fixtures.js';
 import { tempDir } from './helpers.js';
+import { HumanGestureTokens } from '../src/human-gesture-token.js';
 
 type Api = Awaited<ReturnType<typeof bootApi>>;
 let api: Api | undefined;
@@ -27,12 +28,22 @@ const PIPELINE = {
   edges: [{ from: 'plan', to: 'build' }],
 };
 
-const put = (a: Api, name: string, body: unknown) =>
+/** P4-F.2 사람 클릭 토큰 (화면의 저장 클릭 때 받는 것) */
+const gesture = async (a: Api, kind = 'save-agent') =>
+  ((await (await a.post('/api/gesture-tokens', { kind }, a.auth)).json()) as { token: string }).token;
+
+const putWith = (a: Api, name: string, body: unknown, token?: string) =>
   fetch(a.server.url + `/api/agents/${name}`, {
     method: 'PUT',
-    headers: { ...a.auth, 'content-type': 'application/json' },
+    headers: {
+      ...a.auth,
+      'content-type': 'application/json',
+      ...(token ? { 'x-harness-gesture': token } : {}),
+    },
     body: JSON.stringify(body),
   });
+
+const put = async (a: Api, name: string, body: unknown) => putWith(a, name, body, await gesture(a));
 
 describe('46.3 PUT /api/agents/:name — 빌더 저장', () => {
   it('<home>/agents/<이름>/agent.yaml + pipeline.yaml 생성, 명령은 /이름으로 자동', async () => {
@@ -101,5 +112,31 @@ describe('46.3 PUT /api/agents/:name — 빌더 저장', () => {
     expect(b.errors.join('\n')).toContain('onFail');
     const unauth = await fetch(api.server.url + '/api/agents/a-b', { method: 'PUT', body: '{}' });
     expect(unauth.status).toBe(401);
+  });
+
+  it('P4-F.2 보강: 사람 클릭 토큰 없음·재사용·만료·다른 종류 → 403, 파일 안 생김', async () => {
+    const tmp = tempDir('hx-agents-gesture-');
+    cleanups.push(tmp.cleanup);
+    const home = join(tmp.dir, 'home');
+    let now = Date.now();
+    const gestures = new HumanGestureTokens({ now: () => now });
+    api = await bootApi({ agentsHome: home, gestures });
+    const body = { agent: { name: 'my-qa' }, pipeline: PIPELINE };
+    const reason = async (r: Response) => {
+      expect(r.status).toBe(403);
+      return ((await r.json()) as { error: string; reason: string }).reason;
+    };
+    // 세션 토큰만 (예전 동작) → 403
+    expect(await reason(await putWith(api, 'my-qa', body))).toBe('missing');
+    expect(await reason(await putWith(api, 'my-qa', body, 'made-up'))).toBe('unknown');
+    expect(await reason(await putWith(api, 'my-qa', body, await gesture(api, 'install')))).toBe('wrong_kind');
+    const old = await gesture(api);
+    now += 61_000;
+    expect(await reason(await putWith(api, 'my-qa', body, old))).toBe('expired');
+    expect(existsSync(join(home, 'agents', 'my-qa'))).toBe(false);
+    // 정상 클릭 → 201, 같은 토큰 재사용 → 403
+    const t = await gesture(api);
+    expect((await putWith(api, 'my-qa', body, t)).status).toBe(201);
+    expect(await reason(await putWith(api, 'my-qa', { ...body, overwrite: true }, t))).toBe('reused');
   });
 });
