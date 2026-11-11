@@ -1,7 +1,8 @@
-import { NODE_TYPES, type NodeType, type PipelineInput } from '@harness-x/protocol';
+import { NODE_TYPES, type ModelsResponse, type NodeType, type PipelineInput } from '@harness-x/protocol';
 import type { HarnessApiClient } from '../api/client.js';
 import { enginesFromPlugins } from '../composer/engines.js';
 import { NODE_LABEL } from './graph.js';
+import { engineBlocksFromModels } from '../engines/model.js';
 
 /** 빌더 서랍·시작 선택이 쓰는 블록 목록 */
 
@@ -28,6 +29,8 @@ export interface BuilderCatalog {
   skills: CatalogItem[];
   engines: CatalogItem[];
   tools: CatalogItem[];
+  /** T-101 5D 지금 메인 AI 엔진 (노드 칩 `메인(claude-code)` 표시·직접 고르기 전환용) */
+  mainEngine?: string;
 }
 
 export const DRAWER_TABS = ['node', 'plugin', 'skill', 'engine', 'tool'] as const;
@@ -218,7 +221,13 @@ export const DEFAULT_CATALOG: BuilderCatalog = {
  * API가 파이프라인 본문을 주지 않으므로 같은 id의 기본 카탈로그 파이프라인으로 보충한다.
  */
 export async function loadCatalog(client: HarnessApiClient): Promise<BuilderCatalog> {
-  const [agentsRes, pluginsRes] = await Promise.all([client.agents(), client.plugins()]);
+  const [agentsRes, pluginsRes, modelsRes, mainRes] = await Promise.all([
+    client.agents(),
+    client.plugins(),
+    // T-101 5D.1 엔진 탭 = 입력창 모델 목록(/api/models, 자동 탐지 결과·배지)과 같은 데이터
+    client.request<ModelsResponse>('/api/models').catch(() => undefined),
+    client.request<{ main: { engine: string } | null }>('/api/main-ai').catch(() => undefined),
+  ]);
   const known = (id: string) => DEFAULT_CATALOG.plugins.find((p) => p.id === id)?.pipeline;
   const engines = enginesFromPlugins(pluginsRes).map((e) => ({ id: e.id, label: e.label }));
   const skillPlugins = pluginsRes.plugins.filter((p) => p.slots.includes('skill'));
@@ -242,7 +251,10 @@ export async function loadCatalog(client: HarnessApiClient): Promise<BuilderCata
     skills: skillPlugins.length
       ? skillPlugins.map((p) => ({ id: p.id, label: p.displayName || p.id, description: p.description }))
       : DEFAULT_CATALOG.skills,
-    engines: [DEFAULT_CATALOG.engines[0]!, ...engines],
+    engines: modelsRes?.models.length
+      ? engineBlocksFromModels(modelsRes.models)
+      : [DEFAULT_CATALOG.engines[0]!, ...engines],
     tools: DEFAULT_CATALOG.tools,
+    ...(mainRes?.main?.engine ? { mainEngine: mainRes.main.engine } : {}),
   };
 }

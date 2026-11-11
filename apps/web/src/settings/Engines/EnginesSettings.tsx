@@ -60,7 +60,7 @@ export function EnginesSettings({ api }: EnginesSettingsProps) {
           </span>
         )}
         <button type="button" className="hx-icon-btn" onClick={rescan} disabled={scanning}>
-          {scanning ? '스캔 중…' : '다시 스캔'}
+          {scanning ? '찾는 중…' : '다시 찾기'}
         </button>
       </header>
       {error && (

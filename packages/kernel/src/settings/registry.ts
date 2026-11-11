@@ -337,6 +337,26 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     storage: 'engines-file',
     widget: 'engine-settings',
   }),
+  // T-101 5C.3 메인 AI: 입력창 오른쪽 아래 [엔진 · 모델 ▾]에서 고른 것 (kernel main-ai.ts가 읽고 쓴다)
+  defineSetting('main.engine', engineId, {
+    group: 'ai',
+    title: '기본으로 쓰는 AI',
+    description: '새 대화와 "자동"으로 둔 기능이 쓰는 AI예요. 입력창 오른쪽 아래에서도 바꿀 수 있어요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    widget: 'engine',
+  }),
+  defineSetting('main.model', S(), {
+    group: 'ai',
+    title: '기본으로 쓰는 AI의 모델',
+    description: '메인 AI가 쓸 모델이에요. 비우면 그 AI의 기본 모델을 써요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    widget: 'model',
+    engineKey: 'main.engine',
+  }),
   defineSetting('builder.engine', engineId, {
     group: 'ai',
     title: '에이전트 설계에 쓸 AI',

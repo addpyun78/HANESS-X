@@ -19,7 +19,7 @@ import type { JudgeBackend } from './types.js';
 
 /**
  * E.2 판정기 선택 순서
- *   ① judge.engine (감지·로그인 OK)
+ *   ① judge.engine (감지·로그인 OK) — 비어 있으면("자동") 메인 AI(T-101 5C.3 main.engine)
  *   ② 로컬 Ollama (기동 + 모델 있음)
  *   ③ 로그인된 구독 엔진 (E.7: 항목 작성 엔진과 다른 엔진 우선, 없으면 같은 엔진 + sameEngineJudge)
  *   ④ 없음 → 승인 카드(H)
@@ -27,6 +27,8 @@ import type { JudgeBackend } from './types.js';
  */
 
 export interface JudgeSelectDeps {
+  /** T-101 5C.3 메인 AI 엔진 (judge.engine이 "자동"일 때 먼저 쓴다) */
+  mainEngine?(): string | undefined;
   /** engine-scanner 탐지 결과 + 로그인/인증 모드 (주입) */
   listEngines(): Promise<readonly JudgeEngineInfo[]> | readonly JudgeEngineInfo[];
   /** 로컬 Ollama 상태 (기본: GET /api/tags) */
@@ -78,7 +80,17 @@ export async function selectJudge(
         });
 
   // ① 사용자가 지정한 엔진 (같은 엔진이어도 그대로 쓰고 표시만)
-  const wanted = normalizeEngineId(settings.engine);
+  const wanted =
+    normalizeEngineId(settings.engine) ||
+    normalizeEngineId(
+      (() => {
+        try {
+          return deps.mainEngine?.();
+        } catch {
+          return undefined;
+        }
+      })(),
+    );
   if (wanted) {
     const e = engines.find((x) => normalizeEngineId(x.id) === wanted);
     if (e && usable(e)) {

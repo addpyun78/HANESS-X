@@ -40,6 +40,8 @@ import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
+import { useEngines } from './engines/useEngines.js';
+import { useProjectAi } from './engines/useProjectAi.js';
 import { AppShell } from './shell/AppShell.js';
 import { useIsMobile } from './shell/mobile.js';
 import { agentSessionsFromEvents, fromDispatchSession } from './shell/agent-sessions.js';
@@ -141,6 +143,20 @@ export function App() {
     onWorkspace: setWorkspace,
     engines: available,
     agents: agentChoices,
+  });
+  // T-101 5C.3b 프로젝트 기본 AI (project.defaults.engine/model)
+  const projectAi = useProjectAi(proj.enabled ? proj.current : undefined, pApi?.patch);
+  // T-101 5 시작 시 엔진 자동 탐지(가운데 말풍선) + 입력창 오른쪽 아래 모델 선택(메인 AI)
+  const eng = useEngines({
+    client,
+    events,
+    ...((proj.activeId ?? activeId) ? { sessionId: (proj.activeId ?? activeId)! } : {}),
+    ...(projectAi ? { project: projectAi } : {}),
+    onOpenInstall: () => {
+      setInstallNav({ tab: 'search', query: 'AI' });
+      setView('install');
+    },
+    onLogin: () => panels.setActive('terminal'),
   });
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
@@ -449,6 +465,7 @@ export function App() {
                     </div>
                   )}
                   <ChatStream events={events} mode={mode} onModeChange={setMode} />
+                  {!demo && eng.bubble}
                   {wsError && (
                     <div className="hx-ws-error" role="alert">
                       {wsError}
@@ -476,6 +493,8 @@ export function App() {
                   )}
                   <Composer
                     engines={engines}
+                    modelPicker={eng.button}
+                    ai={eng.main.current}
                     plusMenu={
                       proj.enabled
                         ? { mobile, ...proj.plusMenu }
