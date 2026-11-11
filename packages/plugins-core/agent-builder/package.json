@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/engine-openai-compat": "workspace:*",
     "@harness-x/engine-scanner": "workspace:*",
+    "@harness-x/judge": "workspace:*",
     "@harness-x/kernel": "workspace:*",
     "@harness-x/mcp-host": "workspace:*",
     "@harness-x/protocol": "workspace:*",
