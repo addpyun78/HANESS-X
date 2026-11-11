@@ -73,6 +73,50 @@ async function loadApprovalsModule(): Promise<ApprovalsPluginModule | undefined>
 }
 
 /**
+ * 판정 사다리 모듈의 공개 함수 (T-100 Part 1: 비교기 → 사전 → judge 체인 → 승인 카드 연결,
+ * J.6 시작 시 예전 판정 설정·키 정리 1회 + 패널 안내). 커널은 그 패키지에 의존하지 않는다 — 구조적으로만 본다.
+ */
+export interface JudgeRuntimeLike {
+  readonly settingsError?: string;
+  readonly cleanup: { deleted: string[]; migration: { migrated: boolean }; lockRemoved: string[] };
+  notices(): unknown[];
+}
+export interface LadderRuntimeModule {
+  startJudgeRuntime?(opts: {
+    home: string;
+    workspace?: string;
+    log?: { append(e: never): unknown };
+    secrets: { delete(account: string): boolean };
+    removeLockEntries?: (ids: string[]) => string[];
+    approvals?: () => unknown;
+    judge: {
+      listEngines(): Promise<unknown[]>;
+      ollamaBaseUrl?: string;
+      secretStore?: unknown;
+    };
+  }): JudgeRuntimeLike;
+  registerJudgeRoutes?(app: unknown, rt: JudgeRuntimeLike): void;
+  judgeEnginesFrom?(
+    scan: unknown,
+    opts: {
+      authMode?: (id: string) => 'subscription' | 'apiKey' | undefined;
+      loginState?: (id: string) => 'loggedIn' | 'loggedOut' | 'unknown' | undefined;
+    },
+  ): unknown[];
+}
+
+/** 저장소의 판정 사다리 모듈 (빌드된 dist, packages/plugins-core/verifiers/ladder) */
+export async function loadLadderModule(root = repoRoot()): Promise<LadderRuntimeModule | undefined> {
+  const file = root && join(root, 'packages', 'plugins-core', 'verifiers', 'ladder', 'dist', 'index.js');
+  if (!file || !existsSync(file)) return undefined;
+  const { pathToFileURL } = await import('node:url');
+  return (await import(pathToFileURL(file).href)) as LadderRuntimeModule;
+}
+
+/** 로그인 상태 조회 캐시 (판정마다 상태 명령을 다시 돌리지 않는다) */
+const LOGIN_CACHE_MS = 60_000;
+
+/**
  * agent-builder 플러그인 모듈의 공개 API (커널은 그 패키지에 의존하지 않는다 — 순환 방지.
  * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
  */
@@ -212,6 +256,69 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const home = harnessHome();
   const log = new EventLog({ root: join(home, 'logs') });
   const hooks = new HookBus({ log });
+  const enginesCache = join(home, 'engines.json');
+
+  // T-100 Part 1 판정 연결: 설정(~/.harness-x/settings.json judge.*) → 예전 판정 설정·키 정리 1회(J.6) →
+  // judge 체인(engine-scanner 감지 + 로그인 상태). 플러그인을 읽기 전에 정리해 plugins.lock에서 예전 항목을 먼저 지운다.
+  const { removeLockEntries, loadEnginesSettings } = await Promise.all([
+    import('./loader.js'),
+    import('./engines-settings.js'),
+  ]).then(([l, e]) => ({
+    removeLockEntries: l.removeLockEntries,
+    loadEnginesSettings: e.loadEnginesSettings,
+  }));
+  const secrets = new SecretStore();
+  let approvalCards: ApprovalCardsApi | undefined;
+  const loginCache = new Map<string, { at: number; state: 'loggedIn' | 'loggedOut' | 'unknown' }>();
+  const loginState = async (id: string) => {
+    const hit = loginCache.get(id);
+    if (hit && Date.now() - hit.at < LOGIN_CACHE_MS) return hit.state;
+    const state = (await getLoginStatus(id).catch(() => ({ state: 'unknown' as const }))).state;
+    loginCache.set(id, { at: Date.now(), state });
+    return state;
+  };
+  const ladderMod = await loadLadderModule().catch((err: unknown) => {
+    process.stderr.write(
+      `판정 사다리 모듈을 읽지 못했습니다: ${err instanceof Error ? err.message : String(err)}\n`,
+    );
+    return undefined;
+  });
+  const judgeRuntime = ladderMod?.startJudgeRuntime?.({
+    home,
+    ...(values.workspace ? { workspace: resolve(values.workspace) } : {}),
+    log: log as unknown as { append(e: never): unknown },
+    secrets,
+    removeLockEntries: (ids) => removeLockEntries(join(home, 'plugins.lock'), ids),
+    approvals: () => approvalCards,
+    judge: {
+      listEngines: async () => {
+        const scan = existsSync(enginesCache)
+          ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)
+          : null;
+        let modes: Record<string, { mode: 'subscription' | 'apiKey' }> = {};
+        try {
+          modes = loadEnginesSettings().engines;
+        } catch {
+          modes = {};
+        }
+        const states = new Map<string, 'loggedIn' | 'loggedOut' | 'unknown'>();
+        for (const e of scan?.engines ?? []) states.set(e.name, await loginState(e.name));
+        return (
+          ladderMod?.judgeEnginesFrom?.(scan, {
+            authMode: (id) => modes[id]?.mode,
+            loginState: (id) => states.get(id),
+          }) ?? []
+        );
+      },
+      ...(process.env.HARNESS_X_OLLAMA_URL ? { ollamaBaseUrl: process.env.HARNESS_X_OLLAMA_URL } : {}),
+      secretStore: secrets,
+    },
+  });
+  if (judgeRuntime?.settingsError) process.stderr.write(`${judgeRuntime.settingsError}\n`);
+  if (judgeRuntime?.cleanup.migration.migrated)
+    process.stderr.write(
+      `예전 판정 설정을 judge.*로 옮겼습니다 (지운 키 ${judgeRuntime.cleanup.deleted.length}개, lock ${judgeRuntime.cleanup.lockRemoved.length}개)\n`,
+    );
   const roots = [
     ...defaultPluginRoots({ workspace: values.workspace, repoRoot: repoRoot(), home }),
     ...(values.plugins ?? []).map((dir) => ({ dir: resolve(dir), origin: 'extra' as const })),
@@ -243,7 +350,6 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       const list = (p.module as { engines?: unknown } | undefined)?.engines;
       return p.state === 'active' && Array.isArray(list) ? (list as EngineAdapter[]) : [];
     });
-  const enginesCache = join(home, 'engines.json');
 
   // 43.5/46.5 에이전트 레지스트리: 요청마다 agent-builder 플러그인 모듈로 새로 만든다(핫리로드된 모듈 사용,
   // 사용자·프로젝트 폴더를 매번 다시 읽음 → 빌더 저장 직후 / 목록에 나타난다). 커널은 agent-builder를 import하지 않는다.
@@ -328,11 +434,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {
         const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
-        return values.workspace && ap?.workspaceApprovals
-          ? { approvalCards: ap.workspaceApprovals(resolve(values.workspace), { log }) }
-          : {};
+        approvalCards =
+          values.workspace && ap?.workspaceApprovals
+            ? ap.workspaceApprovals(resolve(values.workspace), { log })
+            : undefined;
+        return approvalCards ? { approvalCards } : {};
       })(),
       routes: (app) => {
+        // T-100 판정 연결: GET /api/notices (한 번만 보여 줄 안내) · POST /api/compare (비교 파이프라인)
+        if (judgeRuntime) ladderMod?.registerJudgeRoutes?.(app, judgeRuntime);
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
         const ledgerFor =
           values.workspace && ledger?.workspaceLedgerResolver
@@ -373,7 +483,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       // 37.2 터미널 셸 cwd = 현재 워크스페이스 (폴더 선택기로 바꾸면 다음 셸부터 반영)
       terminal: { cwd: () => workspaces.sessionCwd(workspace) },
       engines: {
-        secrets: new SecretStore(),
+        secrets,
         scan: () =>
           existsSync(enginesCache)
             ? (JSON.parse(readFileSync(enginesCache, 'utf8')) as EngineScanSnapshot)

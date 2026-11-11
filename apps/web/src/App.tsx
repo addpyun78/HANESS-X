@@ -1,5 +1,5 @@
 import type { AgentSummary, HarnessEvent } from '@harness-x/protocol';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ApiError,
   HarnessApiClient,
@@ -23,6 +23,7 @@ import { approvalsApi } from './panels/Approvals/api.js';
 import { ApprovalsArea } from './panels/Approvals/ApprovalsArea.js';
 import { Toasts } from './panels/Approvals/Toasts.js';
 import { ApprovalFocusContext, useApprovals, type ApprovalFocus } from './panels/Approvals/useApprovals.js';
+import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
@@ -86,6 +87,16 @@ export function App() {
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
   const approvals = useApprovals({ events, ...(apApi ? { api: apApi } : {}) });
   const { setFocusId } = approvals;
+  // T-100 J.6 한 번만 보여 주는 안내 (GET /api/notices + notice 이벤트) → 토스트
+  const ntApi = useMemo(() => (client ? noticesApi(client) : undefined), [client]);
+  const notices = useNotices({ events, ...(ntApi ? { api: ntApi } : {}) });
+  const toasts = useMemo(() => [...approvals.toasts, ...notices.toasts], [approvals.toasts, notices.toasts]);
+  const { dismissToast } = approvals;
+  const { dismiss: dismissNotice } = notices;
+  const onDismissToast = useCallback(
+    (id: string) => (id.startsWith('n-') ? dismissNotice(id) : dismissToast(id)),
+    [dismissNotice, dismissToast],
+  );
   const approvalFocus = useMemo<ApprovalFocus>(() => ({ focus: (id) => setFocusId(id) }), [setFocusId]);
   const navSessions = useMemo(
     () =>
@@ -307,7 +318,7 @@ export function App() {
               )
             }
           />
-          <Toasts toasts={approvals.toasts} onOpen={setFocusId} onDismiss={approvals.dismissToast} />
+          <Toasts toasts={toasts} onOpen={setFocusId} onDismiss={onDismissToast} />
         </PanelActionsContext.Provider>
       </ApprovalFocusContext.Provider>
     </ForgeAnswerContext.Provider>
