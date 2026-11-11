@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { LintViolation } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface PlanReviewProps {
   violations: readonly LintViolation[];
@@ -44,6 +45,7 @@ export function PlanReview({ violations, onApprove, busy, error, children }: Pla
       {children}
       <div className="hx-ck-review__actions">
         <button
+          {...act('checklist.approve-plan')}
           type="button"
           className="hx-ck-btn hx-ck-btn--primary"
           disabled={blocked || busy || !onApprove}

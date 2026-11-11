@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { badgeLabel, type ActionCardModel } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface ActionCardProps {
   card: ActionCardModel;
@@ -91,6 +92,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
       <div className="hx-action-card__buttons">
         {card.buttons.map((b, i) => (
           <button
+            {...act('approvals.choose')}
             key={b.id}
             ref={i === 0 ? first : undefined}
             type="button"
@@ -116,6 +118,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
       {card.technical && card.technical.length > 0 && (
         <div className="hx-action-card__tech">
           <button
+            {...act('approvals.more')}
             type="button"
             className="hx-action-card__more"
             aria-expanded={open}

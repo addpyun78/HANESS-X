@@ -87,6 +87,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="1"
           class="hx-action-card__btn hx-action-card__btn--primary"
+          data-action="approvals.choose"
           data-choice="accept"
           type="button"
         >
@@ -102,6 +103,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="2"
           class="hx-action-card__btn"
+          data-action="approvals.choose"
           data-choice="redo"
           type="button"
         >
@@ -117,6 +119,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="3"
           class="hx-action-card__btn"
+          data-action="approvals.choose"
           data-choice="stop"
           type="button"
         >
@@ -132,6 +135,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="4"
           class="hx-action-card__btn"
+          data-action="approvals.choose"
           data-choice="allow-move"
           type="button"
         >
@@ -160,6 +164,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-expanded="false"
           class="hx-action-card__more"
+          data-action="approvals.more"
           type="button"
         >
           ▸
@@ -226,6 +231,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="1"
           class="hx-action-card__btn hx-action-card__btn--primary"
+          data-action="approvals.choose"
           data-choice="accept"
           type="button"
         >
@@ -241,6 +247,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="2"
           class="hx-action-card__btn"
+          data-action="approvals.choose"
           data-choice="redo"
           type="button"
         >
@@ -256,6 +263,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-keyshortcuts="3"
           class="hx-action-card__btn"
+          data-action="approvals.choose"
           data-choice="stop"
           type="button"
         >
@@ -284,6 +292,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
         <button
           aria-expanded="false"
           class="hx-action-card__more"
+          data-action="approvals.more"
           type="button"
         >
           ▸
@@ -301,6 +310,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
       aria-controls="hx-tabpanel-checklist"
       aria-selected="true"
       class="hx-tab"
+      data-action="panel.tab"
       data-tab="checklist"
       draggable="true"
       id="hx-tab-checklist"
@@ -313,6 +323,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
       aria-controls="hx-tabpanel-diff"
       aria-selected="false"
       class="hx-tab"
+      data-action="panel.tab"
       data-tab="diff"
       draggable="true"
       id="hx-tab-diff"
@@ -325,6 +336,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
       aria-controls="hx-tabpanel-terminal"
       aria-selected="false"
       class="hx-tab"
+      data-action="panel.tab"
       data-tab="terminal"
       draggable="true"
       id="hx-tab-terminal"
@@ -337,6 +349,7 @@ exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리�
       aria-controls="hx-tabpanel-trajectory"
       aria-selected="false"
       class="hx-tab"
+      data-action="panel.tab"
       data-tab="trajectory"
       draggable="true"
       id="hx-tab-trajectory"

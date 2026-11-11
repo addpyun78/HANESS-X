@@ -2,12 +2,14 @@ import { useContext } from 'react';
 import { ApprovalFocusContext } from './useApprovals.js';
 import { AREA_TITLE, type ApprovalCardData } from './model.js';
 import './approvals.css';
+import { act } from '../../actions/registry.js';
 
 /** 채팅 스트림 축소 카드 (T-100 H.14) — 누르면 패널의 카드로 스크롤·포커스 */
 export function MiniApprovalCard({ approvalId, card }: { approvalId: string; card?: ApprovalCardData }) {
   const focus = useContext(ApprovalFocusContext);
   return (
     <button
+      {...act('approvals.mini-open')}
       type="button"
       className="hx-approval-mini"
       data-approval-id={approvalId}
