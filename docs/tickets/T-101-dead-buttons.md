@@ -246,3 +246,17 @@
 | 에이전트 만들기(대화) | 말로 입력(처리 중·허락 묻는 중) (builder/chat/MicButton.tsx) | 비활성일 때 이유가 안 보임 | 0C.F13 |
 | 에이전트 만들기(대화) | 질문 답 보내기(다 안 고름) (builder/draft/DraftCards.tsx) | 비활성일 때 이유가 안 보임 | 0C.F13 |
 | 에이전트 만들기(대화) | 저장·빈 칸 있어도 저장(이름 오류·저장 중) ×2 (builder/draft/SaveDialog.tsx) | 비활성일 때 이유가 안 보임 | 0C.F13 |
+
+## C. master 병합 뒤 재점검 (0-1 설정 폼·0-2 프로젝트 사이드바 합쳐진 뒤)
+
+같은 검사기로 새 화면 5개(project-sidebar, project-sidebar-menus, project-picker, empty-session-projects, settings-form)를 목록에 넣고 다시 돌림.
+
+| 화면 | 버튼 (파일) | 지금 동작 | 조치 |
+| --- | --- | --- | --- |
+| 설정 폼 | 켜기/끄기·목록 더하기/빼기·폴더 고르기·열쇠 저장/지우기·기본값으로(항목·묶음·전부·확인·그만두기) — `data-action="settings.*"` 11종 (settings/form/*.tsx) | 눌리면 동작하지만 id가 레지스트리에 없음 → 개발 모드 빨간 배너 | 0C.F14 |
+| 설정 폼 | 위 버튼 중 비활성 8개 (저장 중·바꿀 수 없음) | 비활성일 때 이유가 안 보임 | 0C.F14 |
+| 프로젝트 사이드바 | 새 세션·▾·프로젝트별 +·…·폴더 열기·다시 연결·묶음 접기·완료됨·보관하기·대화 행·대화 메뉴·프로젝트 메뉴 항목·하단 메뉴 (shell/projects/ProjectSidebar.tsx) | data-action 없음, 하단 메뉴 플러그인·스킬·설정은 눌러도 아무 일 없음(0C.F2~F4와 같은 원인) | 0C.F15 |
+| 프로젝트 고르기 카드 | 폴더 열기·최근 프로젝트·임시 작업 공간·프로젝트 고르기·닫기·맨 위 폴더로·고른 폴더 그대로 (WhereToWork.tsx) | data-action 없음, [최근 프로젝트] 비활성 이유 없음 | 0C.F15 |
+| 빈 세션·확인 카드·프로젝트 설정 | 예시·최근 에이전트·확인/취소·다시 연결·저장·닫기 (EmptySession·ConfirmCard·ProjectSettings.tsx) | data-action 없음 | 0C.F15 |
+
+고친 뒤: 화면 24개 276개 클릭 실패 0건, `eslint apps/web/src` 0건.
