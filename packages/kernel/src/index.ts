@@ -29,3 +29,4 @@ export * from './path-normalize.js';
 export * from './projects/index.js';
 export * from './settings/index.js';
 export * from './api/settings-routes.js';
+export * from './run-mode/index.js';
