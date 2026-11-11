@@ -9,6 +9,7 @@ import {
   type Overlay,
   type RunEvent,
 } from './dryrun.js';
+import { stageRunView } from './dryrun-stages.js';
 import { graphToPipeline, type PipelineMeta } from './yaml.js';
 
 export interface DryRunTabProps {
@@ -71,6 +72,7 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
     );
   };
 
+  const stages = overlay ? stageRunView(graphToPipeline(graph, meta), overlay) : undefined;
   const rows = overlay ? Object.entries(overlay).sort((a, b) => (a[1].order ?? 99) - (b[1].order ?? 99)) : [];
 
   return (
@@ -109,6 +111,24 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
             <li key={e}>{e}</li>
           ))}
         </ul>
+      )}
+      {stages && (
+        <div className="hx-dryrun__stages">
+          <p className="hx-dryrun__stage-progress" data-testid="dryrun-stage-progress">
+            {stages.label}
+          </p>
+          <ol className="hx-dryrun__list" aria-label="단계별 진행">
+            {stages.rows.map((r, k) => (
+              <li key={r.nodeId} data-stage={r.nodeId} data-status={r.status}>
+                <span>
+                  {k + 1}. {r.title}
+                </span>
+                <span>{STATUS_LABEL[r.status]}</span>
+                <span />
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
       {overlay && (
         <>
