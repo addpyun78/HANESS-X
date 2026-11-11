@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`T-100 F.5 CHECKLIST.md 판정 단계 표시 > 자동 정리로 일치 / 사전 일치 / AI 판단(엔진명, 0.93) / 사용자 승인 (스냅샷) 1`] = `
+"# 판정 단계
+
+개정 v1 · 버전 14 · 진행 4/5
+현재 항목: 5
+
+범례: ⬜ todo · 🔄 doing · 🔍 verifying · ✅ done · ❌ failed · ⛔ blocked
+
+- ✅ **1** 항목 1 구현 — \`art.item-1\` · 시도 1
+  - 판정 단계: 자동 정리로 일치
+- ✅ **2** 항목 2 구현 — \`art.item-2\` · 시도 1
+  - 판정 단계: 사전 일치
+- ✅ **3** 항목 3 구현 — \`art.item-3\` · 시도 1
+  - 판정 단계: AI 판단(codex, 0.93)
+- ✅ **4** 항목 4 구현 — \`art.item-4\` · 시도 1
+  - 판정 단계: 사용자 승인
+- ⬜ **5** 항목 5 구현 — \`art.item-5\`
+"
+`;

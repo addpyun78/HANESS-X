@@ -1,0 +1,10 @@
+{
+  "id": "comparators",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Comparators",
+  "description": "기대값·실제값 비교기 (exact·path·text·json·number·version·regex·exitCode) — 정규화·사전 칸, 모델 호출 없음",
+  "main": "dist/index.js",
+  "provides": { "comparator": ["exact", "path", "text", "json", "number", "version", "regex", "exitCode"] },
+  "permissions": { "fs": ["workspace:read"], "net": [], "shell": false }
+}

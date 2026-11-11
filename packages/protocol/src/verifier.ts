@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /**
  * 판정기(verifier 슬롯) 인터페이스 (T-026)
- * 판정 사다리 L4(Jev·로컬 LLM)와 L5(다른 엔진)가 같은 질문 형식을 쓴다.
+ * 판정 사다리 L4(의미 판단 AI·로컬 LLM)와 L5(다른 엔진)가 같은 질문 형식을 쓴다.
  *   judge(question, state) → { noul | choice | score, confidence }
  * - noul: yes/no 확률(0~1, "yes"일 확률)
  * - choice: 선택지 중 하나
@@ -99,7 +99,7 @@ export interface JudgeOptions {
 
 /** verifier 슬롯 플러그인이 구현하는 판정기 */
 export interface Verifier {
-  /** 판정기 ID (예: jev, local) */
+  /** 판정기 ID (예: local) */
   readonly id: string;
   judge<Q extends JudgeQuestion>(
     question: Q,
@@ -226,7 +226,7 @@ export function minimizeJudgeState(input: Record<string, unknown> | JudgeState):
   });
 }
 
-// ── 공통 요청 형식 (Jev·로컬 LLM·L5 엔진이 같은 질문 형식을 쓴다) ─────────
+// ── 공통 요청 형식 (로컬 LLM·L5 엔진이 같은 질문 형식을 쓴다) ─────────
 export const JUDGE_SYSTEM_PROMPT =
   'You are a strict verification judge for a coding harness. You receive ONE typed question and metadata ' +
   '(paths, file names, symbol names, checklist item title) — never source code. Answer ONLY with a JSON object ' +

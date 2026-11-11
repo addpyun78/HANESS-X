@@ -41,7 +41,7 @@ describe('36.3 항목 펼침', () => {
     expect(steps[0]!.textContent).toContain('내용 증거');
     expect(steps[0]!.textContent).toContain('내용 증거 통과: ai/mobile에서 acceptance 2/2');
     expect(steps[1]!.textContent).toContain('경량 판정 모델');
-    expect(steps[1]!.textContent).toContain('Jev: 같은 산출물 p=0.93, 동치');
+    expect(steps[1]!.textContent).toContain('AI 판단: 같은 산출물 p=0.93, 동치');
 
     const evid = within(d).getByRole('region', { name: '증거' });
     expect(

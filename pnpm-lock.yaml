@@ -449,6 +449,9 @@ importers:
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
+      '@harness-x/comparators':
+        specifier: workspace:*
+        version: link:../verifiers/comparators
       '@harness-x/kernel':
         specifier: workspace:*
         version: link:../../kernel
@@ -557,6 +560,21 @@ importers:
         specifier: ^1.32.2
         version: 1.32.2(supports-color@7.2.0)(zod@4.6.7)
 
+  packages/plugins-core/verifiers/comparators:
+    dependencies:
+      '@harness-x/checklist-ledger':
+        specifier: workspace:*
+        version: link:../../checklist-ledger
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../../protocol
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+
   packages/plugins-core/verifiers/judge:
     dependencies:
       '@harness-x/engine-antigravity':
@@ -583,13 +601,19 @@ importers:
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../../checklist-ledger
+      '@harness-x/comparators':
+        specifier: workspace:*
+        version: link:../comparators
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../../protocol
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
     devDependencies:
-      '@harness-x/verifier-jev':
+      '@harness-x/kernel':
         specifier: workspace:*
-        version: link:../../../plugins/verifier-jev
+        version: link:../../../kernel
       '@harness-x/verifier-local':
         specifier: workspace:*
         version: link:../../../plugins/verifier-local
@@ -601,12 +625,6 @@ importers:
         version: link:../../protocol
 
   packages/plugins/stt-local:
-    dependencies:
-      '@harness-x/protocol':
-        specifier: workspace:*
-        version: link:../../protocol
-
-  packages/plugins/verifier-jev:
     dependencies:
       '@harness-x/protocol':
         specifier: workspace:*

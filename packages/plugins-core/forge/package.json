@@ -17,6 +17,7 @@
   "dependencies": {
     "@harness-x/agent-builder": "workspace:*",
     "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/comparators": "workspace:*",
     "@harness-x/kernel": "workspace:*",
     "@harness-x/protocol": "workspace:*",
     "@harness-x/sdk": "workspace:*",

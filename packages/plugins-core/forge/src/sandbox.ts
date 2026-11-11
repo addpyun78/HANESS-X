@@ -1,6 +1,7 @@
 import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
+import { compareValues, defaultCompareCtx } from '@harness-x/comparators';
 import { HookBus, PluginLoader, TrustStore, type HookName } from '@harness-x/kernel';
 import { compilePlugin, runChecks, type CompileResult } from './check.js';
 import type { ForgeExample, ForgeSpec } from './spec.js';
@@ -95,11 +96,15 @@ async function runExample(
     const out = await hooks.runBlocking(hook, ctx);
     const actual = { decision: out.decision, ...(out.reason ? { reason: out.reason } : {}) };
     const problems: string[] = [];
-    if (out.decision !== ex.expect.decision)
+    const cc = defaultCompareCtx({ workspaceRoot: ws });
+    if (compareValues('exact', ex.expect.decision, out.decision, cc).next !== 'pass')
       problems.push(
         `결정 ${out.decision} (기대 ${ex.expect.decision})${out.reason ? ` 사유: ${out.reason}` : ''}`,
       );
-    if (ex.expect.reasonContains && !(out.reason ?? '').includes(ex.expect.reasonContains))
+    const reasonOk = (want: string) =>
+      compareValues('text', want, out.reason ?? '', cc, { options: { mode: 'contains' }, semantic: 'off' })
+        .next === 'pass';
+    if (ex.expect.reasonContains && !reasonOk(ex.expect.reasonContains))
       problems.push(`사유에 '${ex.expect.reasonContains}' 없음`);
     return {
       name: ex.name,

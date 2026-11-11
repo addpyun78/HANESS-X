@@ -5,7 +5,14 @@ import { writeFileAtomic } from './fs-util.js';
 import { currentItemOf } from './ledger.js';
 import type { Manifest } from './manifest.js';
 import { lastFailureReason } from './slice.js';
-import { ITEM_STATUSES, type Checklist, type ChecklistItem, type ItemStatus } from './schema.js';
+import {
+  compareEvidenceOf,
+  ITEM_STATUSES,
+  type Checklist,
+  type ChecklistItem,
+  type CompareEvidence,
+  type ItemStatus,
+} from './schema.js';
 import { nextInstruction } from './stop-guard.js';
 
 /**
@@ -26,6 +33,33 @@ export const STATUS_ICONS: Record<ItemStatus, string> = {
   failed: '❌',
   blocked: '⛔',
 };
+
+/**
+ * T-100 F.5 판정 단계 표시 — 비교 증거(kind 'compare')가 어느 칸에서 일치했는지 사람이 읽는 말로.
+ *   normalize → 자동 정리로 일치 / dictionary → 사전 일치 / semantic → AI 판단(엔진명, 0.93) / human → 사용자 승인
+ */
+export function compareStageLabel(e: CompareEvidence): string {
+  const c = e.compare;
+  switch (c.level) {
+    case 'normalize':
+      return '자동 정리로 일치';
+    case 'dictionary':
+      return '사전 일치';
+    case 'semantic':
+      return `AI 판단(${c.judgeEngine ?? '엔진 모름'}, ${c.confidence.toFixed(2)})`;
+    case 'human':
+      return '사용자 승인';
+  }
+}
+
+/** 항목의 마지막 일치 비교 증거 → 판정 단계 문구 (없으면 undefined) */
+export function itemCompareStage(it: Pick<ChecklistItem, 'evidence'>): string | undefined {
+  for (let k = it.evidence.length - 1; k >= 0; k--) {
+    const c = compareEvidenceOf(it.evidence[k]!);
+    if (c && c.compare.verdict === 'equal') return compareStageLabel(c);
+  }
+  return undefined;
+}
 
 export interface RenderOptions {
   title?: string;
@@ -66,6 +100,8 @@ export function renderChecklistMarkdown(c: Checklist | null, opts: RenderOptions
         lines.push(
           `${pad}  - 판정: L${it.verdict.level} ${it.verdict.verdict} (${it.verdict.confidence.toFixed(2)}) — ${oneLine(it.verdict.reason)}`,
         );
+      const stage = itemCompareStage(it);
+      if (stage) lines.push(`${pad}  - 판정 단계: ${stage}`);
       if (it.status === 'failed' || it.status === 'blocked') {
         const why = lastFailureReason(it) ?? it.evidence.at(-1)?.summary;
         if (why) lines.push(`${pad}  - 사유: ${oneLine(why)}`);

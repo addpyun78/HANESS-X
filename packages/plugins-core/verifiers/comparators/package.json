@@ -1,5 +1,5 @@
 {
-  "name": "@harness-x/verifier-jev",
+  "name": "@harness-x/comparators",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -15,6 +15,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@harness-x/protocol": "workspace:*"
+    "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/kernel": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "zod": "^4.6.7"
   }
 }

@@ -55,7 +55,7 @@ export interface SendPayload {
 /** 판정 줄: 항목이 판정 사다리 몇 번째 칸에서 통과했는지 */
 export interface Verdict {
   itemId: string;
-  /** 1~5 (정규화·별칭 사전·내용 증거·Jev·사람) */
+  /** 1~5 (정규화·별칭 사전·내용 증거·AI 판단·사람) */
   rung: 1 | 2 | 3 | 4 | 5;
   passed: boolean;
 }
@@ -64,6 +64,6 @@ export const RUNG_LABEL: Record<Verdict['rung'], string> = {
   1: '정규화',
   2: '별칭 사전',
   3: '내용 증거',
-  4: 'Jev',
+  4: 'AI 판단',
   5: '사람',
 };
