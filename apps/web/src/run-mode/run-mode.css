@@ -1,0 +1,92 @@
+/* T-101 3. 실행 모드 카드·패널 */
+
+.hx-plan-done,
+.hx-auto-limits,
+.hx-auto-summary,
+.hx-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-bg);
+}
+
+.hx-plan-done__actions,
+.hx-auto-limits__actions,
+.hx-review__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+}
+
+.hx-auto-limits__lines,
+.hx-review__list {
+  margin: 0;
+  padding-left: var(--hx-space-3);
+}
+
+.hx-review__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.hx-auto-limits__edit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--hx-space-2);
+}
+
+.hx-auto-limits__edit label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  font-size: var(--hx-font-12);
+}
+
+.hx-review__title {
+  margin: 0;
+  font-size: var(--hx-font-14);
+}
+
+.hx-review__count {
+  color: var(--hx-text-faint);
+}
+
+.hx-review__reason {
+  margin: var(--hx-space-1) 0;
+}
+
+.hx-review__ref {
+  margin-left: var(--hx-space-2);
+  color: var(--hx-text-faint);
+}
+
+.hx-auto-summary__counts {
+  display: flex;
+  gap: var(--hx-space-4);
+  margin: 0;
+}
+
+.hx-auto-summary__counts dd {
+  margin: 0;
+  font-size: var(--hx-font-20);
+}
+
+.hx-mode-badge {
+  display: inline-block;
+  padding: 0 var(--hx-space-1);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+}
+
+.hx-mode-badge--auto {
+  border-color: var(--hx-accent);
+  color: var(--hx-accent);
+}
