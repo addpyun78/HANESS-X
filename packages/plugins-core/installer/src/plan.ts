@@ -109,15 +109,40 @@ export const UNKNOWN_PRICING: Pricing = {
 
 export const UNKNOWN_LICENSE: License = { id: 'unknown', plain: '사용 조건을 확인하지 못했어요.' };
 
-/** 라이선스 id → 쉬운 말 (D.5 사전의 기본값; 카드 렌더는 다음 단계) */
+/**
+ * P2-D.5 라이선스 쉬운 설명 사전.
+ * 순서대로 맞춰 보고 처음 맞는 설명을 쓴다. 없으면 "직접 확인" 안내 (추정으로 무료라고 하지 않는다).
+ */
+export const LICENSE_FREE_PLAIN = '누구나 무료로 쓸 수 있어요.';
+export const LICENSE_COPYLEFT_PLAIN = '무료지만 고쳐서 배포하면 소스 공개 의무가 있어요.';
+export const LICENSE_COMMERCIAL_PLAIN = '회사 약관을 따라야 해요.';
+export const LICENSE_OTHER_PLAIN = '사용 조건을 직접 확인해 주세요.';
+
+export const LICENSE_DICTIONARY: readonly { match: RegExp; plain: string; examples: string[] }[] = [
+  {
+    match:
+      /^(MIT|MIT-0|Apache-2\.0|BSD-[23]-Clause|ISC|0BSD|Unlicense|MPL-2\.0|Zlib|CC0-1\.0|BSL-1\.0|PSF-2\.0|Python-2\.0)$/i,
+    plain: LICENSE_FREE_PLAIN,
+    examples: ['MIT', 'Apache-2.0', 'BSD-3-Clause', 'ISC', 'MPL-2.0'],
+  },
+  {
+    match: /^(L?GPL|AGPL)/i,
+    plain: LICENSE_COPYLEFT_PLAIN,
+    examples: ['GPL-3.0', 'GPL-2.0-only', 'LGPL-2.1', 'AGPL-3.0'],
+  },
+  {
+    match: /^(proprietary|commercial|freeware|eula|closed)/i,
+    plain: LICENSE_COMMERCIAL_PLAIN,
+    examples: ['Proprietary', 'Commercial', 'Freeware'],
+  },
+];
+
+/** 라이선스 id → 쉬운 말 (D.5 사전) */
 export function plainLicense(id: string | undefined | null): License {
-  if (!id) return UNKNOWN_LICENSE;
+  if (!id || !id.trim() || id.trim().toLowerCase() === 'unknown') return UNKNOWN_LICENSE;
   const k = id.trim();
-  if (/^(MIT|Apache-2\.0|BSD-[23]-Clause|ISC|0BSD|Unlicense|MPL-2\.0|Zlib)$/i.test(k))
-    return { id: k, plain: '누구나 무료로 쓸 수 있어요.' };
-  if (/^(L?GPL|AGPL)/i.test(k)) return { id: k, plain: '무료지만 고쳐서 배포하면 소스 공개 의무가 있어요.' };
-  if (/^(proprietary|commercial)/i.test(k)) return { id: k, plain: '회사 약관을 따라야 해요.' };
-  return { id: k, plain: '사용 조건을 직접 확인해 주세요.' };
+  const hit = LICENSE_DICTIONARY.find((e) => e.match.test(k));
+  return { id: k, plain: hit ? hit.plain : LICENSE_OTHER_PLAIN };
 }
 
 /** 계획 하나를 만들 때 기본값을 채운다 (어댑터 공용) */
