@@ -21,6 +21,8 @@ import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.j
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } from './approvals-routes.js';
+import { HumanGestureTokens } from '../human-gesture-token.js';
+import { registerGestureRoute, registerInstallRoutes, type InstallApi } from './install-routes.js';
 
 /**
  * 로컬 API 서버
@@ -69,6 +71,10 @@ export interface ApiServerOptions {
   engines?: EnginesApiOptions;
   /** T-060 GET /api/quota (엔진별 사용량 집계). 없으면 라우트 없음 */
   quota?: QuotaApiOptions;
+  /** T-100 A.6 사람 클릭 토큰 저장소 (기본: 서버마다 새로). POST /api/gesture-tokens */
+  gestures?: HumanGestureTokens;
+  /** T-100 Part 2 설치 관리자 API (/api/install/…). 없으면 라우트 없음 */
+  install?: InstallApi;
 }
 
 export {
@@ -84,6 +90,8 @@ export interface ApiServer {
   tokenFile: string;
   url: string;
   port: number;
+  /** 사람 클릭 토큰 저장소 (테스트·다른 라우트가 같은 저장소를 쓰도록 노출) */
+  gestures: HumanGestureTokens;
   close(): Promise<void>;
 }
 
@@ -255,6 +263,9 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
+  const gestures = opts.gestures ?? new HumanGestureTokens();
+  registerGestureRoute(app, gestures);
+  registerInstallRoutes(app, { gestures, ...(opts.install ? { install: opts.install } : {}) });
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {
@@ -281,6 +292,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     tokenFile,
     port: boundPort,
     url: `http://${urlHost}:${boundPort}`,
+    gestures,
     close: () => app.close(),
   };
 }

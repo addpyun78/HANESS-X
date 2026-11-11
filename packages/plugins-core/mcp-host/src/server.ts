@@ -28,6 +28,20 @@ export const HARNESS_TOOLS = [
 ] as const;
 export type HarnessToolName = (typeof HARNESS_TOOLS)[number];
 
+/**
+ * T-100 P2-A.7 설치 관리자 도구: AI에게는 찾기·주소 해석·계획만 준다.
+ * 실행(install.execute)·제거(uninstall)는 MCP 도구로 절대 노출하지 않는다 — 사람 클릭 토큰이 필요한 API로만.
+ */
+export const INSTALL_MCP_TOOLS = ['install.search', 'install.resolve', 'install.plan'] as const;
+export type InstallMcpToolName = (typeof INSTALL_MCP_TOOLS)[number];
+
+/** @harness-x/installer의 InstallService가 구현 (mcp-host는 설치 관리자에 의존하지 않는다) */
+export interface InstallToolsProvider {
+  search(query: string, kind?: string): unknown;
+  resolve(url: string): unknown;
+  plan(req: Record<string, unknown>): unknown;
+}
+
 export interface HarnessMcpOptions {
   name?: string;
   version?: string;
@@ -41,6 +55,8 @@ export interface HarnessMcpOptions {
    * 하네스 실행기는 이 도구의 tool_call 입력을 노드 출력으로 읽는다(받은 값은 그대로 돌려준다).
    */
   nodeOutput?: boolean;
+  /** T-100 A.7: 설치 관리자 도구 install.search·install.resolve·install.plan 등록 */
+  install?: InstallToolsProvider;
 }
 
 /** 파이프라인 노드 출력 도구 이름 (nodeOutput 옵션) */
@@ -183,5 +199,53 @@ export function createHarnessMcpServer(deps: HarnessToolDeps, opts: HarnessMcpOp
       (args) => run(() => ({ accepted: true, json: args.json })),
     );
 
+  if (opts.install) registerInstallTools(server, opts.install, opts.toolNames);
+
   return server;
+}
+
+function registerInstallTools(
+  server: McpServer,
+  p: InstallToolsProvider,
+  style: HarnessMcpOptions['toolNames'] = 'dotted',
+): void {
+  const n = (b: InstallMcpToolName) => (style === 'underscore' ? b.replace(/\./g, '_') : b);
+  server.registerTool(
+    n('install.search'),
+    {
+      title: '설치할 도구 찾기',
+      description:
+        '설치할 수 있는 앱·도구·모델 후보를 찾는다(실행 없음). 결과에서 하나를 골라 install.plan으로 계획을 만든다. 설치는 사람이 화면에서 승인해야만 실행된다.',
+      inputSchema: { query: z.string().min(1), kind: z.string().optional() },
+    },
+    (args) => run(() => p.search(args.query, args.kind)),
+  );
+  server.registerTool(
+    n('install.resolve'),
+    {
+      title: '주소로 설치 방법 찾기',
+      description:
+        '사용자가 준 주소(GitHub·npm·PyPI·Ollama·VS Code 마켓·Docker Hub·설치 파일·MCP 주소 등)를 읽기만 해서 설치 후보와 추천을 돌려준다. 코드는 실행하지 않는다.',
+      inputSchema: { url: z.string().min(1) },
+    },
+    (args) => run(() => p.resolve(args.url)),
+  );
+  server.registerTool(
+    n('install.plan'),
+    {
+      title: '설치 계획 만들기',
+      description:
+        '설치 계획(무엇을·어디서·무료/유료·바뀌는 것·위험·지우는 방법)을 만들어 사람에게 보여 줄 카드로 돌려준다. 실행하지 않는다.',
+      inputSchema: {
+        kind: z.string(),
+        target: z.object({
+          id: z.string(),
+          version: z.string().optional(),
+          name: z.string().optional(),
+          options: z.record(z.string(), z.unknown()).optional(),
+        }),
+      },
+    },
+    (args) => run(() => p.plan(args as Record<string, unknown>)),
+  );
 }
