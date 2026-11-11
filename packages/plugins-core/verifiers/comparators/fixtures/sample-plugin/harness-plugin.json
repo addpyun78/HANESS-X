@@ -1,0 +1,10 @@
+{
+  "id": "sample-comparator",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Sample comparator",
+  "description": "B.4 검증용 샘플 비교기 플러그인 — 대소문자 무시 비교",
+  "main": "index.js",
+  "provides": { "comparator": ["case-insensitive"] },
+  "permissions": { "fs": [], "net": [], "shell": false }
+}
