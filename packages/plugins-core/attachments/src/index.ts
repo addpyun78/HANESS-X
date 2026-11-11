@@ -19,6 +19,7 @@ export * from './folder.js';
 export * from './convert.js';
 export * from './secrets.js';
 export * from './mcp.js';
+export * from './routes.js';
 
 export function activate(ctx: { log(message: string): void }): void {
   ctx.log('attachments: 입력창 첨부 준비');

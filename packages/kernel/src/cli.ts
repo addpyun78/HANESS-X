@@ -12,6 +12,7 @@ import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from 
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
+import { SettingsStore, readSetting } from './settings/index.js';
 
 // 무거운 모듈(fastify 등)은 main 안에서 동적으로 불러온다 → --exit-with-stdin 감시를 기동 초기에 건다
 // (WSL /mnt/c 위에서는 모듈 로딩만 수십 초 걸린다). 값은 api/server.ts의 DEFAULT_API_PORT와 같다.
@@ -44,6 +45,20 @@ interface ForgePluginModule {
 }
 
 /** checklist-ledger 플러그인 모듈의 공개 함수 (T-028 28.1 GET /api/checklist/:session/status) */
+/** T-101 1A 첨부 플러그인 (packages/plugins-core/attachments) — 커널은 그 패키지에 의존하지 않는다 */
+interface AttachmentsPluginModule {
+  registerAttachmentRoutes?(
+    app: unknown,
+    o: {
+      session(id: string): { projectRoot?: string; draft: boolean } | undefined;
+      commitDraft(id: string, firstMessage: string): unknown;
+      limits?: () => Record<string, number>;
+      events?: { append(r: { type: string } & Record<string, unknown>): unknown };
+    },
+  ): void;
+  eventLogSink?(log: unknown): { append(r: { type: string } & Record<string, unknown>): unknown };
+}
+
 interface LedgerPluginModule {
   workspaceLedgerResolver?(workspace: string): (sessionId: string) => unknown;
   registerChecklistStatusRoute?(app: unknown, resolve: (sessionId: string) => unknown): void;
@@ -570,6 +585,27 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           ledger.registerChecklistStatusRoute(app, ledgerFor);
         if (ledgerFor && ledger?.registerChecklistPlanRoutes)
           ledger.registerChecklistPlanRoutes(app, ledgerFor, { log });
+        // T-101 1A 첨부 저장: 세션의 프로젝트 폴더 .harness-x/attachments (초안이면 그 순간 정식 저장)
+        const att = loader.plugins.get('attachments')?.module as AttachmentsPluginModule | undefined;
+        att?.registerAttachmentRoutes?.(app, {
+          session: (id) => {
+            const s = sessionRegistry.get(id);
+            if (!s) return undefined;
+            const p = s.projectId ? projects.get(s.projectId) : undefined;
+            return { draft: s.draft, ...(p ? { projectRoot: p.rootPath } : {}) };
+          },
+          commitDraft: (id, text) => sessionRegistry.commitDraft(id, text),
+          limits: () => {
+            const v = new SettingsStore({ file: join(home, 'settings.json') }).effective();
+            return {
+              maxFileMB: readSetting<number>(v, 'attachments.maxFileMB'),
+              maxBatchMB: readSetting<number>(v, 'attachments.maxBatchMB'),
+              concurrency: readSetting<number>(v, 'attachments.concurrency'),
+              folderConfirmOver: readSetting<number>(v, 'attachments.folderConfirmOver'),
+            };
+          },
+          ...(att.eventLogSink ? { events: att.eventLogSink(log) } : {}),
+        });
         // T-051 Forge 카드 응답 (POST /api/forge/answers/:id)
         forge()?.registerForgeApi?.(app, { log });
         registerRecoveryRoutes(app, {
