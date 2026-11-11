@@ -149,6 +149,8 @@ export const ACTIONS = {
   'inspector.yaml-apply': { description: '고친 설정 글을 블록 그림에 적용해요', effect: 'state' },
   'inspector.yaml-reset': { description: '고친 설정 글을 되돌려요', effect: 'state' },
 
+  'dev.dismiss-banner': { description: '개발 경고 띠를 닫아요', effect: 'state' },
+
   'lego.detach-plugin': { description: '플러그인 묶음을 떼어내요', effect: 'state' },
   'lego.remove-skill': { description: '블록에서 스킬을 빼요', effect: 'state' },
 } as const satisfies Record<string, ActionSpec>;
