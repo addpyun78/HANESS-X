@@ -60,6 +60,8 @@ export interface ActionCardButton {
 export interface ActionCardModel {
   id: string;
   title: string;
+  /** 제목 앞 그림 글자 (기본 ✋, 도구 고르기 카드는 🔧) */
+  icon?: string;
   /** 제목 옆 작은 표시 (예: 항목 번호, 무료/유료) */
   badges?: string[];
   sections: ActionCardSection[];

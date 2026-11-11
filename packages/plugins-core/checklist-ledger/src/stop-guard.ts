@@ -63,7 +63,10 @@ export function nextInstruction(
   // T-100 H.19 승인 카드 "원래 자리로 다시 만들기" → 다음 턴 지시문 앞에 쉬운 말 사유 + 정식 경로
   const last = item.evidence?.at(-1);
   const redo =
-    item.status === 'doing' && last?.kind === 'approval_redo' && typeof last.instruction === 'string'
+    item.status === 'doing' &&
+    // T-100 P3-D.1·C.6 도구 설치 후 재개 / 도구 없이 진행 지시도 같은 방식으로 다음 턴 앞에 붙인다
+    (last?.kind === 'approval_redo' || last?.kind === 'tool_resumed' || last?.kind === 'tool_skipped') &&
+    typeof last.instruction === 'string'
       ? `${last.instruction}\n\n`
       : '';
   return (

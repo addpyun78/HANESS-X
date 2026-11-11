@@ -23,6 +23,7 @@ import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } from './approvals-routes.js';
 import { HumanGestureTokens } from '../human-gesture-token.js';
 import { registerGestureRoute, registerInstallRoutes, type InstallApi } from './install-routes.js';
+import { registerToolRoutes, type ToolFinderApi } from './tool-routes.js';
 
 /**
  * 로컬 API 서버
@@ -75,6 +76,8 @@ export interface ApiServerOptions {
   gestures?: HumanGestureTokens;
   /** T-100 Part 2 설치 관리자 API (/api/install/…). 없으면 라우트 없음 */
   install?: InstallApi;
+  /** T-100 Part 3 도구 찾기 API (/api/tools/…). 없으면 라우트 없음 */
+  toolFinder?: ToolFinderApi;
 }
 
 export {
@@ -266,6 +269,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   const gestures = opts.gestures ?? new HumanGestureTokens();
   registerGestureRoute(app, gestures);
   registerInstallRoutes(app, { gestures, ...(opts.install ? { install: opts.install } : {}) });
+  if (opts.toolFinder) registerToolRoutes(app, opts.toolFinder);
 
   // 8.4 이벤트 스트리밍
   app.get('/ws/events', { websocket: true }, (socket, req) => {
