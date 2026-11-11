@@ -1,0 +1,159 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.6 승인·알림 > 컴퓨터 알림·다시 알림 간격·소리가 보이고 고르면 이 기기 저장소에 남는다 (스냅샷) 1`] = `
+<section
+  aria-label="승인·알림"
+  class="hx-settings-form__section"
+  data-setting-group="approval"
+>
+  <header
+    class="hx-settings-form__section-head"
+  >
+    <h3>
+      승인·알림
+    </h3>
+    <button
+      class="hx-setting__link"
+      data-action="settings.reset-group"
+      type="button"
+    >
+      이 묶음 기본값으로
+    </button>
+  </header>
+  <p
+    class="hx-settings-form__section-desc"
+  >
+    허락을 묻는 방법과 알림을 정해요.
+  </p>
+  <div
+    class="hx-setting"
+    data-setting-key="approval.osNotify"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-approval-osNotify"
+      >
+        컴퓨터 알림
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      화면을 보고 있지 않을 때 확인할 일이 생기면 컴퓨터 알림을 띄워요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-approval-osNotify"
+      >
+        <option
+          value="on"
+        >
+          켜기
+        </option>
+        <option
+          value="off"
+        >
+          끄기
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="approval.remindMinutes"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-approval-remindMinutes"
+      >
+        다시 알림 간격
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      확인할 일이 남아 있으면 이 간격마다 다시 알려요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-approval-remindMinutes"
+      >
+        <option
+          value="0"
+        >
+          다시 알리지 않기
+        </option>
+        <option
+          value="5"
+        >
+          5분마다
+        </option>
+        <option
+          value="15"
+        >
+          15분마다
+        </option>
+        <option
+          value="30"
+        >
+          30분마다
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    class="hx-setting"
+    data-setting-key="approval.sound"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-approval-sound"
+      >
+        알림 소리
+      </label>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      확인할 일이 생기면 짧은 소리를 내요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-approval-sound"
+      >
+        <option
+          value="on"
+        >
+          켜기
+        </option>
+        <option
+          value="off"
+        >
+          끄기
+        </option>
+      </select>
+    </div>
+  </div>
+</section>
+`;
