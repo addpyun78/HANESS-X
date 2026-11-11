@@ -54,7 +54,7 @@ export interface NotifierLike {
 
 const ASKED_KEY = 'hx.approvals.notify-asked';
 
-function browserNotifier(): NotifierLike | undefined {
+export function browserNotifier(): NotifierLike | undefined {
   if (typeof window === 'undefined' || typeof window.Notification === 'undefined') return undefined;
   const N = window.Notification;
   return {
