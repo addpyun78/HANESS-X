@@ -72,6 +72,9 @@ export function MicButton({ stt, onText, now = Date.now }: MicButtonProps) {
         aria-label={recording ? '녹음 끝내기' : '말로 입력'}
         aria-pressed={recording}
         disabled={busy || s.phase === 'consent'}
+        title={
+          busy ? '처리하는 중이에요' : s.phase === 'consent' ? '먼저 마이크 사용을 허락해 주세요' : undefined
+        }
         onClick={() => dispatch({ type: 'press', needsConsent: stt.needsConsent })}
       >
         🎤

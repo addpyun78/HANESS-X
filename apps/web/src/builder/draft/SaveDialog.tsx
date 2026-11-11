@@ -137,6 +137,7 @@ export function SaveDialog({ draftId, draft, api, onClose, onFillGaps, onSaved }
               type="button"
               className="hx-insp-btn hx-insp-btn--ghost"
               disabled={busy || !!nameError}
+              title={busy ? '저장하는 중이에요' : nameError ? '이름을 먼저 고쳐 주세요' : undefined}
               onClick={() => void save(true)}
             >
               {SAVE_INCOMPLETE_LABEL}
@@ -148,6 +149,7 @@ export function SaveDialog({ draftId, draft, api, onClose, onFillGaps, onSaved }
             type="button"
             className="hx-insp-btn"
             disabled={busy || !!nameError}
+            title={busy ? '저장하는 중이에요' : nameError ? '이름을 먼저 고쳐 주세요' : undefined}
             onClick={() => void save(false)}
           >
             저장

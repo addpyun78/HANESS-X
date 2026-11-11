@@ -172,6 +172,7 @@ export function QuestionCard({
           type="button"
           className="hx-insp-btn"
           disabled={!done}
+          title={done ? undefined : '모든 질문에 답을 골라 주세요'}
           onClick={() => onAnswer(questions.map((q) => ({ question: q.text, answer: picked[q.id]! })))}
         >
           이대로 만들기
