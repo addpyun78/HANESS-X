@@ -11,6 +11,7 @@
 
 .hx-composer[data-drag-over] {
   border-color: var(--hx-accent);
+  border-style: dashed;
   background: var(--hx-accent-soft);
 }
 
@@ -213,6 +214,77 @@
 .hx-attachment__remove {
   border: 0;
   background: transparent;
+  cursor: pointer;
+}
+
+/* T-101 1E 첨부: 놓기 영역 안내 · 칩 상태 · 미리보기 · 안내 · 모바일 파일 선택 */
+.hx-dropzone {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hx-radius);
+  color: var(--hx-accent);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.hx-attachment__open {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hx-attachment__status[data-status='failed'] {
+  color: var(--hx-danger);
+}
+
+.hx-attachment__status[data-status='converting'] {
+  color: var(--hx-text-faint);
+}
+
+.hx-attachment-preview {
+  max-height: 240px;
+  margin: 0 0 var(--hx-space-1);
+  padding: var(--hx-space-2);
+  overflow: auto;
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+}
+
+.hx-attachment-preview img,
+.hx-attachment-preview object {
+  max-width: 100%;
+  max-height: 220px;
+}
+
+.hx-attachment-preview__text {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: var(--hx-font-12);
+}
+
+.hx-attachment-hint {
+  margin: 0 0 var(--hx-space-1);
+  color: var(--hx-text-faint);
+  font-size: var(--hx-font-12);
+}
+
+.hx-attach-pick {
+  min-height: 36px;
+  padding: 0 var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: transparent;
+  color: var(--hx-text);
   cursor: pointer;
 }
 
