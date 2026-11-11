@@ -12,9 +12,12 @@ export const CODEX_SANDBOX: Record<PermissionMode, CodexSandboxMode> = {
 /**
  * T-101 실행 모드가 권한보다 먼저다.
  *  3B.3 계획 → read-only
+ *  3D.6 오토 → workspace-write + 승인 묻지 않음(--ask-for-approval never, codex 최상위 옵션이라 exec 앞에)
  */
 export function codexSandbox(permission: PermissionMode | undefined, mode?: RunMode): CodexSandboxMode {
   if (mode === 'plan') return 'read-only';
+  // 3D.6 오토 → workspace-write (danger-full-access 금지) — 최종 판단은 하네스 게이트
+  if (mode === 'auto') return 'workspace-write';
   return CODEX_SANDBOX[permission ?? 'workspace-write'];
 }
 
@@ -68,7 +71,15 @@ function toToml(v: unknown): string {
  * 옵션은 resume 서브커맨드 앞에 두고, 프롬프트는 `--` 뒤 마지막 인자
  */
 export function buildExecArgs(input: CodexRunInput): string[] {
-  const args = ['exec', '--json', '--sandbox', codexSandbox(input.permission, input.mode), '--cd', input.cwd];
+  const args = [
+    ...(input.mode === 'auto' ? ['--ask-for-approval', 'never'] : []),
+    'exec',
+    '--json',
+    '--sandbox',
+    codexSandbox(input.permission, input.mode),
+    '--cd',
+    input.cwd,
+  ];
   args.push('--skip-git-repo-check');
   if (input.model) args.push('--model', input.model);
   for (const [name, cfg] of Object.entries(codexMcpServers(input.mcpServers)))

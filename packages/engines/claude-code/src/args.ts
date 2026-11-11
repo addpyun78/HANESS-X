@@ -10,9 +10,12 @@ export const CLAUDE_PERMISSION_MODES: Record<PermissionMode, string> = {
 /**
  * T-101 실행 모드 → claude --permission-mode. 모드가 권한보다 먼저다.
  *  3B.3 계획 → plan (읽기만)
+ *  3D.6 오토 → acceptEdits (권한이 '전체'여도 bypassPermissions 금지)
  */
 export function claudePermissionMode(permission: PermissionMode | undefined, mode?: RunMode): string {
   if (mode === 'plan') return 'plan';
+  // 3D.6 오토 → acceptEdits. 전체 우회(bypassPermissions)는 오토에서 절대 쓰지 않는다 — 최종 판단은 하네스 게이트
+  if (mode === 'auto') return 'acceptEdits';
   return CLAUDE_PERMISSION_MODES[permission ?? 'workspace-write'];
 }
 
