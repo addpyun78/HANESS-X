@@ -6,7 +6,9 @@ import { usePanelActions } from '../panels/panel-actions.js';
 import type { ChatBlock } from './blocks.js';
 import { StopBlockCard } from './StopBlockCard.js';
 import { CollapsibleCard, formatValue, ItemTag, ToolCard, truncate } from './ToolCard.js';
-import { act } from '../actions/registry.js';
+import { act, NOT_READY } from '../actions/registry.js';
+
+export const APPROVAL_OPTION_NOT_READY = `${NOT_READY}: 채팅에서 바로 답하는 기능은 아직 없어요`;
 
 const CHANGE_LABEL = { create: '생성', modify: '수정', delete: '삭제', rename: '이름 변경' } as const;
 const TURN_END_LABEL = {
@@ -97,6 +99,9 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
                 type="button"
                 className="hx-icon-btn"
                 data-option={o}
+                // T-101 0C.F5 채팅에서 일반 승인 요청에 바로 답하는 API가 아직 없다 → 누를 수 없게 + 이유
+                disabled
+                title={APPROVAL_OPTION_NOT_READY}
               >
                 {o}
               </button>
