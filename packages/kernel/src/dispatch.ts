@@ -134,6 +134,31 @@ export interface DispatchRunInput {
   /** 실행기 이벤트(node_start/node_end 등) — 진행률 추적용. 로그 기록은 실행기가 맡는다 */
   onEvent: (rec: LogRecord) => void;
   signal: AbortSignal;
+  /** T-101 2B.9 이어하기 실행이면 그 방식 (엔진 자체 재개면 노드별 엔진 세션 id) */
+  resume?: DispatchResumeInfo;
+}
+
+export interface DispatchResumeInfo {
+  /** engine: 엔진 자체 재개(예: claude --resume) / summary: 요약 컨텍스트로 새 엔진 세션 */
+  mode: 'engine' | 'summary';
+  /** 노드 id → 엔진 세션 id (mode engine) */
+  resumeIds?: Record<string, string>;
+}
+
+/** T-101 2B 멈춘 세션 이어하기 요청 */
+export interface DispatchResumeRequest {
+  sessionId: string;
+  /** 이름 또는 /명령 */
+  agent: string;
+  /** 이어하기 지시 (요약 컨텍스트 포함) */
+  prompt: string;
+  /** 2B.6 실행할 파이프라인 (기본: 시작할 때 버전을 넘긴다 — 없으면 지금 에이전트 파이프라인) */
+  pipeline?: Pipeline;
+  /** 2B.5 바꾼 엔진 (모든 role 노드에 적용) */
+  engine?: string;
+  resume: DispatchResumeInfo;
+  /** session_resumed 기록에 붙일 것 (점검 결과·고른 선택지 등) */
+  note?: Record<string, unknown>;
 }
 
 export interface DispatchRunResult {
@@ -166,6 +191,8 @@ export interface DispatcherOptions {
     session: DispatchSession,
     ctx: { kind: StopKind; nodeId?: string; itemId?: string },
   ) => Record<string, unknown> | void;
+  /** T-101 2B.6 실행 시작 직후 (버전 고정: agent.yaml·파이프라인·설정 스냅샷) */
+  onCreated?: (session: DispatchSession, ctx: { agent: DispatchAgent; pipeline: Pipeline }) => void;
 }
 
 export type DispatchSessionStatus =
@@ -281,10 +308,61 @@ export class Dispatcher {
       prompt: session.prompt,
       modifiers,
     });
+    try {
+      this.opts.onCreated?.(snapshot(session), { agent, pipeline: agent.pipeline });
+    } catch {
+      // 버전 고정 실패는 실행을 막지 않는다 (이어하기 때 지금 버전으로)
+    }
     const abort = new AbortController();
     const live: Live = { session, queue: [], abort, done: Promise.resolve(session) };
     this.live.set(sessionId, live);
     live.done = this.execute(live, agent, pipeline);
+    return snapshot(session);
+  }
+
+  /**
+   * T-101 2B 멈춘 세션을 같은 세션 id로 이어서 실행한다 (session_resumed 기록).
+   * 이 프로세스가 만든 세션이 아니어도(서버를 다시 켠 뒤) 이어할 수 있다.
+   */
+  resume(req: DispatchResumeRequest): DispatchSession {
+    const prev = this.live.get(req.sessionId);
+    if (prev && prev.session.status === 'running')
+      throw new DispatchError('invalid_request', `이미 실행 중인 세션: ${req.sessionId}`);
+    const agent = this.resolveAgent(req.agent);
+    const modifiers: DispatchModifiers = {
+      ...(prev?.session.modifiers ?? { strict: false, planOnly: false }),
+      ...(req.engine ? { engine: req.engine } : {}),
+    };
+    this.checkEngine(modifiers.engine);
+    const pipeline = applyModifiers(req.pipeline ?? agent.pipeline, modifiers);
+    const from = prev?.session.paused;
+    const session: DispatchSession = {
+      sessionId: req.sessionId,
+      agent: {
+        name: agent.name,
+        command: agent.command,
+        displayName: agent.displayName,
+        ...(agent.icon ? { icon: agent.icon } : {}),
+      },
+      prompt: prev?.session.prompt ?? req.prompt,
+      modifiers,
+      status: 'running',
+      completedNodes: prev ? [...prev.session.completedNodes] : [],
+      nodeCount: pipeline.nodes.length,
+      progress: prev?.session.progress ?? 0,
+      startedAt: prev?.session.startedAt ?? this.now().toISOString(),
+      subagents: [],
+    };
+    this.emit(req.sessionId, 'session_resumed', {
+      mode: req.resume.mode,
+      ...(modifiers.engine ? { engine: modifiers.engine } : {}),
+      ...(from ? { from } : {}),
+      ...(req.note ?? {}),
+    });
+    const abort = new AbortController();
+    const live: Live = { session, queue: [], abort, done: Promise.resolve(session) };
+    this.live.set(req.sessionId, live);
+    live.done = this.execute(live, agent, pipeline, req.prompt, req.resume);
     return snapshot(session);
   }
 
@@ -461,11 +539,17 @@ export class Dispatcher {
       );
   }
 
-  private async execute(live: Live, first: DispatchAgent, firstPipeline: Pipeline): Promise<DispatchSession> {
+  private async execute(
+    live: Live,
+    first: DispatchAgent,
+    firstPipeline: Pipeline,
+    firstPrompt?: string,
+    resume?: DispatchResumeInfo,
+  ): Promise<DispatchSession> {
     const s = live.session;
     let agent = first;
     let pipeline = firstPipeline;
-    let prompt = s.prompt;
+    let prompt = firstPrompt ?? s.prompt;
     let prefix = '';
     try {
       for (;;) {
@@ -478,6 +562,7 @@ export class Dispatcher {
           modifiers: s.modifiers,
           onEvent: (rec) => this.track(live, rec, p),
           signal: live.abort.signal,
+          ...(resume && !p ? { resume } : {}),
         });
         if (live.stop) {
           this.markPaused(live);

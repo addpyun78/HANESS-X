@@ -33,3 +33,5 @@ export * from './api/resume-routes.js';
 export * from './resume-check.js';
 export * from './resume-files.js';
 export * from './resume-engine.js';
+export * from './resume-pin.js';
+export * from './resume-run.js';

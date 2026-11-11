@@ -147,6 +147,8 @@ interface AgentBuilderPluginModule {
             status?: 'ready' | 'incomplete';
           };
           pipeline: Pipeline;
+          /** agent.yaml이 있는 폴더 */
+          dir?: string;
         }
       | undefined;
   };
@@ -425,6 +427,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
   const { takePauseSnapshot } = await import('./pause-snapshot.js');
+  const { pinRunVersion } = await import('./resume-pin.js');
   const dispatch = new Dispatcher({
     log,
     // T-101 2A.6 멈추면 정지 스냅샷 (<logs>/sessions/<id>/pause.json, 작업 트리는 바꾸지 않음)
@@ -438,6 +441,20 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         ...(c.nodeId ? { nodeId: c.nodeId } : {}),
       });
       return { snapshot: { file: 'pause.json', kind: snap.files.kind } };
+    },
+    // T-101 2B.6 실행 시작 때 agent.yaml·파이프라인·엔진 설정을 고정 (<logs>/sessions/<id>/pinned.json)
+    onCreated: (s, c) => {
+      const dir = registry()?.get(c.agent.name)?.dir;
+      pinRunVersion({
+        sessionId: s.sessionId,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        agent: c.agent.name,
+        pipeline: c.pipeline,
+        files: [
+          ...(dir ? [{ label: 'agent.yaml', path: join(dir, 'agent.yaml') }] : []),
+          { label: 'engines-settings.yaml', path: join(home, 'engines-settings.yaml') },
+        ],
+      });
     },
     engines: () => adapters().map((a) => a.id),
     resolve: (name) => {
