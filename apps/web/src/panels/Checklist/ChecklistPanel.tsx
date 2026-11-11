@@ -1,4 +1,4 @@
-import type { HarnessEvent } from '@harness-x/protocol';
+import type { HarnessEvent, RunMode } from '@harness-x/protocol';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ApiError } from '../../api/client.js';
 import type { ChecklistApi } from './api.js';
@@ -10,6 +10,7 @@ import {
   type ApprovalDecision,
   type ChecklistView,
 } from './model.js';
+import { ModeBadge, modeFromEvents } from '../../run-mode/ModeBadge.js';
 import { PlanReview } from './PlanReview.js';
 import './checklist.css';
 
@@ -22,6 +23,8 @@ export interface ChecklistPanelProps {
   initialView?: ChecklistView;
   /** checklist_change 뒤 서버 재조회까지 대기 (기본 150ms — 증거·판정 갱신용) */
   refetchDelayMs?: number;
+  /** T-101 3E.5 모드 배지 (없으면 세션 기록 이벤트에서 찾는다) */
+  mode?: RunMode;
 }
 
 function errorText(err: unknown): string {
@@ -52,6 +55,7 @@ export function ChecklistPanel({
   api,
   initialView,
   refetchDelayMs = 150,
+  mode: modeProp,
 }: ChecklistPanelProps) {
   const [view, setView] = useState<ChecklistView | undefined>(initialView);
   const [loadError, setLoadError] = useState<string>();
@@ -61,6 +65,8 @@ export function ChecklistPanel({
   const [cardError, setCardError] = useState<{ id: string; message: string }>();
   const [lockError, setLockError] = useState<string>();
   const sessionId = sessionProp ?? initialView?.sessionId ?? sessionOf(events);
+  const mode = modeProp ?? modeFromEvents(events, sessionId);
+  const badge = mode && <ModeBadge mode={mode} />;
 
   const reqId = useRef(0);
   const refetch = useCallback(async () => {
@@ -154,6 +160,7 @@ export function ChecklistPanel({
   if (!view)
     return (
       <section className="hx-ck" aria-label="체크리스트">
+        {badge}
         {cards}
         <p className="hx-panel-empty">{loadError ?? '아직 체크리스트가 없습니다'}</p>
       </section>
@@ -172,6 +179,7 @@ export function ChecklistPanel({
 
   return (
     <section className="hx-ck" aria-label="체크리스트" data-version={view.checklist.version}>
+      {badge}
       {cards}
       {view.plan.locked ? (
         <>
