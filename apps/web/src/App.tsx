@@ -23,6 +23,10 @@ import { approvalsApi } from './panels/Approvals/api.js';
 import { ApprovalsArea } from './panels/Approvals/ApprovalsArea.js';
 import { Toasts } from './panels/Approvals/Toasts.js';
 import { ApprovalFocusContext, useApprovals, type ApprovalFocus } from './panels/Approvals/useApprovals.js';
+import { installApi } from './install/api.js';
+import { InstallManager, type InstallTab } from './install/InstallManager.js';
+import { InstallPlanCard, ResolveFailureCard } from './install/InstallPlanCard.js';
+import { useInstallCards } from './install/useInstallCards.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
@@ -84,7 +88,18 @@ export function App() {
   const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
-  const approvals = useApprovals({ events, ...(apApi ? { api: apApi } : {}) });
+  // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
+  const instApi = useMemo(() => (client ? installApi(client) : undefined), [client]);
+  const installCards = useInstallCards({ events, ...(instApi ? { api: instApi } : {}) });
+  const [installNav, setInstallNav] = useState<{ tab: InstallTab; query: string }>({
+    tab: 'installed',
+    query: '',
+  });
+  const approvals = useApprovals({
+    events,
+    ...(apApi ? { api: apApi } : {}),
+    extra: installCards.summaries,
+  });
   const { setFocusId } = approvals;
   const approvalFocus = useMemo<ApprovalFocus>(() => ({ focus: (id) => setFocusId(id) }), [setFocusId]);
   const navSessions = useMemo(
@@ -226,6 +241,24 @@ export function App() {
             panelTop={
               <ApprovalsArea
                 cards={approvals.pending}
+                extra={installCards.cards.map((c) => ({
+                  id: c.id,
+                  render: ({ autoFocus }) =>
+                    c.type === 'plan' ? (
+                      <InstallPlanCard
+                        plan={c.plan}
+                        {...(instApi ? { api: instApi } : {})}
+                        autoFocus={autoFocus}
+                        onClose={() => installCards.remove(c.id)}
+                        onAlternatives={(p) => {
+                          setInstallNav({ tab: 'search', query: p.name });
+                          setView('install');
+                        }}
+                      />
+                    ) : (
+                      <ResolveFailureCard result={c.result} onClose={() => installCards.remove(c.id)} />
+                    ),
+                }))}
                 onChoose={(id, choice, remember) => void approvals.choose(id, choice, remember)}
                 {...(approvals.busy ? { busy: approvals.busy } : {})}
                 errors={approvals.errors}
@@ -251,7 +284,10 @@ export function App() {
                 activeSessionId={activeId ?? sessions[0]?.id}
                 onNavigate={(to) => {
                   if (to === 'agent-builder') navigate('/builder/new');
-                  else setView(to === 'engines' ? 'engines' : 'chat');
+                  else if (to === 'install') {
+                    setInstallNav({ tab: 'installed', query: '' });
+                    setView('install');
+                  } else setView(to === 'engines' ? 'engines' : 'chat');
                 }}
                 onSelectSession={(id) => {
                   setActiveId(id);
@@ -262,6 +298,13 @@ export function App() {
             main={
               view === 'engines' && engineSettings ? (
                 <EnginesSettings api={engineSettings} />
+              ) : view === 'install' && instApi ? (
+                <InstallManager
+                  api={instApi}
+                  cards={installCards}
+                  initialTab={installNav.tab}
+                  initialQuery={installNav.query}
+                />
               ) : (
                 <>
                   <ChatStream events={events} mode={mode} onModeChange={setMode} />

@@ -21,7 +21,7 @@ const s = (
 });
 
 describe('좌측 사이드바', () => {
-  it('새 세션, 세션 목록, 하단 메뉴 5개 (스냅샷)', () => {
+  it('새 세션, 세션 목록, 하단 메뉴 6개 (스냅샷)', () => {
     const onNew = vi.fn();
     const onNav = vi.fn();
     const onSel = vi.fn();
@@ -41,7 +41,7 @@ describe('좌측 사이드바', () => {
       />,
     );
     const menu = screen.getAllByRole('menuitem').map((b) => b.textContent);
-    expect(menu).toEqual(['✦에이전트 만들기', '⧉플러그인', '◇스킬', '⚙엔진', '☰설정']);
+    expect(menu).toEqual(['✦에이전트 만들기', '⧉플러그인', '◇스킬', '⬇설치 관리', '⚙엔진', '☰설정']);
     fireEvent.click(screen.getByText('+ 새 세션'));
     expect(onNew).toHaveBeenCalledOnce();
     fireEvent.click(screen.getByText('플러그인'));

@@ -68,12 +68,14 @@ export interface SessionAgent {
   icon?: string;
 }
 
-export type NavTarget = 'agent-builder' | 'plugins' | 'skills' | 'engines' | 'settings';
+export type NavTarget = 'agent-builder' | 'plugins' | 'skills' | 'install' | 'engines' | 'settings';
 
 export const NAV_ITEMS: { id: NavTarget; label: string; icon: string }[] = [
   { id: 'agent-builder', label: '에이전트 만들기', icon: '✦' },
   { id: 'plugins', label: '플러그인', icon: '⧉' },
   { id: 'skills', label: '스킬', icon: '◇' },
+  // T-100 P2-G.1 설치 관리 (앱·도구·모델·확장)
+  { id: 'install', label: '설치 관리', icon: '⬇' },
   { id: 'engines', label: '엔진', icon: '⚙' },
   { id: 'settings', label: '설정', icon: '☰' },
 ];
