@@ -27,6 +27,7 @@ import {
   type Verdict,
 } from './types.js';
 import './composer.css';
+import { act } from '../actions/registry.js';
 
 export interface ComposerProps {
   engines: EngineOption[];
@@ -187,6 +188,7 @@ export function Composer({
               <span className="hx-attachment__name">{a.name}</span>
               <span className="hx-attachment__size">{formatSize(a.size)}</span>
               <button
+                {...act('composer.remove-attachment')}
                 type="button"
                 className="hx-attachment__remove"
                 aria-label={`${a.name} 첨부 빼기`}
@@ -237,6 +239,7 @@ export function Composer({
       )}
       <div className="hx-composer__bar" role="toolbar" aria-label="입력 도구">
         <button
+          {...act('composer.plus')}
           type="button"
           className="hx-plus"
           aria-label="추가"
@@ -291,7 +294,14 @@ export function Composer({
         )}
         <span className="hx-composer__spacer" />
         {toolbarExtra}
-        <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
+        <button
+          {...act('composer.send')}
+          type="button"
+          className="hx-send"
+          aria-label="전송"
+          disabled={!canSend}
+          onClick={send}
+        >
           ↑
         </button>
       </div>
