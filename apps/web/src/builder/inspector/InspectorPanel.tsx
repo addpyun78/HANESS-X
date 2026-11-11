@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { BuilderCatalog } from '../catalog.js';
 import type { BuilderGraph } from '../graph.js';
 import { DryRunTab } from './DryRunTab.js';
@@ -25,6 +25,10 @@ export interface InspectorPanelProps {
   overlay: Overlay | undefined;
   onOverlay: (o: Overlay | undefined) => void;
   dryRunStepMs?: number;
+  /** 초안 노드별 "AI가 이렇게 정한 이유" (T-100 P4-D.4) */
+  reasons?: Record<string, string>;
+  /** 초안 저장 전 점검표 등 아래에 붙는 것 (T-100 P4-D.6) */
+  footer?: ReactNode;
 }
 
 /** 인스펙터(우): 노드 / YAML 보기 / 시험 실행 */
@@ -49,7 +53,15 @@ export function InspectorPanel(p: InspectorPanelProps) {
       </div>
       {tab === 'node' &&
         (node ? (
-          <NodeFields node={node} engines={p.catalog.engines} dispatch={p.dispatch} />
+          <>
+            {p.reasons?.[node.id] && (
+              <section className="hx-draft-reason" aria-label="AI가 이렇게 정한 이유">
+                <h4>AI가 이렇게 정한 이유</h4>
+                <p>{p.reasons[node.id]}</p>
+              </section>
+            )}
+            <NodeFields node={node} engines={p.catalog.engines} dispatch={p.dispatch} />
+          </>
         ) : (
           <p className="hx-inspector__empty">노드를 선택하세요</p>
         ))}
@@ -64,6 +76,7 @@ export function InspectorPanel(p: InspectorPanelProps) {
           {...(p.dryRunStepMs !== undefined ? { stepMs: p.dryRunStepMs } : {})}
         />
       )}
+      {p.footer}
       <p className="hx-inspector__count">
         노드 {p.graph.nodes.length}개 · 연결 {p.graph.edges.length}개
       </p>

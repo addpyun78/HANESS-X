@@ -121,7 +121,9 @@ export type GraphAction =
   | { type: 'select'; ids: string[]; additive?: boolean }
   | { type: 'removeSelected' }
   | { type: 'removeNodes'; ids: string[] }
-  | { type: 'load'; graph: BuilderGraph };
+  | { type: 'load'; graph: BuilderGraph }
+  /** 그래프 통째로 바꾸기 — load와 달리 실행 취소 한 단계로 남는다 (AI 패치 적용·버전 되돌리기, T-100 P4-E.7) */
+  | { type: 'replace'; graph: BuilderGraph };
 
 export function graphReducer(g: BuilderGraph, a: GraphAction): BuilderGraph {
   switch (a.type) {
@@ -147,6 +149,7 @@ export function graphReducer(g: BuilderGraph, a: GraphAction): BuilderGraph {
     case 'removeNodes':
       return removeIds(g, a.ids);
     case 'load':
+    case 'replace':
       return a.graph;
   }
 }

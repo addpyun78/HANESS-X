@@ -11,7 +11,7 @@ import {
   type OnSelectionChangeParams,
 } from '@xyflow/react';
 import type { NodeType } from '@harness-x/protocol';
-import { useCallback, useMemo, type DragEvent } from 'react';
+import { useCallback, useMemo, type DragEvent, type ReactNode } from 'react';
 import { BLOCK_MIME, type BuilderCatalog } from './catalog.js';
 import { readBlock } from './Drawer.js';
 import { toFlowEdges, toFlowNodes } from './flow.js';
@@ -27,6 +27,8 @@ export interface CanvasProps {
   catalog: BuilderCatalog;
   /** 그래프 동작 + 'checkpoint'(끌기 시작 = 실행 취소 한 단계) */
   dispatch: (a: LegoAction | { type: 'checkpoint' }) => void;
+  /** 캔버스 위에 겹쳐 그릴 것 (초안 빈 칸 — T-100 P4-C.10) */
+  children?: ReactNode;
 }
 
 const nodeTypes = { hxNode: LegoNode, hxGroup: GroupFrame };
@@ -43,7 +45,7 @@ export function Canvas(props: CanvasProps) {
   );
 }
 
-function CanvasInner({ graph, catalog, dispatch }: CanvasProps) {
+function CanvasInner({ graph, catalog, dispatch, children }: CanvasProps) {
   const rf = useReactFlow();
   const nodes = useMemo(() => toFlowNodes(graph), [graph]);
   const edges = useMemo(() => toFlowEdges(graph), [graph]);
@@ -139,6 +141,7 @@ function CanvasInner({ graph, catalog, dispatch }: CanvasProps) {
       {graph.nodes.length === 0 && (
         <p className="hx-canvas__hint">왼쪽 서랍에서 노드 블록을 끌어다 놓으세요</p>
       )}
+      {children}
     </div>
   );
 }

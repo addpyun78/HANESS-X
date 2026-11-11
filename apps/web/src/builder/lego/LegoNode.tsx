@@ -6,6 +6,7 @@ import type { HxFlowNode } from '../flow.js';
 import { NODE_LABEL } from '../graph.js';
 import { formatUsd } from '../inspector/dryrun.js';
 import { useRunOverlay } from '../inspector/overlay-context.js';
+import { useDraftDecor } from '../draft/decor.js';
 import { CHIP_MIME, hasType, readChip, useLegoDispatch } from './dnd.js';
 import { acceptsEngine, acceptsSkills, skillsOf } from './model.js';
 
@@ -35,6 +36,8 @@ export function LegoNode({ data, selected }: Props) {
   const name = spec.label ?? spec.id;
   // 46.4 시험 실행 오버레이 (노드별 진행·비용)
   const run = useRunOverlay()?.[node.id];
+  // T-100 P4-D.1/D.2/E.4 초안 점선·조립 애니메이션·바뀐 곳 노란색
+  const decor = useDraftDecor();
 
   const accepts = (dt: DataTransfer | null): Highlight | undefined => {
     if (acceptsSkills(spec) && (hasType(dt, blockKindMime('skill')) || hasType(dt, CHIP_MIME)))
@@ -72,6 +75,14 @@ export function LegoNode({ data, selected }: Props) {
       data-selected={selected || undefined}
       data-highlight={highlight}
       data-run={run?.status}
+      data-draft={decor.draft || undefined}
+      data-changed={decor.changed.has(node.id) || undefined}
+      data-hidden={decor.hidden.has(node.id) || undefined}
+      onClick={(e) => {
+        // 노드 카드를 누르면 선택 (인스펙터·"AI가 이렇게 정한 이유" — 칩·버튼 클릭은 제외)
+        if ((e.target as HTMLElement).closest('button')) return;
+        dispatch({ type: 'select', ids: [node.id], additive: e.shiftKey });
+      }}
       onDragOver={onDragOver}
       onDragLeave={() => setHighlight(undefined)}
       onDrop={onDrop}
@@ -92,7 +103,12 @@ export function LegoNode({ data, selected }: Props) {
         </span>
       )}
       {engine !== undefined && (
-        <span className="hx-engine-chip" data-engine={engine} aria-label={`${name} 엔진 ${engine}`}>
+        <span
+          className="hx-engine-chip"
+          data-engine={engine}
+          data-changed={decor.chips.has(`${node.id}:@engine`) || undefined}
+          aria-label={`${name} 엔진 ${engine}`}
+        >
           {engine}
         </span>
       )}
@@ -104,6 +120,7 @@ export function LegoNode({ data, selected }: Props) {
               className="hx-skill-chip nodrag"
               draggable
               data-skill={s}
+              data-changed={decor.chips.has(`${node.id}:${s}`) || undefined}
               onDragStart={(e) => {
                 e.stopPropagation();
                 e.dataTransfer.setData(CHIP_MIME, JSON.stringify({ nodeId: node.id, skill: s }));
