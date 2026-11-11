@@ -260,6 +260,8 @@ export class PipelineRunner {
           const v = await this.passThrough(node, cur);
           cur = v;
           id = this.pickNext(node, v);
+          if (node.type === 'router' && id !== undefined)
+            this.opts.stages?.routeChosen?.({ router: node, to: id });
         }
       }
     }
@@ -290,7 +292,27 @@ export class PipelineRunner {
     });
   }
 
+  /** 단계 트리 알림 (T-101 4번). 계획 모드에서 { stop }이면 멈춘다 */
+  private async stageStart(node: PipelineNode, visit: number, engineId?: string, rerun?: boolean) {
+    const r = await this.opts.stages?.nodeStart?.({
+      node,
+      visit,
+      ...(engineId ? { engineId } : {}),
+      ...(rerun ? { rerun } : {}),
+    });
+    if (r && 'stop' in r) throw new Halt('incomplete', node.id, r.stop);
+  }
+
   private record(v: NodeVisit, startedAt: number) {
+    const items = v.type === 'role' ? this.latest.get(v.nodeId)?.ledger?.read()?.items : undefined;
+    this.opts.stages?.nodeEnd?.({
+      node: this.node(v.nodeId),
+      visit: v.visit,
+      status: v.status,
+      output: v.output,
+      ...(v.reason ? { reason: v.reason } : {}),
+      ...(items ? { items } : {}),
+    });
     this.visits.push(v);
     this.outputs[v.nodeId] = v.output;
     this.emit({
@@ -321,6 +343,7 @@ export class PipelineRunner {
     const visit = this.nextVisit(node.id);
     const t = Date.now();
     this.nodeStart(node, visit);
+    await this.stageStart(node, visit);
     const v: NodeVisit = {
       nodeId: node.id,
       type: node.type,
@@ -348,6 +371,10 @@ export class PipelineRunner {
 
   private ledgerDir(nodeId: string, visit: number): string {
     return join(this.opts.workspace, '.harness-x', 'sessions', this.sessionId, 'nodes', `${nodeId}.${visit}`);
+  }
+
+  private stagePrompt(node: RoleNode, engineId: string, prompt: string): string {
+    return this.opts.stages?.prompt?.({ node, engineId, prompt }) ?? prompt;
   }
 
   /** 노드 프롬프트 (T-042: 입력 값은 값 그대로 주입) */
@@ -474,6 +501,7 @@ export class PipelineRunner {
     const items = this.opts.checklists?.(node, node.checklistTemplate);
     if (items?.length) ledger.create(items);
     this.nodeStart(node, visitNo, engine.id);
+    await this.stageStart(node, visitNo, engine.id);
     const visit: NodeVisit = {
       nodeId: node.id,
       type: 'role',
@@ -495,7 +523,12 @@ export class PipelineRunner {
       ledgerDir: dir,
       ledger,
     };
-    await this.execRole(ctx, visit, this.buildPrompt(node, input, ledger), t);
+    await this.execRole(
+      ctx,
+      visit,
+      this.stagePrompt(node, engine.id, this.buildPrompt(node, input, ledger)),
+      t,
+    );
     return visit.output;
   }
 
@@ -590,6 +623,7 @@ export class PipelineRunner {
     const visitNo = this.nextVisit(gate.id);
     const t = Date.now();
     this.nodeStart(gate, visitNo);
+    await this.stageStart(gate, visitNo);
     const target = this.pipeline.edges.find((e) => e.from === gate.id && e.onFail)!.to;
     const span = this.gateSpan(gate, target);
     const verify =
@@ -616,6 +650,7 @@ export class PipelineRunner {
       const failed = verdict.failed.map((f) => ({ ...f, nodeId: f.nodeId ?? target }));
       visit.output = { passed: failed.length === 0, failed, attempt };
       if (failed.length === 0) break;
+      this.opts.stages?.gateFailed?.({ gate, attempt, failed, exhausted: attempt >= gate.maxRetries });
       if (attempt >= gate.maxRetries) {
         visit.status = 'failed';
         visit.reason = `gate 실패 (재시도 ${attempt}회 소진): ${failed.map((f) => `${f.nodeId}/${f.itemId}`).join(', ')}`;
@@ -661,6 +696,7 @@ export class PipelineRunner {
     const t = Date.now();
     const visit = l.visit;
     this.nodeStart(node, visit.visit, l.engine.id);
+    await this.stageStart(node, visit.visit, l.engine.id, true);
     const ctx: NodeRunContext = {
       pipeline: this.pipeline,
       node,
@@ -672,7 +708,12 @@ export class PipelineRunner {
     };
     // 방문 기록은 같은 것을 이어 쓴다 (visits에는 재실행도 한 줄로 남는다)
     this.visits = this.visits.filter((v) => v !== visit);
-    await this.execRole(ctx, visit, this.buildRerunPrompt(node, failed, ledger.get().items), t);
+    await this.execRole(
+      ctx,
+      visit,
+      this.stagePrompt(node, l.engine.id, this.buildRerunPrompt(node, failed, ledger.get().items)),
+      t,
+    );
   }
 
   protected buildRerunPrompt(node: RoleNode, failed: GateFailure[], items: ChecklistItem[]): string {
@@ -743,6 +784,7 @@ export class PipelineRunner {
     const visitNo = this.nextVisit(node.id);
     const t = Date.now();
     this.nodeStart(node, visitNo);
+    await this.stageStart(node, visitNo);
     const body = this.outEdges(node.id).filter((e) => this.reaches(e.to, node.id));
     const inner = new Set(stops);
     inner.add(node.id);
@@ -759,6 +801,7 @@ export class PipelineRunner {
         status = 'completed';
         break;
       }
+      this.opts.stages?.loopIteration?.({ loop: node, iteration: i });
       const a = await this.runFrom(start.to, cur, inner);
       cur = a.value;
       if (node.until && evaluateCondition(node.until, this.scope(cur, { iteration: i }))) {
@@ -776,6 +819,7 @@ export class PipelineRunner {
       }
     }
     if (status === 'max_iterations') reason = `최대 반복 ${node.maxIterations}회 도달`;
+    this.opts.stages?.loopEnd?.({ loop: node, iterations, ...(reason ? { reason } : {}) });
     const visit: NodeVisit = {
       nodeId: node.id,
       type: 'loop',
@@ -798,6 +842,7 @@ export class PipelineRunner {
     const visitNo = this.nextVisit(node.id);
     const t = Date.now();
     this.nodeStart(node, visitNo);
+    await this.stageStart(node, visitNo);
     const pipeline = this.opts.resolveAgent?.(node.agent.replace(/^\//, ''));
     const visit: NodeVisit = {
       nodeId: node.id,
@@ -814,8 +859,17 @@ export class PipelineRunner {
       this.record(visit, t);
       throw new Halt('error', node.id, visit.reason);
     }
+    const childStages = this.opts.stages?.subagent?.({
+      node,
+      visit: visitNo,
+      agent: node.agent.replace(/^\//, ''),
+      pipeline,
+    });
+    const { stages: _parentStages, ...parentOpts } = this.opts;
+    void _parentStages;
     const child = new PipelineRunner({
-      ...this.opts,
+      ...parentOpts,
+      ...(childStages ? { stages: childStages } : {}),
       sessionId: `${this.sessionId}.${node.id}.${visitNo}`,
       ...(node.engine && node.engine !== 'auto' ? { defaultEngine: node.engine } : {}),
     });

@@ -108,7 +108,7 @@ export const MAX_SUMMARY_LINES = 3;
 /** 쉬운 말 요약 기본값 (AI 요약이 검사를 못 넘으면 이걸 쓴다) */
 export function defaultStageSummary(s: Pick<Stage, 'title' | 'items'>): string {
   const n = s.items.filter((i) => i.status === 'done').length;
-  return n ? `${s.title} 단계에서 할 일 ${n}개를 마쳤어요.` : `${s.title} 단계를 마쳤어요.`;
+  return n ? `할 일 ${n}개를 모두 마쳤어요.` : '이 단계를 마쳤어요.';
 }
 
 /** 요약 다듬기: 3줄 이내 + 쉬운 말 검사(H.6 주입) 통과, 아니면 기본 요약 */

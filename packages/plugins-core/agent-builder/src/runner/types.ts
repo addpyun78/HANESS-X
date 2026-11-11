@@ -111,6 +111,46 @@ export type GateVerifier = (input: {
   subjects: GateSubject[];
 }) => GateVerdict | Promise<GateVerdict>;
 
+/**
+ * 실행기 → 단계 트리 알림 (T-101 4번). 모두 선택. nodeStart가 { stop }을 돌려주면(계획 모드) 실행을 멈춘다.
+ */
+export interface RunnerStageHooks {
+  nodeStart?(i: {
+    node: PipelineNode;
+    visit: number;
+    engineId?: string;
+    /** gate 부분 재실행으로 같은 방문을 다시 시작 */
+    rerun?: boolean;
+  }): void | { stop: string } | Promise<void | { stop: string }>;
+  nodeEnd?(i: {
+    node: PipelineNode;
+    visit: number;
+    status: NodeStatus;
+    output: unknown;
+    reason?: string;
+    /** role 노드 원장 항목 */
+    items?: ChecklistItem[];
+  }): void;
+  gateFailed?(i: {
+    gate: GateNode;
+    attempt: number;
+    failed: Required<GateFailure>[];
+    exhausted: boolean;
+  }): void;
+  loopIteration?(i: { loop: PipelineNode; iteration: number }): void;
+  loopEnd?(i: { loop: PipelineNode; iterations: number; reason?: string }): void;
+  routeChosen?(i: { router: PipelineNode; to: string }): void;
+  /** subagent 노드: 그 에이전트 트리를 단계 아래에 넣고 하위 실행기용 알림을 돌려준다 */
+  subagent?(i: {
+    node: PipelineNode;
+    visit: number;
+    agent: string;
+    pipeline: Pipeline;
+  }): RunnerStageHooks | undefined;
+  /** role 노드 프롬프트 다듬기 (단계 슬라이스 붙이기) */
+  prompt?(i: { node: RoleNode; engineId: string; prompt: string }): string;
+}
+
 /** 노드 출력 추출기 (T-042 contract가 기본) */
 export type OutputExtractor = (node: RoleNode, events: readonly HarnessEvent[]) => unknown;
 
@@ -142,6 +182,8 @@ export interface PipelineRunnerOptions {
   extractOutput?: OutputExtractor;
   /** outputSchema 검증 실패 시 같은 노드에 재요청할 최대 횟수 (기본 2) */
   maxContractRetries?: number;
+  /** 단계 체크리스트 연결 (T-101 4번 — StageTracker.hooks()) */
+  stages?: RunnerStageHooks;
   signal?: AbortSignal;
   idGen?: () => string;
   now?: () => Date;
