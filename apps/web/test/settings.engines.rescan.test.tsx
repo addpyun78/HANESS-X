@@ -21,7 +21,7 @@ describe('38.5 다시 스캔 + 미설치 지원 엔진 회색 카드', () => {
         e.getAttribute('aria-label'),
       ),
     ).toMatchSnapshot('grey-before');
-    await act(async () => fireEvent.click(screen.getByRole('button', { name: '다시 스캔' })));
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: '다시 찾기' })));
     expect(calls).toContainEqual(['rescan']);
     expect(screen.getByRole('article', { name: 'Antigravity' }).getAttribute('data-installed')).toBe('true');
     expect(screen.getByText('2026-11-10 10:00')).toBeTruthy();
