@@ -26,6 +26,7 @@ import { ApprovalFocusContext, useApprovals, type ApprovalFocus } from './panels
 import { installApi } from './install/api.js';
 import { InstallManager, type InstallTab } from './install/InstallManager.js';
 import { InstallPlanCard, ResolveFailureCard } from './install/InstallPlanCard.js';
+import { FirstRunCard, firstRunsFromEvents } from './install/FirstRunCard.js';
 import { useInstallCards } from './install/useInstallCards.js';
 import type { InstallPlanView } from './install/model.js';
 import {
@@ -138,9 +139,19 @@ export function App() {
     [events, pickerDone],
   );
   const dismissPicker = (id: string) => setPickerDone((s) => new Set(s).add(id));
+  // T-100 P2-F.6 새 도구 첫 실행 확인: 서버 approval_request(kind 'tool.first-run') → 패널 카드
+  const [firstRunDone, setFirstRunDone] = useState<ReadonlySet<string>>(() => new Set());
+  const firstRuns = useMemo(
+    () => firstRunsFromEvents(events).filter((f) => !firstRunDone.has(f.id)),
+    [events, firstRunDone],
+  );
   const extraPending = useMemo(
-    () => [...installCards.summaries, ...pickers.map((p) => ({ id: p.id, text: toolPickerToast(p).text }))],
-    [installCards.summaries, pickers],
+    () => [
+      ...installCards.summaries,
+      ...pickers.map((p) => ({ id: p.id, text: toolPickerToast(p).text })),
+      ...firstRuns.map((f) => ({ id: f.id, text: f.whatHappened })),
+    ],
+    [installCards.summaries, pickers, firstRuns],
   );
   const approvals = useApprovals({
     events,
@@ -311,24 +322,37 @@ export function App() {
                       .finally(() => dismissPicker(d.id));
                   },
                 }))}
-                extra={installCards.cards.map((c) => ({
-                  id: c.id,
-                  render: ({ autoFocus }) =>
-                    c.type === 'plan' ? (
-                      <InstallPlanCard
-                        plan={c.plan}
-                        {...(instApi ? { api: instApi } : {})}
+                extra={[
+                  ...firstRuns.map((f) => ({
+                    id: f.id,
+                    render: ({ autoFocus }: { autoFocus: boolean }) => (
+                      <FirstRunCard
+                        data={f}
+                        {...(instApi?.firstRunAnswer ? { answer: instApi.firstRunAnswer } : {})}
                         autoFocus={autoFocus}
-                        onClose={() => installCards.remove(c.id)}
-                        onAlternatives={(p) => {
-                          setInstallNav({ tab: 'search', query: p.name });
-                          setView('install');
-                        }}
+                        onDone={() => setFirstRunDone((s) => new Set(s).add(f.id))}
                       />
-                    ) : (
-                      <ResolveFailureCard result={c.result} onClose={() => installCards.remove(c.id)} />
                     ),
-                }))}
+                  })),
+                  ...installCards.cards.map((c) => ({
+                    id: c.id,
+                    render: ({ autoFocus }: { autoFocus: boolean }) =>
+                      c.type === 'plan' ? (
+                        <InstallPlanCard
+                          plan={c.plan}
+                          {...(instApi ? { api: instApi } : {})}
+                          autoFocus={autoFocus}
+                          onClose={() => installCards.remove(c.id)}
+                          onAlternatives={(p) => {
+                            setInstallNav({ tab: 'search', query: p.name });
+                            setView('install');
+                          }}
+                        />
+                      ) : (
+                        <ResolveFailureCard result={c.result} onClose={() => installCards.remove(c.id)} />
+                      ),
+                  })),
+                ]}
                 onChoose={(id, choice, remember) => void approvals.choose(id, choice, remember)}
                 {...(approvals.busy ? { busy: approvals.busy } : {})}
                 errors={approvals.errors}

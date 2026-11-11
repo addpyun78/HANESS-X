@@ -362,7 +362,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   });
   // T-100 Part 2 설치 관리자: API(/api/install/…) + MCP 도구(install.search·resolve·plan, 같은 서비스) +
   // 새 도구 첫 실행 확인(permission-gate, <home>/tools/allowed.json) + 설치 도구 감지(읽기만)
-  const installWiring = wireInstaller({ plugins: loader.plugins, hooks });
+  // P2-F.6 첫 실행 확인은 패널 카드(approval_request kind tool.first-run)로 묻는다
+  const installWiring = wireInstaller({ plugins: loader.plugins, hooks, log });
   // T-100 Part 3 도구 찾기: /api/tools/* + tools.request(MCP) + 도구 고르기 카드 이벤트 + 설치 후 자동 재개
   const toolWiring = installWiring
     ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })

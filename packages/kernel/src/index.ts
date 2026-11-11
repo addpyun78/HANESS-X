@@ -11,6 +11,7 @@ export * from './api/install-routes.js';
 export * from './api/tool-routes.js';
 export * from './install-wiring.js';
 export * from './human-gesture-token.js';
+export * from './tool-first-run-asker.js';
 export * from './api/sessions-routes.js';
 export * from './dispatch.js';
 export * from './api/quota-route.js';

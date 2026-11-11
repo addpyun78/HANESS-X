@@ -1,7 +1,15 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
-import { HookBus, wireInstaller, wireToolFinder } from '@harness-x/kernel';
+import { existsSync, readFileSync } from 'node:fs';
+import {
+  FIRST_RUN_LABELS,
+  HookBus,
+  TOOL_FIRST_RUN_EVENT_KIND,
+  wireInstaller,
+  wireToolFinder,
+} from '@harness-x/kernel';
+import { checkPlainKorean } from '../../approvals/src/plain-korean.js';
 import * as mcpHost from '@harness-x/mcp-host';
 import * as permissionGate from '@harness-x/permission-gate';
 import * as toolFinder from '@harness-x/tool-finder';
@@ -137,6 +145,107 @@ describe('T-100 Part 2·3 serve 연결 (cli.ts와 같은 wireInstaller·wireTool
     const iw2 = wireInstaller({ plugins, hooks: hooks2, detect: false })!;
     cleanups.push(() => iw2.dispose());
     expect((await run(hooks2)).decision).toBe('allow');
+  });
+
+  it('P2-F.6 보강: 첫 실행은 패널 카드로 묻고 클릭을 기다림 → "앞으로 허락"은 바로 기록, 두 번째는 묻지 않음', async () => {
+    const { svc, plugins } = await boot();
+    const p = (await svc.plan({ kind: 'winget', target: { id: 'jqlang.jq' } })) as InstallPlan;
+    await svc.execute(p.id, { gestureId: 'g' }).done;
+    const events: Record<string, unknown>[] = [];
+    const hooks = new HookBus();
+    const iw = wireInstaller({
+      plugins,
+      hooks,
+      detect: false,
+      log: { append: (e) => events.push(e as Record<string, unknown>) },
+    })!;
+    cleanups.push(() => iw.dispose());
+    const api = await bootApi({ install: iw.install });
+    cleanups.push(() => api.close());
+    const run = () => hooks.runBlocking('tool.before', { tool: 'Bash', input: { command: 'jq . a.json' } });
+    const cards = () => events.filter((e) => e.type === 'approval_request');
+
+    const pending = run();
+    await expect.poll(() => cards().length).toBe(1);
+    const card = cards()[0]!;
+    expect(card).toMatchObject({
+      kind: TOOL_FIRST_RUN_EVENT_KIND,
+      sessionId: 'tools',
+      options: ['once', 'always', 'deny'],
+    });
+    // 카드 문구는 쉬운 말 (버튼은 라벨 규칙)
+    const d = card.detail as {
+      whatHappened: string;
+      whyAsking: string;
+      timeoutNote: string;
+      toolName: string;
+    };
+    expect(d.toolName).toBe('jq');
+    for (const t of [d.whatHappened, d.whyAsking, d.timeoutNote])
+      expect(checkPlainKorean(t).ok, t).toBe(true);
+    for (const t of Object.values(FIRST_RUN_LABELS))
+      expect(checkPlainKorean(t, { label: true }).ok, t).toBe(true);
+    expect(checkPlainKorean(card.title as string, { label: true }).ok).toBe(true);
+    expect(
+      (await api.get('/api/install/first-run', api.auth).then((r) => r.json())) as unknown,
+    ).toMatchObject({
+      pending: [{ id: card.approvalId, toolName: 'jq' }],
+    });
+    // 잘못된 선택 400, 패널의 [앞으로 허락] 클릭 → 실행 허락 + allowed.json 바로 기록
+    expect(
+      (await api.post(`/api/install/first-run/${String(card.approvalId)}`, { choice: 'yes' }, api.auth))
+        .status,
+    ).toBe(400);
+    const res = await api.post(
+      `/api/install/first-run/${String(card.approvalId)}`,
+      { choice: 'always' },
+      api.auth,
+    );
+    expect(res.status).toBe(200);
+    expect((await pending).decision).toBe('allow');
+    expect(JSON.parse(readFileSync(iw.allowedFile, 'utf8'))).toMatchObject({ allowed: ['winget:jqlang.jq'] });
+    expect(events.find((e) => e.type === 'approval_resolved')).toMatchObject({
+      approvalId: card.approvalId,
+      choice: 'always',
+    });
+    // 두 번째 실행: 묻지 않음 (재시작 없음)
+    expect((await run()).decision).toBe('allow');
+    expect(cards()).toHaveLength(1);
+    // 이미 끝난 카드에 다시 답 → 404
+    expect(
+      (await api.post(`/api/install/first-run/${String(card.approvalId)}`, { choice: 'once' }, api.auth))
+        .status,
+    ).toBe(404);
+  });
+
+  it('P2-F.6 보강: 시간 안에 안 고르면 거부 (자동 허락 없음), 파일 기록 없음 · CLI allow는 재시작 없이 반영', async () => {
+    const { svc, plugins } = await boot();
+    const p = (await svc.plan({ kind: 'winget', target: { id: 'jqlang.jq' } })) as InstallPlan;
+    await svc.execute(p.id, { gestureId: 'g' }).done;
+    const events: Record<string, unknown>[] = [];
+    const hooks = new HookBus();
+    const iw = wireInstaller({
+      plugins,
+      hooks,
+      detect: false,
+      log: { append: (e) => events.push(e as Record<string, unknown>) },
+      firstRunTimeoutMs: 200,
+    })!;
+    cleanups.push(() => iw.dispose());
+    const run = () => hooks.runBlocking('tool.before', { tool: 'Bash', input: { command: 'jq . a.json' } });
+    const r = await run();
+    expect(r.decision).toBe('deny');
+    expect(r.reason).toMatch(/first_run_denied/);
+    expect(events.find((e) => e.type === 'approval_resolved')).toMatchObject({
+      choice: 'deny',
+      by: 'timeout',
+    });
+    expect(existsSync(iw.allowedFile)).toBe(false);
+    expect(iw.firstRun.pending()).toEqual([]);
+    // 다른 곳(CLI `harness-x tools allow`)에서 기록 → 같은 게이트가 다음 검사에서 바로 반영
+    allowTool(svc.home, 'winget:jqlang.jq');
+    expect((await run()).decision).toBe('allow');
+    expect(events.filter((e) => e.type === 'approval_request')).toHaveLength(1);
   });
 
   it('Part 3: /api/tools/* · tools.request(MCP) → 도구 고르기 카드 이벤트 · plan-selected는 계획까지만', async () => {
