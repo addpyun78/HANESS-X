@@ -341,7 +341,13 @@ function SearchTab({
             </option>
           ))}
         </select>
-        <button {...act('install.search')} type="submit" className="hx-install__btn" disabled={busy}>
+        <button
+          {...act('install.search')}
+          type="submit"
+          className="hx-install__btn"
+          disabled={busy}
+          title={busy ? '찾는 중이에요' : undefined}
+        >
           {busy ? '찾는 중…' : '찾기'}
         </button>
       </form>
@@ -432,7 +438,13 @@ function UrlTab({ api, cards }: { api: InstallApi; cards: InstallCardSink }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <button {...act('install.url-check')} type="submit" className="hx-install__btn" disabled={busy}>
+        <button
+          {...act('install.url-check')}
+          type="submit"
+          className="hx-install__btn"
+          disabled={busy}
+          title={busy ? '살펴보는 중이에요' : undefined}
+        >
           {busy ? '살펴보는 중…' : '확인'}
         </button>
       </form>
