@@ -16,8 +16,12 @@
   },
   "dependencies": {
     "@harness-x/checklist-ledger": "workspace:*",
+    "@harness-x/engine-scanner": "workspace:*",
     "@harness-x/kernel": "workspace:*",
-    "@harness-x/protocol": "workspace:*"
+    "@harness-x/mcp-host": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@harness-x/engine-claude-code": "workspace:*",

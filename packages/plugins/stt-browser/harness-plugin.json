@@ -1,0 +1,10 @@
+{
+  "id": "stt-browser",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "음성 입력 (브라우저)",
+  "description": "브라우저 음성 인식(ko-KR)으로 말을 글로 바꾼다. 처음 쓸 때 동의가 필요하다 — 목소리가 브라우저 회사 서버로 전송될 수 있다",
+  "main": "dist/index.js",
+  "provides": { "tool": ["stt.browser"] },
+  "permissions": { "fs": [], "net": [], "shell": false }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "stt-local",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "음성 입력 (PC 안)",
+  "description": "설치된 whisper.cpp로 PC 안에서 말을 글로 바꾼다 (한국어 모델). 목소리가 밖으로 나가지 않는다",
+  "main": "dist/index.js",
+  "provides": { "tool": ["stt.local"] },
+  "permissions": { "fs": ["workspace:read"], "net": [], "shell": true }
+}

@@ -18,6 +18,8 @@
       "@harness-x/permission-gate": ["./packages/plugins-core/permission-gate/src/index.ts"],
       "@harness-x/protocol": ["./packages/protocol/src/index.ts"],
       "@harness-x/sdk": ["./packages/sdk/src/index.ts"],
+      "@harness-x/stt-browser": ["./packages/plugins/stt-browser/src/index.ts"],
+      "@harness-x/stt-local": ["./packages/plugins/stt-local/src/index.ts"],
       "@harness-x/verifier-jev": ["./packages/plugins/verifier-jev/src/index.ts"],
       "@harness-x/verifier-ladder": ["./packages/plugins-core/verifiers/ladder/src/index.ts"],
       "@harness-x/verifier-local": ["./packages/plugins/verifier-local/src/index.ts"]

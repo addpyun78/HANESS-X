@@ -4,7 +4,8 @@ import { HarnessApiClient, resolveToken } from '../api/client.js';
 import { navigate } from '../router.js';
 import { Canvas } from './Canvas.js';
 import { DEFAULT_CATALOG, loadCatalog, type BuilderCatalog } from './catalog.js';
-import { Drawer } from './Drawer.js';
+import { BuilderSidebar } from './chat/BuilderSidebar.js';
+import { resolveStt, type SttHandle } from './chat/stt.js';
 import { emptyGraph } from './graph.js';
 import { InspectorPanel } from './inspector/InspectorPanel.js';
 import type { Overlay } from './inspector/dryrun.js';
@@ -27,12 +28,22 @@ export interface BuilderPageProps {
   saveAgent?: SaveAgentFn;
   /** 시험 실행 리플레이 간격 (테스트용) */
   dryRunStepMs?: number;
+  /** 대화 탭 음성 입력 (기본: 설정 stt.provider + 감지 결과로 고른다) */
+  loadStt?: () => Promise<SttHandle | undefined>;
 }
+
+const defaultLoadStt = () => resolveStt().then((r) => r.stt);
 
 const builderReducer = withHistory(inspectorReducer);
 
 /** 에이전트 만들기(컨셉 C): 시작 선택 → 블록 서랍 / 캔버스 / 인스펙터 */
-export function BuilderPage({ route, catalog: given, saveAgent, dryRunStepMs }: BuilderPageProps) {
+export function BuilderPage({
+  route,
+  catalog: given,
+  saveAgent,
+  dryRunStepMs,
+  loadStt = defaultLoadStt,
+}: BuilderPageProps) {
   const catalog = useCatalog(given);
   const save = useSaveAgent(saveAgent);
   const [start, setStart] = useState<StartResult>();
@@ -103,7 +114,11 @@ export function BuilderPage({ route, catalog: given, saveAgent, dryRunStepMs }: 
       {start && <SaveBar graph={graph} meta={meta} onMeta={setMeta} {...(save ? { save } : {})} />}
       {start ? (
         <div className="hx-builder__cols">
-          <Drawer catalog={catalog} />
+          <BuilderSidebar
+            catalog={catalog}
+            initialMode={start.mode === 'chat' ? 'chat' : 'blocks'}
+            chat={{ loadStt }}
+          />
           <RunOverlayContext.Provider value={overlay}>
             <Canvas graph={graph} catalog={catalog} dispatch={dispatch} />
           </RunOverlayContext.Provider>

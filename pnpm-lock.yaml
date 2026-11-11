@@ -248,6 +248,9 @@ importers:
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../packages/protocol
+      '@harness-x/stt-browser':
+        specifier: workspace:*
+        version: link:../../packages/plugins/stt-browser
       '@testing-library/dom':
         specifier: ^10.4.2
         version: 10.4.2
@@ -366,12 +369,24 @@ importers:
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
+      '@harness-x/engine-scanner':
+        specifier: workspace:*
+        version: link:../engine-scanner
       '@harness-x/kernel':
         specifier: workspace:*
         version: link:../../kernel
+      '@harness-x/mcp-host':
+        specifier: workspace:*
+        version: link:../mcp-host
       '@harness-x/protocol':
         specifier: workspace:*
         version: link:../../protocol
+      yaml:
+        specifier: ^2.9.1
+        version: 2.9.1
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
     devDependencies:
       '@harness-x/engine-claude-code':
         specifier: workspace:*
@@ -510,6 +525,18 @@ importers:
       '@harness-x/verifier-local':
         specifier: workspace:*
         version: link:../../../plugins/verifier-local
+
+  packages/plugins/stt-browser:
+    dependencies:
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+
+  packages/plugins/stt-local:
+    dependencies:
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
 
   packages/plugins/verifier-jev:
     dependencies:

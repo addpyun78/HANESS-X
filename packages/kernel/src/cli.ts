@@ -60,6 +60,7 @@ interface LedgerPluginModule {
 interface AgentBuilderPluginModule {
   AgentRegistry?: new (o: { plugins?: () => Iterable<unknown>; home?: string; workspace?: string }) => {
     summaries(): AgentSummary[];
+    list(): unknown[];
     get(nameOrCommand: string):
       | {
           name: string;
@@ -73,6 +74,11 @@ interface AgentBuilderPluginModule {
   PipelineRunner?: new (o: Record<string, unknown>) => {
     run(pipeline: Pipeline, input: unknown): Promise<DispatchRunResult>;
   };
+  /** T-100 P4-A.12 GET /api/builder/inventory (+ engines.json 감시). 핫리로드는 attachHotReload로 연결 */
+  registerBuilderInventory?: (
+    app: { get(path: string, handler: () => Promise<unknown>): unknown },
+    o: { plugins: () => Iterable<unknown>; agents?: () => unknown[]; home?: string; workspace?: string },
+  ) => { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void };
 }
 
 const HELP = `harness-x — 엔진 중립 에이전트 하네스
@@ -274,6 +280,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     },
   });
   let server;
+  let inventory: { attachHotReload(src: { on(event: string, fn: () => void): unknown }): void } | undefined;
   try {
     // 35.x 워크스페이스 저장소 (~/.harness-x/workspaces.json) — 새 세션 cwd·쓰기 경계의 기준
     const workspaces = new WorkspaceStore();
@@ -303,6 +310,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         registerRecoveryRoutes(app, {
           log,
           ...(ledgerFor ? { ledgerFor: (id) => ledgerFor(id) as LedgerView | null } : {}),
+        });
+        // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
+        inventory = builder()?.registerBuilderInventory?.(app, {
+          plugins: () => loader.plugins.values(),
+          agents: () => registry()?.list() ?? [],
+          home,
+          workspace,
         });
         // 핫리로드 뒤에도 현재 모듈의 스캐너를 쓰도록 요청 시점에 찾는다
         const mod = () => loader.plugins.get('engine-scanner')?.module as ScannerPluginModule | undefined;
@@ -349,6 +363,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     reloader.on('failed', (e: { id: string; error: string }) =>
       process.stderr.write(`reload failed ${e.id}: ${e.error} (이전 버전 유지)\n`),
     );
+    inventory?.attachHotReload(reloader);
     await reloader.start();
   }
 
