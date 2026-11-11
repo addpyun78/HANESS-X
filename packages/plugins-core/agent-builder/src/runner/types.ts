@@ -1,3 +1,4 @@
+import type { MissingEngineCard, MissingEngineChoice } from './missing-engine.js';
 import type { LogRecord } from '@harness-x/kernel';
 import type { ChecklistItem, ChecklistItemInput, ChecklistLedger } from '@harness-x/checklist-ledger';
 import type {
@@ -119,6 +120,13 @@ export interface PipelineRunnerOptions {
   engines: Record<string, EngineAdapter> | ((id: string) => EngineAdapter | undefined);
   /** engine: auto인 노드가 쓸 엔진 (기본: 등록된 첫 엔진) */
   defaultEngine?: string;
+  /** T-101 5D.4 `engine: main`(메인 AI 따라가기) 노드가 쓸 엔진 (없으면 defaultEngine) */
+  mainEngine?: string;
+  /**
+   * T-101 5D.6 고정 엔진을 못 찾았을 때 카드 응답을 기다린다 ('use-main' → 메인 AI로 대신, 'stop' → 멈춤).
+   * 없으면 카드만 남기고 멈춘다
+   */
+  onMissingEngine?: (card: MissingEngineCard) => Promise<MissingEngineChoice>;
   /** 엔진 작업 폴더. 노드 원장은 <workspace>/.harness-x/sessions/<sessionId>/nodes/<노드>.<방문>/ */
   workspace: string;
   sessionId?: string;
