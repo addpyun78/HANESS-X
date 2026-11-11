@@ -15,6 +15,13 @@ exports[`6B.8 첨부 > 1번 구역이 attachments.* 를 등록하면 저절로 �
     >
       파일 하나 크기 한도(MB)
     </label>
+    <span
+      class="hx-setting__tag hx-setting__scope"
+      data-scope="both"
+      title="이 값이 어디에 적용되나요?"
+    >
+      전체 (프로젝트마다 바꿀 수 있음)
+    </span>
   </div>
   <p
     class="hx-setting__desc"

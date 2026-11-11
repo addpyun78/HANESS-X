@@ -10,10 +10,13 @@ import type { EngineScanSnapshot } from './api/engines-routes.js';
 import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
+import { cleanupData } from './settings/data-cleanup.js';
 import {
   checklistRunnerOptions,
   installerConfig,
+  kernelVersion,
   readSettingsFile,
+  scratchRootFrom,
   sessionDefaultsFromSettings,
 } from './settings/runtime.js';
 import { Worker } from 'node:worker_threads';
@@ -441,8 +444,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const { Dispatcher } = await import('./dispatch.js');
   // T-101 0-2 프로젝트·세션 등록부: workspaces.json → projects.json(처음 1회), 옛 세션 가져오기(0B.5),
   // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 지금 감지된 첫 엔진(5번 이후 메인 AI로 바뀜)
-  const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
-  const projects = new ProjectStore({ home });
+  const { ProjectStore, SessionRegistry, projectSettingsIO } = await import('./projects/index.js');
+  const settingsFile = join(home, 'settings.json');
+  // T-101 6B.10 임시 작업 공간 위치 (설정 project.scratchDir, 만들 때마다 다시 읽음)
+  const projects = new ProjectStore({
+    home,
+    scratchRoot: () => scratchRootFrom(readSettingsFile(settingsFile)),
+  });
   const plainTitle = (
     loader.plugins.get('approvals')?.module as
       { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
@@ -460,6 +468,24 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
   const imported = sessionRegistry.importLegacy(log);
+  // T-101 6B.11 기록 보관 기간·첨부 정리 (설정이 0이면 아무것도 안 함) — 시작 때 한 번 + [지금 정리하기]
+  const dataCleanup = () =>
+    cleanupData({
+      values: readSettingsFile(settingsFile),
+      sessions: () => sessionRegistry.list(),
+      removeLog: (id) => log.removeSession(id),
+      projectRoots: () =>
+        projects
+          .list()
+          .filter((p) => !p.missing)
+          .map((p) => p.rootPath),
+    });
+  try {
+    const c = dataCleanup();
+    if (c.logs || c.attachments) process.stderr.write(`정리: 기록 ${c.logs}개, 첨부 ${c.attachments}개\n`);
+  } catch {
+    /* 정리 실패는 시작을 막지 않는다 */
+  }
   if (projects.migrated !== undefined)
     process.stderr.write(`워크스페이스 ${projects.migrated}개를 프로젝트로 옮겼어요 (workspaces.json.bak)\n`);
   if (sessionRegistry.reindexed) process.stderr.write('세션 색인을 폴더에서 다시 만들었어요\n');
@@ -556,10 +582,20 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       gestures,
       // T-101 0-1 설정 화면 API (/api/settings…): 키는 키체인에만, 플러그인 configSchema 자동 포함
       settings: {
-        file: join(home, 'settings.json'),
+        file: settingsFile,
         secrets,
         engines: () => loadEnginesSettings().engines,
         plugins: () => [...loader.plugins.values()].map((p) => p.manifest),
+        // T-101 6B.14 프로젝트 범위 값 = <프로젝트>/.harness-x/project.json 의 settings
+        project: projectSettingsIO(projects),
+        // T-101 6B.11 [지금 정리하기] · 6B.13 정보·진단 파일
+        cleanup: dataCleanup,
+        about: {
+          version: kernelVersion(),
+          plugins: () =>
+            [...loader.plugins.values()].map((p) => ({ id: p.manifest.id, version: p.manifest.version })),
+          engines: () => adapters().map((a) => a.id),
+        },
       },
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {

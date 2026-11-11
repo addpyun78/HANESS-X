@@ -40,6 +40,13 @@ exports[`6B.5 판정 > 기본: 판정 AI·뜻으로 판정하기 / 고급: 반�
         판정할 때 쓸 AI
       </label>
       <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
+      <span
         class="hx-setting__tag"
       >
         다시 시작 필요
@@ -89,6 +96,13 @@ exports[`6B.5 판정 > 기본: 판정 AI·뜻으로 판정하기 / 고급: 반�
       >
         뜻으로 판정하기
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
       <span
         class="hx-setting__tag"
       >

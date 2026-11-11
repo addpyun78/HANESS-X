@@ -16,6 +16,13 @@ exports[`6B.3 모드·권한 > 기본 허락 범위가 보이고 바꾸면 setti
       >
         기본 허락 범위
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
     </div>
     <p
       class="hx-setting__desc"

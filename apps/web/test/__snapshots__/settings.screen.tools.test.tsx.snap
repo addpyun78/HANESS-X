@@ -40,6 +40,13 @@ exports[`6B.7 도구·설치 > 비용 기준·브레이브 검색·키·초코 �
         도구 비용 기준
       </label>
       <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
+      <span
         class="hx-setting__tag"
       >
         다시 시작 필요
@@ -90,6 +97,13 @@ exports[`6B.7 도구·설치 > 비용 기준·브레이브 검색·키·초코 �
         브레이브 검색 쓰기
       </label>
       <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
+      <span
         class="hx-setting__tag"
       >
         다시 시작 필요
@@ -138,6 +152,13 @@ exports[`6B.7 도구·설치 > 비용 기준·브레이브 검색·키·초코 �
       >
         브레이브 검색 키
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -187,6 +208,13 @@ exports[`6B.7 도구·설치 > 비용 기준·브레이브 검색·키·초코 �
       >
         초코로 설치하기
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        전체
+      </span>
       <span
         class="hx-setting__tag"
       >

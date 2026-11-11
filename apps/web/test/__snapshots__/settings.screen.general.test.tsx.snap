@@ -39,6 +39,13 @@ exports[`6B.1 일반 > 설계 그림대로 13개 탭이 있고, 처음엔 일반
       >
         화면 테마
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -84,6 +91,13 @@ exports[`6B.1 일반 > 설계 그림대로 13개 탭이 있고, 처음엔 일반
       >
         글자 크기
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -129,6 +143,13 @@ exports[`6B.1 일반 > 설계 그림대로 13개 탭이 있고, 처음엔 일반
       >
         움직임 줄이기
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -174,6 +195,13 @@ exports[`6B.1 일반 > 설계 그림대로 13개 탭이 있고, 처음엔 일반
       >
         화면 언어
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"

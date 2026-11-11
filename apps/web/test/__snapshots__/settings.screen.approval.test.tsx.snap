@@ -39,6 +39,13 @@ exports[`6B.6 승인·알림 > 컴퓨터 알림·다시 알림 간격·소리가
       >
         컴퓨터 알림
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -79,6 +86,13 @@ exports[`6B.6 승인·알림 > 컴퓨터 알림·다시 알림 간격·소리가
       >
         다시 알림 간격
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
@@ -129,6 +143,13 @@ exports[`6B.6 승인·알림 > 컴퓨터 알림·다시 알림 간격·소리가
       >
         알림 소리
       </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
     </div>
     <p
       class="hx-setting__desc"
