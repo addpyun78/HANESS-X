@@ -8,34 +8,11 @@ import {
   loadGlossary,
   type Acceptance,
 } from '@harness-x/checklist-ledger';
-import {
-  parseJudgeAnswer,
-  type DeviationKind,
-  type JudgeAnswerFor,
-  type JudgeQuestion,
-  type JudgeState,
-  type Verifier,
-} from '@harness-x/protocol';
 import { afterEach, describe, expect, it } from 'vitest';
 import { runLadder, type LadderResult } from '../src/ladder.js';
-import { decideL4, learnL4Alias, resolveThresholds, runLadderL4, type L4Result } from '../src/l4.js';
+import { decideL4, learnL4Alias, runLadderL4, type L4Judge, type L4Result } from '../src/l4.js';
 import { toEvidence } from '../src/record.js';
-
-/** 고정 답 판정기 — 보낸 질문·상태를 기록한다 */
-export function fakeVerifier(p: number, kind: DeviationKind, id = 'fake') {
-  const calls: { q: JudgeQuestion; s: JudgeState }[] = [];
-  const v: Verifier = {
-    id,
-    async judge<Q extends JudgeQuestion>(q: Q, s: JudgeState): Promise<JudgeAnswerFor<Q>> {
-      calls.push({ q, s });
-      return parseJudgeAnswer(
-        q,
-        q.kind === 'noul' ? { noul: p, confidence: 0.9 } : { choice: kind, confidence: 0.8 },
-      );
-    },
-  };
-  return { v, calls };
-}
+import { fakeChain, NO, YES } from './judge-fakes.js';
 
 const prev: LadderResult = {
   level: 3,
@@ -48,80 +25,69 @@ const prev: LadderResult = {
   escalate: true,
 };
 
-const l4 = async (p: number, kind: DeviationKind, thresholds?: { accept?: number; fail?: number }) =>
-  (await runLadderL4(prev, {
-    verifier: fakeVerifier(p, kind).v,
-    itemTitle: '모바일 앱',
-    ...(thresholds ? { thresholds } : {}),
-  })) as L4Result;
+/** 표본 3개 답 → 체인 → L4 */
+const l4 = async (answers: (typeof YES)[]) =>
+  (await runLadderL4(prev, { judge: fakeChain(answers).chain, itemTitle: '모바일 앱' })) as L4Result;
 
-describe('26.5 L4 임계값: ≥0.9 인정, 0.6~0.9 L5, <0.6 실패 (설정 가능)', () => {
-  it('경계값 (기본 임계값)', async () => {
-    expect((await l4(0.9, 'equivalent')).decision).toBe('accept');
-    expect((await l4(1, 'relocated-ok')).decision).toBe('accept');
-    expect((await l4(0.8999, 'equivalent')).decision).toBe('escalate');
-    expect((await l4(0.6, 'equivalent')).decision).toBe('escalate');
-    expect((await l4(0.5999, 'equivalent')).decision).toBe('fail');
-    expect((await l4(0, 'missing')).decision).toBe('fail');
-  });
-
-  it('결과: 인정 → equal/relocated(escalate false), L5 → escalate, 실패 → wrong/missing', async () => {
-    expect(await l4(0.95, 'equivalent')).toMatchObject({ level: 4, verdict: 'equal', escalate: false });
-    expect(await l4(0.95, 'relocated-ok')).toMatchObject({ verdict: 'relocated', escalate: false });
-    expect(await l4(0.7, 'equivalent')).toMatchObject({ level: 4, verdict: 'relocated', escalate: true });
-    expect(await l4(0.3, 'wrong-target')).toMatchObject({
-      verdict: 'wrong',
+describe('E.14 L4는 judge 체인을 쓴다 (체인 임계값 ≥0.9 인정 · 0.6~0.9 L5 · <0.6 실패)', () => {
+  it('3/3 예 → 인정(equal), 2/3 → L5, 0/3 → 실패', async () => {
+    expect(await l4([YES, YES, YES])).toMatchObject({
+      level: 4,
+      decision: 'accept',
+      verdict: 'equal',
+      confidence: 1,
       escalate: false,
-      confidence: 0.7,
+      verifierId: 'codex',
     });
-    expect(await l4(0.3, 'missing')).toMatchObject({ verdict: 'missing', escalate: false });
-    // p는 높은데 종류가 잘못된 대상 → 모순이므로 L5
-    expect(await l4(0.95, 'wrong-target')).toMatchObject({ decision: 'escalate', escalate: true });
+    expect(await l4([YES, YES, NO])).toMatchObject({
+      decision: 'escalate',
+      escalate: true,
+      confidence: 0.667,
+    });
+    expect(await l4([NO, NO, NO])).toMatchObject({
+      decision: 'fail',
+      verdict: 'wrong',
+      confidence: 1,
+      escalate: false,
+    });
+    const missing = { ...NO, difference_kind: 'missing' as const };
+    expect(await l4([missing, missing, missing])).toMatchObject({ decision: 'fail', verdict: 'missing' });
   });
 
-  it('임계값 설정', async () => {
-    const t = { accept: 0.8, fail: 0.5 };
-    expect((await l4(0.8, 'equivalent', t)).decision).toBe('accept');
-    expect((await l4(0.7999, 'equivalent', t)).decision).toBe('escalate');
-    expect((await l4(0.5, 'equivalent', t)).decision).toBe('escalate');
-    expect((await l4(0.4999, 'equivalent', t)).decision).toBe('fail');
-    expect(decideL4(0.95, 'equivalent', { accept: 0.99 })).toBe('escalate');
-    expect(() => resolveThresholds({ accept: 0.5, fail: 0.7 })).toThrow(RangeError);
-    expect(resolveThresholds()).toEqual({ accept: 0.9, fail: 0.6 });
+  it('체인 결정 → L4 결정 대응', () => {
+    expect(decideL4({ verdict: 'equal' })).toBe('accept');
+    expect(decideL4({ verdict: 'different' })).toBe('fail');
+    expect(decideL4({ verdict: 'uncertain' })).toBe('escalate');
+    expect(decideL4({ verdict: 'unavailable' })).toBe('skipped');
   });
 
-  it('L3에서 확정된 결과(escalate=false)는 L4를 건너뜀, 판정기 오류는 L5', async () => {
+  it('L3에서 확정된 결과는 건너뜀, 판정할 AI 없음·체인 오류는 L5', async () => {
     const done: LadderResult = { ...prev, level: 2, verdict: 'equal', escalate: false };
-    const f = fakeVerifier(1, 'equivalent');
-    expect(await runLadderL4(done, { verifier: f.v, itemTitle: 't' })).toBe(done);
-    expect(f.calls).toHaveLength(0);
-    const broken: Verifier = {
-      id: 'broken',
-      judge: () => Promise.reject(new Error('timeout')),
-    };
-    expect(await runLadderL4(prev, { verifier: broken, itemTitle: 't' })).toMatchObject({
+    const f = fakeChain([YES]);
+    expect(await runLadderL4(done, { judge: f.chain, itemTitle: 't' })).toBe(done);
+    expect(f.backend.calls).toBe(0);
+
+    const none = fakeChain([YES], {}, []); // 엔진 없음 + Ollama 꺼짐 → no-judge
+    expect(await runLadderL4(prev, { judge: none.chain, itemTitle: 't' })).toMatchObject({
       level: 4,
       decision: 'skipped',
       escalate: true,
+      verdict: 'relocated',
     });
+    const broken: L4Judge = {
+      judge: () => Promise.resolve({ verdict: 'unavailable', confidence: 0, reason: 'error' }),
+    };
+    expect(await runLadderL4(prev, { judge: broken, itemTitle: 't' })).toMatchObject({ decision: 'skipped' });
   });
 
-  it('질문 2개 + 메타데이터 상태, evidence 기록', async () => {
-    const f = fakeVerifier(0.95, 'equivalent');
-    const r = await runLadderL4(prev, {
-      verifier: f.v,
-      itemTitle: '모바일 앱',
-      acceptance: [AcceptanceSchema.parse({ type: 'symbol', symbol: 'MainActivity' })],
-    });
-    expect(f.calls.map((c) => c.q.id)).toEqual(['same_artifact', 'deviation_kind']);
-    expect(f.calls[0]!.s).toEqual({
-      itemTitle: '모바일 앱',
-      expectedPath: 'harness/mobile',
-      actualPath: 'ai/mobile',
-      candidates: ['ai/mobile'],
-      fileNames: ['mobile'],
-      symbols: ['MainActivity'],
-    });
+  it('체인에 보내는 것: path 비교 · 기대/실제 경로 · 항목 제목만, evidence 기록', async () => {
+    const f = fakeChain([YES, YES, YES]);
+    const r = await runLadderL4(prev, { judge: f.chain, itemTitle: '모바일 앱', sessionId: 's1' });
+    expect(f.backend.calls).toBe(3);
+    const user = f.backend.prompts[0]!.user;
+    expect(user).toContain('harness/mobile');
+    expect(user).toContain('ai/mobile');
+    expect(user).toContain('모바일 앱');
     expect(toEvidence(r, { now: () => new Date('2026-01-01T00:00:00Z') })).toMatchObject({
       kind: 'ladder_verdict',
       level: 4,
@@ -136,7 +102,7 @@ describe('26.5 인정 시 별칭 자동 추가 → 다음 판정은 L2', () => {
   let root = '';
   afterEach(() => rmSync(root, { recursive: true, force: true }));
 
-  it('하네스/모바일 vs ai/mobile: L3 relocated → L4 인정 → manifest·glossary 별칭 → 재판정 L2', async () => {
+  it('하네스/모바일 vs ai/mobile: L3 relocated → L4(체인) 인정 → manifest·glossary 별칭 → 재판정 L2', async () => {
     root = mkdtempSync(join(tmpdir(), 'hx-ladder-l4-'));
     const write = (p: string, c: string) => {
       mkdirSync(dirname(join(root, p)), { recursive: true });
@@ -164,10 +130,10 @@ describe('26.5 인정 시 별칭 자동 추가 → 다음 판정은 L2', () => {
     });
     expect(l3).toMatchObject({ level: 3, verdict: 'relocated', escalate: true });
 
+    const f = fakeChain([YES, YES, YES]);
     const r = await runLadderL4(l3, {
-      verifier: fakeVerifier(0.93, 'equivalent').v,
+      judge: f.chain,
       itemTitle: '모바일 앱',
-      acceptance,
       onAccept: learnL4Alias({ artifactId: 'art.mobile-app', manifest, glossaryFile }),
     });
     expect(r).toMatchObject({ level: 4, decision: 'accept', verdict: 'equal' });
@@ -176,6 +142,7 @@ describe('26.5 인정 시 별칭 자동 추가 → 다음 판정은 L2', () => {
     expect(g.terms.find((t) => t.canonical === 'harness')?.aliases).toContain('ai');
 
     // 다음 판정: 별칭 사전(L2)에서 끝난다 — 판정기 호출 없음
+    const calls = f.backend.calls;
     const again = await runLadder({
       expected: { path: expectedPath, kind: 'dir' },
       changes,
@@ -184,6 +151,7 @@ describe('26.5 인정 시 별칭 자동 추가 → 다음 판정은 L2', () => {
       glossary: g,
     });
     expect(again).toMatchObject({ level: 2, verdict: 'equal', actualPath: 'ai/mobile', escalate: false });
+    expect(f.backend.calls).toBe(calls);
     const viaManifest = await runLadder({
       expected: {
         path: expectedPath,

@@ -1,31 +1,18 @@
-import {
-  learnEquivalence,
-  type Acceptance,
-  type ManifestStore,
-  type VerdictKind,
-} from '@harness-x/checklist-ledger';
-import {
-  deviationKindQuestion,
-  minimizeJudgeState,
-  sameArtifactQuestion,
-  type ChoiceAnswer,
-  type DeviationKind,
-  type NoulAnswer,
-  type Verifier,
-} from '@harness-x/protocol';
+import { learnEquivalence, type ManifestStore, type VerdictKind } from '@harness-x/checklist-ledger';
+import type { JudgeOutcome, JudgeRequest } from '@harness-x/judge';
 import type { LadderResult } from './ladder.js';
 import type { JudgeSettings } from './settings.js';
 
 /**
- * 판정 사다리 L4 — 경량 판정 모델 (T-026)
- * L3가 escalate=true(위치만 다름 등)로 넘긴 결과만 받는다. 질문 2개를 판정기에 보낸다.
- *   same_artifact (noul) → p = "같은 산출물"일 확률
- *   deviation_kind (choice) → equivalent | relocated-ok | wrong-target | missing
- * 결정 (임계값은 설정 가능, 기본 accept 0.9 · fail 0.6):
- *   p ≥ accept 이고 종류가 equivalent/relocated-ok → 인정 (+ 별칭 자동 추가)
- *   p < fail → 실패
- *   그 밖(0.6 ≤ p < 0.9, 또는 p는 높은데 종류가 wrong-target/missing) → L5
- * 판정기가 off(null)이거나 오류가 나면 L5로 직행한다.
+ * 판정 사다리 L4 — 의미 판단 AI 체인 (T-025/T-026 → T-100 E.14)
+ * L3가 escalate=true(위치만 다름 등)로 넘긴 결과만 받는다. 기대 경로·실제 경로를 judge 체인
+ * (사용자 설정 AI → 로컬 Ollama → 로그인된 구독 엔진)에 path 비교로 묻는다.
+ * 체인이 임계값(≥0.9 equal · 0.6~0.9 uncertain · <0.6 different, E.11)을 이미 적용하므로 결정은 그대로 옮긴다.
+ *   equal       → 인정 (+ 별칭 자동 추가)
+ *   different   → 실패 (difference_kind가 missing이면 missing, 그 밖은 wrong)
+ *   uncertain   → L5 (승인 카드)
+ *   unavailable → L5 (판정할 AI 없음·상한 초과)
+ * 체인이 없거나(null) judge.semantic = off면 L5로 직행한다.
  */
 
 export interface L4Thresholds {
@@ -35,56 +22,51 @@ export interface L4Thresholds {
   fail: number;
 }
 
+/** 체인 임계값(E.11)과 같은 값 — 참고용 */
 export const DEFAULT_L4_THRESHOLDS: Readonly<L4Thresholds> = Object.freeze({ accept: 0.9, fail: 0.6 });
 
 export type L4Decision = 'accept' | 'escalate' | 'fail';
 
-export function resolveThresholds(t: Partial<L4Thresholds> = {}): L4Thresholds {
-  const r = { ...DEFAULT_L4_THRESHOLDS, ...t };
-  if (!(r.fail >= 0 && r.accept <= 1 && r.fail <= r.accept))
-    throw new RangeError(`L4 임계값은 0 ≤ fail ≤ accept ≤ 1 (받은 값 fail=${r.fail}, accept=${r.accept})`);
-  return r;
+/** judge 체인 (createJudgeChain 결과의 judge만 쓴다) */
+export interface L4Judge {
+  judge(req: JudgeRequest): Promise<JudgeOutcome>;
 }
 
-/** p(같은 산출물)와 어긋남 종류 → 결정 */
-export function decideL4(p: number, kind: DeviationKind, thresholds: Partial<L4Thresholds> = {}): L4Decision {
-  const t = resolveThresholds(thresholds);
-  if (p < t.fail) return 'fail';
-  if (p >= t.accept && (kind === 'equivalent' || kind === 'relocated-ok')) return 'accept';
-  return 'escalate';
+/** 체인 판정 → L4 결정 */
+export function decideL4(o: Pick<JudgeOutcome, 'verdict'>): L4Decision | 'skipped' {
+  switch (o.verdict) {
+    case 'equal':
+      return 'accept';
+    case 'different':
+      return 'fail';
+    case 'uncertain':
+      return 'escalate';
+    case 'unavailable':
+      return 'skipped';
+  }
 }
 
 export interface L4Result extends Omit<LadderResult, 'level'> {
   level: 4;
-  /** skipped = 판정기 off 또는 오류 → L5 */
+  /** skipped = 체인 없음·판정할 AI 없음·상한 초과 → L5 */
   decision: L4Decision | 'skipped';
+  /** 판정한 엔진 id (로컬이면 'ollama') */
   verifierId?: string;
-  deviation?: DeviationKind;
-  answers?: { sameArtifact: NoulAnswer; deviationKind: ChoiceAnswer };
+  /** 체인 결과 원본 */
+  judge?: JudgeOutcome;
 }
 
 export interface L4Options {
-  /** null = off (L5로 직행) */
-  verifier: Verifier | null;
+  /** null = 의미 판단 off (L5로 직행) */
+  judge: L4Judge | null;
   /** 항목 제목 (판정기에 보내는 메타데이터) */
   itemTitle: string;
-  /** 심볼 목록 (없으면 acceptance의 symbol 조건에서 뽑는다) */
-  symbols?: readonly string[];
-  acceptance?: readonly Acceptance[];
-  thresholds?: Partial<L4Thresholds>;
+  /** 세션 id (세션 호출 상한, E.13) */
+  sessionId?: string;
+  /** 항목을 작성한 엔진 (E.7: 다른 엔진 우선) */
+  authorEngineId?: string;
   /** 인정 시 호출 (별칭 자동 추가) — learnL4Alias()로 만든다 */
   onAccept?: (r: L4Result) => void | Promise<void>;
-  signal?: AbortSignal;
-}
-
-/** acceptance의 symbol 조건 → 심볼 목록 */
-export function symbolsOf(acceptance: readonly Acceptance[] = []): string[] {
-  return acceptance.flatMap((a) => (a.type === 'symbol' ? [a.symbol] : []));
-}
-
-function baseName(p: string): string {
-  const parts = p.split('/').filter(Boolean);
-  return parts[parts.length - 1] ?? p;
 }
 
 const round = (x: number) => Math.round(x * 1000) / 1000;
@@ -92,89 +74,52 @@ const round = (x: number) => Math.round(x * 1000) / 1000;
 export async function runLadderL4(prev: LadderResult, opts: L4Options): Promise<LadderResult | L4Result> {
   if (!prev.escalate) return prev;
   const base = { ...prev, level: 4 as const };
-  if (!opts.verifier)
-    return { ...base, decision: 'skipped', escalate: true, reason: `L4 판정기 off → L5 (${prev.reason})` };
-  const thresholds = resolveThresholds(opts.thresholds);
-  const state = minimizeJudgeState({
+  if (!opts.judge)
+    return { ...base, decision: 'skipped', escalate: true, reason: `L4 의미 판단 off → L5 (${prev.reason})` };
+  const o = await opts.judge.judge({
+    kind: 'path',
+    expected: prev.expectedPath || '.',
+    actual: prev.actualPath ?? prev.candidates[0]?.path ?? '',
     itemTitle: opts.itemTitle,
-    expectedPath: prev.expectedPath || '.',
-    ...(prev.actualPath ? { actualPath: prev.actualPath } : {}),
-    candidates: prev.candidates.map((c) => c.path),
-    fileNames: [prev.expectedPath, ...(prev.actualPath ? [prev.actualPath] : [])].map(baseName),
-    symbols: opts.symbols ? [...opts.symbols] : symbolsOf(opts.acceptance),
+    sessionId: opts.sessionId ?? 'default',
+    ...(opts.authorEngineId ? { authorEngineId: opts.authorEngineId } : {}),
   });
-  let same: NoulAnswer;
-  let dev: ChoiceAnswer;
-  try {
-    const sig = opts.signal ? { signal: opts.signal } : {};
-    same = await opts.verifier.judge(sameArtifactQuestion(), state, sig);
-    dev = await opts.verifier.judge(deviationKindQuestion(), state, sig);
-  } catch (err) {
-    return {
-      ...base,
-      decision: 'skipped',
-      verifierId: opts.verifier.id,
-      escalate: true,
-      reason: `L4 판정기(${opts.verifier.id}) 오류 → L5: ${err instanceof Error ? err.message : String(err)}`,
-    };
-  }
-  const kind = dev.choice as DeviationKind;
-  const p = same.noul;
-  const decision = decideL4(p, kind, thresholds);
+  const decision = decideL4(o);
+  const tag = `${o.engineId ?? '판정 AI 없음'}: ${o.verdict} (${o.confidence.toFixed(2)}, ${o.reason})`;
   const common = {
     ...base,
     decision,
-    verifierId: opts.verifier.id,
-    deviation: kind,
-    answers: { sameArtifact: same, deviationKind: dev },
+    ...(o.engineId ? { verifierId: o.engineId } : {}),
+    judge: o,
   };
-  const tag = `${opts.verifier.id}: same_artifact=${p}, deviation_kind=${kind}(${dev.confidence})`;
   let r: L4Result;
   if (decision === 'accept') {
-    const verdict: VerdictKind = kind === 'equivalent' ? 'equal' : 'relocated';
-    r = {
-      ...common,
-      verdict,
-      confidence: round(p),
-      escalate: false,
-      reason: `L4 인정 (p ≥ ${thresholds.accept}) — ${tag}`,
-    };
+    const verdict: VerdictKind = 'equal';
+    r = { ...common, verdict, confidence: round(o.confidence), escalate: false, reason: `L4 인정 — ${tag}` };
   } else if (decision === 'fail') {
     r = {
       ...common,
-      verdict: kind === 'missing' ? 'missing' : 'wrong',
-      confidence: round(1 - p),
+      verdict: o.differenceKind === 'missing' ? 'missing' : 'wrong',
+      confidence: round(1 - o.confidence),
       escalate: false,
-      reason: `L4 실패 (p < ${thresholds.fail}) — ${tag}`,
+      reason: `L4 실패 — ${tag}`,
     };
+  } else if (decision === 'escalate') {
+    r = { ...common, confidence: round(o.confidence), escalate: true, reason: `L4 불확실 → L5 — ${tag}` };
   } else {
-    r = {
-      ...common,
-      confidence: round(p),
-      escalate: true,
-      reason: `L4 불확실 → L5 — ${tag}`,
-    };
+    r = { ...common, escalate: true, reason: `L4 판정 불가 → L5 — ${tag}` };
   }
   if (decision === 'accept' && opts.onAccept) await opts.onAccept(r);
   return r;
 }
 
-// ── 판정기 선택 (T-100 J.3·J.4) ─────────────────────────────────────
-// 예전 설정 `verifier.l4`는 폐기했다(J.4). 의미 판단 설정은 judge.*(settings.ts)를 따른다.
-// 의미 판단 체인(judge 패키지: 사용자 설정 AI → 로컬 → 구독 엔진 → 승인 카드)은 E.14에서 연결한다.
+// ── 판정기 선택 (T-100 J.3·J.4·E.14) ─────────────────────────────────
+// 예전 설정 `verifier.l4`는 폐기했다(J.4). L4는 judge 체인(사용자 설정 AI → 로컬 → 구독 엔진)을 쓴다.
 
-/** 판정기 생성기 (verifier-local 플러그인이 제공) */
-export interface L4VerifierFactories {
-  local?: () => Verifier;
-}
-
-/**
- * judge 설정 → L4 판정기. judge.semantic = off면 null(의미 판단 없이 L5로),
- * 그 밖에는 로컬 판정기(설치돼 있지 않으면 null).
- */
-export function selectL4Verifier(settings: JudgeSettings, factories: L4VerifierFactories): Verifier | null {
+/** judge 설정 → L4가 쓸 체인. judge.semantic = off면 null(의미 판단 없이 L5로) */
+export function selectL4Judge(settings: JudgeSettings, chain: L4Judge | null | undefined): L4Judge | null {
   if (settings.semantic === 'off') return null;
-  return factories.local ? factories.local() : null;
+  return chain ?? null;
 }
 
 /** L4 인정 시 manifest·glossary 별칭 자동 추가 (다음 판정은 L2에서 끝난다) */

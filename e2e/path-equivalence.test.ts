@@ -145,7 +145,7 @@ describe('64.1 경로 동치 회귀: 하네스/모바일 vs ai/mobile', () => {
         glossary: loadGlossary(glossaryFile),
       });
       verdicts.push({ itemId, level: l3.level, verdict: l3.verdict });
-      const r = await runLadderL4(l3, { verifier: null, itemTitle: it.title, acceptance: it.acceptance });
+      const r = await runLadderL4(l3, { judge: null, itemTitle: it.title });
       if (r.level === 4) verdicts.push({ itemId, level: 4, verdict: r.verdict });
       return { l3, r };
     }
