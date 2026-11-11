@@ -24,10 +24,15 @@ export interface EngineScannerOptions {
   now?: () => Date;
   onScan?: (cache: EnginesCache) => void;
   onError?: (err: unknown) => void;
+  /** 시작 스캔에서 CLI를 하나도 못 찾으면 이만큼 뒤에 1번 더 스캔 (WSL /mnt/c PATH 첫 조회가 느려 시간 초과되는 경우). 0이면 끔 */
+  startupRetryMs?: number;
 }
+
+export const STARTUP_RETRY_MS = 15_000;
 
 export class EngineScanner {
   private timer: ReturnType<typeof setInterval> | undefined;
+  private retry: ReturnType<typeof setTimeout> | undefined;
   private inflight: Promise<EnginesCache> | undefined;
   last: EnginesCache | undefined;
   readonly cacheFile: string;
@@ -73,12 +78,24 @@ export class EngineScanner {
       this.scan().catch((err) => this.opts.onError?.(err));
     }, interval);
     this.timer.unref?.();
-    return this.scan();
+    const retryMs = this.opts.startupRetryMs ?? STARTUP_RETRY_MS;
+    return this.scan().then((first) => {
+      if (first.engines.length === 0 && retryMs > 0 && this.timer) {
+        this.retry = setTimeout(() => {
+          this.retry = undefined;
+          this.scan().catch((err) => this.opts.onError?.(err));
+        }, retryMs);
+        this.retry.unref?.();
+      }
+      return first;
+    });
   }
 
   stop(): void {
     if (this.timer) clearInterval(this.timer);
+    if (this.retry) clearTimeout(this.retry);
     this.timer = undefined;
+    this.retry = undefined;
   }
 
   get running(): boolean {

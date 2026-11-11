@@ -18,7 +18,8 @@ const WIN_EXEC_EXT = /\.(exe|cmd|bat|com)$/i;
 export async function locateCommand(name: string, opts: LocateOptions = {}): Promise<string[]> {
   const platform = opts.platform ?? process.platform;
   const exec = opts.exec ?? defaultExec;
-  const timeoutMs = opts.timeoutMs ?? 5_000;
+  // WSL에서 PATH에 /mnt/c 폴더가 많으면 첫 조회가 5초를 넘길 수 있다
+  const timeoutMs = opts.timeoutMs ?? 20_000;
   const isWin = platform === 'win32';
   const r = isWin
     ? await exec('where.exe', [name], { timeoutMs })

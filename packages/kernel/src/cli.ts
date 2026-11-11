@@ -156,7 +156,13 @@ interface AgentBuilderPluginModule {
   /** T-100 P4-A.12 GET /api/builder/inventory (+ engines.json 감시). 핫리로드는 attachHotReload로 연결 */
   registerBuilderInventory?: (
     app: { get(path: string, handler: () => Promise<unknown>): unknown },
-    o: { plugins: () => Iterable<unknown>; agents?: () => unknown[]; home?: string; workspace?: string },
+    o: {
+      plugins: () => Iterable<unknown>;
+      agents?: () => unknown[];
+      home?: string;
+      workspace?: string;
+      engineFacts?: () => Promise<{ login: Record<string, 'loggedIn' | 'loggedOut' | 'unknown'> }>;
+    },
   ) => {
     attachHotReload(src: { on(event: string, fn: () => void): unknown }): void;
     get(): Promise<unknown>;
@@ -528,6 +534,12 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           agents: () => registry()?.list() ?? [],
           home,
           workspace,
+          // 로그인 상태(공식 상태 명령만, 60초 캐시): 로그아웃된 엔진은 needs-login → 설계 AI가 고르지 않는다
+          engineFacts: async () => {
+            const ids = ['claude-code', 'codex', 'antigravity', 'gemini'];
+            const states = await Promise.all(ids.map((id) => loginState(id)));
+            return { login: Object.fromEntries(ids.map((id, i) => [id, states[i]!])) };
+          },
         });
         // T-100 P4 대화로 만들기 (설계 AI는 도구 없이 읽기 전용, 저장은 사람 클릭 토큰으로만)
         if (inventory)

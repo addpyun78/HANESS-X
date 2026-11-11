@@ -4,6 +4,7 @@ import type { RegisteredAgent } from '../registry.js';
 import type { InventoryPluginSource } from './plugins.js';
 import { registerInventoryRoute, type InventoryRouteHost } from './route.js';
 import { InventoryService } from './service.js';
+import type { InventorySources } from './build.js';
 
 /**
  * 커널(cli.ts)이 agent-builder 모듈을 구조적으로 불러 쓰는 진입점.
@@ -15,6 +16,8 @@ export interface BuilderInventoryOptions {
   agents?: () => readonly unknown[];
   home?: string;
   workspace?: string;
+  /** 엔진 로그인 상태·쿼터 (커널의 공식 상태 명령 결과). 없으면 unknown */
+  engineFacts?: InventorySources['engineFacts'];
 }
 
 export function registerBuilderInventory(
@@ -27,6 +30,7 @@ export function registerBuilderInventory(
     ...(o.agents ? { agents: () => (o.agents?.() ?? []) as readonly RegisteredAgent[] } : {}),
     home,
     ...(o.workspace ? { workspace: o.workspace } : {}),
+    ...(o.engineFacts ? { engineFacts: o.engineFacts } : {}),
   });
   svc.on('error', () => undefined); // 재생성 실패는 다음 요청에서 다시 시도
   svc.watchEnginesCache(join(home, 'engines.json'));
