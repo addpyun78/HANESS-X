@@ -7,6 +7,7 @@ import {
   type LoginState,
   type PingResult,
 } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface EngineCardProps {
   card: EngineCardModel;
@@ -27,7 +28,13 @@ export function EngineCard({ card, api, fallbackOptions, onSaved }: EngineCardPr
           <span className="hx-badge hx-badge--muted">미설치</span>
         </header>
         {card.installUrl && (
-          <a className="hx-engine-card__install" href={card.installUrl} target="_blank" rel="noreferrer">
+          <a
+            {...act('engines.install-guide')}
+            className="hx-engine-card__install"
+            href={card.installUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             설치 안내
           </a>
         )}
@@ -154,7 +161,13 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
             value={keyInput}
             onChange={(e) => setKeyInput(e.currentTarget.value)}
           />
-          <button type="button" className="hx-icon-btn" disabled={!keyInput.trim()} onClick={saveKey}>
+          <button
+            {...act('engines.save-key')}
+            type="button"
+            className="hx-icon-btn"
+            disabled={!keyInput.trim()}
+            onClick={saveKey}
+          >
             키 저장
           </button>
         </div>
@@ -188,6 +201,7 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
           </select>
         </label>
         <button
+          {...act('engines.save-settings')}
           type="button"
           className="hx-icon-btn"
           onClick={() =>
@@ -204,7 +218,13 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
       </div>
 
       <div className="hx-engine-card__row">
-        <button type="button" className="hx-icon-btn" disabled={ping === 'running'} onClick={runPing}>
+        <button
+          {...act('engines.ping')}
+          type="button"
+          className="hx-icon-btn"
+          disabled={ping === 'running'}
+          onClick={runPing}
+        >
           테스트 실행
         </button>
         {ping && (
