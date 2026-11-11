@@ -66,6 +66,7 @@ export function EnginesSettings({ api }: EnginesSettingsProps) {
           className="hx-icon-btn"
           onClick={rescan}
           disabled={scanning}
+          title={scanning ? '찾는 중이에요' : undefined}
         >
           {scanning ? '스캔 중…' : '다시 스캔'}
         </button>

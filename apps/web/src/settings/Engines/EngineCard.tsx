@@ -166,6 +166,7 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
             type="button"
             className="hx-icon-btn"
             disabled={!keyInput.trim()}
+            title={keyInput.trim() ? undefined : '키를 먼저 넣어 주세요'}
             onClick={saveKey}
           >
             키 저장
@@ -223,6 +224,7 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
           type="button"
           className="hx-icon-btn"
           disabled={ping === 'running'}
+          title={ping === 'running' ? '시험하는 중이에요' : undefined}
           onClick={runPing}
         >
           테스트 실행
