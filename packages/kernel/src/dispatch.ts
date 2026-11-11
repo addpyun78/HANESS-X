@@ -222,6 +222,7 @@ interface Live {
 export class Dispatcher {
   private readonly opts: DispatcherOptions;
   private readonly live = new Map<string, Live>();
+  private readonly stopAllHooks: (() => unknown)[] = [];
   private readonly idGen: () => string;
   private readonly now: () => Date;
 
@@ -356,10 +357,23 @@ export class Dispatcher {
     return { sessionId, kind, state: 'paused' };
   }
 
-  /** 전체 정지: 실행 중인 세션 전부를 지금 멈춘다 */
+  /** 전체 정지: 실행 중인 세션 전부를 지금 멈춘다 (+ 2A.5 진행 중인 설치 등 등록된 정지 훅) */
   async stopAll(by = 'user'): Promise<StopResult[]> {
     const running = [...this.live.values()].filter((l) => l.session.status === 'running');
-    return Promise.all(running.map((l) => this.stopNow(l.session.sessionId, by, 'user', 'stop-all')));
+    const [results] = await Promise.all([
+      Promise.all(running.map((l) => this.stopNow(l.session.sessionId, by, 'user', 'stop-all'))),
+      ...this.stopAllHooks.map((h) => Promise.resolve(h()).catch(() => undefined)),
+    ]);
+    return results;
+  }
+
+  /** 2A.5 전체 정지 때 함께 부를 훅 (예: 설치 관리자 InstallService.stopAll) */
+  addStopAllHook(hook: () => unknown): () => void {
+    this.stopAllHooks.push(hook);
+    return () => {
+      const i = this.stopAllHooks.indexOf(hook);
+      if (i >= 0) this.stopAllHooks.splice(i, 1);
+    };
   }
 
   /** 실행 중인 세션 수 (상단 바 [전체 정지] 표시 기준) */

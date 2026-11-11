@@ -476,6 +476,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   // 새 도구 첫 실행 확인(permission-gate, <home>/tools/allowed.json) + 설치 도구 감지(읽기만)
   // P2-F.6 첫 실행 확인은 패널 카드(approval_request kind tool.first-run)로 묻는다
   const installWiring = wireInstaller({ plugins: loader.plugins, hooks, log });
+  // T-101 2A.5 전체 정지 → 진행 중인 설치도 중단 가능한 지점에서 멈추고 정리
+  if (installWiring) dispatch.addStopAllHook(() => installWiring.service.stopAll?.());
   // T-100 Part 3 도구 찾기: /api/tools/* + tools.request(MCP) + 도구 고르기 카드 이벤트 + 설치 후 자동 재개
   const toolWiring = installWiring
     ? wireToolFinder({ plugins: loader.plugins, service: installWiring.service, log })
