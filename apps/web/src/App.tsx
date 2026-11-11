@@ -32,6 +32,7 @@ import { ForgeAnswerContext, type ForgeActions } from './forge/ForgeCards.js';
 import { SessionNav } from './shell/SessionNav.js';
 import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/types.js';
 import { useQuota } from './shell/useQuota.js';
+import { takeForgePrefill } from './builder/draft/forge-handoff.js';
 
 const DEMO_ENGINES: EngineOption[] = [
   { id: 'claude-code', label: 'Claude Code', available: true },
@@ -66,6 +67,11 @@ export function App() {
   const [activeId, setActiveId] = useState<string>();
   const [confirm, setConfirm] = useState<{ payload: SendPayload; running: SessionSummary }>();
   const [sendError, setSendError] = useState<string>();
+  // T-100 P4-C.11 빌더 빈 칸 [Forge로 만들기] → 입력창에 "/forge 설명"을 채워 둔다 (보내기는 사용자)
+  const [forgeFill] = useState(() => {
+    const text = takeForgePrefill();
+    return text ? { text, seq: 1 } : undefined;
+  });
   const sessions: SessionSummary[] = useMemo(() => {
     if (demo) return DEMO_SESSIONS;
     const live = agentSessionsFromEvents(events, workspace?.name ?? '프로젝트');
@@ -301,6 +307,7 @@ export function App() {
                     }}
                     agents={agents}
                     onSend={onSend}
+                    {...(forgeFill ? { fill: forgeFill } : {})}
                     verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
                   />
                 </>
