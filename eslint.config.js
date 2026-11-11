@@ -37,9 +37,9 @@ export default tseslint.config(
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
   {
-    // T-101 0C.2 눌러도 아무 일 없는 버튼·메뉴 항목·링크 금지 + 상호작용 계약(data-action) (scripts/eslint/no-dead-button.js)
+    // T-101 0C.2·0C.9 눌러도 아무 일 없는 버튼·메뉴 항목·링크 금지 + 상호작용 계약(data-action) (scripts/eslint/no-dead-button.js)
     files: ['apps/web/src/**/*.tsx'],
     plugins: { hx: hxPlugin },
-    rules: { 'hx/no-dead-button': ['warn', { requireAction: true }] },
+    rules: { 'hx/no-dead-button': ['error', { requireAction: true }] },
   },
 );
