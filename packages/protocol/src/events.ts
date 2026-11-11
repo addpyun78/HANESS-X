@@ -87,6 +87,20 @@ export const ApprovalRequestEventSchema = EventBaseSchema.extend({
   options: z.array(z.string().min(1)).min(1),
 });
 
+/**
+ * 승인 카드 처리 알림 (T-100 H.10). HarnessEvent 9종 밖의 커널 기록이지만 /ws/events로 함께 나간다.
+ * undone: "방금 선택 취소"로 되돌린 경우
+ */
+export const APPROVAL_RESOLVED_TYPE = 'approval_resolved';
+export const ApprovalResolvedEventSchema = EventBaseSchema.extend({
+  type: z.literal(APPROVAL_RESOLVED_TYPE),
+  approvalId: z.string().min(1),
+  choice: z.string().min(1),
+  remember: z.boolean().optional(),
+  undone: z.boolean().optional(),
+});
+export type ApprovalResolvedEvent = z.infer<typeof ApprovalResolvedEventSchema>;
+
 export const ChecklistChangeEventSchema = EventBaseSchema.extend({
   type: z.literal('checklist_change'),
   /** 변경된 항목 (공통 필드 itemId와 별개로 필수) */

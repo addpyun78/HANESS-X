@@ -7,6 +7,7 @@ import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol'
 import type { DispatchRunResult } from './dispatch.js';
 import type { LogRecord } from './event-log.js';
 import type { EngineScanSnapshot } from './api/engines-routes.js';
+import type { ApprovalCardsApi } from './api/approvals-routes.js';
 import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from './recover.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
@@ -53,6 +54,24 @@ interface LedgerPluginModule {
   ): void;
 }
 
+/** approvals 플러그인 모듈의 공개 함수 (T-100 H.10 승인 카드 API, H.17 `harness-x approvals`) */
+interface ApprovalsPluginModule {
+  workspaceApprovals?(workspace: string, extra: { log?: { append(e: never): unknown } }): ApprovalCardsApi;
+  approvalsCli?(
+    argv: string[],
+    io: { input: NodeJS.ReadableStream; output: NodeJS.WritableStream },
+  ): Promise<number>;
+}
+
+/** 저장소의 approvals 플러그인 (빌드된 dist) — 커널은 그 패키지에 의존하지 않는다 */
+async function loadApprovalsModule(): Promise<ApprovalsPluginModule | undefined> {
+  const root = repoRoot();
+  const file = root && join(root, 'packages', 'plugins-core', 'approvals', 'dist', 'index.js');
+  if (!file || !existsSync(file)) return undefined;
+  const { pathToFileURL } = await import('node:url');
+  return (await import(pathToFileURL(file).href)) as ApprovalsPluginModule;
+}
+
 /**
  * agent-builder 플러그인 모듈의 공개 API (커널은 그 패키지에 의존하지 않는다 — 순환 방지.
  * 로드된 플러그인 모듈을 구조적으로 확인해 쓴다)
@@ -85,6 +104,8 @@ const HELP = `harness-x — 엔진 중립 에이전트 하네스
 
 사용법:
   harness-x serve [옵션]     로컬 API 서버 실행 (기본 127.0.0.1:${DEFAULT_API_PORT})
+  harness-x approvals [--workspace <dir>] [--session <id>] [카드 번호 선택 번호]
+                             확인이 필요한 카드를 글로 보고 번호로 고르기
 
 옵션:
   --port <n>          포트 (기본 ${DEFAULT_API_PORT}, 0 = 임의)
@@ -131,6 +152,15 @@ function repoRoot(): string | undefined {
 }
 
 export async function main(argv = process.argv.slice(2)): Promise<number> {
+  // T-100 H.17 패널 없이 승인 카드 보기·고르기 (자체 옵션을 쓰므로 serve 옵션 해석 전에 넘긴다)
+  if (argv[0] === 'approvals') {
+    const mod = await loadApprovalsModule();
+    if (!mod?.approvalsCli) {
+      process.stderr.write('approvals 플러그인을 찾지 못했습니다 (pnpm -r build 필요)\n');
+      return 1;
+    }
+    return mod.approvalsCli(argv.slice(1), { input: process.stdin, output: process.stdout });
+  }
   const { values, positionals } = parseArgs({
     args: argv,
     allowPositionals: true,
@@ -295,6 +325,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       agents: () => registry()?.summaries() ?? [],
       dispatch,
       agentsHome: home,
+      // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
+      ...(() => {
+        const ap = loader.plugins.get('approvals')?.module as ApprovalsPluginModule | undefined;
+        return values.workspace && ap?.workspaceApprovals
+          ? { approvalCards: ap.workspaceApprovals(resolve(values.workspace), { log }) }
+          : {};
+      })(),
       routes: (app) => {
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
         const ledgerFor =

@@ -58,6 +58,8 @@ export interface SessionSummary {
   currentNode?: string;
   /** 진행률 0~1 */
   progress?: number;
+  /** T-100 H.12 대기 중인 승인 카드 수 ("확인 필요" 배지) */
+  needsApproval?: number;
 }
 
 export interface SessionAgent {

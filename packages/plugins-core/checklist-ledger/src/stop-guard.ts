@@ -56,8 +56,18 @@ export const ChecklistStatusSchema = z
 export type ChecklistStatus = z.infer<typeof ChecklistStatusSchema>;
 
 /** 다음 항목 지시문 (브리지 reason·재주입 프롬프트) */
-export function nextInstruction(item: Pick<ChecklistItem, 'id' | 'title'>, remaining: number): string {
+export function nextInstruction(
+  item: Pick<ChecklistItem, 'id' | 'title'> & Partial<Pick<ChecklistItem, 'status' | 'evidence'>>,
+  remaining: number,
+): string {
+  // T-100 H.19 승인 카드 "원래 자리로 다시 만들기" → 다음 턴 지시문 앞에 쉬운 말 사유 + 정식 경로
+  const last = item.evidence?.at(-1);
+  const redo =
+    item.status === 'doing' && last?.kind === 'approval_redo' && typeof last.instruction === 'string'
+      ? `${last.instruction}\n\n`
+      : '';
   return (
+    redo +
     `다음 항목 ${item.id}: ${item.title} — 체크리스트에 미완료 항목 ${remaining}개가 남았습니다. ` +
     `멈추지 말고 이 항목을 진행한 뒤 checklist.submit으로 증거를 제출하세요.`
   );

@@ -20,6 +20,7 @@ import { registerSessionRoutes } from './sessions-routes.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
+import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } from './approvals-routes.js';
 
 /**
  * 로컬 API 서버
@@ -52,8 +53,10 @@ export interface ApiServerOptions {
   routes?: (app: FastifyInstance) => void | Promise<void>;
   /** 48.1 POST/GET /api/sessions (/ 실행 디스패치). 없으면 라우트 없음 */
   dispatch?: Dispatcher;
-  /** POST /api/approvals/:id 처리기 (예: checklist-ledger Escalator). 없으면 404 */
+  /** POST /api/approvals/:id {decision} 처리기 (예: checklist-ledger Escalator). 없으면 404 */
   approvals?: ApprovalHandler;
+  /** T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember}) */
+  approvalCards?: ApprovalCardsApi;
   /** POST /api/native/pick-folder 대화상자 (기본: NativeFolderPicker — Windows/WSL PowerShell) */
   folderPicker?: Pick<FolderPicker, 'pick'>;
   /** 교차 출처 허용 (데스크톱 웹뷰). 기본 Tauri 출처만 */
@@ -68,16 +71,12 @@ export interface ApiServerOptions {
   quota?: QuotaApiOptions;
 }
 
-/** 승인 카드 버튼 (판정 사다리 L5): 동치 인정 / 이동 승인 / 실패 */
-export const API_APPROVAL_DECISIONS = ['equivalent', 'move', 'fail'] as const;
-export type ApiApprovalDecision = (typeof API_APPROVAL_DECISIONS)[number];
-
-/**
- * 승인 요청 응답 처리기. 오류의 code가 APPROVAL_NOT_FOUND면 404, 그 밖의 오류는 409로 응답한다.
- */
-export interface ApprovalHandler {
-  resolve(approvalId: string, decision: ApiApprovalDecision, meta: { by: string }): unknown;
-}
+export {
+  API_APPROVAL_DECISIONS,
+  type ApiApprovalDecision,
+  type ApprovalCardsApi,
+  type ApprovalHandler,
+} from './approvals-routes.js';
 
 export interface ApiServer {
   app: FastifyInstance;
@@ -197,22 +196,10 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     ...(opts.onAgentSaved ? { onSaved: opts.onAgentSaved } : {}),
   });
 
-  // 27.3 승인 카드 응답 {decision: equivalent|move|fail}
-  app.post('/api/approvals/:id', async (req, reply) => {
-    const { id } = req.params as { id: string };
-    if (!opts.approvals) return reply.code(404).send({ error: 'not_found' });
-    const decision = (req.body as { decision?: unknown } | undefined)?.decision;
-    if (typeof decision !== 'string' || !(API_APPROVAL_DECISIONS as readonly string[]).includes(decision))
-      return reply.code(400).send({ error: 'invalid_decision', allowed: API_APPROVAL_DECISIONS });
-    try {
-      const result = await opts.approvals.resolve(id, decision as ApiApprovalDecision, { by: 'api' });
-      return { id, decision, result };
-    } catch (err) {
-      const code = (err as { code?: unknown }).code;
-      const message = err instanceof Error ? err.message : String(err);
-      if (code === 'APPROVAL_NOT_FOUND') return reply.code(404).send({ error: 'not_found', message });
-      return reply.code(409).send({ error: 'approval_failed', ...(code ? { code } : {}), message });
-    }
+  // 27.3 승인 카드 응답 {decision} · T-100 H.10 쉬운 말 카드 {choice, remember}
+  registerApprovalRoutes(app, {
+    ...(opts.approvals ? { legacy: opts.approvals } : {}),
+    ...(opts.approvalCards ? { cards: opts.approvalCards } : {}),
   });
 
   // 34.2 네이티브 폴더 대화상자 — 동시 1개(34.8: 두 번째는 409), 취소는 {cancelled:true}(34.6)

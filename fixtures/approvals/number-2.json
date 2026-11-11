@@ -1,0 +1,35 @@
+{
+  "id": "fx-number-2",
+  "itemId": "5.4",
+  "kind": "number",
+  "sessionId": "s-fixture",
+  "title": "확인이 필요해요",
+  "whatHappened": "계획에는 \"200\"이라는 숫자가 나와야 했어요. 실제로는 \"204\"라는 숫자가 나왔어요.",
+  "whyAsking": "두 숫자가 같은 값을 뜻하는지 확실하지 않아요.",
+  "confidenceWord": "중간",
+  "options": [
+    {
+      "id": "accept",
+      "label": "같은 걸로 인정"
+    },
+    {
+      "id": "redo",
+      "label": "원래 자리로 다시 만들기"
+    },
+    {
+      "id": "stop",
+      "label": "잘 모르겠어요 — 안전하게 멈추기"
+    }
+  ],
+  "rememberable": true,
+  "technical": {
+    "itemId": "5.4",
+    "expected": "200",
+    "actual": "204",
+    "difference": "- 200\n+ 204",
+    "comparator": "number",
+    "confidence": 0.7,
+    "judgeEngine": "codex"
+  },
+  "createdAt": "2026-11-11T09:00:00.000Z"
+}

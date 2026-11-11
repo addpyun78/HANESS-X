@@ -19,6 +19,10 @@ import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
 import { navigate } from './router.js';
 import { PanelActionsContext } from './panels/panel-actions.js';
 import { usePanels } from './panels/usePanels.js';
+import { approvalsApi } from './panels/Approvals/api.js';
+import { ApprovalsArea } from './panels/Approvals/ApprovalsArea.js';
+import { Toasts } from './panels/Approvals/Toasts.js';
+import { ApprovalFocusContext, useApprovals, type ApprovalFocus } from './panels/Approvals/useApprovals.js';
 import { enginesApi } from './settings/Engines/api.js';
 import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
 import { AppShell } from './shell/AppShell.js';
@@ -78,6 +82,18 @@ export function App() {
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
   const quotas = useQuota(client, events, available);
   const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
+  // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
+  const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
+  const approvals = useApprovals({ events, ...(apApi ? { api: apApi } : {}) });
+  const { setFocusId } = approvals;
+  const approvalFocus = useMemo<ApprovalFocus>(() => ({ focus: (id) => setFocusId(id) }), [setFocusId]);
+  const navSessions = useMemo(
+    () =>
+      sessions.map((x) =>
+        approvals.bySession[x.id] ? { ...x, needsApproval: approvals.bySession[x.id] } : x,
+      ),
+    [sessions, approvals.bySession],
+  );
 
   useEffect(() => {
     if (demo) return;
@@ -204,81 +220,96 @@ export function App() {
 
   return (
     <ForgeAnswerContext.Provider value={forgeActions}>
-      <PanelActionsContext.Provider value={panels.actions}>
-        <AppShell
-          panelContent={panels.content}
-          panelActive={panels.active}
-          onPanelActiveChange={panels.setActive}
-          topBar={{
-            workspace,
-            runState,
-            quotas:
-              quotas ??
-              available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
-          }}
-          sidebar={
-            <SessionNav
-              sessions={sessions}
-              activeSessionId={activeId ?? sessions[0]?.id}
-              onNavigate={(to) => {
-                if (to === 'agent-builder') navigate('/builder/new');
-                else setView(to === 'engines' ? 'engines' : 'chat');
-              }}
-              onSelectSession={(id) => {
-                setActiveId(id);
-                setView('chat');
-              }}
-            />
-          }
-          main={
-            view === 'engines' && engineSettings ? (
-              <EnginesSettings api={engineSettings} />
-            ) : (
-              <>
-                <ChatStream events={events} mode={mode} onModeChange={setMode} />
-                {wsError && (
-                  <div className="hx-ws-error" role="alert">
-                    {wsError}
-                  </div>
-                )}
-                {sendError && (
-                  <div className="hx-ws-error" role="alert">
-                    {sendError}
-                  </div>
-                )}
-                {confirm && (
-                  <SubagentConfirm
-                    agent={confirm.payload.agent!}
-                    running={confirm.running}
-                    onAddSubagent={() => {
-                      setConfirm(undefined);
-                      void addSubagent(confirm.running, confirm.payload.agent!);
+      <ApprovalFocusContext.Provider value={approvalFocus}>
+        <PanelActionsContext.Provider value={panels.actions}>
+          <AppShell
+            panelTop={
+              <ApprovalsArea
+                cards={approvals.pending}
+                onChoose={(id, choice, remember) => void approvals.choose(id, choice, remember)}
+                {...(approvals.busy ? { busy: approvals.busy } : {})}
+                errors={approvals.errors}
+                {...(approvals.last ? { last: approvals.last } : {})}
+                onUndo={() => void approvals.undo()}
+                {...(approvals.focusId ? { focusId: approvals.focusId } : {})}
+                onFocused={() => setFocusId(undefined)}
+              />
+            }
+            panelContent={panels.content}
+            panelActive={panels.active}
+            onPanelActiveChange={panels.setActive}
+            topBar={{
+              workspace,
+              runState,
+              quotas:
+                quotas ??
+                available.map((e) => ({ engineId: e.id, label: e.label, ...(demo ? { ratio: 0.42 } : {}) })),
+            }}
+            sidebar={
+              <SessionNav
+                sessions={navSessions}
+                activeSessionId={activeId ?? sessions[0]?.id}
+                onNavigate={(to) => {
+                  if (to === 'agent-builder') navigate('/builder/new');
+                  else setView(to === 'engines' ? 'engines' : 'chat');
+                }}
+                onSelectSession={(id) => {
+                  setActiveId(id);
+                  setView('chat');
+                }}
+              />
+            }
+            main={
+              view === 'engines' && engineSettings ? (
+                <EnginesSettings api={engineSettings} />
+              ) : (
+                <>
+                  <ChatStream events={events} mode={mode} onModeChange={setMode} />
+                  {wsError && (
+                    <div className="hx-ws-error" role="alert">
+                      {wsError}
+                    </div>
+                  )}
+                  {sendError && (
+                    <div className="hx-ws-error" role="alert">
+                      {sendError}
+                    </div>
+                  )}
+                  {confirm && (
+                    <SubagentConfirm
+                      agent={confirm.payload.agent!}
+                      running={confirm.running}
+                      onAddSubagent={() => {
+                        setConfirm(undefined);
+                        void addSubagent(confirm.running, confirm.payload.agent!);
+                      }}
+                      onNewSession={() => {
+                        setConfirm(undefined);
+                        void startSession(confirm.payload);
+                      }}
+                      onCancel={() => setConfirm(undefined)}
+                    />
+                  )}
+                  <Composer
+                    engines={engines}
+                    plusMenu={{
+                      mobile,
+                      recent,
+                      onOpenFolder: () => void openFolder(),
+                      onPickRecent: (p) => void openWorkspace(p.path),
+                      onTogglePin: (p) => void togglePin(p),
                     }}
-                    onNewSession={() => {
-                      setConfirm(undefined);
-                      void startSession(confirm.payload);
-                    }}
-                    onCancel={() => setConfirm(undefined)}
+                    agents={agents}
+                    onSend={onSend}
+                    verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
                   />
-                )}
-                <Composer
-                  engines={engines}
-                  plusMenu={{
-                    mobile,
-                    recent,
-                    onOpenFolder: () => void openFolder(),
-                    onPickRecent: (p) => void openWorkspace(p.path),
-                    onTogglePin: (p) => void togglePin(p),
-                  }}
-                  agents={agents}
-                  onSend={onSend}
-                  verdict={demo ? { itemId: '2.1', rung: 2, passed: true } : undefined}
-                />
-              </>
-            )
-          }
-        />
-      </PanelActionsContext.Provider>
+                </>
+              )
+            }
+          />
+          <Toasts toasts={approvals.toasts} onOpen={setFocusId} onDismiss={approvals.dismissToast} />
+        </PanelActionsContext.Provider>
+      </ApprovalFocusContext.Provider>
     </ForgeAnswerContext.Provider>
   );
 }

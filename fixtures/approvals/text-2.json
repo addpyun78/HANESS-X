@@ -1,0 +1,35 @@
+{
+  "id": "fx-text-2",
+  "itemId": "4.3",
+  "kind": "text",
+  "sessionId": "s-fixture",
+  "title": "확인이 필요해요",
+  "whatHappened": "계획에는 \"저장되었습니다\"라는 글이 나와야 했어요. 실제로는 \"저장 실패\"라는 글이 나왔어요.",
+  "whyAsking": "두 표현이 같은 뜻인지 확실하지 않아요.",
+  "confidenceWord": "낮은 편",
+  "options": [
+    {
+      "id": "accept",
+      "label": "같은 걸로 인정"
+    },
+    {
+      "id": "redo",
+      "label": "원래 자리로 다시 만들기"
+    },
+    {
+      "id": "stop",
+      "label": "잘 모르겠어요 — 안전하게 멈추기"
+    }
+  ],
+  "rememberable": true,
+  "technical": {
+    "itemId": "4.3",
+    "expected": "저장되었습니다",
+    "actual": "저장 실패",
+    "difference": "- 저장되었습니다\n+ 저장 실패",
+    "comparator": "text",
+    "confidence": 0.61,
+    "judgeEngine": "claude-code"
+  },
+  "createdAt": "2026-11-11T09:00:00.000Z"
+}

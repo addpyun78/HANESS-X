@@ -55,6 +55,15 @@ export function Sidebar({
                       )}
                       <span className="hx-session__title">{s.title}</span>
                       <span className="hx-session__engine">{s.engineId}</span>
+                      {s.needsApproval ? (
+                        <span
+                          className="hx-session__approval"
+                          aria-label={`확인 필요 ${s.needsApproval}건`}
+                          data-testid="session-needs-approval"
+                        >
+                          확인 필요
+                        </span>
+                      ) : null}
                       {s.agent && <AgentProgress s={s} />}
                     </button>
                   </li>

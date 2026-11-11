@@ -1,0 +1,362 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`H.11 우측 패널 맨 위 "확인이 필요해요" 영역 (체크리스트 위) + 개수 배지 > 스냅샷: 탭·체크리스트보다 위에 고정, 2장이면 배지 2 1`] = `
+<aside
+  aria-label="우측 패널"
+  class="hx-panel"
+>
+  <section
+    aria-label="확인이 필요해요"
+    class="hx-approvals hx-approvals--panel"
+    data-variant="panel"
+  >
+    <header
+      class="hx-approvals__head"
+    >
+      <h3>
+        <span
+          aria-hidden="true"
+        >
+          ✋ 
+        </span>
+        확인이 필요해요
+      </h3>
+      <span
+        aria-label="카드 2장"
+        class="hx-approvals__count"
+      >
+        2
+      </span>
+    </header>
+    <article
+      aria-label="확인이 필요해요 3.2.2"
+      class="hx-action-card"
+      data-card-id="fx-path-1"
+      role="group"
+    >
+      <header
+        class="hx-action-card__head"
+      >
+        <strong>
+          <span
+            aria-hidden="true"
+          >
+            ✋ 
+          </span>
+          확인이 필요해요
+        </strong>
+        <span
+          class="hx-action-card__badge"
+        >
+          3.2.2
+        </span>
+      </header>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          무슨 일이 있었나요?
+        </h4>
+        <p>
+          계획에는 "하네스/모바일" 폴더에 만들기로 했어요. 그런데 AI가 "ai/mobile" 폴더에 만들었어요.
+        </p>
+      </section>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          왜 제가 정하지 못했나요?
+        </h4>
+        <p>
+          두 이름이 같은 폴더를 뜻하는지 확실하지 않아요. (확신 정도: 중간)
+        </p>
+      </section>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          AI 추천: 같은 걸로 인정
+        </h4>
+        <p>
+          이유: 안에 든 파일과 테스트 결과가 같아요.
+        </p>
+      </section>
+      <div
+        class="hx-action-card__buttons"
+      >
+        <button
+          aria-keyshortcuts="1"
+          class="hx-action-card__btn hx-action-card__btn--primary"
+          data-choice="accept"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ①
+          </span>
+           
+          같은 걸로 인정
+        </button>
+        <button
+          aria-keyshortcuts="2"
+          class="hx-action-card__btn"
+          data-choice="redo"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ②
+          </span>
+           
+          원래 자리로 다시 만들기
+        </button>
+        <button
+          aria-keyshortcuts="3"
+          class="hx-action-card__btn"
+          data-choice="stop"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ③
+          </span>
+           
+          잘 모르겠어요 — 안전하게 멈추기
+        </button>
+        <button
+          aria-keyshortcuts="4"
+          class="hx-action-card__btn"
+          data-choice="allow-move"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ④
+          </span>
+           
+          이 위치로 옮긴 걸 허락
+        </button>
+      </div>
+      <label
+        class="hx-action-card__check"
+      >
+        <input
+          type="checkbox"
+        />
+         
+        다음부터 같은 경우는 자동으로 처리해 주세요
+      </label>
+      <div
+        class="hx-action-card__tech"
+      >
+        <button
+          aria-expanded="false"
+          class="hx-action-card__more"
+          type="button"
+        >
+          ▸
+           자세히 보기 (기술 정보)
+        </button>
+      </div>
+    </article>
+    <article
+      aria-label="확인이 필요해요 4.1"
+      class="hx-action-card"
+      data-card-id="fx-text-1"
+      role="group"
+    >
+      <header
+        class="hx-action-card__head"
+      >
+        <strong>
+          <span
+            aria-hidden="true"
+          >
+            ✋ 
+          </span>
+          확인이 필요해요
+        </strong>
+        <span
+          class="hx-action-card__badge"
+        >
+          4.1
+        </span>
+      </header>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          무슨 일이 있었나요?
+        </h4>
+        <p>
+          계획에는 "로그인 성공"이라는 글이 나와야 했어요. 실제로는 "로그인에 성공했습니다"라는 글이 나왔어요.
+        </p>
+      </section>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          왜 제가 정하지 못했나요?
+        </h4>
+        <p>
+          두 표현이 같은 뜻인지 확실하지 않아요. (확신 정도: 높은 편)
+        </p>
+      </section>
+      <section
+        class="hx-action-card__section"
+      >
+        <h4>
+          AI 추천: 같은 걸로 인정
+        </h4>
+        <p>
+          이유: 두 문장 모두 로그인이 잘 됐다는 뜻이에요.
+        </p>
+      </section>
+      <div
+        class="hx-action-card__buttons"
+      >
+        <button
+          aria-keyshortcuts="1"
+          class="hx-action-card__btn hx-action-card__btn--primary"
+          data-choice="accept"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ①
+          </span>
+           
+          같은 걸로 인정
+        </button>
+        <button
+          aria-keyshortcuts="2"
+          class="hx-action-card__btn"
+          data-choice="redo"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ②
+          </span>
+           
+          원래 자리로 다시 만들기
+        </button>
+        <button
+          aria-keyshortcuts="3"
+          class="hx-action-card__btn"
+          data-choice="stop"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-action-card__key"
+          >
+            ③
+          </span>
+           
+          잘 모르겠어요 — 안전하게 멈추기
+        </button>
+      </div>
+      <label
+        class="hx-action-card__check"
+      >
+        <input
+          type="checkbox"
+        />
+         
+        다음부터 같은 경우는 자동으로 처리해 주세요
+      </label>
+      <div
+        class="hx-action-card__tech"
+      >
+        <button
+          aria-expanded="false"
+          class="hx-action-card__more"
+          type="button"
+        >
+          ▸
+           자세히 보기 (기술 정보)
+        </button>
+      </div>
+    </article>
+  </section>
+  <div
+    aria-label="패널 탭 (끌어서 순서 변경)"
+    class="hx-panel__tabs"
+    role="tablist"
+  >
+    <button
+      aria-controls="hx-tabpanel-checklist"
+      aria-selected="true"
+      class="hx-tab"
+      data-tab="checklist"
+      draggable="true"
+      id="hx-tab-checklist"
+      role="tab"
+      type="button"
+    >
+      체크리스트
+    </button>
+    <button
+      aria-controls="hx-tabpanel-diff"
+      aria-selected="false"
+      class="hx-tab"
+      data-tab="diff"
+      draggable="true"
+      id="hx-tab-diff"
+      role="tab"
+      type="button"
+    >
+      Diff
+    </button>
+    <button
+      aria-controls="hx-tabpanel-terminal"
+      aria-selected="false"
+      class="hx-tab"
+      data-tab="terminal"
+      draggable="true"
+      id="hx-tab-terminal"
+      role="tab"
+      type="button"
+    >
+      터미널
+    </button>
+    <button
+      aria-controls="hx-tabpanel-trajectory"
+      aria-selected="false"
+      class="hx-tab"
+      data-tab="trajectory"
+      draggable="true"
+      id="hx-tab-trajectory"
+      role="tab"
+      type="button"
+    >
+      궤적
+    </button>
+  </div>
+  <div
+    aria-labelledby="hx-tab-checklist"
+    class="hx-panel__body"
+    id="hx-tabpanel-checklist"
+    role="tabpanel"
+  >
+    <section
+      aria-label="체크리스트"
+    >
+      체크리스트 트리
+    </section>
+  </div>
+</aside>
+`;

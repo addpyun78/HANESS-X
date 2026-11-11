@@ -9,6 +9,8 @@ export interface RightPanelProps {
   /** 바깥에서 탭을 고를 때 (예: Diff 열기). 생략하면 내부 상태 */
   active?: PanelTabId;
   onActiveChange?: (id: PanelTabId) => void;
+  /** 탭 위에 고정되는 영역 (T-100 H.11 "확인이 필요해요") */
+  top?: ReactNode;
 }
 
 const LABEL = Object.fromEntries(PANEL_TABS.map((t) => [t.id, t.label])) as Record<PanelTabId, string>;
@@ -20,6 +22,7 @@ export function RightPanel({
   content = {},
   active: activeProp,
   onActiveChange,
+  top,
 }: RightPanelProps) {
   const [activeState, setActiveState] = useState<PanelTabId>(order[0] ?? 'checklist');
   const active = activeProp ?? activeState;
@@ -41,6 +44,7 @@ export function RightPanel({
 
   return (
     <aside className="hx-panel" aria-label="우측 패널">
+      {top}
       <div className="hx-panel__tabs" role="tablist" aria-label="패널 탭 (끌어서 순서 변경)">
         {order.map((id) => (
           <button
