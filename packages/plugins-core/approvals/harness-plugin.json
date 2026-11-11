@@ -1,0 +1,10 @@
+{
+  "id": "approvals",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Approvals",
+  "description": "쉬운 말 승인 카드: 판정이 애매할 때 사람에게 묻고, 선택을 체크리스트·사전에 반영한다",
+  "main": "dist/index.js",
+  "provides": { "tool": ["approvals"] },
+  "permissions": { "fs": ["workspace:read", "workspace:write"], "net": [], "shell": false }
+}

@@ -4,6 +4,7 @@
     "noEmit": true,
     "paths": {
       "@harness-x/agent-builder": ["./packages/plugins-core/agent-builder/src/index.ts"],
+      "@harness-x/approvals": ["./packages/plugins-core/approvals/src/index.ts"],
       "@harness-x/checklist-ledger": ["./packages/plugins-core/checklist-ledger/src/index.ts"],
       "@harness-x/engine-acp-generic": ["./packages/engines/acp-generic/src/index.ts"],
       "@harness-x/engine-antigravity": ["./packages/engines/antigravity/src/index.ts"],
