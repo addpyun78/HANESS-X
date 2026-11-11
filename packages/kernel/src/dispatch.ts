@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto';
 import {
   EngineRefSchema,
   INCOMPLETE_AGENT_MESSAGE,
+  isRunMode,
+  type RunMode,
   type Pipeline,
   type PipelineNode,
 } from '@harness-x/protocol';
@@ -16,7 +18,8 @@ import type { SessionOrigin, SessionState } from './projects/schema.js';
  * - 수식어(48.2): 지시문 안의 공백으로 구분된 낱말
  *   @엔진   이번 실행만 모든 role 노드(와 엔진을 지정한 subagent 노드)의 엔진을 바꾼다 (예: @codex)
  *   #strict 엄격 모드: 출력 계약 재요청 없이 첫 불충족에서 멈춘다 (실행기 maxContractRetries: 0)
- *   !plan   계획만: 시작 노드 하나만 읽기 전용으로 실행한다
+ *   !plan   계획만: 시작 노드 하나만 읽기 전용으로 실행한다 (T-101 3E.1: 이번 실행 모드 = 계획)
+ *   !auto   이번 실행만 오토 모드 (T-101 3E.1)
  *   수식어는 지시문에서 빠지고, 나머지 글은 그대로 남는다. 'a@b'처럼 낱말 중간의 @는 수식어가 아니다.
  * - 실행기(PipelineRunner)는 agent-builder 패키지에 있으므로 커널은 그것을 import하지 않는다.
  *   cli.ts가 로드된 agent-builder 플러그인 모듈로 resolve·run을 만들어 주입한다(순환 의존 방지).
@@ -34,6 +37,8 @@ export interface DispatchModifiers {
   strict: boolean;
   /** !plan: 계획만 */
   planOnly: boolean;
+  /** T-101 3E.1 이번 실행만 모드 (!plan → plan, !auto → auto). 우선순위 맨 위 (3E.3) */
+  mode?: RunMode;
 }
 
 export interface ParsedInstruction {
@@ -61,8 +66,13 @@ export function parseModifiers(text: string): ParsedInstruction {
     const engine = ENGINE_TOKEN.exec(part);
     if (engine) modifiers.engine = engine[1]!.toLowerCase();
     else if (lower === '#strict') modifiers.strict = true;
-    else if (lower === '!plan') modifiers.planOnly = true;
-    else {
+    else if (lower === '!plan') {
+      modifiers.planOnly = true;
+      modifiers.mode = 'plan';
+    } else if (lower === '!auto') {
+      modifiers.planOnly = false; // 둘 다 쓰면 나중 것
+      modifiers.mode = 'auto';
+    } else {
       kept.push(part);
       continue;
     }
@@ -426,6 +436,7 @@ function clean(m: Partial<DispatchModifiers> | undefined): Partial<DispatchModif
   if (typeof m.engine === 'string' && m.engine) out.engine = m.engine.replace(/^@/, '').toLowerCase();
   if (typeof m.strict === 'boolean') out.strict = m.strict;
   if (typeof m.planOnly === 'boolean') out.planOnly = m.planOnly;
+  if (isRunMode(m.mode)) out.mode = m.mode;
   return out;
 }
 
