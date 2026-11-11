@@ -17,7 +17,7 @@ export const MESSAGES = {
   archiveUnsafePath: '폴더 밖으로 나가는 파일이 들어 있어서 풀지 않았어요.',
   archiveBomb: '풀면 너무 커지는 압축 파일이라 풀지 않았어요.',
   archiveTooMany: '안에 파일이 너무 많아서 풀지 않았어요.',
-  folderTooMany: (n: number) => `파일이 많아요(${n}개). 다 넣을까요?`,
+  folderTooMany: '파일이 많아요. 다 넣을까요?',
   unknownFile: '내용은 읽을 수 없어요. 이름과 크기, 형식만 보내요.',
   notExecuted: '실행하지 않고 내용만 봐요.',
   secretFound: '비밀번호나 키가 들어 있어요.',
