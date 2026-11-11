@@ -42,21 +42,25 @@ export interface DesignerEngineChoice {
   /** 고른 엔진 id (없으면 undefined = 쓸 엔진이 없음) */
   engineId: string | undefined;
   /** 어디서 골랐나 */
-  from: 'setting' | 'session-default' | 'none';
+  from: 'setting' | 'main' | 'session-default' | 'none';
 }
 
 /**
- * 설계 엔진 고르기: builder.engine이 감지된 엔진이면 그것, 아니면 세션 기본 엔진.
- * (감지되지 않은 엔진 id가 설정돼 있으면 무시하고 기본 엔진을 쓴다)
+ * 설계 엔진 고르기: builder.engine이 감지된 엔진이면 그것, 비어 있으면("자동") 메인 AI 따라가기(T-101 5D.5),
+ * 아니면 세션 기본 엔진. (감지되지 않은 엔진 id가 설정돼 있으면 무시하고 다음 순서로)
  */
 export function resolveDesignerEngine(
   settings: Pick<BuilderSettings, 'engine'>,
   detected: readonly string[],
   sessionDefault: string | undefined,
+  mainEngine?: string,
 ): DesignerEngineChoice {
   const ids = detected.map(normalizeDesignerEngineId);
   const want = settings.engine ? normalizeDesignerEngineId(settings.engine) : '';
-  if (want && ids.includes(want)) return { engineId: want, from: 'setting' };
+  if (want && want !== 'main' && want !== 'auto' && ids.includes(want))
+    return { engineId: want, from: 'setting' };
+  const main = mainEngine ? normalizeDesignerEngineId(mainEngine) : '';
+  if (main && ids.includes(main)) return { engineId: main, from: 'main' };
   if (sessionDefault) return { engineId: normalizeDesignerEngineId(sessionDefault), from: 'session-default' };
   return { engineId: undefined, from: 'none' };
 }
