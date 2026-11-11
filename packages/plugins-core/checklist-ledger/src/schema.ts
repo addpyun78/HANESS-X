@@ -135,6 +135,14 @@ export const CompareEvidenceSchema = z.looseObject({
 });
 export type CompareEvidence = z.infer<typeof CompareEvidenceSchema>;
 
+/** F.2 의미 판단(AI)으로 통과한 비교 증거가 하나라도 있는가 */
+export function hasAiJudgedEvidence(evidence: readonly Evidence[]): boolean {
+  return evidence.some((e) => {
+    const c = compareEvidenceOf(e);
+    return !!c && c.compare.level === 'semantic' && c.compare.verdict === 'equal';
+  });
+}
+
 /** evidence가 비교 증거면 파싱 결과, 아니면 undefined */
 export function compareEvidenceOf(e: Evidence): CompareEvidence | undefined {
   if (e.kind !== 'compare') return undefined;
@@ -178,6 +186,8 @@ export const ChecklistItemSchema = z
     evidence: z.array(EvidenceSchema).default([]),
     verdict: VerdictSchema.optional(),
     estimate: EstimateSchema.optional(),
+    /** 의미 판단(AI)으로 통과한 비교 증거가 있다 (T-100 F.2) */
+    ai_judged: z.boolean().optional(),
   })
   .strict()
   .refine((i) => i.parent !== i.id, {

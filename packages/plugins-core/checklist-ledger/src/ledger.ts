@@ -4,6 +4,7 @@ import { ChecklistChangeEventSchema, type ChecklistChangeEvent } from '@harness-
 import {
   ChecklistItemSchema,
   EvidenceSchema,
+  hasAiJudgedEvidence,
   VerdictSchema,
   type Checklist,
   type ChecklistItem,
@@ -122,6 +123,7 @@ export class ChecklistLedger {
           attempts: to === 'doing' ? it.attempts + 1 : it.attempts,
           evidence: [...it.evidence, ...extra],
           ...(verdict ? { verdict } : {}),
+          ...(hasAiJudgedEvidence(extra) ? { ai_judged: true } : {}),
         };
       });
       if (!cur.items.some((i) => i.id === itemId)) throw new ItemNotFoundError(itemId);
@@ -143,7 +145,13 @@ export class ChecklistLedger {
       return {
         revision: cur.revision,
         items: cur.items.map((it) =>
-          it.id === itemId ? { ...it, evidence: [...it.evidence, ...extra] } : it,
+          it.id === itemId
+            ? {
+                ...it,
+                evidence: [...it.evidence, ...extra],
+                ...(hasAiJudgedEvidence(extra) ? { ai_judged: true } : {}),
+              }
+            : it,
         ),
       };
     }, opts);
