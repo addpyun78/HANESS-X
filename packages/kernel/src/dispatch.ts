@@ -158,6 +158,14 @@ export interface DispatcherOptions {
   now?: () => Date;
   /** T-101 2A.3 일시정지 요청 뒤 "지금 멈출까요?"까지 기다리는 시간 (기본 60초) */
   pauseTimeoutMs?: number;
+  /**
+   * T-101 2A.6 세션이 멈춘 직후 (정지 스냅샷: 파일 상태·현재 항목 interrupted).
+   * 돌려준 필드는 session_paused 기록에 붙는다
+   */
+  onPaused?: (
+    session: DispatchSession,
+    ctx: { kind: StopKind; nodeId?: string; itemId?: string },
+  ) => Record<string, unknown> | void;
 }
 
 export type DispatchSessionStatus =
@@ -217,6 +225,8 @@ interface Live {
   pauseRequested?: { by: string; reason: PauseReason };
   /** 2A.3 안전한 지점 대기 (60초 타이머) */
   gate?: PauseGate;
+  /** 2A.6 마지막으로 이벤트에 나온 체크리스트 항목 (멈추면 interrupted: true) */
+  lastItemId?: string;
 }
 
 export class Dispatcher {
@@ -408,11 +418,25 @@ export class Dispatcher {
     s.pausing = false;
     s.currentNode = undefined;
     s.paused = { reason: stop.reason, at: this.now().toISOString(), by: stop.by };
+    const itemId = live.lastItemId;
+    let extra: Record<string, unknown> = {};
+    try {
+      extra =
+        this.opts.onPaused?.(snapshot(s), {
+          kind: stop.kind,
+          ...(stop.nodeId ? { nodeId: stop.nodeId } : {}),
+          ...(itemId ? { itemId } : {}),
+        }) ?? {};
+    } catch (err) {
+      extra = { snapshotError: err instanceof Error ? err.message : String(err) };
+    }
     this.emit(s.sessionId, 'session_paused', {
       kind: stop.kind,
       paused: s.paused,
       progress: s.progress,
       ...(stop.nodeId ? { nodeId: stop.nodeId } : {}),
+      ...(itemId ? { item: { id: itemId, interrupted: true } } : {}),
+      ...extra,
     });
   }
 
@@ -480,6 +504,7 @@ export class Dispatcher {
   /** prefix: 서브에이전트 노드는 '<에이전트>/<노드>'로 센다 (본 파이프라인과 id가 겹쳐도 따로) */
   private track(live: Live, rec: LogRecord, prefix: string) {
     const s = live.session;
+    if (typeof rec.itemId === 'string') live.lastItemId = rec.itemId;
     // 2A.3 안전한 지점(도구 실행이 끝난 뒤·다음 AI 턴 전)에서 일시정지 요청을 실행
     if (live.pauseRequested && isSafePoint(rec) && live.gate?.atSafePoint()) {
       if (typeof rec.nodeId === 'string' && !s.currentNode) s.currentNode = prefix + rec.nodeId;

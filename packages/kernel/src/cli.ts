@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import type { AgentSummary, EngineAdapter, Pipeline } from '@harness-x/protocol';
@@ -423,8 +423,21 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const forge = () => loader.plugins.get('forge')?.module as ForgePluginModule | undefined;
   // 48.1 / 실행 디스패치: 칩 + 지시문 → 그 에이전트 파이프라인으로 새 세션 (PipelineRunner 주입)
   const { Dispatcher } = await import('./dispatch.js');
+  const { takePauseSnapshot } = await import('./pause-snapshot.js');
   const dispatch = new Dispatcher({
     log,
+    // T-101 2A.6 멈추면 정지 스냅샷 (<logs>/sessions/<id>/pause.json, 작업 트리는 바꾸지 않음)
+    onPaused: (s, c) => {
+      const snap = takePauseSnapshot({
+        sessionId: s.sessionId,
+        paused: s.paused!,
+        cwd: workspace,
+        sessionDir: dirname(log.sessionFile(s.sessionId)),
+        ...(c.itemId ? { itemId: c.itemId } : {}),
+        ...(c.nodeId ? { nodeId: c.nodeId } : {}),
+      });
+      return { snapshot: { file: 'pause.json', kind: snap.files.kind } };
+    },
     engines: () => adapters().map((a) => a.id),
     resolve: (name) => {
       const a = registry()?.get(name);
