@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.8 첨부 > 1번 구역이 attachments.* 를 등록하면 저절로 나타난다 (크기 한도·OCR·비밀 검사, 장면 수는 고급, 스냅샷) 1`] = `
+<div
+  class="hx-setting"
+  data-setting-key="attachments.maxFileMb"
+  data-widget="number"
+>
+  <div
+    class="hx-setting__head"
+  >
+    <label
+      class="hx-setting__title"
+      for="hx-setting-attachments-maxFileMb"
+    >
+      파일 하나 크기 한도(MB)
+    </label>
+  </div>
+  <p
+    class="hx-setting__desc"
+  >
+    이보다 큰 파일은 붙이지 않아요.
+  </p>
+  <div
+    class="hx-setting__control"
+  >
+    <span
+      class="hx-setting__number"
+    >
+      <input
+        class="hx-setting__input hx-setting__input--number"
+        id="hx-setting-attachments-maxFileMb"
+        inputmode="numeric"
+        max="2048"
+        min="1"
+        step="1"
+        type="number"
+        value="100"
+      />
+      <span
+        class="hx-setting__range"
+      >
+        1~2048
+      </span>
+    </span>
+  </div>
+</div>
+`;
