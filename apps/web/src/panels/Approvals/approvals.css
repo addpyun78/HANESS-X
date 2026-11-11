@@ -1,0 +1,195 @@
+/* T-100 H.11·H.15·H.16 확인이 필요해요 영역 — 글자 15px 이상, 좁은 화면은 하단 시트(버튼 48px 이상) */
+.hx-approvals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-2);
+  border-bottom: 1px solid var(--hx-border);
+  background: var(--hx-surface);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.hx-approvals__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-approvals__head h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.hx-approvals__count {
+  min-width: 22px;
+  padding: 0 var(--hx-space-1);
+  border-radius: 999px;
+  background: var(--hx-warning);
+  color: var(--hx-bg);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.hx-approvals__batch,
+.hx-approvals__last {
+  margin: 0;
+  font-size: 15px;
+  color: var(--hx-text-muted);
+}
+
+.hx-approvals__undo {
+  min-height: 48px;
+  font-size: 15px;
+}
+
+/* 하단 시트 (768px 미만) */
+.hx-approvals--sheet {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-top: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius) var(--hx-radius) 0 0;
+}
+
+/* ── 범용 카드 ─────────────────────────────────────── */
+.hx-action-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-warning);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+  font-size: 15px;
+}
+
+.hx-action-card:focus-within {
+  outline: 2px solid var(--hx-accent);
+}
+
+.hx-action-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-action-card__badge {
+  margin-left: auto;
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}
+
+.hx-action-card__section h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.hx-action-card__section p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.hx-action-card__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-2);
+}
+
+.hx-action-card__btn {
+  min-height: 48px;
+  padding: var(--hx-space-1) var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font-size: 15px;
+  text-align: left;
+}
+
+.hx-action-card__btn--primary {
+  border-color: var(--hx-accent);
+}
+
+.hx-approvals--sheet .hx-action-card__btn {
+  flex: 1 1 100%;
+}
+
+.hx-action-card__check {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: var(--hx-space-1);
+  font-size: 15px;
+}
+
+.hx-action-card__more {
+  min-height: 48px;
+  border: none;
+  background: none;
+  color: var(--hx-text-muted);
+  font-size: 15px;
+}
+
+.hx-action-card__tech dl {
+  margin: 0;
+  font-size: 15px;
+}
+
+.hx-action-card__error {
+  margin: 0;
+  color: var(--hx-danger);
+  font-size: 15px;
+}
+
+/* ── 토스트 ─────────────────────────────────────────── */
+.hx-toasts {
+  position: fixed;
+  top: var(--hx-space-4);
+  right: var(--hx-space-4);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  max-width: 360px;
+}
+
+.hx-toast {
+  min-height: 48px;
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border: 1px solid var(--hx-warning);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+  color: var(--hx-text);
+  font-size: 15px;
+  text-align: left;
+}
+
+/* ── 채팅 축소 카드 ─────────────────────────────────── */
+.hx-approval-mini {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+  min-height: 48px;
+  padding: var(--hx-space-2) var(--hx-space-3);
+  border: 1px solid var(--hx-warning);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface-2);
+  color: var(--hx-text);
+  font-size: 15px;
+  text-align: left;
+}
+
+/* 사이드바 세션 "확인 필요" 배지 */
+.hx-session__approval {
+  padding: 0 var(--hx-space-1);
+  border-radius: var(--hx-radius);
+  background: var(--hx-warning);
+  color: var(--hx-bg);
+  font-size: 12px;
+}

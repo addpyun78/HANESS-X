@@ -13,6 +13,8 @@ export interface AppShellProps {
   panelContent?: Partial<Record<PanelTabId, ReactNode>>;
   panelActive?: PanelTabId;
   onPanelActiveChange?: (id: PanelTabId) => void;
+  /** 우측 패널 맨 위 고정 영역. 좁은 화면에서는 패널 밖(하단 시트)으로 그린다 (T-100 H.11·H.15) */
+  panelTop?: ReactNode;
 }
 
 type Sheet = 'sidebar' | 'panel' | undefined;
@@ -28,6 +30,7 @@ export function AppShell({
   panelContent,
   panelActive,
   onPanelActiveChange,
+  panelTop,
 }: AppShellProps) {
   const [layout, setLayout] = useState<Layout>(loadLayout);
   const narrow = useMediaQuery(NARROW_QUERY);
@@ -59,6 +62,7 @@ export function AppShell({
       content={panelContent}
       active={panelActive}
       onActiveChange={onPanelActiveChange}
+      top={narrow ? undefined : panelTop}
     />
   );
 
@@ -129,6 +133,7 @@ export function AppShell({
         )}
         {!narrow && panel}
       </div>
+      {narrow && panelTop}
       {narrow && sheet && (
         <>
           <div
