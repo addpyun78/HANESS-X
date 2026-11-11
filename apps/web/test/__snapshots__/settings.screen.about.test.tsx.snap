@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.13 정보 > 버전 표시, 업데이트 확인 결과, 진단 파일 내려받기 (스냅샷) 1`] = `
+<section
+  aria-label="하네스 정보"
+  class="hx-settings-screen__card"
+>
+  <h3>
+    HARNESS-X
+  </h3>
+  <dl
+    class="hx-settings-screen__about"
+  >
+    <dt>
+      버전
+    </dt>
+    <dd
+      data-testid="about-version"
+    >
+      1.2.3
+    </dd>
+    <dt>
+      운영체제
+    </dt>
+    <dd>
+      win32
+    </dd>
+  </dl>
+  <div
+    class="hx-settings-screen__row"
+  >
+    <button
+      data-action="settings.update-check"
+      type="button"
+    >
+      업데이트 확인
+    </button>
+  </div>
+  <div
+    class="hx-settings-screen__row"
+  >
+    <button
+      data-action="settings.diagnostics"
+      type="button"
+    >
+      진단 파일 내보내기
+    </button>
+  </div>
+</section>
+`;
