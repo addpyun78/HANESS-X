@@ -10,7 +10,10 @@
     "declaration": false,
     "declarationMap": false,
     "types": ["vite/client"],
-    "paths": { "@harness-x/protocol": ["../../packages/protocol/src/index.ts"] }
+    "paths": {
+      "@harness-x/protocol": ["../../packages/protocol/src/index.ts"],
+      "@harness-x/stt-browser": ["../../packages/plugins/stt-browser/src/index.ts"]
+    }
   },
   "include": ["src", "vite.config.ts"]
 }
