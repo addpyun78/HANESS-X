@@ -13,6 +13,7 @@ export * from './xml.js';
 export * from './office.js';
 export * from './hwp.js';
 export * from './image.js';
+export * from './media.js';
 
 export function activate(ctx: { log(message: string): void }): void {
   ctx.log('attachments: 입력창 첨부 준비');
