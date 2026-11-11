@@ -34,7 +34,15 @@ describe('T-101 0A.4 Zod → JSON Schema + 메타', () => {
     });
     expect((judge.local!.properties as Record<string, JsonSchema>).timeoutMs!.default).toBe(20000);
     const ext = gen['x-harness-external'] as Record<string, JsonSchema>;
-    expect(Object.keys(ext).sort()).toEqual(['engines', 'tools.braveKey', 'ui.theme', 'voice.provider']);
+    // settings.json 밖(엔진 파일·키체인·브라우저)에 저장되는 키 = 레지스트리에서 storage가 settings가 아닌 것 + engines
+    const external = settingsRegistry
+      .list()
+      .filter((d) => (d.storage ?? 'settings') !== 'settings')
+      .map((d) => d.key);
+    expect(Object.keys(ext).sort()).toEqual(external.sort());
+    expect(Object.keys(ext)).toEqual(
+      expect.arrayContaining(['engines', 'tools.braveKey', 'ui.theme', 'voice.provider']),
+    );
     expect(ext['tools.braveKey']!['x-harness']).toMatchObject({ storage: 'keychain', widget: 'secret' });
     // 모든 레지스트리 키가 정확히 한 번 나온다
     const seen: string[] = Object.keys(ext);

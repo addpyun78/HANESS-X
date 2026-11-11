@@ -519,6 +519,30 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     options: { local: '내 컴퓨터에서', browser: '브라우저 기능', off: '끄기' },
   }),
 
+  // ── 프로젝트 (0B.25/0B.26 사이드바 묶기·정렬, 이 기기에 저장)
+  defineSetting('sidebar.group', z.enum(['project', 'status', 'date', 'none']).default('project'), {
+    group: 'project',
+    title: '사이드바 묶기 방식',
+    description: '사이드바의 대화 목록을 프로젝트, 상태, 날짜 중 무엇으로 묶을지 골라요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx-sidebar-group',
+    options: { project: '프로젝트별', status: '상태별', date: '날짜별', none: '묶지 않기' },
+  }),
+  defineSetting('sidebar.sort', z.enum(['recent', 'name', 'manual']).default('recent'), {
+    group: 'project',
+    title: '사이드바 정렬 방식',
+    description: '최근에 쓴 순서, 이름 순서, 직접 끌어 놓은 순서 중에서 골라요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx-sidebar-sort',
+    options: { recent: '최근 쓴 순서', name: '이름 순서', manual: '직접 정한 순서' },
+  }),
+
   // (mode·checklist·approval·attachments·project·data·about 그룹은 각 구역 작업자가 채운다)
 ];
 
