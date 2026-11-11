@@ -147,3 +147,19 @@ export class SessionAiOverrides {
     return o;
   }
 }
+
+/**
+ * 5C.3/5C.5 실행 기본 엔진: `@엔진` 수식어(이번 실행만) → 에이전트 지정 엔진 → 메인 AI → 첫 엔진.
+ * 수식어는 메인 AI 설정을 바꾸지 않는다 (읽기만).
+ */
+export function pickRunEngine(o: {
+  modifier?: string | undefined;
+  agentDefault?: string | undefined;
+  main?: string | undefined;
+  available: readonly string[];
+}): string | undefined {
+  if (o.modifier) return o.modifier;
+  if (!isAutoEngine(o.agentDefault)) return o.agentDefault!.trim();
+  if (o.main && (o.available.length === 0 || o.available.includes(o.main))) return o.main;
+  return o.available[0];
+}
