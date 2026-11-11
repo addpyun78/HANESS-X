@@ -9,6 +9,7 @@ import { FORGE_PREFILL_KEY, takeForgePrefill } from '../src/builder/draft/forge-
 import { DRAFT_CATALOG, fakeDesignerApi, sampleDraft, startChatAndSend } from './draft-fixtures.js';
 import { mockReactFlowDom } from './flow-mock.js';
 import { renderApp } from './app-fixtures.js';
+import { pickerData } from './toolpicker-fixtures.js';
 
 beforeAll(mockReactFlowDom);
 afterEach(() => {
@@ -48,6 +49,26 @@ describe('P4-C.10 빈 칸: 쉬운 말 + 빨간 점선 노드 + [도구 찾기] [
     expect(onFindTool).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gap-1', need: '화면 스크린샷 두 장을 비교하는 기능' }),
     );
+  });
+
+  it('BuilderPage 기본 연결: [도구 찾기] → Part 3 openToolPickerForGap → 도구 고르기 카드가 캔버스에 뜬다', async () => {
+    const d = pickerData();
+    const find = vi.fn(async () => ({
+      status: 'candidates' as const,
+      need: d.need,
+      candidates: d.candidates,
+      notices: [],
+    }));
+    const api = fakeDesignerApi({ design: [draftResponse()] });
+    await startChatAndSend(api, undefined, { toolPicker: { find } });
+    fireEvent.click(screen.getByText('도구 찾기'));
+    expect(find).toHaveBeenCalledWith({
+      capability: '화면 스크린샷 두 장을 비교하는 기능',
+      nodeId: 'critic',
+    });
+    const picker = await screen.findByLabelText('도구 고르기');
+    expect(picker.closest('.hx-canvas')).toBeTruthy();
+    expect(within(picker).getByText(d.candidates[0]!.name)).toBeTruthy();
   });
 
   it('[이 칸 빼기] → 빈 칸이 사라지고 새 버전으로 남는다 (자동으로 새로 만들지 않음)', async () => {

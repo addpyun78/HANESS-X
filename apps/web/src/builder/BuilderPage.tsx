@@ -21,6 +21,14 @@ import { httpDesignerApi, type DesignerApi, type SaveDraftResponse } from './dra
 import { DraftDecorContext } from './draft/decor.js';
 import { Checklist, DraftBanner, DraftList, GapLayer, ResumePrompt } from './draft/DraftCards.js';
 import { SaveDialog } from './draft/SaveDialog.js';
+import {
+  openToolPickerForGap,
+  openUrlInstall,
+  toolPickerApi,
+  type ToolPickerApi,
+} from '../panels/ToolPicker/api.js';
+import { ToolPickerCard } from '../panels/ToolPicker/ToolPickerCard.js';
+import type { ToolPickerData } from '../panels/ToolPicker/model.js';
 import { animationEnabled, useDraftSession } from './draft/useDraftSession.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
@@ -46,6 +54,8 @@ export interface BuilderPageProps {
   onForge?: (gap: DraftGap) => void;
   /** 초안 자동 보관 지연 (테스트용) */
   autosaveMs?: number;
+  /** P3-D.3 [도구 찾기]가 쓰는 도구 찾기 API (없으면 토큰이 있을 때 HTTP) */
+  toolPicker?: Pick<ToolPickerApi, 'find'>;
 }
 
 const defaultLoadStt = () => resolveStt().then((r) => r.stt);
@@ -64,12 +74,32 @@ export function BuilderPage({
   onFindTool,
   onForge,
   autosaveMs,
+  toolPicker,
 }: BuilderPageProps) {
   const catalog = useCatalog(given);
   const save = useSaveAgent(saveAgent);
   const api = useDesignerApi(designerApi);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState<SaveDraftResponse>();
+  // P4-C.10 ↔ P3-D.3 빈 칸 [도구 찾기] → 도구 고르기 카드
+  const finder = useToolPickerApi(toolPicker);
+  const [pickerCards, setPickerCards] = useState<ToolPickerData[]>([]);
+  const [pickerNote, setPickerNote] = useState<string>();
+  const findTool = useCallback(
+    (gap: DraftGap) => {
+      if (!finder) return;
+      setPickerNote(undefined);
+      void openToolPickerForGap(
+        { nodeId: gap.nodeId ?? gap.id, capability: gap.need },
+        {
+          api: finder,
+          show: (card) => setPickerCards((cs) => [...cs, card]),
+          onHave: (r) => setPickerNote(r.message),
+        },
+      ).catch(() => setPickerNote('도구를 찾지 못했어요. 잠시 뒤 다시 눌러 주세요.'));
+    },
+    [finder],
+  );
   const [start, setStart] = useState<StartResult>();
   const [meta, setMeta] = useState<AgentMeta>({ name: 'new-agent', displayName: '새 에이전트' });
   const [overlay, setOverlay] = useState<Overlay>();
@@ -91,7 +121,7 @@ export function BuilderPage({
     catalog,
     onMeta: onDraftMeta,
     animate: animate ?? animationEnabled(),
-    ...(onFindTool ? { onFindTool } : {}),
+    onFindTool: onFindTool ?? findTool,
     ...(onForge ? { onForge } : {}),
     ...(autosaveMs !== undefined ? { autosaveMs } : {}),
   });
@@ -204,6 +234,19 @@ export function BuilderPage({
             <DraftDecorContext.Provider value={draft.decor}>
               <Canvas graph={draft.canvasGraph} catalog={catalog} dispatch={editDispatch}>
                 <GapLayer gaps={draft.gaps} {...draft.gapActions} />
+                {(pickerCards.length > 0 || pickerNote) && (
+                  <div className="hx-gap-picker" aria-label="도구 고르기">
+                    {pickerNote && <p role="status">{pickerNote}</p>}
+                    {pickerCards.map((c) => (
+                      <ToolPickerCard
+                        key={c.id}
+                        data={c}
+                        onOpenUrlInstall={() => openUrlInstall()}
+                        onContinueWithout={() => setPickerCards((cs) => cs.filter((x) => x.id !== c.id))}
+                      />
+                    ))}
+                  </div>
+                )}
               </Canvas>
             </DraftDecorContext.Provider>
           </RunOverlayContext.Provider>
@@ -282,6 +325,14 @@ function useDesignerApi(given?: DesignerApi): DesignerApi | undefined {
     if (given) return given;
     const token = resolveToken();
     return token ? httpDesignerApi(new HarnessApiClient({ token })) : undefined;
+  }, [given]);
+}
+
+function useToolPickerApi(given?: Pick<ToolPickerApi, 'find'>): Pick<ToolPickerApi, 'find'> | undefined {
+  return useMemo(() => {
+    if (given) return given;
+    const token = resolveToken();
+    return token ? toolPickerApi(new HarnessApiClient({ token })) : undefined;
   }, [given]);
 }
 
