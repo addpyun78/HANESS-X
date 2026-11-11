@@ -19,11 +19,13 @@ import { registerAgentSaveRoute, type SavedAgent } from './agents-routes.js';
 import { registerSessionRoutes } from './sessions-routes.js';
 import { registerEngineRoutes, type EnginesApiOptions } from './engines-routes.js';
 import { registerQuotaRoute, type QuotaApiOptions } from './quota-route.js';
+import { registerSettingsRoutes, type SettingsRoutesOptions } from './settings-routes.js';
 import { registerTerminalRoute, type TerminalOptions } from './terminal.js';
 import { registerApprovalRoutes, type ApprovalCardsApi, type ApprovalHandler } from './approvals-routes.js';
 import { HumanGestureTokens } from '../human-gesture-token.js';
 import { registerGestureRoute, registerInstallRoutes, type InstallApi } from './install-routes.js';
 import { registerToolRoutes, type ToolFinderApi } from './tool-routes.js';
+import { registerProjectRoutes, type ProjectRoutesOptions } from '../projects/routes.js';
 
 /**
  * 로컬 API 서버
@@ -70,6 +72,8 @@ export interface ApiServerOptions {
   terminal?: TerminalOptions;
   /** T-038 설정 > 엔진 API (/api/engines…). 없으면 라우트 없음 */
   engines?: EnginesApiOptions;
+  /** T-101 0-1 설정 화면 API (/api/settings…). 없으면 라우트 없음 */
+  settings?: SettingsRoutesOptions;
   /** T-060 GET /api/quota (엔진별 사용량 집계). 없으면 라우트 없음 */
   quota?: QuotaApiOptions;
   /** T-100 A.6 사람 클릭 토큰 저장소 (기본: 서버마다 새로). POST /api/gesture-tokens */
@@ -78,6 +82,8 @@ export interface ApiServerOptions {
   install?: InstallApi;
   /** T-100 Part 3 도구 찾기 API (/api/tools/…). 없으면 라우트 없음 */
   toolFinder?: ToolFinderApi;
+  /** T-101 0-2 프로젝트·초안 세션 API (/api/projects…, POST /api/sessions {projectId?}). 없으면 라우트 없음 */
+  projects?: ProjectRoutesOptions;
 }
 
 export {
@@ -152,7 +158,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
       if (req.method === 'OPTIONS') {
         return reply
           .code(204)
-          .header('access-control-allow-methods', 'GET, POST, PUT, OPTIONS')
+          .header('access-control-allow-methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
           .header('access-control-allow-headers', 'authorization, content-type, x-harness-token')
           .header('access-control-max-age', '600')
           .send();
@@ -264,10 +270,12 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
     }
   });
 
-  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch);
+  if (opts.dispatch) registerSessionRoutes(app, opts.dispatch, opts.projects?.sessions);
+  if (opts.projects) registerProjectRoutes(app, opts.projects);
   if (opts.terminal) registerTerminalRoute(app, opts.terminal);
   if (opts.engines) registerEngineRoutes(app, opts.engines);
   if (opts.quota) registerQuotaRoute(app, opts.log, opts.quota);
+  if (opts.settings) registerSettingsRoutes(app, opts.settings);
   registerGestureRoute(app, gestures);
   registerInstallRoutes(app, { gestures, ...(opts.install ? { install: opts.install } : {}) });
   if (opts.toolFinder) registerToolRoutes(app, opts.toolFinder);

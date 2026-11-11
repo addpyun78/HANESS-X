@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`T-101 0A.5 폼 자동 렌더러 위젯 5종 > 글자(string): Enter나 칸 벗어나면 저장, 안 바뀌면 저장 안 함 1`] = `"<input id="w-str" class="hx-setting__input" placeholder="비워 두면 기본값" type="text" value="">"`;
+
+exports[`T-101 0A.5 폼 자동 렌더러 위젯 5종 > 목록(array): 추가·빼기 1`] = `"<div class="hx-setting__list"><ul class="hx-setting__list-items"><li class="hx-setting__list-item"><span>a</span><button type="button" class="hx-setting__link" data-action="settings.list-remove" aria-label="a 빼기">빼기</button></li><li class="hx-setting__list-item"><span>b</span><button type="button" class="hx-setting__link" data-action="settings.list-remove" aria-label="b 빼기">빼기</button></li></ul><span class="hx-setting__list-add"><input id="w-arr" class="hx-setting__input" placeholder="새 항목" type="text" value=""><button type="button" data-action="settings.list-add">추가</button></span></div>"`;
+
+exports[`T-101 0A.5 폼 자동 렌더러 위젯 5종 > 선택(enum): 쉬운 이름 보기 + 바꾸면 바로 저장 1`] = `"<select id="w-enum" class="hx-setting__select"><option value="free-only">무료만</option><option value="free-first">무료 먼저</option><option value="any">상관없음</option></select>"`;
+
+exports[`T-101 0A.5 폼 자동 렌더러 위젯 5종 > 숫자(입력+범위): 범위 표시, 칸을 벗어나면 숫자로 저장, 숫자가 아니면 그대로 보내 거부받는다 1`] = `"<span class="hx-setting__number"><input id="w-num" inputmode="numeric" class="hx-setting__input hx-setting__input--number" min="1" max="3" step="1" type="number" value="3"><span class="hx-setting__range">1~3</span></span>"`;
+
+exports[`T-101 0A.5 폼 자동 렌더러 위젯 5종 > 켜기/끄기(boolean): 스냅샷 + 누르면 반대 값 저장 1`] = `"<button id="w-bool" type="button" role="switch" aria-checked="true" class="hx-setting__switch" data-action="settings.toggle" title="시험 항목"><span class="hx-setting__switch-knob" aria-hidden="true"></span><span class="hx-setting__switch-label">켜짐</span></button>"`;

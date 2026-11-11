@@ -6,6 +6,8 @@ import {
   type PipelineNode,
 } from '@harness-x/protocol';
 import type { LogRecord } from './event-log.js';
+import { SessionRegistry } from './projects/session-registry.js';
+import type { SessionOrigin, SessionState } from './projects/schema.js';
 
 /**
  * T-048 / 실행 디스패치
@@ -147,6 +149,8 @@ export interface DispatcherOptions {
   engines?: () => readonly string[];
   idGen?: () => string;
   now?: () => Date;
+  /** T-101 0B.37 세션 등록부 (세션은 createSession() 하나로만 만든다). 없으면 메모리 등록부 */
+  sessions?: SessionRegistry;
 }
 
 export type DispatchSessionStatus = 'running' | 'completed' | 'incomplete' | 'failed' | 'error' | string;
@@ -189,6 +193,10 @@ export interface DispatchRequest {
   prompt: string;
   /** 지시문 밖에서 따로 준 수식어 (지시문 안 수식어 위에 덮어쓴다) */
   modifiers?: Partial<DispatchModifiers>;
+  /** T-101 0B.39 만들 때 직접 저장할 프로젝트 (없으면 지금 고른 프로젝트) */
+  projectId?: string;
+  /** 어디서 시작했나 (기본 'slash' = 입력창 / 실행) */
+  origin?: SessionOrigin;
 }
 
 interface Live {
@@ -203,11 +211,14 @@ export class Dispatcher {
   private readonly live = new Map<string, Live>();
   private readonly idGen: () => string;
   private readonly now: () => Date;
+  /** T-101 0B.37 세션 등록부 */
+  readonly registry: SessionRegistry;
 
   constructor(opts: DispatcherOptions) {
     this.opts = opts;
     this.idGen = opts.idGen ?? randomUUID;
     this.now = opts.now ?? (() => new Date());
+    this.registry = opts.sessions ?? new SessionRegistry({ memory: true, now: this.now });
   }
 
   /** 48.1 새 세션 시작 (실행은 비동기로 계속된다) */
@@ -220,7 +231,18 @@ export class Dispatcher {
     const modifiers: DispatchModifiers = { ...parsed.modifiers, ...clean(req.modifiers) };
     this.checkEngine(modifiers.engine);
     const pipeline = applyModifiers(agent.pipeline, modifiers);
-    const sessionId = `dispatch-${this.idGen()}`;
+    // 0B.37 세션 등록은 createSession() 하나로 (id·projectId·사이드바 반영이 모두 여기서)
+    const { id: sessionId } = this.registry.createSession({
+      origin: req.origin ?? 'slash',
+      idPrefix: 'dispatch-',
+      idGen: this.idGen,
+      ...(req.projectId ? { projectId: req.projectId } : {}),
+      agent: agent.name,
+      ...(agent.icon ? { agentIcon: agent.icon } : {}),
+      ...(modifiers.engine ? { engine: modifiers.engine } : {}),
+      status: 'running',
+      firstMessage: parsed.prompt || req.prompt,
+    });
     const session: DispatchSession = {
       sessionId,
       agent: {
@@ -368,6 +390,7 @@ export class Dispatcher {
 
   private finish(s: DispatchSession, status: string, reason?: string, haltedAt?: string) {
     s.status = status;
+    this.registry.setStatus(s.sessionId, registryState(status));
     s.endedAt = this.now().toISOString();
     if (reason) s.reason = reason;
     if (haltedAt) s.haltedAt = haltedAt;
@@ -383,6 +406,13 @@ export class Dispatcher {
   private emit(sessionId: string, type: string, body: Record<string, unknown>) {
     this.opts.log?.append({ id: this.idGen(), ts: this.now().toISOString(), sessionId, type, ...body });
   }
+}
+
+function registryState(status: string): SessionState {
+  if (status === 'completed') return 'done';
+  if (status === 'running') return 'running';
+  if (status === 'error' || status === 'failed') return 'error';
+  return 'paused';
 }
 
 function progressOf(s: DispatchSession): number {
