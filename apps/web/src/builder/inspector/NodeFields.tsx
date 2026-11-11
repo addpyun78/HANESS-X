@@ -4,6 +4,7 @@ import type { CatalogItem } from '../catalog.js';
 import { NODE_LABEL, type BuilderNode } from '../graph.js';
 import { skillsOf } from '../lego/model.js';
 import { editableFields, parseSchemaText, type InspectorAction, type NodePatch } from './model.js';
+import { act } from '../../actions/registry.js';
 
 const PERMISSIONS: { value: NodePermission; label: string }[] = [
   { value: 'read-only', label: '읽기 전용' },
@@ -106,6 +107,7 @@ export function NodeFields({ node, engines, dispatch }: NodeFieldsProps) {
                 <li key={s} data-skill={s}>
                   <span className="hx-mono">{s}</span>
                   <button
+                    {...act('inspector.skill-up')}
                     type="button"
                     className="hx-icon-btn"
                     aria-label={`${s} 위로`}
@@ -115,6 +117,7 @@ export function NodeFields({ node, engines, dispatch }: NodeFieldsProps) {
                     ↑
                   </button>
                   <button
+                    {...act('inspector.skill-down')}
                     type="button"
                     className="hx-icon-btn"
                     aria-label={`${s} 아래로`}

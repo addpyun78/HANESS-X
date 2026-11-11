@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ApiError, type SaveAgentRequest, type SaveAgentResponse } from '../../api/client.js';
 import type { BuilderGraph } from '../graph.js';
 import { buildSaveRequest, suggestCommand, toAgentName, validateAgentName, type AgentMeta } from './save.js';
+import { act } from '../../actions/registry.js';
 
 export type SaveAgentFn = (
   name: string,
@@ -106,6 +107,7 @@ export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: Sa
         }}
       />
       <button
+        {...act('inspector.save')}
         type="submit"
         className="hx-insp-btn"
         disabled={
@@ -122,6 +124,7 @@ export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: Sa
           <>
             이미 있는 이름입니다{' '}
             <button
+              {...act('inspector.overwrite')}
               type="button"
               className="hx-insp-btn hx-insp-btn--ghost"
               onClick={() => void doSave(true)}

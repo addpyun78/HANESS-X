@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { draftEngines, draftPermissions, type CheckRow } from './model.js';
 import type { DraftListItem, DraftVersionInfo, EngineSuggestion } from './api.js';
 import './draft.css';
+import { act } from '../../actions/registry.js';
 
 /** 대화로 만들기 화면 조각들 — 사용자에게 보이는 글은 모두 쉬운 말(H.6) */
 
@@ -25,7 +26,12 @@ export function DraftBanner({
     <div className="hx-draft-banner" role="status" aria-label="초안 상태">
       <span className="hx-draft-banner__text">초안 v{version} · 아직 저장 안 됨</span>
       {versions.length > 0 && (
-        <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => setOpen((o) => !o)}>
+        <button
+          {...act('draft.versions-toggle')}
+          type="button"
+          className="hx-insp-btn hx-insp-btn--ghost"
+          onClick={() => setOpen((o) => !o)}
+        >
           버전 기록 ({versions.length})
         </button>
       )}
@@ -37,11 +43,21 @@ export function DraftBanner({
                 v{x.v} · {SOURCE_LABEL[x.source]}
                 {x.note ? ` · ${x.note}` : ''}
               </span>
-              <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => setPeek(x.v)}>
+              <button
+                {...act('draft.version-peek')}
+                type="button"
+                className="hx-insp-btn hx-insp-btn--ghost"
+                onClick={() => setPeek(x.v)}
+              >
                 v{x.v} 보기
               </button>
               {x.v !== version && onRevert && (
-                <button type="button" className="hx-insp-btn" onClick={() => onRevert(x.v)}>
+                <button
+                  {...act('draft.version-revert')}
+                  type="button"
+                  className="hx-insp-btn"
+                  onClick={() => onRevert(x.v)}
+                >
                   v{x.v}로 되돌리기
                 </button>
               )}
@@ -52,7 +68,12 @@ export function DraftBanner({
       {shown && (
         <div className="hx-draft-peek" aria-label={`v${shown.v} 내용`}>
           <strong>v{shown.v}</strong> {shown.draft.nodes.map((n) => n.role).join(' → ')}
-          <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => setPeek(undefined)}>
+          <button
+            {...act('draft.peek-close')}
+            type="button"
+            className="hx-insp-btn hx-insp-btn--ghost"
+            onClick={() => setPeek(undefined)}
+          >
             닫기
           </button>
         </div>
@@ -133,6 +154,7 @@ export function QuestionCard({
           <legend>{q.text}</legend>
           {q.choices.map((c) => (
             <button
+              {...act('draft.question-choice')}
               key={c}
               type="button"
               className="hx-insp-btn hx-insp-btn--ghost"
@@ -146,6 +168,7 @@ export function QuestionCard({
       ))}
       <div className="hx-draft-card__actions">
         <button
+          {...act('draft.questions-submit')}
           type="button"
           className="hx-insp-btn"
           disabled={!done}
@@ -153,7 +176,12 @@ export function QuestionCard({
         >
           이대로 만들기
         </button>
-        <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={onSkip}>
+        <button
+          {...act('draft.questions-skip')}
+          type="button"
+          className="hx-insp-btn hx-insp-btn--ghost"
+          onClick={onSkip}
+        >
           {SKIP_QUESTIONS}
         </button>
       </div>
@@ -179,13 +207,28 @@ export function GapLayer({ gaps, ...a }: { gaps: DraftGap[] } & GapActions) {
         <li key={g.id} className="hx-gap-node" data-gap-id={g.id} data-node-id={g.nodeId}>
           <span className="hx-gap-node__title">빈 칸: {g.need}</span>
           <span className="hx-gap-node__actions">
-            <button type="button" className="hx-insp-btn" onClick={() => a.onFindTool?.(g)}>
+            <button
+              {...act('draft.gap-find-tool')}
+              type="button"
+              className="hx-insp-btn"
+              onClick={() => a.onFindTool?.(g)}
+            >
               도구 찾기
             </button>
-            <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => a.onForge?.(g)}>
+            <button
+              {...act('draft.gap-forge')}
+              type="button"
+              className="hx-insp-btn hx-insp-btn--ghost"
+              onClick={() => a.onForge?.(g)}
+            >
               Forge로 만들기
             </button>
-            <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => a.onRemove?.(g)}>
+            <button
+              {...act('draft.gap-remove')}
+              type="button"
+              className="hx-insp-btn hx-insp-btn--ghost"
+              onClick={() => a.onRemove?.(g)}
+            >
               이 칸 빼기
             </button>
           </span>
@@ -241,10 +284,15 @@ export function PatchPreview({
         </p>
       )}
       <div className="hx-draft-card__actions">
-        <button type="button" className="hx-insp-btn" onClick={onApply}>
+        <button {...act('draft.patch-apply')} type="button" className="hx-insp-btn" onClick={onApply}>
           {conflicts.length > 0 ? '네, 바꿀게요' : '적용'}
         </button>
-        <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={onCancel}>
+        <button
+          {...act('draft.patch-cancel')}
+          type="button"
+          className="hx-insp-btn hx-insp-btn--ghost"
+          onClick={onCancel}
+        >
           취소
         </button>
       </div>
@@ -271,10 +319,15 @@ export function ResumePrompt({
         "{item.displayName}" · 버전 {item.versions}개
       </p>
       <div className="hx-draft-card__actions">
-        <button type="button" className="hx-insp-btn" onClick={onResume}>
+        <button {...act('draft.resume')} type="button" className="hx-insp-btn" onClick={onResume}>
           이어서 하기
         </button>
-        <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={onDismiss}>
+        <button
+          {...act('draft.start-new')}
+          type="button"
+          className="hx-insp-btn hx-insp-btn--ghost"
+          onClick={onDismiss}
+        >
           새로 만들기
         </button>
       </div>
@@ -311,10 +364,20 @@ export function DraftList({
               {i.displayName} · 버전 {i.versions}개{i.gaps ? ` · 빈 칸 ${i.gaps}개` : ''}
               {i.stale ? ' · 오래됨' : ''}
             </span>
-            <button type="button" className="hx-insp-btn" onClick={() => onResume(i.id)}>
+            <button
+              {...act('draft.list-resume')}
+              type="button"
+              className="hx-insp-btn"
+              onClick={() => onResume(i.id)}
+            >
               이어서 하기
             </button>
-            <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={() => onDelete(i.id)}>
+            <button
+              {...act('draft.list-delete')}
+              type="button"
+              className="hx-insp-btn hx-insp-btn--ghost"
+              onClick={() => onDelete(i.id)}
+            >
               삭제
             </button>
           </li>

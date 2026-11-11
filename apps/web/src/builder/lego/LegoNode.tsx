@@ -9,6 +9,7 @@ import { useRunOverlay } from '../inspector/overlay-context.js';
 import { useDraftDecor } from '../draft/decor.js';
 import { CHIP_MIME, hasType, readChip, useLegoDispatch } from './dnd.js';
 import { acceptsEngine, acceptsSkills, skillsOf } from './model.js';
+import { act } from '../../actions/registry.js';
 
 type Props = NodeProps<Extract<HxFlowNode, { type: 'hxNode' }>>;
 type Highlight = 'skill' | 'engine';
@@ -134,6 +135,7 @@ export function LegoNode({ data, selected }: Props) {
             >
               {s}
               <button
+                {...act('lego.remove-skill')}
                 type="button"
                 className="hx-skill-chip__x nodrag"
                 aria-label={`${s} 스킬 빼기`}

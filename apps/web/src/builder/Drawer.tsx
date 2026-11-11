@@ -10,6 +10,7 @@ import {
   type DrawerBlock,
   type DrawerTab,
 } from './catalog.js';
+import { act } from '../actions/registry.js';
 
 export interface DrawerProps {
   catalog: BuilderCatalog;
@@ -26,6 +27,7 @@ export function Drawer({ catalog, initialTab = 'node' }: DrawerProps) {
       <div className="hx-drawer__tabs" role="tablist" aria-label="블록 종류">
         {DRAWER_TABS.map((t) => (
           <button
+            {...act('builder.drawer-tab')}
             key={t}
             type="button"
             role="tab"
