@@ -486,6 +486,9 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../../kernel
       '@harness-x/verifier-local':
         specifier: workspace:*
         version: link:../../../plugins/verifier-local
