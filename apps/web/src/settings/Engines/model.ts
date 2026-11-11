@@ -11,6 +11,8 @@ export interface ScanEngine {
   status: string;
   minVersion?: string;
   error?: string;
+  /** T-101 5A.6 스캔 때 공식 상태 명령으로 확인한 로그인 상태 (모델 호출 없음) */
+  login?: LoginState;
 }
 
 export interface EnginesResponse {
@@ -74,6 +76,8 @@ export interface EngineCardModel {
   model?: string;
   fallback: string[];
   key: { masked: string } | null;
+  /** T-101 5D.7 자동 상태: 스캔이 확인한 로그인 상태 (모르면 생략 → 카드가 상태 명령으로 묻는다) */
+  login?: LoginState;
 }
 
 /** windows → Windows, wsl:Ubuntu → WSL (Ubuntu) */
@@ -95,6 +99,7 @@ export function buildEngineCards(r: EnginesResponse): EngineCardModel[] {
     supported: SupportedEngine | undefined,
   ): EngineCardModel => {
     const s = r.settings.engines[id];
+    const login = entries.map((e) => e.login).find((l) => l && l !== 'unknown');
     return {
       id,
       label,
@@ -113,6 +118,7 @@ export function buildEngineCards(r: EnginesResponse): EngineCardModel[] {
       ...(s?.model ? { model: s.model } : {}),
       fallback: s?.fallback ?? [],
       key: r.keys[id] ?? null,
+      ...(login ? { login } : {}),
     };
   };
   const cards = SUPPORTED_ENGINES.map((sup) => {
