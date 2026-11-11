@@ -519,6 +519,21 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     options: { local: '내 컴퓨터에서', browser: '브라우저 기능', off: '끄기' },
   }),
 
+  // ── 모드·권한 (T-101 3)
+  defineSetting('mode.default', z.enum(['plan', 'normal', 'auto']).default('normal'), {
+    group: 'mode',
+    title: '기본 실행 모드',
+    description: '새 작업을 시작할 때 쓸 모드예요. 프로젝트마다 따로 정하면 그 값이 먼저 쓰여요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'both',
+    options: {
+      plan: '계획 — 목록까지만 만들어요',
+      normal: '일반 — 확인받으며 해요',
+      auto: '오토 — 묻지 않고 해요',
+    },
+  }),
+
   // (mode·checklist·approval·attachments·project·data·about 그룹은 각 구역 작업자가 채운다)
 ];
 

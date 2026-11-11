@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, w
 import { join } from 'node:path';
 import type { LogRecord } from '../event-log.js';
 import { harnessHome } from '../loader.js';
+import { toRunMode } from '@harness-x/protocol';
 import { resolveSessionDefaults, type GlobalDefaultsSource } from './defaults.js';
 import type { ProjectStore } from './project-store.js';
 import {
@@ -224,7 +225,7 @@ export class SessionRegistry extends EventEmitter {
     if (this.get(id)) throw new SessionError('invalid', `이미 있는 세션: ${id}`);
     const engine = input.engine ?? d.engine;
     const model = input.model ?? d.model;
-    const mode = input.mode ?? d.mode;
+    const mode = toRunMode(input.mode) ?? toRunMode(d.mode);
     const agent = input.agent ?? d.agent;
     const first = input.firstMessage?.trim();
     const s = SessionRecordSchema.parse({
@@ -341,10 +342,12 @@ export class SessionRegistry extends EventEmitter {
         permission: d.permission,
         updatedAt: this.now().toISOString(),
       });
-      for (const k of ['engine', 'model', 'mode', 'agent'] as const) {
+      for (const k of ['engine', 'model', 'agent'] as const) {
         if (d[k]) draft[k] = d[k];
         else delete draft[k];
       }
+      if (d.mode) draft.mode = d.mode;
+      else delete draft.mode;
       return { session: structuredClone(draft), replaced: false };
     }
     const s = this.mustSaved(id);

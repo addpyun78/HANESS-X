@@ -1,3 +1,4 @@
+import { RunModeSchema } from '@harness-x/protocol';
 import { z } from 'zod';
 
 /**
@@ -73,8 +74,8 @@ export const SessionRecordSchema = z.object({
   status: z.enum(SESSION_STATES),
   engine: z.string().optional(),
   model: z.string().optional(),
-  /** 3번(실행 모드) 이후 채워짐 — 있으면 사이드바에 배지 */
-  mode: z.string().optional(),
+  /** 3A.2 실행 모드 (plan | normal | auto) — 있으면 사이드바에 배지. 모르는 옛 값은 버린다 */
+  mode: RunModeSchema.optional().catch(undefined),
   permission: z.string().optional(),
   agent: z.string().optional(),
   agentIcon: z.string().optional(),

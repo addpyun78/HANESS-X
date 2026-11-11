@@ -435,6 +435,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 지금 감지된 첫 엔진(5번 이후 메인 AI로 바뀜)
   const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
   const projects = new ProjectStore({ home });
+  const { readSetting, SettingsStore } = await import('./settings/index.js');
+  const modeSettings = new SettingsStore({ file: join(home, 'settings.json') });
   const plainTitle = (
     loader.plugins.get('approvals')?.module as
       { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
@@ -445,7 +447,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     log,
     defaults: () => {
       const first = adapters()[0]?.id;
-      return first ? { engine: first } : {};
+      // T-101 3A.2 전체 설정 기본 모드 (프로젝트 기본값이 있으면 그쪽이 먼저 — 0B.40)
+      const mode = readSetting<string>(modeSettings.readGlobal(), 'mode.default');
+      return { ...(first ? { engine: first } : {}), mode };
     },
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
