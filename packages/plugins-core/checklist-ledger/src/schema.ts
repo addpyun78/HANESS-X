@@ -107,6 +107,41 @@ export const EvidenceSchema = z.looseObject({
 });
 export type Evidence = z.infer<typeof EvidenceSchema>;
 
+/**
+ * 비교 증거 (T-100 F.1) — 비교기·의미 판단 결과를 evidence에 남긴다.
+ *  compare.level: normalize(자동 정리) | dictionary(사전) | semantic(AI 판단) | human(사용자 승인)
+ */
+export const COMPARE_EVIDENCE_LEVELS = ['normalize', 'dictionary', 'semantic', 'human'] as const;
+export const CompareEvidenceSchema = z.looseObject({
+  kind: z.literal('compare'),
+  ts: z.iso.datetime({ offset: true }).optional(),
+  summary: z.string().optional(),
+  compare: z
+    .object({
+      kind: z.string().min(1),
+      level: z.enum(COMPARE_EVIDENCE_LEVELS),
+      verdict: z.enum(['equal', 'different', 'uncertain']),
+      confidence: z.number().min(0).max(1),
+      /** 의미 판단 엔진 id (semantic 단계에서만) */
+      judgeEngine: z.string().min(1).optional(),
+      /** 의미 판단 반복 횟수 */
+      samples: z.number().int().positive().optional(),
+      normalizedExpected: z.string(),
+      normalizedActual: z.string(),
+    })
+    .strict(),
+  /** 의미 판단(AI)으로 통과한 비교 (F.2) */
+  ai_judged: z.boolean().optional(),
+});
+export type CompareEvidence = z.infer<typeof CompareEvidenceSchema>;
+
+/** evidence가 비교 증거면 파싱 결과, 아니면 undefined */
+export function compareEvidenceOf(e: Evidence): CompareEvidence | undefined {
+  if (e.kind !== 'compare') return undefined;
+  const r = CompareEvidenceSchema.safeParse(e);
+  return r.success ? r.data : undefined;
+}
+
 export const VERDICTS = ['equal', 'relocated', 'wrong', 'missing'] as const;
 export const VerdictKindSchema = z.enum(VERDICTS);
 export type VerdictKind = z.infer<typeof VerdictKindSchema>;

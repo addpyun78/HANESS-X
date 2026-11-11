@@ -14,3 +14,4 @@ export * from './comparators/exit-code.js';
 export * from './infer.js';
 export * from './compare.js';
 export * from './migrate.js';
+export * from './evidence.js';
