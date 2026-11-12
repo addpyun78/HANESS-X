@@ -1,0 +1,15 @@
+{
+  "note": "보고만 — 삭제 대상 아님(세션·첨부·임시 작업 공간·모델)",
+  "home": "~/.harness-x",
+  "totalBytes": 1262337,
+  "totalMB": 1.2,
+  "parts": {
+    "drafts": 8635,
+    "engines.json": 1279,
+    "logs": 1247942,
+    "plugins.lock": 1388,
+    "run": 3056,
+    "sessions": 37
+  },
+  "projectData": []
+}
