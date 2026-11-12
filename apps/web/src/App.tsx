@@ -21,6 +21,7 @@ import type { RecentProject } from './composer/PlusMenu.js';
 import { SubagentConfirm, subagentTarget } from './composer/SubagentConfirm.js';
 import type { EngineOption, SendPayload } from './composer/types.js';
 import { DEMO_SESSIONS, DEMO_WORKSPACE, demoEvents } from './demo.js';
+import { SERVER_NOT_STARTED, SERVER_STARTING, waitForServer } from './api/wait-server.js';
 import { navigate, useRoute } from './router.js';
 import { PanelActionsContext } from './panels/panel-actions.js';
 import { usePanels } from './panels/usePanels.js';
@@ -311,7 +312,21 @@ export function App() {
         .catch((err: unknown) => setWsError(err instanceof Error ? err.message : String(err)));
     } else {
       const token = resolveToken();
-      if (token) start(new HarnessApiClient({ token }));
+      if (token) {
+        // T-102 I.2 바로가기로 켜면 화면이 서버보다 먼저 열린다 → 서버가 답할 때까지 기다렸다가 목록을 불러온다
+        const c = new HarnessApiClient({ token });
+        setClient(c); // 버튼 동작은 바로 쓸 수 있게(요청은 서버가 켜지면 성공)
+        void waitForServer(c, {
+          isStopped: () => stopped,
+          onWaiting: (s) => setWsError(SERVER_STARTING(s)),
+        }).then((ok) => {
+          if (stopped) return;
+          if (ok) {
+            setWsError(undefined);
+            start(c);
+          } else setWsError(SERVER_NOT_STARTED);
+        });
+      }
     }
     return () => {
       stopped = true;
