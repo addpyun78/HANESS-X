@@ -40,7 +40,7 @@ export const NPM_INSTALL_SCRIPTS = ['preinstall', 'install', 'postinstall'] as c
 
 export class NpmAdapter extends CommandAdapter {
   readonly kind = 'npm-cli' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
 
   async view(spec: string): Promise<NpmView | undefined> {
     const r = await this.ctx.runner(
@@ -147,7 +147,7 @@ export class NpmAdapter extends CommandAdapter {
 // ── B.4 Python CLI: uv tool 우선, 없으면 pipx. 전역 pip 금지 ─────
 export class PythonCliAdapter extends CommandAdapter {
   readonly kind = 'python-cli' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
 
   /** 사용할 설치 도구: uv → pipx (둘 다 없으면 undefined). pip은 절대 쓰지 않는다 */
   installer(): { tool: 'uv' | 'pipx'; host: CommandHost } | undefined {
@@ -195,7 +195,7 @@ export class PythonCliAdapter extends CommandAdapter {
 // ── B.5 cargo / go install (기본 숨김: 설치 도구가 있을 때만 후보) ────
 export class CargoAdapter extends CommandAdapter {
   readonly kind = 'cargo' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
   async plan(t: InstallTarget): Promise<InstallPlan> {
     check(t.id);
     if (!this.available().available)
@@ -224,7 +224,7 @@ export class CargoAdapter extends CommandAdapter {
 
 export class GoAdapter extends CommandAdapter {
   readonly kind = 'go' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
   async plan(t: InstallTarget): Promise<InstallPlan> {
     check(t.id, /^[a-z0-9.-]+(\/[\w.-]+)+$/, '모듈 주소');
     if (!this.available().available)
@@ -262,7 +262,7 @@ export function parseSizeMB(text: string): number | undefined {
 
 export class OllamaModelAdapter extends CommandAdapter {
   readonly kind = 'ollama-model' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
 
   /** 모델 크기(MB): options.sizeMB → `ollama show` 출력 → 레지스트리 매니페스트(읽기만) */
   async sizeOf(t: InstallTarget): Promise<number | undefined> {
@@ -334,7 +334,11 @@ export class OllamaModelAdapter extends CommandAdapter {
     });
   }
 
-  async install(plan: InstallPlan, onProgress: ProgressFn, ctl?: ExecControl): Promise<InstallOutcome> {
+  override async install(
+    plan: InstallPlan,
+    onProgress: ProgressFn,
+    ctl?: ExecControl,
+  ): Promise<InstallOutcome> {
     await this.checkDisk(plan.sizeMB ?? undefined, plan.host);
     return super.install(plan, onProgress, ctl);
   }
@@ -406,7 +410,7 @@ export class VscodeExtAdapter extends CommandAdapter {
 // ── B.11 Docker 이미지 ───────────────────────────────────────
 export class DockerImageAdapter extends CommandAdapter {
   readonly kind = 'docker-image' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
 
   async plan(t: InstallTarget): Promise<InstallPlan> {
     check(t.id, /^[a-z0-9][\w.\-/]*(:[\w.-]+)?(@sha256:[a-f0-9]{64})?$/, '이미지 이름');
@@ -454,7 +458,7 @@ export const SUDO_NOTICE = '관리자 비밀번호가 필요해요.';
 
 export class WslAptAdapter extends CommandAdapter {
   readonly kind = 'wsl-apt' as const;
-  protected defaultHost: CommandHost = 'linux';
+  protected override defaultHost: CommandHost = 'linux';
 
   async plan(t: InstallTarget): Promise<InstallPlan> {
     check(t.id, /^[a-z0-9][a-z0-9+.-]+$/, '패키지 이름');
@@ -493,7 +497,7 @@ export class WslAptAdapter extends CommandAdapter {
    * 하네스는 sudo 명령을 실행하지 않는다: 터미널 패널에 넣을 명령만 알려 주고 사용자를 기다린다.
    * (비밀번호는 사용자가 터미널에 직접 입력 — 하네스는 보지도 저장하지도 않는다)
    */
-  async install(plan: InstallPlan, onProgress: ProgressFn): Promise<InstallOutcome> {
+  override async install(plan: InstallPlan, onProgress: ProgressFn): Promise<InstallOutcome> {
     onProgress({
       stream: 'info',
       data: `${SUDO_NOTICE} 터미널에 아래 명령을 넣어 주세요:\n${plan.commands.join('\n')}\n`,
@@ -506,7 +510,7 @@ export class WslAptAdapter extends CommandAdapter {
     };
   }
 
-  async uninstall(record: InstalledRecord, onProgress?: ProgressFn): Promise<InstallOutcome> {
+  override async uninstall(record: InstalledRecord, onProgress?: ProgressFn): Promise<InstallOutcome> {
     onProgress?.({
       stream: 'info',
       data: `${SUDO_NOTICE} 터미널에 아래 명령을 넣어 주세요:\n${this.uninstallCommands(record).join('\n')}\n`,
