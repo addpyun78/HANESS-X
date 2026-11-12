@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ResumeFlow, toStartChoices, type ResumeApi } from '../src/recovery/ResumeFlow.js';
@@ -66,7 +68,12 @@ async function makePausedSession() {
 
 describe('2B.2 이어하기 입구 5개', () => {
   it('① 사이드바 세션 … 메뉴 [이어하기] — resume.project-entrances.test.tsx(0-2 사이드바)에서 검사', () => {
-    expect(true).toBe(true);
+    // T-102 C2-005: 자리표시 대신 그 검사가 실제로 있는지 확인한다
+    const other = readFileSync(
+      join(process.cwd(), 'apps/web/test/resume.project-entrances.test.tsx'),
+      'utf8',
+    );
+    expect(other).toContain("it('① 세션 … 메뉴 [이어하기]");
   });
 
   it('② ⏸ 세션 줄 클릭 → 점검 → 이어하기 (POST check → POST resume)', async () => {
@@ -115,7 +122,8 @@ describe('2B.2 이어하기 입구 5개', () => {
   });
 
   it('⑤ CLI harness-x resume <id> — packages/kernel/test/resume.entrances.test.ts에서 검사', () => {
-    expect(true).toBe(true);
+    const other = readFileSync(join(process.cwd(), 'packages/kernel/test/resume.entrances.test.ts'), 'utf8');
+    expect(other).toContain("it('켜진 서버에 점검 → 이어서 시작 (쉬운 말 출력)'");
   });
 });
 
