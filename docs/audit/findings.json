@@ -384,7 +384,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": ["F-007", "F-019", "F-122"],
       "area": "shell",
       "severity": "critical",
@@ -405,7 +405,9 @@
       "meta": {
         "source": "C2.19",
         "wiring": true,
-        "rootCause": "loader-default-module"
+        "rootCause": "loader-default-module",
+        "resolution": "loader.ts: activate 없는 플러그인은 default 또는 모듈 전체 사용(처음 켜기·핫리로드)",
+        "resolvedAt": "2026-11-12T15:04:20.078Z"
       },
       "id": "C2-001",
       "plain": "체크리스트 화면이 부르는 주소가 실제 서버에 없어요. 그래서 화면이 비어요.",
