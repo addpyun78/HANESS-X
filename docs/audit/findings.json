@@ -327,7 +327,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": [],
       "area": "security",
       "severity": "critical",
@@ -346,7 +346,9 @@
         "from": "3.4.15",
         "to": ">=3.4.17",
         "major": false,
-        "prod": true
+        "prod": true,
+        "resolution": "pnpm-workspace.yaml overrides dompurify ^3.4.17",
+        "resolvedAt": "2026-11-12T14:46:30.368Z"
       },
       "id": "C1-008",
       "plain": "화면 편집기가 쓰는 부품에 보안 구멍이 있어요. 같은 판에서 고칠 수 있어요.",
