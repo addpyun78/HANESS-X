@@ -1,0 +1,34 @@
+[
+  {
+    "key": "assist.model",
+    "title": "도구 고르기 모델",
+    "description": "도구를 고를 AI가 쓸 모델이에요. 비우면 기본 모델을 써요.",
+    "restartRequired": false,
+    "runtimeReaders": 0,
+    "drift": "설명은 동작을 바꾼다고 하지만 읽어서 쓰는 코드가 없음"
+  },
+  {
+    "key": "verifier.local.baseUrl",
+    "title": "내 컴퓨터 판정기 주소",
+    "description": "내 컴퓨터 판정기가 열려 있는 주소예요. 비우면 기본 주소를 써요.",
+    "restartRequired": true,
+    "runtimeReaders": 0,
+    "drift": "설명은 동작을 바꾼다고 하지만 읽어서 쓰는 코드가 없음"
+  },
+  {
+    "key": "verifier.local.model",
+    "title": "내 컴퓨터 판정기 모델",
+    "description": "내 컴퓨터 판정기에 넘길 모델 이름이에요.",
+    "restartRequired": true,
+    "runtimeReaders": 0,
+    "drift": "설명은 동작을 바꾼다고 하지만 읽어서 쓰는 코드가 없음"
+  },
+  {
+    "key": "verifier.local.timeoutMs",
+    "title": "내 컴퓨터 판정기 기다림(밀리초)",
+    "description": "판정기가 이 시간 안에 답하지 않으면 멈춰요.",
+    "restartRequired": true,
+    "runtimeReaders": 0,
+    "drift": "설명은 동작을 바꾼다고 하지만 읽어서 쓰는 코드가 없음"
+  }
+]
