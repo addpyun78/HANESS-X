@@ -1,0 +1,19 @@
+{
+  "turns": 100,
+  "events": 300,
+  "replayed": 303,
+  "ms": 1607,
+  "before": {
+    "heapUsed": 16339936,
+    "rss": 92086272
+  },
+  "after": {
+    "heapUsed": 16916616,
+    "rss": 100868096
+  },
+  "diff": {
+    "heapUsed": 576680,
+    "rss": 8781824
+  },
+  "gc": true
+}
