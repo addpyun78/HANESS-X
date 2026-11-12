@@ -1,0 +1,26 @@
+[
+  {
+    "file": "packages/kernel/test/secrets.keyring.test.ts",
+    "line": 24,
+    "name": "'실제 OS 키체인(@napi-rs/keyring): 저장 후 조회 일치, 삭제 후 없음'",
+    "viaHelper": false
+  },
+  {
+    "file": "packages/kernel/test/secrets.keyring.test.ts",
+    "line": 28,
+    "name": "'메모리 백엔드도 같은 계약'",
+    "viaHelper": false
+  },
+  {
+    "file": "packages/plugins-core/attachments/test/four-engines.test.ts",
+    "line": 70,
+    "name": "'antigravity: 세 첨부 모두 목록에'",
+    "viaHelper": false
+  },
+  {
+    "file": "tests/stop-guard-reinject.test.ts",
+    "line": 134,
+    "name": "'로컬 LLM(하네스 도구 루프, 녹화 응답): 같은 판단으로 2턴 자동'",
+    "viaHelper": true
+  }
+]
