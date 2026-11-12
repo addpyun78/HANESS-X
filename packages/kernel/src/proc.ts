@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { createInterface } from 'node:readline';
 import type { Readable } from 'node:stream';
 import type { EngineErrorCode, HarnessEvent } from '@harness-x/protocol';
+import { STOP_NOW_GRACE_MS } from './stop.js';
 
 /**
  * 엔진 어댑터 공용 자식 프로세스 도우미 (EPIC 1)
@@ -33,14 +34,29 @@ function alive(child: ChildProcess): boolean {
   return child.exitCode === null && child.signalCode === null;
 }
 
-/** 프로세스 그룹 전체 종료: SIGTERM → graceMs 후 SIGKILL. 종료되면 resolve */
-export async function killGroup(child: ChildProcess, graceMs = 1000): Promise<void> {
+/**
+ * T-101 2A.4 Windows 자식 프로세스까지 종료하는 명령 (`taskkill /pid N /T /F`).
+ * Windows가 아니면 undefined (프로세스 그룹 신호를 쓴다)
+ */
+export function killTreeCommand(
+  pid: number,
+  platform: NodeJS.Platform = process.platform,
+): { file: string; args: string[] } | undefined {
+  return platform === 'win32' ? { file: 'taskkill', args: ['/pid', String(pid), '/T', '/F'] } : undefined;
+}
+
+/**
+ * 프로세스 그룹 전체 종료: SIGTERM → graceMs(기본 3초, 2A.4 지금 멈추기) 안에 안 끝나면 SIGKILL.
+ * Windows는 taskkill /T /F로 자식 트리까지. 종료되면 resolve
+ */
+export async function killGroup(child: ChildProcess, graceMs = STOP_NOW_GRACE_MS): Promise<void> {
   const pid = child.pid;
   if (pid === undefined) return;
   const exited = alive(child) ? new Promise<void>((r) => child.once('exit', () => r())) : Promise.resolve();
+  const tree = killTreeCommand(pid);
   const signal = (sig: NodeJS.Signals) => {
-    if (process.platform === 'win32') {
-      spawnSync('taskkill', ['/pid', String(pid), '/T', '/F'], { windowsHide: true });
+    if (tree) {
+      spawnSync(tree.file, tree.args, { windowsHide: true });
       return;
     }
     try {
@@ -162,7 +178,7 @@ export interface LineRunSpec {
   signal?: AbortSignal;
   event: (body: EventBody) => HarnessEvent;
   parser: LineParser;
-  /** interrupt 시 SIGKILL까지 유예 (기본 1000ms) */
+  /** interrupt 시 SIGKILL까지 유예 (기본 STOP_NOW_GRACE_MS = 3000ms) */
   killGraceMs?: number;
 }
 

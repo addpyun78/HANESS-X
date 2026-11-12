@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 /** 0B.18 빈 세션(초안) 화면 */
 
 export const EXAMPLE_PROMPTS = [
@@ -22,9 +23,18 @@ export interface EmptySessionProps {
   onAgent: (command: string) => void;
   /** 고지: 0B.13 "그 폴더에서 새 세션을 열게요" 같은 안내 */
   notice?: string;
+  /** T-101 2B.2 "이어서 할 작업 N개" 같은 덧붙임 */
+  extra?: ReactNode;
 }
 
-export function EmptySession({ projectName, recentAgents, onExample, onAgent, notice }: EmptySessionProps) {
+export function EmptySession({
+  projectName,
+  recentAgents,
+  onExample,
+  onAgent,
+  notice,
+  extra,
+}: EmptySessionProps) {
   const agents = recentAgents.slice(0, 3);
   return (
     <section className="hx-empty-session" aria-label="새 세션">
@@ -34,6 +44,7 @@ export function EmptySession({ projectName, recentAgents, onExample, onAgent, no
         </p>
       )}
       <h2>{projectName}에서 무엇을 할까요?</h2>
+      {extra}
       <ul className="hx-empty-session__examples" aria-label="예시 지시">
         {EXAMPLE_PROMPTS.map((t) => (
           <li key={t}>

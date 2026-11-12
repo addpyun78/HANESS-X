@@ -51,7 +51,7 @@ const row = (list: HTMLElement, id: string) => list.querySelector(`[data-project
 describe('6B.10 프로젝트', () => {
   it('임시 작업 공간 위치·묶기·정렬 + 프로젝트 목록(고정 먼저, 폴더 없음 ⚠) (스냅샷)', async () => {
     const { m, sec, list } = await setup();
-    expect(keysIn(sec)).toEqual(['project.scratchDir', 'project.sidebarGroup', 'project.sidebarSort']);
+    expect(keysIn(sec)).toEqual(['project.scratchDir', 'sidebar.group', 'sidebar.sort']);
     expect(
       [...list.querySelectorAll('[data-project-id]')].map((e) => e.getAttribute('data-project-id')),
     ).toEqual(['b', 'a', 'c']);
@@ -94,8 +94,8 @@ describe('6B.10 프로젝트', () => {
     window.removeEventListener('hx-browser-setting', on);
     expect(loadPrefs()).toMatchObject({ group: 'status', sort: 'name' });
     expect(heard).toEqual([
-      { key: 'hx.sidebar.group', value: 'status' },
-      { key: 'hx.sidebar.sort', value: 'name' },
+      { key: 'hx-sidebar-group', value: 'status' },
+      { key: 'hx-sidebar-sort', value: 'name' },
     ]);
     m.dispose();
   });

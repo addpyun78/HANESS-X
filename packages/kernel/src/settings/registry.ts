@@ -371,6 +371,26 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     storage: 'engines-file',
     widget: 'engine-settings',
   }),
+  // T-101 5C.3 메인 AI: 입력창 오른쪽 아래 [엔진 · 모델 ▾]에서 고른 것 (kernel main-ai.ts가 읽고 쓴다)
+  defineSetting('main.engine', engineId, {
+    group: 'ai',
+    title: '기본으로 쓰는 AI',
+    description: '새 대화와 "자동"으로 둔 기능이 쓰는 AI예요. 입력창 오른쪽 아래에서도 바꿀 수 있어요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    widget: 'engine',
+  }),
+  defineSetting('main.model', S(), {
+    group: 'ai',
+    title: '기본으로 쓰는 AI의 모델',
+    description: '메인 AI가 쓸 모델이에요. 비우면 그 AI의 기본 모델을 써요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    widget: 'model',
+    engineKey: 'main.engine',
+  }),
   defineSetting('builder.engine', engineId, {
     group: 'ai',
     title: '에이전트 설계에 쓸 AI',
@@ -657,27 +677,28 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     scope: 'global',
     widget: 'folder',
   }),
-  defineSetting('project.sidebarGroup', z.enum(['project', 'status', 'date', 'none']).default('project'), {
+  // ── 프로젝트 (0B.25/0B.26 사이드바 묶기·정렬, 이 기기에 저장)
+  defineSetting('sidebar.group', z.enum(['project', 'status', 'date', 'none']).default('project'), {
     group: 'project',
     title: '사이드바 묶기 방식',
-    description: '사이드바에서 작업을 무엇으로 묶어 보일지 정해요. 이 기기 화면에만 저장돼요.',
+    description: '사이드바의 대화 목록을 프로젝트, 상태, 날짜 중 무엇으로 묶을지 골라요.',
     advanced: false,
     restartRequired: false,
     scope: 'global',
     storage: 'browser',
-    browserKey: 'hx.sidebar.group',
-    options: { project: '프로젝트', status: '상태', date: '날짜', none: '묶지 않기' },
+    browserKey: 'hx-sidebar-group',
+    options: { project: '프로젝트별', status: '상태별', date: '날짜별', none: '묶지 않기' },
   }),
-  defineSetting('project.sidebarSort', z.enum(['recent', 'name', 'manual']).default('recent'), {
+  defineSetting('sidebar.sort', z.enum(['recent', 'name', 'manual']).default('recent'), {
     group: 'project',
     title: '사이드바 정렬 방식',
-    description: '프로젝트를 어떤 순서로 보일지 정해요. 고정한 프로젝트는 늘 맨 위예요.',
+    description: '최근에 쓴 순서, 이름 순서, 직접 끌어 놓은 순서 중에서 골라요.',
     advanced: false,
     restartRequired: false,
     scope: 'global',
     storage: 'browser',
-    browserKey: 'hx.sidebar.sort',
-    options: { recent: '최근 활동', name: '이름순', manual: '내가 정한 순서' },
+    browserKey: 'hx-sidebar-sort',
+    options: { recent: '최근 쓴 순서', name: '이름 순서', manual: '직접 정한 순서' },
   }),
 
   // ── 데이터·보안 (T-101 6B.11 — 저장된 키 목록은 데이터·보안 탭의 목록 화면, 정리는 settings/data-cleanup.ts)

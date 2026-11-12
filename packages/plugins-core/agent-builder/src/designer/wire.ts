@@ -23,6 +23,19 @@ export interface BuilderDesignerWireOptions {
   onSaved?: (s: { name: string; command: string; dir: string }) => void;
 }
 
+/** T-101 5D.5 메인 AI 엔진 (settings.json `main.engine` — 설정 레지스트리 등록은 0A.3/6B.2에서) */
+export function readMainEngine(home: string): string | undefined {
+  const f = join(home, 'settings.json');
+  try {
+    if (!existsSync(f)) return undefined;
+    const cfg = JSON.parse(readFileSync(f, 'utf8')) as Record<string, unknown>;
+    const v = cfg['main.engine'] ?? (cfg.main as { engine?: unknown } | undefined)?.engine;
+    return typeof v === 'string' && v.trim() ? v.trim() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function readBuilderSettings(home: string): BuilderSettings {
   const f = join(home, 'settings.json');
   try {
@@ -48,7 +61,12 @@ export function registerBuilderDesignerRoutes(app: DesignerRouteHost, o: Builder
       const inv = await o.inventory.get();
       const settings = readBuilderSettings(o.home);
       const detected = inv.engines.filter((e) => e.installed).map((e) => e.id);
-      const choice = resolveDesignerEngine(settings, detected, o.sessionDefault?.() ?? readyEngines(inv)[0]);
+      const choice = resolveDesignerEngine(
+        settings,
+        detected,
+        o.sessionDefault?.() ?? readyEngines(inv)[0],
+        readMainEngine(o.home),
+      );
       const e = choice.engineId ? inv.engines.find((x) => x.id === choice.engineId) : undefined;
       if (!e) return undefined;
       const s = createDesignerSession({
