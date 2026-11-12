@@ -1,0 +1,85 @@
+{
+  "checked": 13,
+  "shell": 0,
+  "untestedNonGet": 67,
+  "items": [
+    {
+      "route": "GET /api/approvals",
+      "file": "packages/kernel/src/api/approvals-routes.ts:50",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/builder/drafts",
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts:124",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/forge/pending",
+      "file": "packages/plugins-core/forge/src/routes.ts:26",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/install/first-run",
+      "file": "packages/kernel/src/api/install-routes.ts:170",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/install/history",
+      "file": "packages/kernel/src/api/install-routes.ts:167",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/install/tools",
+      "file": "packages/kernel/src/api/install-routes.ts:166",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/main-ai",
+      "file": "packages/kernel/src/api/models-routes.ts:45",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/models",
+      "file": "packages/kernel/src/api/models-routes.ts:33",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/notices",
+      "file": "packages/plugins-core/verifiers/ladder/src/runtime.ts:276",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/quota",
+      "file": "packages/kernel/src/api/quota-route.ts:12",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/recovery",
+      "file": "packages/kernel/src/recover.ts:297",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/resume",
+      "file": "packages/kernel/src/api/resume-routes.ts:24",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    },
+    {
+      "route": "GET /api/sessions",
+      "file": "packages/kernel/src/api/sessions-routes.ts:75",
+      "verdict": "정상",
+      "why": "빈 임시 홈(세션·설치·승인 기록 없음)이라 빈 목록 — 저장된 자료를 그대로 돌려주는 경로"
+    }
+  ]
+}
