@@ -6,6 +6,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ticketsDir = join(root, 'docs', 'tickets');
@@ -52,6 +53,22 @@ function readLast() {
 }
 
 const input = parseInput(readStdin());
+
+// T-102 C.2 진단(C·D) 단계 동안: docs/audit/phase 파일 내용이 C 또는 D면 읽기 전용 가드를 실행해
+// docs/audit/·scripts/audit/ 밖 변경이 있으면 멈추지 못하게(exit 2) 하고 이유를 알린다
+try {
+  const phase = readFileSync(join(root, 'docs', 'audit', 'phase'), 'utf8').trim();
+  const guard = join(root, 'scripts', 'audit', 'guard-readonly.mjs');
+  if (/^[CD]$/.test(phase) && existsSync(guard)) {
+    const r = spawnSync(process.execPath, [guard], { cwd: root, encoding: 'utf8' });
+    if (r.status !== 0) {
+      process.stderr.write(`ticket-gate: 진단 단계(${phase})인데 허용 밖 변경이 있습니다. 되돌리고 계속하세요.\n${r.stderr}`);
+      process.exit(2);
+    }
+  }
+} catch {
+  /* phase 파일 없음 = 점검 진단 단계 아님 */
+}
 const open = collectOpen();
 const last = readLast();
 
