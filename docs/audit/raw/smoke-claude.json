@@ -1,0 +1,20 @@
+{
+  "engine": "claude",
+  "prompt": "README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.",
+  "at": "2026-11-12T10:10:53.287Z",
+  "installed": true,
+  "version": "2.1.322 (Claude Code)",
+  "success": true,
+  "ms": 22566,
+  "eventKinds": [
+    "tool_call",
+    "tool_result",
+    "assistant_text",
+    "usage",
+    "turn_end"
+  ],
+  "eventCount": 6,
+  "textHead": "README.md의 첫 줄은 `# HARNESS-X`이고, 이 프로젝트의 이름을 제목으로 붙인 줄입니다.\n\n참고로 그 아래 3번째 줄에는 이 프로젝트가 특정 엔진에 묶이지 않는 에이전트 하네스(TypeScript · Node 22 · pnpm 모노레포)라고 적혀 있습니다. 파일은 읽기만 했고 고치지 않았습니다.T-102 작업은 이어서 하지 않았습니다.\n\n1",
+  "error": null,
+  "aborted": false
+}
