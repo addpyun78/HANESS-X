@@ -498,7 +498,7 @@
       "bundle": "nice"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": [],
       "area": "shell",
       "severity": "low",
@@ -508,7 +508,9 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C2.19"
+        "source": "C2.19",
+        "resolution": "자리표시 단언 2개를 다른 파일 검사 존재 확인으로",
+        "resolvedAt": "2026-11-12T17:10:18.886Z"
       },
       "id": "C2-005",
       "plain": "늘 통과하는 빈 시험이 2개 있어요.",
