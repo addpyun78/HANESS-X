@@ -1,0 +1,313 @@
+[
+  {
+    "key": "approval.osNotify",
+    "group": "approval",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.approvals.os-notify"
+  },
+  {
+    "key": "approval.remindMinutes",
+    "group": "approval",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.approvals.remind-minutes"
+  },
+  {
+    "key": "approval.sound",
+    "group": "approval",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.approvals.sound"
+  },
+  {
+    "key": "assist.engine",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "assist.model",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "attachments.concurrency",
+    "group": "attachments",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "attachments.folderConfirmOver",
+    "group": "attachments",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "attachments.maxBatchMB",
+    "group": "attachments",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "attachments.maxFileMB",
+    "group": "attachments",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "builder.animation",
+    "group": "ai",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "builder.engine",
+    "group": "ai",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "builder.maxQuestions",
+    "group": "ai",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "checklist.maxAutoTurns",
+    "group": "checklist",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "checklist.stallBlockTurns",
+    "group": "checklist",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "checklist.stallChangeTurns",
+    "group": "checklist",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "checklist.strict",
+    "group": "checklist",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "data.attachmentsKeepDays",
+    "group": "data",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "data.retentionDays",
+    "group": "data",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "engines",
+    "group": "ai",
+    "scope": "global",
+    "storage": "engines-file"
+  },
+  {
+    "key": "installer.chocoEnabled",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.engine",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.local.model",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.local.timeoutMs",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.maxCallsPerSession",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.model",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.samples",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "judge.semantic",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "main.engine",
+    "group": "ai",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "main.model",
+    "group": "ai",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "mode.auto.maxCostUsd",
+    "group": "mode",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "mode.auto.maxIterations",
+    "group": "mode",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "mode.auto.maxMinutes",
+    "group": "mode",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "mode.auto.maxTokens",
+    "group": "mode",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "mode.default",
+    "group": "mode",
+    "scope": "both",
+    "storage": "settings"
+  },
+  {
+    "key": "permission.default",
+    "group": "mode",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "project.scratchDir",
+    "group": "project",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "sidebar.group",
+    "group": "project",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx-sidebar-group"
+  },
+  {
+    "key": "sidebar.sort",
+    "group": "project",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx-sidebar-sort"
+  },
+  {
+    "key": "tools.brave",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "tools.braveKey",
+    "group": "tools",
+    "scope": "global",
+    "storage": "keychain",
+    "secretAccount": "brave-search"
+  },
+  {
+    "key": "tools.budget",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "tools.searxng",
+    "group": "tools",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "ui.fontSize",
+    "group": "general",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.ui.font-size"
+  },
+  {
+    "key": "ui.language",
+    "group": "general",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.ui.language"
+  },
+  {
+    "key": "ui.reduceMotion",
+    "group": "general",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.ui.reduce-motion"
+  },
+  {
+    "key": "ui.theme",
+    "group": "general",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx-theme"
+  },
+  {
+    "key": "verifier.local.baseUrl",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "verifier.local.model",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "verifier.local.timeoutMs",
+    "group": "judge",
+    "scope": "global",
+    "storage": "settings"
+  },
+  {
+    "key": "voice.provider",
+    "group": "voice",
+    "scope": "global",
+    "storage": "browser",
+    "browserKey": "hx.stt.provider"
+  }
+]
