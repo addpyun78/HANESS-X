@@ -1,0 +1,82 @@
+[
+  {
+    "file": "docs/audit/raw/test-run-1.json",
+    "bytes": 1962078
+  },
+  {
+    "file": "docs/audit/raw/done-items.json",
+    "bytes": 504474
+  },
+  {
+    "file": "docs/audit/raw/eslint.json",
+    "bytes": 320620
+  },
+  {
+    "file": "docs/audit/feature-map.json",
+    "bytes": 311248
+  },
+  {
+    "file": "pnpm-lock.yaml",
+    "bytes": 181102
+  },
+  {
+    "file": "docs/tickets/T-101.md",
+    "bytes": 152919
+  },
+  {
+    "file": "docs/screenshots/t032-5000-events.png",
+    "bytes": 132176
+  },
+  {
+    "file": "docs/tickets/T-100.md",
+    "bytes": 123717
+  },
+  {
+    "file": "docs/screenshots/t033-main-dark.png",
+    "bytes": 79059
+  },
+  {
+    "file": "docs/screenshots/t033-main-light.png",
+    "bytes": 77364
+  },
+  {
+    "file": "docs/tickets/T-102.md",
+    "bytes": 70466
+  },
+  {
+    "file": "docs/audit/raw/tsc-strict.txt",
+    "bytes": 62299
+  },
+  {
+    "file": "docs/audit/dynamic-entries.json",
+    "bytes": 60318
+  },
+  {
+    "file": "docs/tickets/T-101-spec.md",
+    "bytes": 60046
+  },
+  {
+    "file": "docs/audit/feature-map.md",
+    "bytes": 59532
+  },
+  {
+    "file": "docs/PLAN-v2.md",
+    "bytes": 57593
+  },
+  {
+    "file": "docs/audit/upgrade-research.md",
+    "bytes": 51945
+  },
+  {
+    "file": "docs/screenshots/t031-narrow.png",
+    "bytes": 46149
+  },
+  {
+    "file": "packages/kernel/src/cli.ts",
+    "bytes": 41930
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+    "bytes": 35963
+  }
+]
