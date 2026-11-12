@@ -57,7 +57,7 @@ const FILE_EXT_RE = /\.(json|ya?ml|tsx?|jsx?|md|lock|txt|log)$/;
 /** 화면 동작 id(`act('engines.rescan')`, T-101 0C.1)는 설정 키가 아니다 — 바로 앞이 act( / actionAttr( 이면 건너뛴다 */
 const ACTION_ARG_RE = /\b(?:act|actionAttr)\(\s*$/;
 
-const lineOf =(text: string, idx: number) => text.slice(0, idx).split('\n').length;
+const lineOf = (text: string, idx: number) => text.slice(0, idx).split('\n').length;
 
 /** 소스 글 하나에서 설정 키 사용 찾기 */
 export function scanSourceText(
