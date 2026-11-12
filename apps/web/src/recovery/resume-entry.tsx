@@ -1,4 +1,5 @@
 import type { ResumeApi } from './ResumeFlow.js';
+import { act } from '../actions/registry.js';
 
 /**
  * T-101 2B.2 이어하기 입구 도우미
@@ -34,7 +35,7 @@ export interface ResumeCountLinkProps {
 export function ResumeCountLink({ count, onOpen }: ResumeCountLinkProps) {
   if (count <= 0) return null;
   return (
-    <button type="button" className="hx-resume-count" onClick={onOpen}>
+    <button type="button" className="hx-resume-count" {...act('resume.open-list')} onClick={onOpen}>
       ⏸ 이어서 할 작업 {count}개
     </button>
   );

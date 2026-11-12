@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { changeText, doneText, NOTHING_FOUND, progressMark, type ScanProgressView } from './model.js';
 import type { BubblePhase } from './useEngineScan.js';
 import './engines.css';
+import { act } from '../actions/registry.js';
 
 export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -49,11 +50,11 @@ export function ScanBubble({ phase, progress, onOpenInstall, onDismiss, reducedM
           <p className="hx-scan-card__title">{NOTHING_FOUND}</p>
           <p className="hx-scan-card__desc">설치 관리에서 쓸 수 있는 AI를 찾아 설치할 수 있어요.</p>
           <div className="hx-scan-card__actions">
-            <button type="button" className="hx-icon-btn" onClick={onOpenInstall}>
+            <button type="button" className="hx-icon-btn" {...act('scan.open-install')} onClick={onOpenInstall}>
               설치 관리에서 찾기
             </button>
             {onDismiss && (
-              <button type="button" className="hx-icon-btn" onClick={onDismiss}>
+              <button type="button" className="hx-icon-btn" {...act('scan.dismiss')} onClick={onDismiss}>
                 닫기
               </button>
             )}

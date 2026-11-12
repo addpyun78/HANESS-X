@@ -68,6 +68,18 @@ export const ACTIONS = {
 
   'recovery.resume': { description: '멈춘 작업을 이어서 해요', effect: 'api' },
   'resume.start': { description: '고른 대로 멈춘 작업을 이어서 해요', effect: 'api' },
+  'resume.check-choice': { description: '이어하기 전 확인에서 하나를 골라요', effect: 'state' },
+  'resume.open-list': { description: '이어서 할 작업 목록을 열어요', effect: 'open' },
+  'resume.session': { description: '고른 작업을 이어서 해요', effect: 'api' },
+  'shell.stop-all': { description: '실행 중인 작업을 모두 멈춰요', effect: 'api' },
+
+  // T-101 5번 AI 고르기·엔진 찾기
+  'model.open': { description: 'AI 고르기 메뉴를 열어요', effect: 'open' },
+  'model.choose': { description: '이 AI를 써요', effect: 'state' },
+  'model.login': { description: '이 AI에 로그인해요', effect: 'open' },
+  'model.scope': { description: '고른 AI를 어디에 쓸지 정해요', effect: 'api' },
+  'scan.open-install': { description: '설치 관리에서 쓸 수 있는 AI를 찾아요', effect: 'navigate' },
+  'scan.dismiss': { description: '안내를 닫아요', effect: 'state' },
 
   // T-101 2A.8 정지 버튼
   'composer.stop': { description: '멈추는 방법을 고르는 메뉴를 열어요', effect: 'open' },
