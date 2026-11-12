@@ -232,7 +232,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": ["F-001"],
       "area": "docs",
       "severity": "low",
@@ -242,7 +242,9 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C1.5"
+        "source": "C1.5",
+        "resolution": "prettier 서식",
+        "resolvedAt": "2026-11-12T17:10:24.501Z"
       },
       "id": "C1-004",
       "plain": "작업 확인 장치 파일의 줄 맞춤이 어긋났어요.",
