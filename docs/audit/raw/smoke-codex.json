@@ -1,0 +1,20 @@
+{
+  "engine": "codex",
+  "prompt": "README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.",
+  "at": "2026-11-12T10:11:33.440Z",
+  "installed": true,
+  "version": "codex-cli 0.155.1",
+  "success": false,
+  "ms": 5811,
+  "eventKinds": [
+    "error",
+    "turn_end"
+  ],
+  "eventCount": 2,
+  "textHead": "",
+  "error": {
+    "code": "auth_required",
+    "message": "Your access token could not be refreshed. Please log out and sign in again."
+  },
+  "aborted": false
+}
