@@ -1,0 +1,664 @@
+[
+  {
+    "id": "F-001",
+    "name": "작업 게이트 부트스트랩",
+    "verdict": "정상(문서·설정 기능)",
+    "passingTests": 0,
+    "tests": 1,
+    "codeFiles": 0,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "tests/audit/f001-ticket-gate.test.ts"
+    ]
+  },
+  {
+    "id": "F-003",
+    "name": "protocol: HarnessEvent 타입",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 1,
+    "users": 147,
+    "usersSample": [
+      "packages/engines/acp-generic/src/adapter.ts",
+      "packages/engines/acp-generic/src/index.ts",
+      "packages/protocol/src/engine.ts"
+    ],
+    "repTests": [
+      "packages/protocol/test/event-base.test.ts"
+    ]
+  },
+  {
+    "id": "F-004",
+    "name": "protocol: 플러그인 매니페스트 스키마",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 1,
+    "users": 153,
+    "usersSample": [
+      "packages/plugins-core/checklist-ledger/src/escalate.ts",
+      "packages/plugins-core/checklist-ledger/src/export.ts",
+      "packages/plugins-core/checklist-ledger/src/index.ts"
+    ],
+    "repTests": [
+      "packages/protocol/test/example-hello.test.ts"
+    ]
+  },
+  {
+    "id": "F-005",
+    "name": "kernel: 이벤트 로그",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 2,
+    "users": 85,
+    "usersSample": [
+      "packages/kernel/src/api/quota-route.ts",
+      "packages/kernel/src/api/resume-routes.ts",
+      "packages/kernel/src/api/server.ts"
+    ],
+    "repTests": [
+      "packages/kernel/test/event-log.perf.test.ts"
+    ]
+  },
+  {
+    "id": "F-007",
+    "name": "kernel: 플러그인 로더",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 6,
+    "tests": 6,
+    "codeFiles": 1,
+    "users": 79,
+    "usersSample": [
+      "packages/kernel/src/api/server.ts",
+      "packages/kernel/src/engines-settings.ts",
+      "packages/kernel/src/hot-reload.ts"
+    ],
+    "repTests": [
+      "packages/kernel/test/loader.discover.test.ts"
+    ]
+  },
+  {
+    "id": "F-008",
+    "name": "kernel: 핫리로드",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 1,
+    "tests": 1,
+    "codeFiles": 1,
+    "users": 69,
+    "usersSample": [
+      "packages/kernel/src/cli.ts",
+      "packages/kernel/src/index.ts",
+      "packages/engines/acp-generic/src/adapter.ts"
+    ],
+    "repTests": [
+      "packages/kernel/test/hot-reload.test.ts"
+    ]
+  },
+  {
+    "id": "F-011",
+    "name": "engine-scanner: WSL 탐지",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 0,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/engine-scanner/test/wsl.both.test.ts"
+    ]
+  },
+  {
+    "id": "F-015",
+    "name": "codex 어댑터",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 6,
+    "users": 17,
+    "usersSample": [
+      "packages/engines/antigravity/src/engine.ts",
+      "packages/engines/antigravity/src/index.ts",
+      "packages/engines/claude-code/src/engine.ts"
+    ],
+    "repTests": [
+      "packages/engines/codex/test/sandbox.test.ts"
+    ]
+  },
+  {
+    "id": "F-016",
+    "name": "antigravity 어댑터",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 6,
+    "tests": 6,
+    "codeFiles": 6,
+    "users": 17,
+    "usersSample": [
+      "packages/engines/antigravity/src/index.ts",
+      "packages/engines/claude-code/src/index.ts",
+      "packages/engines/codex/src/index.ts"
+    ],
+    "repTests": [
+      "packages/engines/antigravity/test/capabilities.test.ts"
+    ]
+  },
+  {
+    "id": "F-019",
+    "name": "체크리스트 원장과 상태 기계",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 7,
+    "tests": 7,
+    "codeFiles": 6,
+    "users": 97,
+    "usersSample": [
+      "packages/kernel/src/dispatch.ts",
+      "packages/kernel/src/projects/defaults.ts",
+      "packages/kernel/src/projects/index.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/checklist-ledger/test/state.test.ts"
+    ]
+  },
+  {
+    "id": "F-020",
+    "name": "원자성 린터",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 6,
+    "tests": 6,
+    "codeFiles": 1,
+    "users": 33,
+    "usersSample": [
+      "packages/plugins-core/checklist-ledger/src/auto-approve.ts",
+      "packages/plugins-core/checklist-ledger/src/index.ts",
+      "packages/plugins-core/checklist-ledger/src/plan-routes.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/checklist-ledger/test/lint.r3.test.ts"
+    ]
+  },
+  {
+    "id": "F-021",
+    "name": "경로 원장(manifest)과 이름 정책",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 3,
+    "users": 41,
+    "usersSample": [
+      "packages/plugins-core/checklist-ledger/src/index.ts",
+      "packages/plugins-core/checklist-ledger/src/learn.ts",
+      "packages/plugins-core/checklist-ledger/src/manifest.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/checklist-ledger/test/glossary.test.ts"
+    ]
+  },
+  {
+    "id": "F-024",
+    "name": "판정 사다리 L1~L3 (코드 판정)",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 6,
+    "users": 9,
+    "usersSample": [
+      "packages/plugins-core/verifiers/comparators/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/ladder.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts"
+    ]
+  },
+  {
+    "id": "F-025",
+    "name": "판정 사다리 L4 — Jev 판정기 플러그인",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 6,
+    "users": 20,
+    "usersSample": [
+      "packages/plugins-core/verifiers/ladder/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/l4.ts",
+      "packages/plugins-core/verifiers/ladder/src/record.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts"
+    ]
+  },
+  {
+    "id": "F-029",
+    "name": "웹 앱 골격과 디자인 토큰",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 5,
+    "users": 33,
+    "usersSample": [
+      "apps/web/src/shell/TopBar.tsx",
+      "apps/web/src/design/ThemeToggle.tsx",
+      "apps/web/src/design/ui-prefs.ts"
+    ],
+    "repTests": [
+      "apps/web/test/theme.test.tsx"
+    ]
+  },
+  {
+    "id": "F-030",
+    "name": "앱 셸 레이아웃",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 7,
+    "users": 64,
+    "usersSample": [
+      "apps/web/src/shell/AppShell.tsx",
+      "apps/web/src/shell/SessionNav.tsx",
+      "packages/plugins-core/agent-builder/src/inventory/build.ts"
+    ],
+    "repTests": [
+      "apps/web/test/shell.topbar.test.tsx"
+    ]
+  },
+  {
+    "id": "F-036",
+    "name": "Diff·터미널·궤적 패널",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 14,
+    "users": 107,
+    "usersSample": [
+      "apps/web/src/chat/ChatStream.tsx",
+      "apps/web/src/App.tsx",
+      "apps/web/src/chat/BlockView.tsx"
+    ],
+    "repTests": [
+      "apps/web/test/panels.diff.test.tsx"
+    ]
+  },
+  {
+    "id": "F-038",
+    "name": "파이프라인·에이전트 스키마",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 2,
+    "users": 151,
+    "usersSample": [
+      "packages/protocol/src/agent-draft.ts",
+      "packages/protocol/src/index.ts",
+      "apps/web/src/App.tsx"
+    ],
+    "repTests": [
+      "packages/protocol/test/example-design-qa.test.ts"
+    ]
+  },
+  {
+    "id": "F-042",
+    "name": "메뉴 \"에이전트 만들기\"와 빌더 캔버스",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 7,
+    "users": 27,
+    "usersSample": [
+      "apps/web/src/builder/BuilderPage.tsx",
+      "apps/web/src/builder/Canvas.tsx",
+      "apps/web/src/builder/Drawer.tsx"
+    ],
+    "repTests": [
+      "apps/web/test/builder.drawer.test.tsx"
+    ]
+  },
+  {
+    "id": "F-043",
+    "name": "레고 장착·분리",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 8,
+    "users": 65,
+    "usersSample": [
+      "apps/web/src/builder/BuilderPage.tsx",
+      "apps/web/src/builder/Canvas.tsx",
+      "apps/web/src/builder/Drawer.tsx"
+    ],
+    "repTests": [
+      "packages/protocol/test/schema-compat.test.ts"
+    ]
+  },
+  {
+    "id": "F-047",
+    "name": "템플릿 레지스트리",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 2,
+    "users": 11,
+    "usersSample": [
+      "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "packages/plugins-core/approvals/src/index.ts",
+      "packages/sdk/src/index.ts"
+    ],
+    "repTests": [
+      "packages/sdk/test/templates.substitute.test.ts"
+    ]
+  },
+  {
+    "id": "F-054",
+    "name": "Tauri 데스크톱 패키징",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 2,
+    "tests": 2,
+    "codeFiles": 0,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "apps/desktop/test/desktop.config.test.ts"
+    ]
+  },
+  {
+    "id": "F-056",
+    "name": "Part 1 · 준비",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 52,
+    "tests": 52,
+    "codeFiles": 5,
+    "users": 83,
+    "usersSample": [
+      "packages/kernel/src/dispatch.ts",
+      "packages/kernel/src/projects/defaults.ts",
+      "packages/kernel/src/projects/index.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts"
+    ]
+  },
+  {
+    "id": "F-058",
+    "name": "Part 1 · 비교기 인터페이스",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 3,
+    "users": 142,
+    "usersSample": [
+      "apps/web/src/App.tsx",
+      "apps/web/src/builder/chat/BuilderChat.tsx",
+      "apps/web/src/composer/AttachmentChips.tsx"
+    ],
+    "repTests": [
+      "packages/plugins-core/installer/test/registry.test.ts"
+    ]
+  },
+  {
+    "id": "F-059",
+    "name": "Part 1 · 비교기 구현 (코드만, 0원)",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 25,
+    "tests": 25,
+    "codeFiles": 6,
+    "users": 19,
+    "usersSample": [
+      "packages/plugins-core/tool-finder/src/finder.ts",
+      "packages/plugins-core/tool-finder/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/candidates.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts"
+    ]
+  },
+  {
+    "id": "F-060",
+    "name": "Part 1 · acceptance 스키마 연결",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 10,
+    "tests": 10,
+    "codeFiles": 2,
+    "users": 10,
+    "usersSample": [
+      "packages/plugins-core/verifiers/comparators/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/index.ts",
+      "packages/plugins-core/verifiers/ladder/src/ladder.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts"
+    ]
+  },
+  {
+    "id": "F-062",
+    "name": "Part 1 · 기록·학습",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 1,
+    "users": 30,
+    "usersSample": [
+      "packages/plugins-core/checklist-ledger/src/index.ts",
+      "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "packages/plugins-core/agent-builder/src/runner/stages.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/verifiers/comparators/test/evidence.test.ts"
+    ]
+  },
+  {
+    "id": "F-066",
+    "name": "Part 2 · 설치 어댑터 (종류별 plan · install · verify · uninstall)",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/installer/test/adapters-dev.test.ts"
+    ]
+  },
+  {
+    "id": "F-068",
+    "name": "Part 2 · 설치 계획 카드와 승인",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 6,
+    "users": 49,
+    "usersSample": [
+      "apps/web/src/App.tsx",
+      "apps/web/src/builder/BuilderPage.tsx",
+      "apps/web/src/install/FirstRunCard.tsx"
+    ],
+    "repTests": [
+      "packages/plugins-core/installer/test/license.test.ts"
+    ]
+  },
+  {
+    "id": "F-069",
+    "name": "Part 2 · 실행·검증·기록·제거",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 1,
+    "tests": 1,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/installer/test/execute.test.ts"
+    ]
+  },
+  {
+    "id": "F-073",
+    "name": "Part 3 · 검색",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 7,
+    "tests": 7,
+    "codeFiles": 4,
+    "users": 13,
+    "usersSample": [
+      "packages/plugins-core/verifiers/judge/src/chain.ts",
+      "packages/plugins-core/verifiers/judge/src/engine.ts",
+      "packages/plugins-core/verifiers/judge/src/index.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/tool-finder/test/candidate.schema.test.ts"
+    ]
+  },
+  {
+    "id": "F-075",
+    "name": "Part 3 · 연결과 마무리",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 8,
+    "users": 61,
+    "usersSample": [
+      "apps/web/src/install/FirstRunCard.tsx",
+      "apps/web/src/install/InstallPlanCard.tsx",
+      "apps/web/src/panels/Approvals/ApprovalsArea.tsx"
+    ],
+    "repTests": [
+      "apps/web/test/toolpicker.card.test.tsx"
+    ]
+  },
+  {
+    "id": "F-077",
+    "name": "Part 4 · 입력 — 글과 말",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 10,
+    "tests": 10,
+    "codeFiles": 8,
+    "users": 69,
+    "usersSample": [
+      "apps/web/src/App.tsx",
+      "apps/web/src/builder/chat/BuilderChat.tsx",
+      "apps/web/src/composer/AttachmentChips.tsx"
+    ],
+    "repTests": [
+      "apps/web/test/composer.ime.test.tsx"
+    ]
+  },
+  {
+    "id": "F-080",
+    "name": "Part 4 · 수정 — 캔버스로도, 말로도",
+    "verdict": "정상(내부 부품)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 9,
+    "users": 83,
+    "usersSample": [
+      "packages/kernel/src/api/settings-routes.ts",
+      "packages/kernel/src/projects/project-settings-io.ts",
+      "packages/kernel/src/settings/diagnostics.ts"
+    ],
+    "repTests": [
+      "packages/plugins-core/agent-builder/test/drafts.store.test.ts"
+    ]
+  },
+  {
+    "id": "F-088",
+    "name": "0-2. 프로젝트와 새 세션 · 회귀",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 1,
+    "tests": 1,
+    "codeFiles": 0,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "apps/web/test/projects.e2e.test.tsx"
+    ]
+  },
+  {
+    "id": "F-089",
+    "name": "0-3. 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검 · 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 5,
+    "tests": 5,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "apps/web/test/click-all.test.tsx"
+    ]
+  },
+  {
+    "id": "F-092",
+    "name": "1. 입력창 첨부 · 형태 바꾸기 (백그라운드)",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 11,
+    "tests": 11,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/attachments/test/unknown.test.ts"
+    ]
+  },
+  {
+    "id": "F-093",
+    "name": "1. 입력창 첨부 · 안전",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 3,
+    "tests": 3,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/attachments/test/no-content-log.test.ts"
+    ]
+  },
+  {
+    "id": "F-102",
+    "name": "3. 실행 모드 · 일반 모드",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 1,
+    "tests": 1,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/permission-gate/test/run-mode.normal.test.ts"
+    ]
+  },
+  {
+    "id": "F-108",
+    "name": "4. 단계가 있는 에이전트의 체크리스트 · 검사 실패와 되돌림",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/checklist-ledger/test/stages.rework-scope.test.ts"
+    ]
+  },
+  {
+    "id": "F-109",
+    "name": "4. 단계가 있는 에이전트의 체크리스트 · 병렬·반복·분기·하위 에이전트",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 4,
+    "tests": 4,
+    "codeFiles": 0,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/agent-builder/test/stages.router.test.ts"
+    ]
+  },
+  {
+    "id": "F-111",
+    "name": "4. 단계가 있는 에이전트의 체크리스트 · 회귀",
+    "verdict": "확인 필요(쓰는 곳 없음)",
+    "passingTests": 2,
+    "tests": 2,
+    "codeFiles": 1,
+    "users": 0,
+    "usersSample": [],
+    "repTests": [
+      "packages/plugins-core/agent-builder/test/stages.e2e.test.ts"
+    ]
+  }
+]
