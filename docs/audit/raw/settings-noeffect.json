@@ -1,0 +1,610 @@
+[
+  {
+    "key": "approval.osNotify",
+    "group": "approval",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/panels/Approvals/alert-prefs.ts:2",
+      "apps/web/src/panels/Approvals/alert-prefs.ts:6"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "approval.remindMinutes",
+    "group": "approval",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/panels/Approvals/alert-prefs.ts:2",
+      "apps/web/src/panels/Approvals/alert-prefs.ts:7"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "approval.sound",
+    "group": "approval",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/panels/Approvals/alert-prefs.ts:2",
+      "apps/web/src/panels/Approvals/alert-prefs.ts:8"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "assist.engine",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/plugins-core/tool-finder/src/assist.ts:2",
+      "packages/plugins-core/tool-finder/src/settings.ts:9"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "assist.model",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 0,
+    "runtimeReaders": 0,
+    "where": [],
+    "noEffect": true
+  },
+  {
+    "key": "attachments.concurrency",
+    "group": "attachments",
+    "storage": "settings",
+    "readers": 3,
+    "runtimeReaders": 3,
+    "where": [
+      "packages/kernel/src/cli.ts:740",
+      "packages/plugins-core/attachments/src/limits.ts:25",
+      "packages/plugins-core/attachments/src/queue.ts:21"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "attachments.folderConfirmOver",
+    "group": "attachments",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/cli.ts:741",
+      "packages/plugins-core/attachments/src/limits.ts:26"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "attachments.maxBatchMB",
+    "group": "attachments",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/cli.ts:739",
+      "packages/plugins-core/attachments/src/limits.ts:24"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "attachments.maxFileMB",
+    "group": "attachments",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/cli.ts:738",
+      "packages/plugins-core/attachments/src/limits.ts:23"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "builder.animation",
+    "group": "ai",
+    "storage": "settings",
+    "readers": 4,
+    "runtimeReaders": 4,
+    "where": [
+      "apps/web/src/builder/BuilderPage.tsx:57",
+      "apps/web/src/builder/draft/useDraftSession.tsx:34",
+      "packages/kernel/src/settings/coverage.ts:33",
+      "packages/plugins-core/agent-builder/src/designer/settings.ts:7"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "builder.engine",
+    "group": "ai",
+    "storage": "settings",
+    "readers": 4,
+    "runtimeReaders": 4,
+    "where": [
+      "packages/plugins-core/agent-builder/src/designer/route.ts:35",
+      "packages/plugins-core/agent-builder/src/designer/settings.ts:5",
+      "packages/plugins-core/agent-builder/src/designer/settings.ts:49",
+      "packages/plugins-core/agent-builder/src/designer/wire.ts:12"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "builder.maxQuestions",
+    "group": "ai",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/plugins-core/agent-builder/src/designer/designer.ts:22",
+      "packages/plugins-core/agent-builder/src/designer/settings.ts:6"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "checklist.maxAutoTurns",
+    "group": "checklist",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/settings/runtime.ts:39"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "checklist.stallBlockTurns",
+    "group": "checklist",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/settings/runtime.ts:35"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "checklist.stallChangeTurns",
+    "group": "checklist",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/settings/runtime.ts:34"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "checklist.strict",
+    "group": "checklist",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/settings/runtime.ts:41"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "data.attachmentsKeepDays",
+    "group": "data",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/settings/data-cleanup.ts:6",
+      "packages/kernel/src/settings/data-cleanup.ts:48"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "data.retentionDays",
+    "group": "data",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/settings/data-cleanup.ts:6",
+      "packages/kernel/src/settings/data-cleanup.ts:42"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "engines",
+    "group": "ai",
+    "storage": "engines-file",
+    "readers": 309,
+    "runtimeReaders": 277,
+    "where": [
+      "apps/web/src/App.tsx:19",
+      "apps/web/src/App.tsx:49",
+      "apps/web/src/App.tsx:50",
+      "apps/web/src/App.tsx:51",
+      "apps/web/src/App.tsx:107",
+      "apps/web/src/App.tsx:135",
+      "apps/web/src/App.tsx:137",
+      "apps/web/src/App.tsx:158"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "installer.chocoEnabled",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/kernel/src/cli.ts:451",
+      "packages/kernel/src/settings/runtime.ts:47"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.engine",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 16,
+    "runtimeReaders": 16,
+    "where": [
+      "packages/kernel/src/cli.ts:133",
+      "packages/kernel/src/cli.ts:413",
+      "packages/kernel/src/settings/coverage.ts:11",
+      "packages/plugins-core/tool-finder/src/assist.ts:2",
+      "packages/plugins-core/tool-finder/src/settings.ts:9",
+      "packages/plugins-core/verifiers/judge/src/engine.ts:14",
+      "packages/plugins-core/verifiers/judge/src/index.ts:15",
+      "packages/plugins-core/verifiers/judge/src/select.ts:22"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.local.model",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/plugins-core/verifiers/judge/src/settings.ts:10"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.local.timeoutMs",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/plugins-core/verifiers/judge/src/settings.ts:11"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.maxCallsPerSession",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/plugins-core/verifiers/judge/src/budget.ts:4",
+      "packages/plugins-core/verifiers/judge/src/settings.ts:8"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.model",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/plugins-core/verifiers/judge/src/settings.ts:6"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.samples",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/plugins-core/verifiers/judge/src/confidence.ts:4",
+      "packages/plugins-core/verifiers/judge/src/settings.ts:7"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "judge.semantic",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 9,
+    "runtimeReaders": 9,
+    "where": [
+      "packages/kernel/src/settings/coverage.ts:11",
+      "packages/plugins-core/verifiers/judge/src/settings.ts:9",
+      "packages/plugins-core/verifiers/ladder/src/l4.ts:15",
+      "packages/plugins-core/verifiers/ladder/src/l4.ts:119",
+      "packages/plugins-core/verifiers/ladder/src/settings.ts:8",
+      "packages/plugins-core/verifiers/ladder/src/settings.ts:67",
+      "packages/plugins-core/verifiers/ladder/src/settings.ts:102",
+      "packages/plugins-core/verifiers/ladder/src/settings.ts:128"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "main.engine",
+    "group": "ai",
+    "storage": "settings",
+    "readers": 12,
+    "runtimeReaders": 12,
+    "where": [
+      "apps/web/src/builder/catalog.ts:258",
+      "packages/kernel/src/main-ai.ts:9",
+      "packages/kernel/src/main-ai.ts:30",
+      "packages/kernel/src/main-ai.ts:34",
+      "packages/kernel/src/main-ai.ts:47",
+      "packages/kernel/src/main-ai.ts:67",
+      "packages/kernel/src/main-ai.ts:91",
+      "packages/kernel/src/main-ai.ts:175"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "main.model",
+    "group": "ai",
+    "storage": "settings",
+    "readers": 5,
+    "runtimeReaders": 5,
+    "where": [
+      "packages/kernel/src/main-ai.ts:9",
+      "packages/kernel/src/main-ai.ts:30",
+      "packages/kernel/src/main-ai.ts:35",
+      "packages/kernel/src/main-ai.ts:48",
+      "packages/kernel/src/main-ai.ts:177"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "mode.auto.maxCostUsd",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/run-mode/limits.ts:21"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "mode.auto.maxIterations",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/run-mode/limits.ts:22"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "mode.auto.maxMinutes",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/run-mode/limits.ts:19"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "mode.auto.maxTokens",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/run-mode/limits.ts:20"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "mode.default",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 4,
+    "runtimeReaders": 4,
+    "where": [
+      "apps/web/src/shell/projects/ProjectSettings.tsx:13",
+      "packages/kernel/src/cli.ts:521",
+      "packages/kernel/src/projects/defaults.ts:8",
+      "packages/kernel/src/run-mode/resolve.ts:6"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "permission.default",
+    "group": "mode",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/kernel/src/settings/runtime.ts:23"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "project.scratchDir",
+    "group": "project",
+    "storage": "settings",
+    "readers": 3,
+    "runtimeReaders": 3,
+    "where": [
+      "packages/kernel/src/cli.ts:500",
+      "packages/kernel/src/projects/project-store.ts:109",
+      "packages/kernel/src/settings/runtime.ts:52"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "sidebar.group",
+    "group": "project",
+    "storage": "browser",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "apps/web/src/shell/projects/prefs.ts:12"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "sidebar.sort",
+    "group": "project",
+    "storage": "browser",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "apps/web/src/shell/projects/prefs.ts:13"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "tools.brave",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/plugins-core/tool-finder/src/settings.ts:8"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "tools.braveKey",
+    "group": "tools",
+    "storage": "keychain",
+    "readers": 5,
+    "runtimeReaders": 5,
+    "where": [
+      "packages/plugins-core/installer/src/adapters/download.ts:295",
+      "packages/plugins-core/installer/src/adapters/download.ts:296",
+      "packages/plugins-core/tool-finder/src/providers/web.ts:17",
+      "packages/plugins-core/tool-finder/src/providers/web.ts:88",
+      "packages/plugins-core/tool-finder/src/settings.ts:8"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "tools.budget",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "packages/plugins-core/tool-finder/src/need.ts:8",
+      "packages/plugins-core/tool-finder/src/settings.ts:6"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "tools.searxng",
+    "group": "tools",
+    "storage": "settings",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "packages/plugins-core/tool-finder/src/settings.ts:7"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "ui.fontSize",
+    "group": "general",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/design/ui-prefs.ts:4",
+      "apps/web/src/design/ui-prefs.ts:8"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "ui.language",
+    "group": "general",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/design/ui-prefs.ts:4",
+      "apps/web/src/design/ui-prefs.ts:10"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "ui.reduceMotion",
+    "group": "general",
+    "storage": "browser",
+    "readers": 2,
+    "runtimeReaders": 2,
+    "where": [
+      "apps/web/src/design/ui-prefs.ts:4",
+      "apps/web/src/design/ui-prefs.ts:9"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "ui.theme",
+    "group": "general",
+    "storage": "browser",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "apps/web/src/design/theme.ts:4"
+    ],
+    "noEffect": false
+  },
+  {
+    "key": "verifier.local.baseUrl",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 0,
+    "runtimeReaders": 0,
+    "where": [],
+    "noEffect": true
+  },
+  {
+    "key": "verifier.local.model",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 0,
+    "runtimeReaders": 0,
+    "where": [],
+    "noEffect": true
+  },
+  {
+    "key": "verifier.local.timeoutMs",
+    "group": "judge",
+    "storage": "settings",
+    "readers": 0,
+    "runtimeReaders": 0,
+    "where": [],
+    "noEffect": true
+  },
+  {
+    "key": "voice.provider",
+    "group": "voice",
+    "storage": "browser",
+    "readers": 1,
+    "runtimeReaders": 1,
+    "where": [
+      "apps/web/src/builder/chat/stt.ts:19"
+    ],
+    "noEffect": false
+  }
+]
