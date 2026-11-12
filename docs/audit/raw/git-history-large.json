@@ -1,0 +1,106 @@
+{
+  "note": "보고만 — Git 기록 다시 쓰기는 하지 않음",
+  "objects": 12687,
+  "top20": [
+    {
+      "sha": "ac168b8df5e8c6d2f0f2c96f9714152454f26e79",
+      "bytes": 1962078,
+      "path": "docs/audit/raw/test-run-1.json"
+    },
+    {
+      "sha": "e0527ec6b874d23d6de45004c9cec0020e9033e8",
+      "bytes": 504474,
+      "path": "docs/audit/raw/done-items.json"
+    },
+    {
+      "sha": "dba56588ad9c55a1fe523281c95cac0367bdbc29",
+      "bytes": 320620,
+      "path": "docs/audit/raw/eslint.json"
+    },
+    {
+      "sha": "d9f499a78cb31ece493c0d40e710bf60712efad2",
+      "bytes": 311248,
+      "path": "docs/audit/feature-map.json"
+    },
+    {
+      "sha": "e85b3fc740c843af10e1c11c36d68884fee7dd87",
+      "bytes": 311106,
+      "path": "docs/audit/feature-map.json"
+    },
+    {
+      "sha": "05b617fe10c501f2db7db71e098a44401bb964de",
+      "bytes": 274186,
+      "path": "docs/audit/feature-map.json"
+    },
+    {
+      "sha": "6548ff2d115ef5c4e536610dfe585e0236bec9fe",
+      "bytes": 184246,
+      "path": "docs/audit/feature-map.json"
+    },
+    {
+      "sha": "e195c3ebae77db99a0f264591d86ba2782dd4ea9",
+      "bytes": 181102,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "50f0267fcf31890c3a5f2e61ca4da8966f4cb17c",
+      "bytes": 170534,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "b85e3a9f3eef07306c0ff1583e8c59618618fcc1",
+      "bytes": 170434,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "a3a72fca8df41778d217a20b43e6ea26bc87fa54",
+      "bytes": 170367,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "f9bfd3f7057c3c3e8493e530b30e9167b43c7cc0",
+      "bytes": 169837,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "5fb75a803c665e0ecbf5024b78e2e7ab6b6aa7d4",
+      "bytes": 169650,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "502d6cc52cd893f5ee7fdfd810d98ef719b6f8c9",
+      "bytes": 169521,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "2bb4d186124b117f4585cfdd3d48bfba66d9fd37",
+      "bytes": 169334,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "c500aa3bfa2913d3f56fee669290c831c1cc585c",
+      "bytes": 168798,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "73f7c8744372285abb4eaa70626801a0a8a9427b",
+      "bytes": 167956,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "28621027866a35c83ed5fef94532566c2f4251f3",
+      "bytes": 167473,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "81698e0ba0980ac7ad7b949610eb48ae5859d97d",
+      "bytes": 167377,
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "sha": "ce421e5fad0069310b591156a6173decf6a340e1",
+      "bytes": 167157,
+      "path": "pnpm-lock.yaml"
+    }
+  ]
+}
