@@ -418,7 +418,7 @@
       "bundle": "must"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": ["F-077"],
       "area": "shell",
       "severity": "high",
@@ -433,7 +433,9 @@
       "effort": "S",
       "meta": {
         "source": "C2.19",
-        "wiring": true
+        "wiring": true,
+        "resolution": "serve가 stt-local registerSttRoutes 연결",
+        "resolvedAt": "2026-11-12T15:36:14.491Z"
       },
       "id": "C2-002",
       "plain": "PC 안 음성 입력 주소를 서버가 몰라요. 그래서 늘 실패해요.",
