@@ -103,6 +103,26 @@ async function loadCorePluginModule<T>(name: string): Promise<T | undefined> {
 
 const loadApprovalsModule = () => loadCorePluginModule<ApprovalsPluginModule>('approvals');
 
+/**
+ * T-102 C2-002 PC 안 음성 입력(stt-local, whisper.cpp)의 화면 주소 GET /api/stt/status · POST /api/stt/transcribe.
+ * stt-local은 packages/plugins(라이브러리형)라 플러그인 로더가 켜지 않는다 → 저장소 dist를 직접 불러 서버에 꽂는다.
+ * whisper가 없으면 status가 local:false를 돌려주므로 안전하다(커널은 그 패키지에 의존하지 않는다).
+ */
+interface SttLocalModule {
+  registerSttRoutes?(app: unknown): void;
+}
+async function loadSttLocalModule(): Promise<SttLocalModule | undefined> {
+  const root = repoRoot();
+  const file = root && join(root, 'packages', 'plugins', 'stt-local', 'dist', 'index.js');
+  if (!file || !existsSync(file)) return undefined;
+  const { pathToFileURL } = await import('node:url');
+  try {
+    return (await import(pathToFileURL(file).href)) as SttLocalModule;
+  } catch {
+    return undefined; /* 빌드가 깨졌으면 음성 입력 주소만 빠지고 서버는 켠다 */
+  }
+}
+
 /** installer 플러그인 모듈의 공개 함수 (T-100 P2-G.7 `harness-x install`·`harness-x tools`) */
 interface InstallerPluginModule {
   installCli?(
@@ -673,6 +693,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       }
     });
     const envToken = process.env.HARNESS_X_TOKEN;
+    const sttLocal = await loadSttLocalModule();
     server = await startApiServer({
       loader,
       log,
@@ -713,6 +734,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       routes: (app) => {
         // T-100 판정 연결: GET /api/notices (한 번만 보여 줄 안내) · POST /api/compare (비교 파이프라인)
         if (judgeRuntime) ladderMod?.registerJudgeRoutes?.(app, judgeRuntime);
+        // T-102 C2-002 PC 안 음성 입력 화면 주소
+        sttLocal?.registerSttRoutes?.(app);
         const ledger = loader.plugins.get('checklist-ledger')?.module as LedgerPluginModule | undefined;
         const ledgerFor =
           values.workspace && ledger?.workspaceLedgerResolver
