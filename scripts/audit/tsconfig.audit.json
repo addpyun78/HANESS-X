@@ -1,0 +1,20 @@
+{
+  "//": "T-102 C1.1 임시 엄격 설정(원래 설정은 그대로). src만 검사. 실행: pnpm exec tsc -p scripts/audit/tsconfig.audit.json",
+  "extends": "../../tsconfig.test.json",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "incremental": false
+  },
+  "include": [
+    "../../packages/**/src/**/*.ts",
+    "../../apps/**/src/**/*.ts",
+    "../../apps/**/src/**/*.tsx",
+    "../../types/**/*.d.ts"
+  ],
+  "exclude": ["../../**/node_modules/**", "../../**/dist/**", "../../**/*.test.ts", "../../**/*.test.tsx"]
+}
