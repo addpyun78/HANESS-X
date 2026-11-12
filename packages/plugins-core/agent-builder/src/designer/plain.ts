@@ -1,4 +1,4 @@
-import { checkPlainKorean, plainTermReplace } from '@harness-x/approvals';
+import { checkPlainKorean, isPlainKorean, plainTermReplace } from '@harness-x/approvals';
 import type { AgentDraft, DraftQuestion } from '@harness-x/protocol';
 
 /**
@@ -6,7 +6,8 @@ import type { AgentDraft, DraftQuestion } from '@harness-x/protocol';
  * 1) 용어 치환(H.7) 뒤 검사 2) 그래도 안 되면 재요청 오류 목록에 넣고 3) 마지막에는 안전한 기본 문장으로 바꾼다.
  */
 
-export const isPlain = (text: string, label = false) => checkPlainKorean(text, { label }).ok;
+/** 대표 구현 isPlainKorean(approvals)을 그대로 쓴다(T-102 C5-001). 바깥 이름은 그대로 둠 */
+export const isPlain = isPlainKorean;
 
 /** 치환해서 통과하면 그 글, 아니면 undefined */
 export function toPlain(text: string, label = false): string | undefined {
