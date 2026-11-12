@@ -77,7 +77,7 @@ export const ACTIONS = {
 
   // T-101 5번 AI 고르기·엔진 찾기
   'model.open': { description: 'AI 고르기 메뉴를 열어요', effect: 'open' },
-  'model.choose': { description: '이 AI를 써요', effect: 'state' },
+  'model.choose': { description: '이 AI 모델을 골라서 써요', effect: 'state' },
   'model.login': { description: '이 AI에 로그인해요', effect: 'open' },
   'model.scope': { description: '고른 AI를 어디에 쓸지 정해요', effect: 'api' },
   'scan.open-install': { description: '설치 관리에서 쓸 수 있는 AI를 찾아요', effect: 'navigate' },
