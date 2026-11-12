@@ -1,0 +1,412 @@
+[
+  {
+    "path": "examples/plugins/hello/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "hello"
+  },
+  {
+    "path": "examples/plugins/hello/index.js",
+    "kind": "main",
+    "plugin": "hello"
+  },
+  {
+    "path": "packages/engines/acp-generic/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-acp-generic"
+  },
+  {
+    "path": "packages/engines/acp-generic/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-acp-generic"
+  },
+  {
+    "path": "packages/engines/acp-generic/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-acp-generic"
+  },
+  {
+    "path": "packages/engines/antigravity/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-antigravity"
+  },
+  {
+    "path": "packages/engines/antigravity/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-antigravity"
+  },
+  {
+    "path": "packages/engines/antigravity/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-antigravity"
+  },
+  {
+    "path": "packages/engines/claude-code/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-claude-code"
+  },
+  {
+    "path": "packages/engines/claude-code/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-claude-code"
+  },
+  {
+    "path": "packages/engines/claude-code/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-claude-code"
+  },
+  {
+    "path": "packages/engines/codex/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-codex"
+  },
+  {
+    "path": "packages/engines/codex/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-codex"
+  },
+  {
+    "path": "packages/engines/codex/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-codex"
+  },
+  {
+    "path": "packages/engines/openai-compat/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-openai-compat"
+  },
+  {
+    "path": "packages/engines/openai-compat/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-openai-compat"
+  },
+  {
+    "path": "packages/engines/openai-compat/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-openai-compat"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "agent-builder"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/dist/index.js",
+    "kind": "main",
+    "plugin": "agent-builder"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/index.ts",
+    "kind": "main-src",
+    "plugin": "agent-builder"
+  },
+  {
+    "path": "packages/plugins-core/approvals/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "approvals"
+  },
+  {
+    "path": "packages/plugins-core/approvals/dist/index.js",
+    "kind": "main",
+    "plugin": "approvals"
+  },
+  {
+    "path": "packages/plugins-core/approvals/src/index.ts",
+    "kind": "main-src",
+    "plugin": "approvals"
+  },
+  {
+    "path": "packages/plugins-core/attachments/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "attachments"
+  },
+  {
+    "path": "packages/plugins-core/attachments/dist/index.js",
+    "kind": "main",
+    "plugin": "attachments"
+  },
+  {
+    "path": "packages/plugins-core/attachments/src/index.ts",
+    "kind": "main-src",
+    "plugin": "attachments"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "checklist-ledger"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/dist/index.js",
+    "kind": "main",
+    "plugin": "checklist-ledger"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/src/index.ts",
+    "kind": "main-src",
+    "plugin": "checklist-ledger"
+  },
+  {
+    "path": "packages/plugins-core/engine-scanner/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "engine-scanner"
+  },
+  {
+    "path": "packages/plugins-core/engine-scanner/dist/index.js",
+    "kind": "main",
+    "plugin": "engine-scanner"
+  },
+  {
+    "path": "packages/plugins-core/engine-scanner/src/index.ts",
+    "kind": "main-src",
+    "plugin": "engine-scanner"
+  },
+  {
+    "path": "packages/plugins-core/forge/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "forge"
+  },
+  {
+    "path": "packages/plugins-core/forge/dist/index.js",
+    "kind": "main",
+    "plugin": "forge"
+  },
+  {
+    "path": "packages/plugins-core/forge/src/index.ts",
+    "kind": "main-src",
+    "plugin": "forge"
+  },
+  {
+    "path": "packages/plugins-core/installer/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "installer"
+  },
+  {
+    "path": "packages/plugins-core/installer/dist/index.js",
+    "kind": "main",
+    "plugin": "installer"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/index.ts",
+    "kind": "main-src",
+    "plugin": "installer"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "mcp-host"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/dist/index.js",
+    "kind": "main",
+    "plugin": "mcp-host"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/index.ts",
+    "kind": "main-src",
+    "plugin": "mcp-host"
+  },
+  {
+    "path": "packages/plugins-core/permission-gate/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "permission-gate"
+  },
+  {
+    "path": "packages/plugins-core/permission-gate/dist/index.js",
+    "kind": "main",
+    "plugin": "permission-gate"
+  },
+  {
+    "path": "packages/plugins-core/permission-gate/src/index.ts",
+    "kind": "main-src",
+    "plugin": "permission-gate"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "tool-finder"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/dist/index.js",
+    "kind": "main",
+    "plugin": "tool-finder"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/src/index.ts",
+    "kind": "main-src",
+    "plugin": "tool-finder"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "sample-comparator"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/index.js",
+    "kind": "main",
+    "plugin": "sample-comparator"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "comparators"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/dist/index.js",
+    "kind": "main",
+    "plugin": "comparators"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/index.ts",
+    "kind": "main-src",
+    "plugin": "comparators"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "judge"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/dist/index.js",
+    "kind": "main",
+    "plugin": "judge"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/index.ts",
+    "kind": "main-src",
+    "plugin": "judge"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "verifier-ladder"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/dist/index.js",
+    "kind": "main",
+    "plugin": "verifier-ladder"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/index.ts",
+    "kind": "main-src",
+    "plugin": "verifier-ladder"
+  },
+  {
+    "path": "packages/plugins/stt-browser/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "stt-browser"
+  },
+  {
+    "path": "packages/plugins/stt-browser/dist/index.js",
+    "kind": "main",
+    "plugin": "stt-browser"
+  },
+  {
+    "path": "packages/plugins/stt-browser/src/index.ts",
+    "kind": "main-src",
+    "plugin": "stt-browser"
+  },
+  {
+    "path": "packages/plugins/stt-local/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "stt-local"
+  },
+  {
+    "path": "packages/plugins/stt-local/dist/index.js",
+    "kind": "main",
+    "plugin": "stt-local"
+  },
+  {
+    "path": "packages/plugins/stt-local/src/index.ts",
+    "kind": "main-src",
+    "plugin": "stt-local"
+  },
+  {
+    "path": "packages/plugins/verifier-local/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "verifier-local"
+  },
+  {
+    "path": "packages/plugins/verifier-local/dist/index.js",
+    "kind": "main",
+    "plugin": "verifier-local"
+  },
+  {
+    "path": "packages/plugins/verifier-local/src/index.ts",
+    "kind": "main-src",
+    "plugin": "verifier-local"
+  },
+  {
+    "path": "packages/sdk/templates/hook/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/hook/dist/index.js",
+    "kind": "main",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/hook/src/index.ts",
+    "kind": "main-src",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/panel/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/panel/dist/index.js",
+    "kind": "main",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/panel/src/index.ts",
+    "kind": "main-src",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/dist/index.js",
+    "kind": "main",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/src/index.ts",
+    "kind": "main-src",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/skill/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/skill/dist/index.js",
+    "kind": "main",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/skill/src/index.ts",
+    "kind": "main-src",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/tool/harness-plugin.json",
+    "kind": "manifest",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/tool/dist/index.js",
+    "kind": "main",
+    "plugin": "{{id}}"
+  },
+  {
+    "path": "packages/sdk/templates/tool/src/index.ts",
+    "kind": "main-src",
+    "plugin": "{{id}}"
+  }
+]
