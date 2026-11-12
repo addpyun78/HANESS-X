@@ -56,6 +56,8 @@ export interface SettingField {
   browserKey?: string;
   engineKey?: string;
   plugin?: { id: string; title: string };
+  /** T-102 C2-004 아직 효과가 없는 설정: 비활성 + "준비 중이에요" */
+  notReady?: string;
   default: unknown;
   schema: JsonSchema;
 }

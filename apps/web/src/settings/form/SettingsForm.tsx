@@ -5,7 +5,7 @@ import { CUSTOM_WIDGETS } from './custom-widgets.js';
 import type { SaveScope, SettingField, SettingGroup, SettingsResponse, SettingValueState } from './types.js';
 import { BASIC_WIDGETS, enumValues } from './widgets.js';
 import './settings-form.css';
-import { act } from '../../actions/registry.js';
+import { act, NOT_READY } from '../../actions/registry.js';
 
 /**
  * T-101 0-1 설정 폼 자동 렌더러 — 레지스트리(GET /api/settings)만 보고 그룹 → 섹션 → 항목을 그린다.
@@ -221,7 +221,8 @@ export function SettingsForm(props: SettingsFormProps) {
       field: f,
       value: st?.effective ?? f.default,
       onCommit: (v: unknown) => void commit(f, v),
-      disabled: busy,
+      // T-102 C2-004 아직 효과가 없는 설정은 바꿀 수 없게
+      disabled: busy || !!f.notReady,
       inputId,
     };
     const Custom = (CUSTOM_WIDGETS as Record<string, (typeof CUSTOM_WIDGETS)[keyof typeof CUSTOM_WIDGETS]>)[
@@ -252,7 +253,12 @@ export function SettingsForm(props: SettingsFormProps) {
           </span>
           {f.restartRequired && <span className="hx-setting__tag">다시 시작 필요</span>}
           {f.advanced && <span className="hx-setting__tag">고급</span>}
-          {resettable && (
+          {f.notReady && (
+            <span className="hx-setting__tag" data-not-ready="" title={f.notReady}>
+              {NOT_READY}
+            </span>
+          )}
+          {resettable && !f.notReady && (
             <button
               type="button"
               className="hx-setting__link hx-setting__reset"
@@ -266,6 +272,11 @@ export function SettingsForm(props: SettingsFormProps) {
           )}
         </div>
         <p className="hx-setting__desc">{f.description}</p>
+        {f.notReady && (
+          <p className="hx-setting__note" role="note">
+            {NOT_READY}: {f.notReady}
+          </p>
+        )}
         {scope === 'global' && project && st?.source === 'project' && (
           <p className="hx-setting__override" role="note">
             이 프로젝트에서는 "{displayValue(f, st.project)}" 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.

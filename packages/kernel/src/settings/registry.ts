@@ -95,6 +95,11 @@ export interface SettingMeta {
   engineKey?: string;
   /** 플러그인 설정이면 플러그인 id·이름 (0A.9) */
   plugin?: { id: string; title: string };
+  /**
+   * T-102 C2-004 아직 이 값을 읽어 쓰는 곳이 없는 설정 — 화면에서 비활성 + "준비 중이에요"와 이 이유(쉬운 말)를 보여 준다.
+   * 연결하면 지운다
+   */
+  notReady?: string;
 }
 
 export interface SettingDef<S extends z.ZodType = z.ZodType> extends SettingMeta {
@@ -485,6 +490,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     advanced: true,
     restartRequired: true,
     scope: 'global',
+    notReady: '이 값을 쓰는 기능을 아직 연결하지 않았어요.',
   }),
   defineSetting('verifier.local.model', S(), {
     group: 'judge',
@@ -493,6 +499,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     advanced: true,
     restartRequired: true,
     scope: 'global',
+    notReady: '이 값을 쓰는 기능을 아직 연결하지 않았어요.',
   }),
   defineSetting('verifier.local.timeoutMs', z.number().int().min(1000).max(600_000).default(20_000), {
     group: 'judge',
@@ -501,6 +508,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     advanced: true,
     restartRequired: true,
     scope: 'global',
+    notReady: '이 값을 쓰는 기능을 아직 연결하지 않았어요.',
   }),
 
   // ── 도구·설치
@@ -556,6 +564,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     advanced: true,
     restartRequired: false,
     scope: 'global',
+    notReady: '이 값을 쓰는 기능을 아직 연결하지 않았어요.',
     widget: 'model',
     engineKey: 'assist.engine',
   }),
