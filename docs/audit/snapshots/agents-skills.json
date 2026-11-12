@@ -1,0 +1,12 @@
+{
+  "agents": [
+    {
+      "name": "forge",
+      "source": "plugin"
+    }
+  ],
+  "skills": [
+    "packages/plugins-core/forge/test/fixtures/claude-plugin/skills/kotlin-style/SKILL.md",
+    "packages/sdk/templates/skill/SKILL.md"
+  ]
+}
