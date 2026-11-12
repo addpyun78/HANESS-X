@@ -1,0 +1,19 @@
+{
+  "node": {
+    "current": "v22.23.4",
+    "engines": ">=22.19",
+    "latestLts": "v26.13.1 (Lithium)",
+    "latestCurrent": "v27.0.0-alpha.0.0.0"
+  },
+  "pnpm": {
+    "current": "12.18.0",
+    "packageManager": "pnpm@12.18.0",
+    "latest": "12.18.0"
+  },
+  "tauri": {
+    "cli": "^2.12.4",
+    "api": null,
+    "latestCli": "2.12.4",
+    "latestApi": "2.12.4"
+  }
+}
