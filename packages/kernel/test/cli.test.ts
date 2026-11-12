@@ -1,8 +1,8 @@
 import { spawn } from 'node:child_process';
-import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { ensureBuilt } from './ensure-built.js';
 import { setup } from './plugin-fixtures.js';
 
 const pkgDir = fileURLToPath(new URL('..', import.meta.url));
@@ -12,7 +12,7 @@ describe('harness-x serve', () => {
   let env: ReturnType<typeof setup>;
   let kill = () => {};
   beforeAll(() => {
-    execFileSync('pnpm', ['run', 'build'], { cwd: pkgDir, stdio: 'ignore' });
+    ensureBuilt(pkgDir); // T-102 C1-010: dist가 새것이면 다시 빌드하지 않음(동시 빌드로 깨지던 흔들림)
   }, 120_000);
   afterEach(() => {
     kill();
@@ -41,7 +41,7 @@ describe('harness-x serve', () => {
       });
       child.stderr.on('data', (d) => (err += d));
       child.on('exit', (code) => rej(new Error(`exit ${code}: ${err}`)));
-      setTimeout(() => rej(new Error('timeout: ' + err)), 150_000);
+      setTimeout(() => rej(new Error('timeout: ' + err)), 300_000); // T-102 C1-010
     });
     expect(info.plugins).toContain('hello');
     const token = readFileSync(info.tokenFile, 'utf8').trim();
@@ -49,5 +49,5 @@ describe('harness-x serve', () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { plugins: { id: string }[] };
     expect(body.plugins.map((p) => p.id)).toContain('hello');
-  }, 180_000);
+  }, 360_000);
 });

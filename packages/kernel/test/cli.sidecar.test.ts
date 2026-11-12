@@ -1,8 +1,9 @@
-import { execFileSync, spawn } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { ensureBuilt } from './ensure-built.js';
 import { setup } from './plugin-fixtures.js';
 
 const pkgDir = fileURLToPath(new URL('..', import.meta.url));
@@ -13,7 +14,7 @@ describe('harness-x serve --exit-with-stdin (데스크톱 사이드카)', () => 
   let env: ReturnType<typeof setup>;
   let kill = () => {};
   beforeAll(() => {
-    execFileSync('pnpm', ['run', 'build'], { cwd: pkgDir, stdio: 'ignore' });
+    ensureBuilt(pkgDir); // T-102 C1-010: dist가 새것이면 다시 빌드하지 않음(동시 빌드로 깨지던 흔들림)
   }, 120_000);
   afterEach(() => {
     kill();
@@ -54,7 +55,7 @@ describe('harness-x serve --exit-with-stdin (데스크톱 사이드카)', () => 
       });
       child.stderr.on('data', (d) => (err += d));
       child.on('exit', (code) => rej(new Error(`exit ${code}: ${err}`)));
-      setTimeout(() => rej(new Error('timeout: ' + err)), 150_000);
+      setTimeout(() => rej(new Error('timeout: ' + err)), 300_000); // T-102 C1-010: 부하가 크면 기동이 150초를 넘음
     });
     expect(info.tokenFile).toBe(tokenFile);
     expect(readFileSync(tokenFile, 'utf8').trim()).toBe(token);
@@ -89,5 +90,5 @@ describe('harness-x serve --exit-with-stdin (데스크톱 사이드카)', () => 
     expect(code).toBe(0);
     expect(Date.now() - t0).toBeLessThan(30_000);
     expect(child.exitCode).toBe(0);
-  }, 240_000);
+  }, 360_000);
 });

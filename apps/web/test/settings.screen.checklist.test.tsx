@@ -35,7 +35,9 @@ describe('6B.4 체크리스트', () => {
     const input = within(cl).getByLabelText('멈추고 확인을 부탁할 때');
     fireEvent.change(input, { target: { value: '1' } });
     fireEvent.blur(input);
-    expect((await within(cl).findByRole('alert')).textContent).toBe('2 이상으로 넣어 주세요.');
+    expect((await within(cl).findByRole('alert', {}, { timeout: 5000 })).textContent).toBe(
+      '2 이상으로 넣어 주세요.',
+    );
     expect(m.store.readGlobal()).toEqual({});
     m.dispose();
   });

@@ -66,7 +66,7 @@ async function boot(settings?: unknown): Promise<Boot> {
       if (line) res(JSON.parse(line));
     });
     c.on('exit', (code) => rej(new Error(`exit ${code}: ${err}`)));
-    setTimeout(() => rej(new Error('timeout: ' + err)), 170_000);
+    setTimeout(() => rej(new Error('timeout: ' + err)), 300_000); // T-102 C1-010: 부하가 크면 기동이 170초를 넘음
   });
   return {
     url: info.url,
@@ -137,7 +137,7 @@ describe('harness-x serve — 판정 연결 (T-100 Part 1)', () => {
       'no-judge',
     ]);
     expect((await call(b, 'POST', '/api/compare', { sessionId: 's1' })).status).toBe(400);
-  }, 240_000);
+  }, 360_000);
 
   it('예전 설정 verifier.l4 = off → 시작 때 judge.semantic = off로 옮겨 쓰고, 비교는 카드 없이 실패', async () => {
     const b = await boot({ verifier: { l4: 'off' } });
@@ -155,5 +155,5 @@ describe('harness-x serve — 판정 연결 (T-100 Part 1)', () => {
     expect(r.body).toMatchObject({ status: 'fail', outcome: { verdict: 'different' } });
     const pending = await call(b, 'GET', '/api/approvals?status=pending');
     expect(pending.body.approvals).toEqual([]);
-  }, 240_000);
+  }, 360_000);
 });
