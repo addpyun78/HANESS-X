@@ -12,9 +12,22 @@ API=http://127.0.0.1:3790
 WEB=http://127.0.0.1:5173
 
 say() { printf '\033[1;36m[HARNESS-X]\033[0m %s\n' "$*"; }
-api_up() { [ -f "$RUN/token" ] && curl -s -o /dev/null -m 2 -H "authorization: Bearer $(cat "$RUN/token")" "$API/api/health"; }
-web_up() { curl -s -o /dev/null -m 2 "$WEB/"; }
-wait_for() { local what=$1 fn=$2 n=0; while ! $fn; do n=$((n+1)); [ $n -gt 120 ] && { say "$what 기동 시간 초과 (로그: $RUN)"; return 1; }; sleep 1; done; }
+# T-102 I.2: 401·404도 "켜짐"으로 보던 문제 → -f(성공 응답만)
+api_up() { [ -f "$RUN/token" ] && curl -sf -o /dev/null -m 2 -H "authorization: Bearer $(cat "$RUN/token")" "$API/api/health"; }
+web_up() { curl -sf -o /dev/null -m 2 "$WEB/"; }
+# 기다리기: 최대 MAX초(WSL /mnt/c 위에서는 서버 기동이 1~3분 걸림), 프로세스가 죽으면 바로 멈추고 로그 끝을 보여 줌
+wait_for() {
+  local what=$1 fn=$2 pidfile=$3 max=${4:-300} n=0
+  while ! $fn; do
+    n=$((n+1))
+    if [ -f "$pidfile" ] && ! kill -0 "$(cat "$pidfile")" 2>/dev/null; then
+      say "$what 이(가) 켜지다가 멈췄어요. 로그 끝부분:"; tail -n 15 "$RUN/server.log" 2>/dev/null; return 1
+    fi
+    [ $n -gt "$max" ] && { say "$what 기동 시간 초과 ${max}초 (로그: $RUN)"; return 1; }
+    [ $((n % 15)) -eq 0 ] && say "$what 켜는 중... ${n}초"
+    sleep 1
+  done
+}
 
 # 1) 빌드 산출물 확인
 if [ ! -f packages/kernel/dist/cli.js ]; then
@@ -45,23 +58,16 @@ import(join(root, "packages/kernel/dist/index.js")).then((k) => {
 });
 ' "$ROOT" "$HOME_DIR/plugins.lock" 2>>"$RUN/server.log" | while read -r l; do say "$l"; done
 
-# 2) 하네스 서버
-if api_up; then
-  say "하네스 서버 실행 중 ($API)"
-else
-  say "하네스 서버 시작 중... (WSL에서 C: 드라이브 위라 10~20초 걸릴 수 있음)"
-  # setsid: 바로가기 창(wsl.exe)이 닫혀도 프로세스가 같이 죽지 않게 새 세션으로 분리
-  setsid -f bash -c 'echo $$ >"$0/server.pid"; exec node --no-warnings packages/kernel/dist/cli.js serve --workspace "$1" >"$0/server.out" 2>"$0/server.log" </dev/null' "$RUN" "$ROOT"
-  sleep 2
-  wait_for "서버" api_up || exit 1
-  say "하네스 서버 준비 ($API)"
+# 2) 토큰을 먼저 정한다 — 화면을 서버보다 먼저 열 수 있게(T-102 I.2). 서버에는 같은 값을 HARNESS_X_TOKEN으로 넘긴다
+if [ ! -s "$RUN/token" ] || [ "$(wc -c <"$RUN/token")" -lt 33 ]; then
+  node -e 'process.stdout.write(require("node:crypto").randomBytes(24).toString("hex"))' >"$RUN/token.tmp" && mv "$RUN/token.tmp" "$RUN/token"
+  chmod 600 "$RUN/token"
 fi
 TOKEN=$(cat "$RUN/token")
 
-# 3) 웹 화면
+# 3) 웹 화면(2~3초) — 먼저 켜서 바로 보이게
 if [ ! -f apps/web/package.json ]; then
-  say "웹 화면(apps/web)이 아직 병합되지 않았습니다. 서버만 켜 두었습니다."
-  say "플러그인 목록 확인: curl -H \"authorization: Bearer \$(cat $RUN/token)\" $API/api/plugins"
+  say "웹 화면(apps/web)이 없습니다."
   exit 2
 fi
 if web_up; then
@@ -69,11 +75,29 @@ if web_up; then
 else
   say "웹 화면 시작 중..."
   setsid -f bash -c 'echo $$ >"$0/web.pid"; cd "$1/apps/web" && exec ./node_modules/.bin/vite --host 127.0.0.1 --port 5173 --strictPort >"$0/web.log" 2>&1 </dev/null' "$RUN" "$ROOT"
-  wait_for "웹 화면" web_up || exit 1
+  wait_for "웹 화면" web_up "$RUN/web.pid" 120 || exit 1
 fi
 
-# 4) Windows 브라우저로 열기 (토큰은 주소로 전달 → 화면이 세션 저장소로 옮기고 주소창에서 지움)
-[ -n "${HX_NO_BROWSER:-}" ] && { say "준비됨: $WEB/?token=… (HX_NO_BROWSER)"; exit 0; }
-say "브라우저를 엽니다"
-cmd.exe /c start "" "$WEB/?token=$TOKEN" >/dev/null 2>&1 || explorer.exe "$WEB/?token=$TOKEN"
+# 4) 브라우저를 바로 연다 — 하네스 서버가 아직이면 화면이 "켜는 중"을 보여 주고 준비되면 저절로 불러온다
+#    (토큰은 주소로 전달 → 화면이 세션 저장소로 옮기고 주소창에서 지움). explorer.exe는 검은 창을 띄우지 않는다
+if [ -n "${HX_NO_BROWSER:-}" ]; then
+  say "준비됨: $WEB/?token=… (HX_NO_BROWSER)"
+else
+  say "브라우저를 엽니다"
+  explorer.exe "$WEB/?token=$TOKEN" >/dev/null 2>&1 || cmd.exe /c start "" "$WEB/?token=$TOKEN" >/dev/null 2>&1
+fi
+
+# 5) 하네스 서버
+if api_up; then
+  say "하네스 서버 실행 중 ($API)"
+else
+  say "하네스 서버 시작 중... (WSL에서 C: 드라이브 위라 1~3분 걸릴 수 있어요)"
+  # 지난 로그 보관(켤 때마다 덮어써서 죽은 원인이 사라지던 문제)
+  [ -f "$RUN/server.log" ] && mv -f "$RUN/server.log" "$RUN/server.log.1"
+  # setsid: 바로가기 창(wsl.exe)이 닫혀도 프로세스가 같이 죽지 않게 새 세션으로 분리
+  HARNESS_X_TOKEN="$TOKEN" setsid -f bash -c 'echo $$ >"$0/server.pid"; exec node --no-warnings packages/kernel/dist/cli.js serve --workspace "$1" >"$0/server.out" 2>"$0/server.log" </dev/null' "$RUN" "$ROOT"
+  sleep 2
+  wait_for "하네스 서버" api_up "$RUN/server.pid" 300 || exit 1
+  say "하네스 서버 준비 ($API)"
+fi
 exit 0
