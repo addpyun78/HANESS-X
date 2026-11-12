@@ -1,3 +1,4 @@
+// @features F-068
 import { describe, expect, it } from 'vitest';
 import { checkPlainKorean } from '@harness-x/approvals';
 import {

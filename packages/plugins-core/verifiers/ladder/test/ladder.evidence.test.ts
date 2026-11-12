@@ -1,3 +1,4 @@
+// @features F-024 F-056 F-059 F-060
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';

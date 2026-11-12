@@ -1,3 +1,4 @@
+// @features F-015
 import { describe, expect, it } from 'vitest';
 import { buildExecArgs, CODEX_SANDBOX, threadParams } from '../src/args.js';
 

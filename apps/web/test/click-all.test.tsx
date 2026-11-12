@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-031 F-089 F-090 F-123 F-124 F-125 F-127 F-131 F-135 F-136 F-137 F-138 F-139 F-140 F-141 F-142 F-144 F-146
 /**
  * T-101 0C.4 "전부 눌러 보기" — e2e/screens.ts의 화면마다 보이는 활성 버튼·링크·메뉴 항목·탭을 하나씩 눌러
  * 2초 안에 효과가 있는지 본다. 실패 목록이 비어 있어야 통과. (`pnpm check:dead-buttons`)

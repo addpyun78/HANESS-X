@@ -1,3 +1,4 @@
+// @features F-016
 import { selectStopStrategy } from '@harness-x/protocol';
 import { describe, expect, it } from 'vitest';
 import { ANTIGRAVITY_CAPABILITIES, antigravityEngine } from '../src/engine.js';

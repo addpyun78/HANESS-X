@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-051
 import { act, cleanup, render, renderHook, screen } from '@testing-library/react';
 import type { HarnessEvent } from '@harness-x/protocol';
 import { afterEach, describe, expect, it } from 'vitest';

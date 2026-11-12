@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-030
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { TopBar } from '../src/shell/TopBar.js';

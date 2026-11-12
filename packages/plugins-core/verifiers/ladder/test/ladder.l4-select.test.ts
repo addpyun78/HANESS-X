@@ -1,3 +1,4 @@
+// @features F-025
 import { createJudgeChain } from '@harness-x/judge';
 import { describe, expect, it } from 'vitest';
 import type { LadderResult } from '../src/ladder.js';

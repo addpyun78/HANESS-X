@@ -1,3 +1,4 @@
+// @features F-102
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { installRunModeGate, PLAN_GATE_HOOK_ID } from '../src/index.js';
 import { gateFixture, type GateFixture } from './helpers.js';

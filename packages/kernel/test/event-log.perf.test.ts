@@ -1,3 +1,4 @@
+// @features F-005
 import { afterEach, describe, expect, it } from 'vitest';
 import { EventLog } from '../src/event-log.js';
 import { tempDir, textEvent } from './helpers.js';

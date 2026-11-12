@@ -1,3 +1,4 @@
+// @features F-092
 import type { Attachment } from '@harness-x/protocol';
 import { checkPlainKorean } from '@harness-x/approvals';
 import { afterEach, describe, expect, it } from 'vitest';

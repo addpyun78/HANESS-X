@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-042 F-120
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { BLOCK_MIME, DEFAULT_CATALOG, drawerBlocks, filterBlocks } from '../src/builder/catalog.js';

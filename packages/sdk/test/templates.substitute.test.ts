@@ -1,3 +1,4 @@
+// @features F-047
 import { describe, expect, it } from 'vitest';
 import { TemplateVarError, TemplateVarsSchema, renderTemplate, substitute } from '../src/templates.js';
 

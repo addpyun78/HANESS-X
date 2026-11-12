@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-129
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';

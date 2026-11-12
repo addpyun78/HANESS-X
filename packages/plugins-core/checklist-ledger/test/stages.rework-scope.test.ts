@@ -1,3 +1,4 @@
+// @features F-108
 import { describe, expect, it } from 'vitest';
 import { applyGateFailure, getStage } from '../src/index.js';
 import { atCritic, finding } from './stages-gate-fixture.js';

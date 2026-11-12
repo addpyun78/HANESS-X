@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-074 F-075 F-119
 import { readFileSync } from 'node:fs';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';

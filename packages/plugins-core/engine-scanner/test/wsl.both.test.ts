@@ -1,3 +1,4 @@
+// @features F-011
 import { describe, expect, it } from 'vitest';
 import { scanAllEngines } from '@harness-x/engine-scanner';
 import { mockExec, ok } from './helpers.js';

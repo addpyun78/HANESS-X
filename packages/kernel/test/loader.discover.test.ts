@@ -1,3 +1,4 @@
+// @features F-006 F-007 F-018 F-023 F-027 F-028 F-048 F-105 F-106
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { defaultPluginRoots } from '../src/loader.js';

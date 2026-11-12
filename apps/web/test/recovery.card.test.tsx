@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-052
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ResumeCard, type ResumeCardData } from '../src/recovery/ResumeCard.js';

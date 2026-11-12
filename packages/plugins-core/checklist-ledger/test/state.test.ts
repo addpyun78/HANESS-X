@@ -1,3 +1,4 @@
+// @features F-019
 import { describe, expect, it } from 'vitest';
 import { ITEM_STATUSES, type ItemStatus } from '../src/schema.js';
 import {

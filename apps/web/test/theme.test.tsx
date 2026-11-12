@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-029 F-145
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ThemeToggle } from '../src/design/ThemeToggle.js';

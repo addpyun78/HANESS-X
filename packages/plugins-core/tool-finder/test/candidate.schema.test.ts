@@ -1,3 +1,4 @@
+// @features F-073
 import { describe, expect, it } from 'vitest';
 import { ToolCandidateSchema, parseCandidate, rawToCandidate } from '../src/index.js';
 import { hit, NOW } from './helpers.js';

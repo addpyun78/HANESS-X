@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-100
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { renderComposer } from './composer.helpers.js';

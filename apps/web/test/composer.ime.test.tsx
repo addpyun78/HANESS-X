@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+// @features F-077
 import { cleanup, screen } from '@testing-library/react';
 import { afterEach, describe } from 'vitest';
 import type { SendPayload } from '../src/composer/types.js';

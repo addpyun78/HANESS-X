@@ -1,3 +1,4 @@
+// @features F-020
 import { describe, expect, it } from 'vitest';
 import { lintItem } from '../src/lint.js';
 

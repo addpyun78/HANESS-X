@@ -1,3 +1,4 @@
+// @features F-003
 import { describe, expectTypeOf, it, expect } from 'vitest';
 import { EventBaseSchema, type EventBase } from '../src/events.js';
 
