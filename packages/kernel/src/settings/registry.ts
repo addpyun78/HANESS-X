@@ -711,6 +711,64 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     scope: 'global',
     widget: 'folder',
   }),
+
+  // ── 모드·권한 (T-101 3)
+  defineSetting('mode.default', z.enum(['plan', 'normal', 'auto']).default('normal'), {
+    group: 'mode',
+    title: '기본 실행 모드',
+    description: '새 작업을 시작할 때 쓸 모드예요. 프로젝트마다 따로 정하면 그 값이 먼저 쓰여요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'both',
+    options: {
+      plan: '계획 — 목록까지만 만들어요',
+      normal: '일반 — 확인받으며 해요',
+      auto: '오토 — 묻지 않고 해요',
+    },
+  }),
+
+  // 3D.5 오토 모드 필수 상한 (하나라도 넘으면 일시정지)
+  defineSetting(
+    'mode.auto.maxMinutes',
+    z
+      .number()
+      .int()
+      .min(1)
+      .max(24 * 60)
+      .default(60),
+    {
+      group: 'mode',
+      title: '오토 모드 최대 시간(분)',
+      description: '오토 모드가 이 시간보다 오래 일하면 멈추고 기다려요.',
+      advanced: false,
+      restartRequired: false,
+      scope: 'both',
+    },
+  ),
+  defineSetting('mode.auto.maxTokens', z.number().int().min(1000).default(2_000_000), {
+    group: 'mode',
+    title: '오토 모드 최대 토큰',
+    description: 'AI가 읽고 쓰는 양이 이만큼 되면 멈추고 기다려요.',
+    advanced: true,
+    restartRequired: false,
+    scope: 'both',
+  }),
+  defineSetting('mode.auto.maxCostUsd', z.number().min(0).default(5), {
+    group: 'mode',
+    title: '오토 모드 최대 비용(달러)',
+    description: '키로 쓰는 AI 비용이 이만큼 되면 멈춰요. 0이면 비용으로는 멈추지 않아요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'both',
+  }),
+  defineSetting('mode.auto.maxIterations', z.number().int().min(1).max(10_000).default(200), {
+    group: 'mode',
+    title: '오토 모드 최대 반복 수',
+    description: 'AI에게 일을 맡기는 횟수가 이만큼 되면 멈추고 기다려요.',
+    advanced: true,
+    restartRequired: false,
+    scope: 'both',
+  }),
   // ── 프로젝트 (0B.25/0B.26 사이드바 묶기·정렬, 이 기기에 저장)
   defineSetting('sidebar.group', z.enum(['project', 'status', 'date', 'none']).default('project'), {
     group: 'project',

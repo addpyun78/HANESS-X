@@ -57,7 +57,7 @@ describe('T-101 0A.10 코드에서 쓰는 설정 키 ⊆ 레지스트리', () =>
 
   it('일부러 미등록 키를 넣으면 실패한다 (검사가 실제로 잡는지)', () => {
     const fake = [
-      "const m = readSetting(values, 'mode.default');",
+      "const m = readSetting(values, 'mode.secretKnob');",
       "const n = readSetting<number>(cfg(), 'attachments.maxFileMb');",
       "const f = join(home, 'settings.json'); to['judge.secretKnob'] = 1;",
       "export const FOO_KEY = 'hx.foo.bar';",
@@ -65,7 +65,7 @@ describe('T-101 0A.10 코드에서 쓰는 설정 키 ⊆ 레지스트리', () =>
     ].join('\n');
     const bad = unregisteredHits(scanSourceText('fake.ts', fake));
     expect(bad.map((h) => [h.key, h.how])).toEqual([
-      ['mode.default', 'readSetting'],
+      ['mode.secretKnob', 'readSetting'],
       ['attachments.maxFileMb', 'readSetting'],
       ['judge.secretKnob', 'literal'],
       ['hx.foo.bar', 'browser'],

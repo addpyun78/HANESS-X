@@ -32,11 +32,6 @@ export interface ModelButtonProps {
  * 펼침 목록: 엔진별 묶음, 모델마다 [구독]/[API]/[무료 로컬] 배지, 이미지 가능 아이콘,
  * 로그인이 필요한 모델은 흐리게 + [로그인]. 고르면 작은 선택 [모든 곳 기본(메인)으로] [이 프로젝트 기본으로] [이 세션만].
  */
-/** 고를 수 없는 모델에 붙이는 이유 (툴팁) */
-function unusableReason(status: ModelOption['status']): string {
-  return status === 'needs-login' ? '로그인해야 쓸 수 있어요' : '지금은 쓸 수 없어요';
-}
-
 export function ModelButton({ models, current, from, hasProject, onChoose, onLogin }: ModelButtonProps) {
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<AiChoice>();
@@ -111,8 +106,8 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                       role="menuitemradio"
                       aria-checked={selected}
                       aria-disabled={unusable || undefined}
-                      title={unusable ? unusableReason(m.status) : undefined}
-                      {...act('model.pick')}
+                      {...act('model.choose')}
+                      {...(unusable ? { title: '지금은 이 AI를 쓸 수 없어요' } : {})}
                       className="hx-model-menu__item"
                       data-status={m.status}
                       onClick={() => {
@@ -155,8 +150,8 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                   key={s}
                   type="button"
                   className="hx-icon-btn"
-                  data-default={i === 0 || undefined}
                   {...act('model.scope')}
+                  data-default={i === 0 || undefined}
                   autoFocus={i === 0}
                   onClick={() => choose(s)}
                 >

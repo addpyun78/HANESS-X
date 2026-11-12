@@ -173,6 +173,7 @@ interface AgentBuilderPluginModule {
             displayName: string;
             icon?: string;
             defaultEngine: string;
+            defaultMode?: 'plan' | 'normal' | 'auto';
             status?: 'ready' | 'incomplete';
           };
           pipeline: Pipeline;
@@ -190,6 +191,8 @@ interface AgentBuilderPluginModule {
     workspace: string;
     sessionId: string;
     agent: { name: string; pipeline: Pipeline };
+    /** T-101 3번 실제 세션 실행 모드 (4B.3 단계 확정·4D.4·4F.7) */
+    mode?: 'plan' | 'normal' | 'auto';
   }) => Record<string, unknown>;
   /** T-100 P4-A.12 GET /api/builder/inventory (+ engines.json 감시). 핫리로드는 attachHotReload로 연결 */
   registerBuilderInventory?: (
@@ -499,6 +502,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     home,
     scratchRoot: () => scratchRootFrom(readSettingsFile(settingsFile)),
   });
+  const { readSetting, SettingsStore } = await import('./settings/index.js');
+  const modeSettings = new SettingsStore({ file: settingsFile });
   const plainTitle = (
     loader.plugins.get('approvals')?.module as
       { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
@@ -514,9 +519,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         adapters().map((a) => a.id),
       ),
       ...sessionDefaultsFromSettings(readSettingsFile(settingsFile)),
+      mode: readSetting<string>(modeSettings.readGlobal(), 'mode.default'),
     }),
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
+  /** T-101 3번 실행 중 세션의 모드: 이번 실행 수식어 > 세션 기록 */
+  const sessionRunMode = (i: { sessionId: string; modifiers: { mode?: string } }) => {
+    const m = i.modifiers.mode ?? sessionRegistry.get(i.sessionId)?.mode;
+    return m === 'plan' || m === 'normal' || m === 'auto' ? m : undefined;
+  };
   const imported = sessionRegistry.importLegacy(log);
   // T-101 6B.11 기록 보관 기간·첨부 정리 (설정이 0이면 아무것도 안 함) — 시작 때 한 번 + [지금 정리하기]
   const dataCleanup = () =>
@@ -580,6 +591,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             displayName: a.agent.displayName,
             ...(a.agent.icon ? { icon: a.agent.icon } : {}),
             defaultEngine: a.agent.defaultEngine,
+            ...(a.agent.defaultMode ? { defaultMode: a.agent.defaultMode } : {}),
             ...(a.agent.status ? { status: a.agent.status } : {}),
             pipeline: a.pipeline,
           }
@@ -615,6 +627,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           workspace,
           sessionId: i.sessionId,
           agent: { name: i.agent.name, pipeline: i.pipeline },
+          // T-101 3E.3 세션에 정해진 실행 모드 (수식어 > 칩 > 에이전트 > 프로젝트 > 전체)
+          ...(sessionRunMode(i) ? { mode: sessionRunMode(i)! } : {}),
         }) ?? {}),
         // T-051 /forge: Forge 플러그인이 엔진 래퍼·gate 판정(검사·샌드박스)·scaffold 체크리스트를 준다
         ...(i.pipeline.name === 'forge'
@@ -757,6 +771,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             engines: () => adapters().map((a) => a.id),
             engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
             fallback: () => fallbackTable(loadEnginesSettings().engines),
+            // T-101 3E.6 이어하기 때 모드 유지·카드에서 바꾸기
+            sessionMode: (id) => sessionRegistry.get(id)?.mode,
+            setSessionMode: (id, mode) => void sessionRegistry.setMode(id, mode),
             ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
             // T-101 4F.6 단계 트리 기준 이어하기
             stages: stageTreeOf,

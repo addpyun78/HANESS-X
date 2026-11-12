@@ -53,7 +53,7 @@ export function ProjectResumeCard({ sessions, onResume, now }: ProjectResumeCard
               <button
                 type="button"
                 className="hx-resume__button"
-                {...act('recovery.project-resume')}
+                {...act('resume.session')}
                 onClick={() => onResume(s.sessionId)}
               >
                 이어하기

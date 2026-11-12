@@ -1,5 +1,4 @@
 import { act } from '../actions/registry.js';
-
 /** T-101 2A.8 실행 중인 세션이 2개 이상이면 상단 바에 [전체 정지] → POST /api/sessions/stop-all */
 export interface StopAllButtonProps {
   runningCount: number;

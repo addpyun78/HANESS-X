@@ -2,10 +2,13 @@ import { randomUUID } from 'node:crypto';
 import {
   EngineRefSchema,
   INCOMPLETE_AGENT_MESSAGE,
+  isRunMode,
+  type RunMode,
   type Pipeline,
   type PipelineNode,
 } from '@harness-x/protocol';
 import type { LogRecord } from './event-log.js';
+import { resolveRunMode } from './run-mode/resolve.js';
 import {
   isSafePoint,
   PAUSE_TIMEOUT_QUESTION,
@@ -25,7 +28,8 @@ import type { SessionOrigin, SessionState } from './projects/schema.js';
  * - 수식어(48.2): 지시문 안의 공백으로 구분된 낱말
  *   @엔진   이번 실행만 모든 role 노드(와 엔진을 지정한 subagent 노드)의 엔진을 바꾼다 (예: @codex)
  *   #strict 엄격 모드: 출력 계약 재요청 없이 첫 불충족에서 멈춘다 (실행기 maxContractRetries: 0)
- *   !plan   계획만: 시작 노드 하나만 읽기 전용으로 실행한다
+ *   !plan   계획만: 시작 노드 하나만 읽기 전용으로 실행한다 (T-101 3E.1: 이번 실행 모드 = 계획)
+ *   !auto   이번 실행만 오토 모드 (T-101 3E.1)
  *   수식어는 지시문에서 빠지고, 나머지 글은 그대로 남는다. 'a@b'처럼 낱말 중간의 @는 수식어가 아니다.
  * - 실행기(PipelineRunner)는 agent-builder 패키지에 있으므로 커널은 그것을 import하지 않는다.
  *   cli.ts가 로드된 agent-builder 플러그인 모듈로 resolve·run을 만들어 주입한다(순환 의존 방지).
@@ -43,6 +47,8 @@ export interface DispatchModifiers {
   strict: boolean;
   /** !plan: 계획만 */
   planOnly: boolean;
+  /** T-101 3E.1 이번 실행만 모드 (!plan → plan, !auto → auto). 우선순위 맨 위 (3E.3) */
+  mode?: RunMode;
 }
 
 export interface ParsedInstruction {
@@ -70,8 +76,13 @@ export function parseModifiers(text: string): ParsedInstruction {
     const engine = ENGINE_TOKEN.exec(part);
     if (engine) modifiers.engine = engine[1]!.toLowerCase();
     else if (lower === '#strict') modifiers.strict = true;
-    else if (lower === '!plan') modifiers.planOnly = true;
-    else {
+    else if (lower === '!plan') {
+      modifiers.planOnly = true;
+      modifiers.mode = 'plan';
+    } else if (lower === '!auto') {
+      modifiers.planOnly = false; // 둘 다 쓰면 나중 것
+      modifiers.mode = 'auto';
+    } else {
       kept.push(part);
       continue;
     }
@@ -121,6 +132,8 @@ export interface DispatchAgent {
   displayName: string;
   icon?: string;
   defaultEngine?: string;
+  /** T-101 3E.2 agent.yaml defaultMode */
+  defaultMode?: RunMode;
   /** T-100 P4-F.6 빈 칸이 남은 에이전트는 실행하지 않는다 */
   status?: 'ready' | 'incomplete';
   pipeline: Pipeline;
@@ -248,6 +261,8 @@ export interface DispatchRequest {
   projectId?: string;
   /** 어디서 시작했나 (기본 'slash' = 입력창 / 실행) */
   origin?: SessionOrigin;
+  /** T-101 3E.3 입력창 모드 칩 값 (수식어보다 뒤, 에이전트 기본값보다 앞) */
+  mode?: RunMode;
 }
 
 interface Live {
@@ -299,6 +314,8 @@ export class Dispatcher {
       agent: agent.name,
       ...(agent.icon ? { agentIcon: agent.icon } : {}),
       ...(modifiers.engine ? { engine: modifiers.engine } : {}),
+      // T-101 3E.3 수식어 > 칩 > 에이전트 기본값. 셋 다 없으면 세션 등록이 프로젝트 > 전체 기본값으로 채운다(0B.40)
+      ...(runModeOf(modifiers, req.mode, agent.defaultMode) ?? {}),
       status: 'running',
       firstMessage: parsed.prompt || req.prompt,
     });
@@ -666,12 +683,19 @@ function progressOf(s: DispatchSession): number {
   return Math.min(1, new Set(s.completedNodes).size / s.nodeCount);
 }
 
+/** 3E.3 디스패치에서 정할 수 있는 앞 세 단계 (나머지 두 단계는 SessionRegistry 기본값) */
+function runModeOf(m: DispatchModifiers, chip: unknown, agent: unknown): { mode: RunMode } | undefined {
+  const r = resolveRunMode({ modifier: m.mode, chip, agent });
+  return r.from === 'fallback' ? undefined : { mode: r.mode };
+}
+
 function clean(m: Partial<DispatchModifiers> | undefined): Partial<DispatchModifiers> {
   if (!m || typeof m !== 'object') return {};
   const out: Partial<DispatchModifiers> = {};
   if (typeof m.engine === 'string' && m.engine) out.engine = m.engine.replace(/^@/, '').toLowerCase();
   if (typeof m.strict === 'boolean') out.strict = m.strict;
   if (typeof m.planOnly === 'boolean') out.planOnly = m.planOnly;
+  if (isRunMode(m.mode)) out.mode = m.mode;
   return out;
 }
 

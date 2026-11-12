@@ -18,6 +18,8 @@ export interface ChipMenuProps<T extends string> {
   onChange: (v: T) => void;
   className?: string;
   emptyText?: string;
+  /** T-101 3A.4 잠금: 자물쇠를 보이고 펼치지 않는다 (값 = 이유, 쉬운 말) */
+  locked?: string;
 }
 
 /** 입력창 아래 칩 + 클릭 시 위로 뜨는 팝오버 목록 */
@@ -30,6 +32,7 @@ export function ChipMenu<T extends string>({
   onChange,
   className = '',
   emptyText = '선택할 항목이 없습니다',
+  locked,
 }: ChipMenuProps<T>) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -59,15 +62,18 @@ export function ChipMenu<T extends string>({
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        onClick={() => setOpen(!open)}
+        {...(locked
+          ? { 'aria-disabled': true, title: locked, 'aria-description': locked, 'data-locked': '' }
+          : {})}
+        onClick={() => !locked && setOpen(!open)}
       >
         {icon && <span aria-hidden="true">{icon}</span>}
         <span>{valueLabel}</span>
         <span className="hx-chip__caret" aria-hidden="true">
-          ▾
+          {locked ? '🔒' : '▾'}
         </span>
       </button>
-      {open && (
+      {open && !locked && (
         <div className="hx-popover" role="menu" id={menuId} aria-label={name}>
           {options.length === 0 && <p className="hx-popover__empty">{emptyText}</p>}
           {options.map((o) => (

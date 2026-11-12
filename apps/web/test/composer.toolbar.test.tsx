@@ -6,7 +6,7 @@ import { renderComposer } from './composer.helpers.js';
 afterEach(cleanup);
 
 describe('하단 도구줄 배치 (T-101 5C.1 최종 입력창 모습)', () => {
-  it('순서: + → 권한 칩 → … → [엔진 · 모델 ▾] → (오른쪽 끝) 전송, 아래 판정 줄 (스냅샷)', () => {
+  it('순서: + → 권한 칩 → 모드 칩(3A.3) → … → [엔진 · 모델 ▾] → (오른쪽 끝) 전송, 아래 판정 줄 (스냅샷)', () => {
     const { container, onPlus } = renderComposer({
       verdict: { itemId: '2.1', rung: 2, passed: true },
       modelPicker: (
@@ -24,7 +24,7 @@ describe('하단 도구줄 배치 (T-101 5C.1 최종 입력창 모습)', () => {
           .find((c) => /^hx-(chip--|send|composer__spacer)/.test(c))
           ?.replace('hx-', ''),
     );
-    expect(order).toEqual(['plus', 'chip--permission', 'composer__spacer', 'model', 'send']);
+    expect(order).toEqual(['plus', 'chip--permission', 'chip--mode', 'composer__spacer', 'model', 'send']);
     expect(bar.firstElementChild?.getAttribute('aria-label')).toBe('추가');
     expect(bar.lastElementChild?.getAttribute('aria-label')).toBe('전송');
     // 예전 왼쪽 엔진 칩·인증 칩은 모델 버튼으로 통합

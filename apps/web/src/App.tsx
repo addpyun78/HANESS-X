@@ -45,6 +45,7 @@ import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
 import { settingsApi } from './settings/form/api.js';
 import { SettingsPage, type SettingsPageProps } from './settings/SettingsPage.js';
+import { isAutoRunning, notifyPolicy, quietToasts, SILENT_NOTIFIER } from './run-mode/notify-policy.js';
 import { useEngines } from './engines/useEngines.js';
 import { useProjectAi } from './engines/useProjectAi.js';
 import { AppShell } from './shell/AppShell.js';
@@ -238,10 +239,14 @@ export function App() {
     ],
     [installCards.summaries, pickers, firstRuns],
   );
+  // T-101 3D.9 오토 실행 중에는 토스트·카드마다 OS 알림 없이 배지만
+  const autoRun = isAutoRunning(proj.sessions);
+  const quiet = useMemo(() => notifyPolicy(autoRun), [autoRun]);
   const approvals = useApprovals({
     events,
     ...(apApi ? { api: apApi } : {}),
     extra: extraPending,
+    ...(quiet.osPerCard ? {} : { notifier: SILENT_NOTIFIER }),
   });
   // P3-C.5 [주소 직접 넣기] → #/install/url → 설치 관리 [주소로 설치]
   const route = useRoute();
@@ -255,7 +260,10 @@ export function App() {
   // T-100 J.6 한 번만 보여 주는 안내 (GET /api/notices + notice 이벤트) → 토스트
   const ntApi = useMemo(() => (client ? noticesApi(client) : undefined), [client]);
   const notices = useNotices({ events, ...(ntApi ? { api: ntApi } : {}) });
-  const toasts = useMemo(() => [...approvals.toasts, ...notices.toasts], [approvals.toasts, notices.toasts]);
+  const toasts = useMemo(
+    () => quietToasts([...approvals.toasts, ...notices.toasts], quiet),
+    [approvals.toasts, notices.toasts, quiet],
+  );
   const { dismissToast } = approvals;
   const { dismiss: dismissNotice } = notices;
   const onDismissToast = useCallback(
@@ -353,6 +361,8 @@ export function App() {
         agent: p.agent,
         prompt: p.text,
         ...(proj.currentId ? { projectId: proj.currentId } : {}),
+        // T-101 3E.3 입력창 모드 칩을 직접 골랐으면 그 값 (수식어 다음, 에이전트·프로젝트·전체 기본값보다 먼저)
+        ...(p.settings.mode ? { mode: p.settings.mode } : {}),
       });
       setDispatched((xs) => [fromDispatchSession(d, workspace?.name ?? '프로젝트'), ...xs]);
       setActiveId(d.sessionId);
@@ -564,6 +574,10 @@ export function App() {
                       key={resumeId}
                       api={rsApi}
                       sessionId={resumeId}
+                      {...(() => {
+                        const m = proj.sessions.find((s) => s.id === resumeId)?.mode;
+                        return m ? { sessionMode: m } : {};
+                      })()}
                       onDone={(r) => {
                         setResumeId(undefined);
                         setProjectResume((xs) => xs.filter((x) => x.sessionId !== resumeId));

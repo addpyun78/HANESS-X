@@ -2,6 +2,7 @@ import type { Attachment } from './attachment.js';
 import type { EngineInputs } from './attachment-delivery.js';
 import type { HarnessEvent } from './events.js';
 import type { AuthMode } from './pipeline.js';
+import type { RunMode } from './run-mode.js';
 
 /**
  * 엔진 어댑터 공통 인터페이스
@@ -52,6 +53,11 @@ export interface EngineRunOptions {
   cwd: string;
   model?: string;
   permission?: PermissionMode;
+  /**
+   * T-101 3B.3·3D.6 실행 모드. 엔진이 아는 모드로 바꿔 넘긴다(claude --permission-mode, codex --sandbox).
+   * 모르는 엔진은 무시하고, 최종 판단은 하네스 permission-gate(모드 게이트)가 한다.
+   */
+  mode?: RunMode;
   auth?: AuthMode;
   /** 엔진 자체 세션 ID로 재개 */
   resumeId?: string;

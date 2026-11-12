@@ -69,23 +69,37 @@ export const ACTIONS = {
   'subagent.cancel': { description: '묻는 창을 닫아요', effect: 'state' },
 
   'recovery.resume': { description: '멈춘 작업을 이어서 해요', effect: 'api' },
-  'recovery.project-resume': { description: '멈춘 작업을 이어하기 전에 먼저 점검해요', effect: 'api' },
-  'recovery.check-choice': { description: '점검 카드에서 어떻게 할지 골라요', effect: 'state' },
-  'recovery.start': { description: '고른 대로 멈춘 작업을 이어서 해요', effect: 'api' },
-  'recovery.open-list': { description: '이어서 할 작업 목록을 열어요', effect: 'open' },
+  'resume.start': { description: '고른 대로 멈춘 작업을 이어서 해요', effect: 'api' },
+  'resume.check-choice': { description: '이어하기 전 확인에서 하나를 골라요', effect: 'state' },
+  'resume.open-list': { description: '이어서 할 작업 목록을 열어요', effect: 'open' },
+  'resume.session': { description: '고른 작업을 이어서 해요', effect: 'api' },
+  'shell.stop-all': { description: '실행 중인 작업을 모두 멈춰요', effect: 'api' },
 
-  'stop.open': { description: '정지 방법(일시정지·지금 멈추기)을 펼쳐요', effect: 'open' },
-  'stop.pause': { description: '하던 일을 마무리하기 좋은 때에 멈춰요', effect: 'api' },
-  'stop.now': { description: '하던 일을 바로 멈춰요', effect: 'api' },
-  'shell.stop-all': { description: '실행 중인 대화를 모두 멈춰요', effect: 'api' },
-
-  'model.open': { description: '쓸 AI(엔진·모델) 목록을 펼쳐요', effect: 'open' },
-  'model.pick': { description: '이 AI를 골라요', effect: 'state' },
-  'model.login': { description: '터미널에서 이 엔진에 로그인해요', effect: 'state' },
-  'model.scope': { description: '고른 AI를 어디에 쓸지 정해요', effect: ['api', 'state'] },
-
+  // T-101 5번 AI 고르기·엔진 찾기
+  'model.open': { description: 'AI 고르기 메뉴를 열어요', effect: 'open' },
+  'model.choose': { description: '이 AI를 써요', effect: 'state' },
+  'model.login': { description: '이 AI에 로그인해요', effect: 'open' },
+  'model.scope': { description: '고른 AI를 어디에 쓸지 정해요', effect: 'api' },
   'scan.open-install': { description: '설치 관리에서 쓸 수 있는 AI를 찾아요', effect: 'navigate' },
-  'scan.dismiss': { description: '엔진 찾기 결과를 닫아요', effect: 'state' },
+  'scan.dismiss': { description: '안내를 닫아요', effect: 'state' },
+
+  // T-101 2A.8 정지 버튼
+  'composer.stop': { description: '멈추는 방법을 고르는 메뉴를 열어요', effect: 'open' },
+  'composer.stop-pause': { description: '하던 일을 마무리하기 좋은 때에 멈춰요', effect: 'api' },
+  'composer.stop-now': { description: '하던 일을 바로 멈춰요', effect: 'api' },
+
+  // T-101 3 실행 모드
+  'composer.mode-upgrade': {
+    description: '권한을 워크스페이스 쓰기로 바꾸고 오토 모드로 해요',
+    effect: 'state',
+  },
+  'composer.mode-keep': { description: '모드와 권한을 그대로 둬요', effect: 'state' },
+  'run-mode.plan-choose': { description: '계획대로 실행하거나 계획을 고쳐요', effect: 'api' },
+  'run-mode.auto-start': { description: '보이는 한도로 오토 모드를 시작해요', effect: 'api' },
+  'run-mode.auto-edit-limits': { description: '오토 모드 한도를 바꾸는 칸을 열어요', effect: 'state' },
+  'run-mode.auto-cancel': { description: '오토 모드 시작을 그만둬요', effect: 'state' },
+  'run-mode.open-review': { description: '돌아오면 확인할 것 목록을 열어요', effect: 'open' },
+  'run-mode.review-action': { description: '확인할 것을 처리해요', effect: 'api' },
 
   'terminal.login': { description: '터미널에서 엔진 로그인을 시작해요', effect: 'state' },
 

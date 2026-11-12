@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, w
 import { join } from 'node:path';
 import type { LogRecord } from '../event-log.js';
 import { harnessHome } from '../loader.js';
+import { toRunMode, type RunMode } from '@harness-x/protocol';
 import { resolveSessionDefaults, type GlobalDefaultsSource } from './defaults.js';
 import type { ProjectStore } from './project-store.js';
 import {
@@ -224,7 +225,7 @@ export class SessionRegistry extends EventEmitter {
     if (this.get(id)) throw new SessionError('invalid', `이미 있는 세션: ${id}`);
     const engine = input.engine ?? d.engine;
     const model = input.model ?? d.model;
-    const mode = input.mode ?? d.mode;
+    const mode = toRunMode(input.mode) ?? toRunMode(d.mode);
     const agent = input.agent ?? d.agent;
     const first = input.firstMessage?.trim();
     const s = SessionRecordSchema.parse({
@@ -341,10 +342,12 @@ export class SessionRegistry extends EventEmitter {
         permission: d.permission,
         updatedAt: this.now().toISOString(),
       });
-      for (const k of ['engine', 'model', 'mode', 'agent'] as const) {
+      for (const k of ['engine', 'model', 'agent'] as const) {
         if (d[k]) draft[k] = d[k];
         else delete draft[k];
       }
+      if (d.mode) draft.mode = d.mode;
+      else delete draft.mode;
       return { session: structuredClone(draft), replaced: false };
     }
     const s = this.mustSaved(id);
@@ -379,6 +382,13 @@ export class SessionRegistry extends EventEmitter {
       { status, ...(status === 'done' ? { doneAt: this.now().toISOString() } : {}) },
       true,
     );
+  }
+
+  /** T-101 3E.6 실행 모드 바꾸기 (이어하기 카드에서 바꿀 때 — 사이드바 배지가 따라 바뀐다) */
+  setMode(id: string, mode: RunMode): SessionRecord | undefined {
+    const s = this.saved.get(id) ?? this.drafts.get(id);
+    if (!s) return undefined;
+    return this.update(s, { mode });
   }
 
   archive(id: string, archived = true): SessionRecord {

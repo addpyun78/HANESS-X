@@ -35,7 +35,7 @@ export interface ResumeCountLinkProps {
 export function ResumeCountLink({ count, onOpen }: ResumeCountLinkProps) {
   if (count <= 0) return null;
   return (
-    <button type="button" className="hx-resume-count" {...act('recovery.open-list')} onClick={onOpen}>
+    <button type="button" className="hx-resume-count" {...act('resume.open-list')} onClick={onOpen}>
       ⏸ 이어서 할 작업 {count}개
     </button>
   );

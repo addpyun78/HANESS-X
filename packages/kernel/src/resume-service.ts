@@ -16,6 +16,9 @@ import { suggestEngines } from './resume-engine.js';
 import { diffSinceSnapshot, revertToSnapshot, type RevertResult } from './resume-files.js';
 import { changedSinceStart, readPinnedVersion } from './resume-pin.js';
 import { resumeSession, type ResumeRunDeps, type ResumeRunResult } from './resume-run.js';
+import type { RunMode } from '@harness-x/protocol';
+import type { AutoResumeContext, AutoResumeDecision } from './resume-policy.js';
+import { autoResumeFor, resumeRunMode } from './run-mode/resume.js';
 
 /**
  * T-101 2B 이어하기 서비스 — 모든 입구(사이드바·⏸ 세션 줄·빈 세션 화면·/resume·CLI)가 같은 길로 들어온다.
@@ -38,6 +41,10 @@ export interface ResumeServiceOptions {
   interrupted?: ResumeRunDeps['interrupted'];
   /** 대답 안 한 승인 카드 */
   pendingApprovals?: (sessionId: string) => { id: string; title: string }[];
+  /** T-101 3E.6 멈춘 세션의 실행 모드 (세션 기록) */
+  sessionMode?: (sessionId: string) => string | undefined;
+  /** T-101 3E.6 이어하기 카드에서 모드를 바꿨을 때 세션 기록에 남긴다 */
+  setSessionMode?: (sessionId: string, mode: RunMode) => void;
   /** T-101 4F.6 단계 트리 (진행률 "단계 2/3 · 항목 4/7", 7일 이상 요약, 재구성 컨텍스트) */
   stages?: (sessionId: string) => StageTreeLike | null | undefined;
   now?: () => Date;
@@ -48,6 +55,8 @@ export interface ResumeStartChoices {
   files?: 'keep' | 'revert' | 'replan';
   engine?: string;
   version?: 'pinned' | 'latest';
+  /** T-101 3E.6 이어하기 카드에서 고른 실행 모드 (없으면 멈추기 전 모드 그대로) */
+  runMode?: RunMode;
 }
 
 export class ResumeServiceError extends Error {
@@ -63,11 +72,16 @@ export class ResumeServiceError extends Error {
 export interface ResumeService {
   list(): ResumableSession[];
   get(sessionId: string): ResumableSession | undefined;
+  /** T-101 2B.11 자동 재개 판단에 실제 세션 모드(3번)를 넘긴다 */
+  autoResume(
+    sessionId: string,
+    ctx?: Omit<AutoResumeContext, 'mode' | 'now'>,
+  ): AutoResumeDecision | undefined;
   check(sessionId: string): ResumeCheckResult;
   start(
     sessionId: string,
     choices?: ResumeStartChoices,
-  ): Promise<ResumeRunResult & { revert?: RevertResult; replan?: boolean }>;
+  ): Promise<ResumeRunResult & { revert?: RevertResult; replan?: boolean; runMode: RunMode }>;
 }
 
 function changedOf(r: ResumeCheckResult): string[] {
@@ -124,6 +138,11 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
   return {
     list: () => findResumableSessions(o.log).map(withStages),
     get,
+    autoResume(id, ctx = {}) {
+      const s = get(id);
+      if (!s) return undefined;
+      return autoResumeFor(s.paused, { mode: o.sessionMode?.(id) }, { ...ctx, now: o.now?.() ?? new Date() });
+    },
     check(id) {
       const s = get(id);
       if (!s) throw new ResumeServiceError('not_found', `이어할 세션이 없어요: ${id}`);
@@ -142,6 +161,9 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
         const snap = readPauseSnapshot(sessionDir(id))!;
         revert = revertToSnapshot(snap, { backupRoot: join(sessionDir(id), 'backups') });
       }
+      // T-101 3E.6 모드 유지 (카드에서 바꾸면 그 값을 세션 기록에)
+      const rm = resumeRunMode({ session: { mode: o.sessionMode?.(id) }, choice: choices.runMode });
+      if (rm.changed || (rm.from === 'card' && !o.sessionMode?.(id))) o.setSessionMode?.(id, rm.mode);
       const run = await resumeSession(
         {
           log: o.log,
@@ -166,6 +188,7 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
       );
       return {
         ...run,
+        runMode: rm.mode,
         ...(revert ? { revert } : {}),
         ...(choices.files === 'replan' ? { replan: true } : {}),
       };

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 import { EngineRefSchema, PipelineSchema } from './pipeline.js';
+import { RunModeSchema } from './run-mode.js';
 
 /**
  * 에이전트 스키마 (agent.yaml)
@@ -43,6 +44,8 @@ export const AgentSchema = z
     icon: z.string().min(1).max(32).optional(),
     command: SlashCommandSchema,
     defaultEngine: EngineRefSchema.default('auto'),
+    /** T-101 3E.2 이 에이전트의 기본 실행 모드 (입력창 칩·수식어가 없을 때, 프로젝트·전체 기본값보다 먼저) */
+    defaultMode: RunModeSchema.optional(),
     /** T-100 P4-F.6 빈 칸이 남은 채 저장되면 incomplete — 목록에 회색, 실행은 막힌다 */
     status: z.enum(['ready', 'incomplete']).optional(),
     pipeline: PipelineRefSchema,

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
+import { RunModeSchema } from './run-mode.js';
 
 /**
  * 파이프라인 스키마 (pipeline.yaml)
@@ -49,6 +50,11 @@ const nodeBase = {
   /** 캔버스에 표시할 이름 */
   label: z.string().min(1).optional(),
   description: z.string().optional(),
+  /**
+   * T-101 3E.2 이 노드만 쓸 실행 모드 (예: 검사 노드는 plan). 없으면 실행 전체 모드를 따른다.
+   * role 노드의 `mode`는 인증 방식(subscription/apiKey)이라 이름을 runMode로 둔다.
+   */
+  runMode: RunModeSchema.optional(),
 };
 
 /**

@@ -24,7 +24,11 @@ describe('48.2 수식어 파서: @엔진 #strict !plan', () => {
       modifiers: { engine: 'codex', strict: true, planOnly: false },
       tokens: ['@codex', '#strict'],
     });
-    expect(parseModifiers('!plan 결제 흐름 설계').modifiers).toEqual({ strict: false, planOnly: true });
+    expect(parseModifiers('!plan 결제 흐름 설계').modifiers).toEqual({
+      strict: false,
+      planOnly: true,
+      mode: 'plan',
+    });
     expect(parseModifiers('!plan 결제 흐름 설계').prompt).toBe('결제 흐름 설계');
   });
 

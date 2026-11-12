@@ -91,9 +91,11 @@ export interface CreateSessionRequest {
   /** 이름 또는 /명령 */
   agent: string;
   prompt: string;
-  modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean };
+  modifiers?: { engine?: string; strict?: boolean; planOnly?: boolean; mode?: 'plan' | 'normal' | 'auto' };
   /** T-101 0B.39 만들 때 저장할 프로젝트 */
   projectId?: string;
+  /** T-101 3E.3 입력창 모드 칩 값 (직접 고른 때만) */
+  mode?: 'plan' | 'normal' | 'auto';
 }
 
 export class ApiError extends Error {
@@ -226,7 +228,7 @@ export class HarnessApiClient {
     });
   }
 
-  /** 48.1 POST /api/sessions — 에이전트 칩 + 지시문 → 새 세션 (수식어 @엔진 #strict !plan은 prompt 안에) */
+  /** 48.1 POST /api/sessions — 에이전트 칩 + 지시문 → 새 세션 (수식어 @엔진 #strict !plan !auto는 prompt 안에) */
   createSession(req: CreateSessionRequest) {
     return this.request<DispatchSessionLike>('/api/sessions', {
       method: 'POST',
