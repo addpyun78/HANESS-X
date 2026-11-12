@@ -299,7 +299,9 @@ export class PluginLoader {
         const mod = (await this.importModule(resolve(p.dir, p.manifest.main), p.sha256)) as PluginModule & {
           default?: PluginModule;
         };
-        const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? {});
+        // activate·deactivate가 없으면: default 내보내기가 있으면 그것, 없으면 모듈 전체(라이브러리형 플러그인 —
+        // 예: checklist-ledger는 함수만 내보내고 커널이 그 함수로 서버 주소를 연결한다. T-102 C2-001)
+        const m: PluginModule = mod.activate || mod.deactivate ? mod : (mod.default ?? mod);
         p.module = m;
         p.isolation = 'main';
         await withTimeout(
@@ -525,7 +527,7 @@ export class PluginLoader {
       const m = (await this.importModule(resolve(old.dir, manifest.main), sha256)) as PluginModule & {
         default?: PluginModule;
       };
-      mod = m.activate || m.deactivate ? m : (m.default ?? {});
+      mod = m.activate || m.deactivate ? m : (m.default ?? m); // 핫리로드도 같은 규칙(T-102 C2-001)
     } catch (err) {
       return fail(`모듈 로드 실패: ${errMsg(err)}`);
     }
