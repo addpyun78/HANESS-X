@@ -293,6 +293,23 @@ function watchStdinEof(onEof: () => void): void {
   w.unref();
 }
 
+/** T-102 C2-003 하위 명령 사용법 (harness-x <명령> --help) */
+const SUB_HELP: Record<string, string> = {
+  install: `사용법: harness-x install <이름|주소>
+  설치 계획을 글로 보여 주고 y/n으로 물은 뒤 설치해요(화면 없이).
+`,
+  tools: `사용법:
+  harness-x tools list         설치된 도구 목록
+  harness-x tools allow <id>   새 도구의 첫 실행을 앞으로 허락
+`,
+  run: `사용법: harness-x run <에이전트> <지시> [--project <id|경로>]
+  켜져 있는 서버에서 새 작업을 시작해요(화면 사이드바에 바로 보여요).
+`,
+  reindex: `사용법: harness-x reindex
+  작업 목록 색인을 다시 만들어요(sessions/ 폴더를 다시 읽어요).
+`,
+};
+
 /** dist/cli.js → 저장소 루트 (packages/kernel/dist → ../../..) */
 function repoRoot(): string | undefined {
   const guess = resolve(fileURLToPath(new URL('.', import.meta.url)), '..', '..', '..');
@@ -300,6 +317,11 @@ function repoRoot(): string | undefined {
 }
 
 export async function main(argv = process.argv.slice(2)): Promise<number> {
+  // T-102 C2-003 하위 명령의 --help·-h: 사용법만 보여 주고 끝낸다(예전엔 '--help'를 이름으로 보고 실제로 실행했다)
+  if (SUB_HELP[argv[0] ?? ''] && argv.slice(1).some((a) => a === '--help' || a === '-h')) {
+    process.stdout.write(SUB_HELP[argv[0]!]!);
+    return 0;
+  }
   // T-100 H.17 패널 없이 승인 카드 보기·고르기 (자체 옵션을 쓰므로 serve 옵션 해석 전에 넘긴다)
   if (argv[0] === 'approvals') {
     const mod = await loadApprovalsModule();
