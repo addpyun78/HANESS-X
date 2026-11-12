@@ -4,6 +4,7 @@ import type { SettingsApi, SettingsWidgetContext } from '../../settings/form/api
 import { SettingsForm } from '../../settings/form/SettingsForm.js';
 import type { ProjectDefaults, ProjectInfo, ProjectView } from './api.js';
 import { MODE_LABEL } from './model.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * 0B.41 프로젝트 설정 ("프로젝트 범위" 화면)
@@ -79,7 +80,7 @@ export function ProjectSettings({
           <span>폴더</span>
           <code>{project.rootPath}</code>
           {project.missing && <span role="status">⚠ 폴더를 찾을 수 없어요</span>}
-          <button type="button" onClick={onRelink}>
+          <button {...act('project-settings.relink')} type="button" onClick={onRelink}>
             폴더 다시 연결
           </button>
         </div>
@@ -143,8 +144,10 @@ export function ProjectSettings({
           <li>CLAUDE.md {info?.hasClaudeMd ? '있음' : '없음'}</li>
         </ul>
         <div className="hx-project-settings__actions">
-          <button type="submit">저장</button>
-          <button type="button" onClick={onClose}>
+          <button {...act('project-settings.save')} type="submit">
+            저장
+          </button>
+          <button {...act('project-settings.close')} type="button" onClick={onClose}>
             닫기
           </button>
           {saved && <span role="status">저장했어요</span>}

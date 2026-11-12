@@ -112,6 +112,50 @@ export type GateVerifier = (input: {
   subjects: GateSubject[];
 }) => GateVerdict | Promise<GateVerdict>;
 
+/**
+ * 실행기 → 단계 트리 알림 (T-101 4번). 모두 선택. nodeStart가 { stop }을 돌려주면(계획 모드) 실행을 멈춘다.
+ */
+export interface RunnerStageHooks {
+  nodeStart?(i: {
+    node: PipelineNode;
+    visit: number;
+    engineId?: string;
+    /** gate 부분 재실행으로 같은 방문을 다시 시작 */
+    rerun?: boolean;
+  }): void | { stop: string } | Promise<void | { stop: string }>;
+  nodeEnd?(i: {
+    node: PipelineNode;
+    visit: number;
+    status: NodeStatus;
+    output: unknown;
+    reason?: string;
+    /** role 노드 원장 항목 */
+    items?: ChecklistItem[];
+    /** 정지(일시정지·지금 멈추기)로 끝남 — 단계는 막힘이 아니라 그대로 둔다 */
+    interrupted?: boolean;
+  }): void;
+  gateFailed?(i: {
+    gate: GateNode;
+    attempt: number;
+    failed: Required<GateFailure>[];
+    exhausted: boolean;
+  }): void;
+  loopIteration?(i: { loop: PipelineNode; iteration: number }): void;
+  loopEnd?(i: { loop: PipelineNode; iterations: number; reason?: string }): void;
+  routeChosen?(i: { router: PipelineNode; to: string }): void;
+  /** subagent 노드: 그 에이전트 트리를 단계 아래에 넣고 하위 실행기용 알림을 돌려준다 */
+  subagent?(i: {
+    node: PipelineNode;
+    visit: number;
+    agent: string;
+    pipeline: Pipeline;
+  }): RunnerStageHooks | undefined;
+  /** role 노드 프롬프트 다듬기 (단계 슬라이스 붙이기) */
+  prompt?(i: { node: RoleNode; engineId: string; prompt: string }): string;
+  /** role 노드 원장 항목이 바뀌었을 수 있는 때(원장 생성 직후·턴이 끝날 때마다) — 진행률을 맞춘다 */
+  nodeItems?(i: { node: PipelineNode; items: ChecklistItem[] }): void;
+}
+
 /** 노드 출력 추출기 (T-042 contract가 기본) */
 export type OutputExtractor = (node: RoleNode, events: readonly HarnessEvent[]) => unknown;
 
@@ -152,6 +196,8 @@ export interface PipelineRunnerOptions {
   extractOutput?: OutputExtractor;
   /** outputSchema 검증 실패 시 같은 노드에 재요청할 최대 횟수 (기본 2) */
   maxContractRetries?: number;
+  /** 단계 체크리스트 연결 (T-101 4번 — StageTracker.hooks()) */
+  stages?: RunnerStageHooks;
   signal?: AbortSignal;
   /** T-101 2B.9 엔진 자체 재개: 노드 id → 엔진 세션 id (그 노드 첫 턴에 resumeId로 넘김) */
   resumeIds?: Record<string, string>;

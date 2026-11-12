@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { act } from '../../actions/registry.js';
 
 export interface ConfirmCardProps {
   title: string;
@@ -22,10 +23,10 @@ export function ConfirmCard({ title, body, confirmLabel, onConfirm, onCancel }: 
       <p className="hx-confirm__title">{title}</p>
       <p className="hx-confirm__body">{body}</p>
       <div className="hx-confirm__actions">
-        <button ref={ok} type="button" className="hx-confirm__ok" onClick={onConfirm}>
+        <button {...act('confirm.ok')} ref={ok} type="button" className="hx-confirm__ok" onClick={onConfirm}>
           {confirmLabel}
         </button>
-        <button type="button" onClick={onCancel}>
+        <button {...act('confirm.cancel')} type="button" onClick={onCancel}>
           취소
         </button>
       </div>

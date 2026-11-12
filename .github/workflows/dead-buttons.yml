@@ -1,0 +1,25 @@
+# T-101 0C.9 동작 없는 버튼 재발 방지: 린트(hx/no-dead-button) + "전부 눌러 보기" 검사
+# 로컬에서도 같은 명령: pnpm check:dead-buttons
+name: dead-buttons
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  dead-buttons:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: 린트 — 눌러도 아무 일 없는 버튼 금지 (hx/no-dead-button)
+        run: pnpm exec eslint apps/web/src --max-warnings 0
+      - name: 전부 눌러 보기 (e2e/screens.ts의 화면마다 버튼을 하나씩 눌러 2초 안 효과 확인)
+        run: pnpm check:dead-buttons

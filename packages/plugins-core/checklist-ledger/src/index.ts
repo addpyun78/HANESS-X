@@ -14,3 +14,4 @@ export * from './slice.js';
 export * from './stall.js';
 export * from './export.js';
 export * from './plan-routes.js';
+export * from './stages/index.js';

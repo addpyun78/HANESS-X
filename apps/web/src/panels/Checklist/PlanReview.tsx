@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { LintViolation } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface PlanReviewProps {
   violations: readonly LintViolation[];
@@ -44,9 +45,19 @@ export function PlanReview({ violations, onApprove, busy, error, children }: Pla
       {children}
       <div className="hx-ck-review__actions">
         <button
+          {...act('checklist.approve-plan')}
           type="button"
           className="hx-ck-btn hx-ck-btn--primary"
           disabled={blocked || busy || !onApprove}
+          title={
+            blocked
+              ? '계획의 문제를 먼저 고쳐 주세요'
+              : busy
+                ? '처리하는 중이에요'
+                : !onApprove
+                  ? '지금은 승인할 수 없어요'
+                  : undefined
+          }
           onClick={onApprove}
         >
           승인

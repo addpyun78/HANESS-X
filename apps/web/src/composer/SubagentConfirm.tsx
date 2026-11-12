@@ -1,5 +1,6 @@
 import type { SessionSummary } from '../shell/types.js';
 import type { SendPayload } from './types.js';
+import { act } from '../actions/registry.js';
 
 /**
  * 48.4 실행 중 다른 에이전트를 /로 부르면 묻는다: 실행 중 세션에 서브에이전트로 추가 / 새 세션으로 실행 / 취소
@@ -47,13 +48,18 @@ export function SubagentConfirm({
         <span className="hx-mono">{agent}</span>를 이 세션의 서브에이전트로 추가할까요?
       </p>
       <div className="hx-subagent-confirm__actions">
-        <button type="button" className="hx-subagent-confirm__primary" onClick={onAddSubagent}>
+        <button
+          {...act('subagent.add')}
+          type="button"
+          className="hx-subagent-confirm__primary"
+          onClick={onAddSubagent}
+        >
           서브에이전트로 추가
         </button>
-        <button type="button" onClick={onNewSession}>
+        <button {...act('subagent.new-session')} type="button" onClick={onNewSession}>
           새 세션으로 실행
         </button>
-        <button type="button" onClick={onCancel}>
+        <button {...act('subagent.cancel')} type="button" onClick={onCancel}>
           취소
         </button>
       </div>

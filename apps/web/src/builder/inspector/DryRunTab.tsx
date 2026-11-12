@@ -9,7 +9,9 @@ import {
   type Overlay,
   type RunEvent,
 } from './dryrun.js';
+import { stageRunView } from './dryrun-stages.js';
 import { graphToPipeline, type PipelineMeta } from './yaml.js';
+import { act } from '../../actions/registry.js';
 
 export interface DryRunTabProps {
   graph: BuilderGraph;
@@ -71,6 +73,7 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
     );
   };
 
+  const stages = overlay ? stageRunView(graphToPipeline(graph, meta), overlay) : undefined;
   const rows = overlay ? Object.entries(overlay).sort((a, b) => (a[1].order ?? 99) - (b[1].order ?? 99)) : [];
 
   return (
@@ -85,11 +88,19 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
         />
       </label>
       <div className="hx-yaml__bar">
-        <button type="button" className="hx-insp-btn" disabled={running} onClick={run}>
+        <button
+          {...act('inspector.dry-run')}
+          type="button"
+          className="hx-insp-btn"
+          disabled={running}
+          title={running ? '시험 실행 중이에요' : undefined}
+          onClick={run}
+        >
           시험 실행
         </button>
         {overlay && (
           <button
+            {...act('inspector.clear-overlay')}
             type="button"
             className="hx-insp-btn hx-insp-btn--ghost"
             onClick={() => {
@@ -109,6 +120,24 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
             <li key={e}>{e}</li>
           ))}
         </ul>
+      )}
+      {stages && (
+        <div className="hx-dryrun__stages">
+          <p className="hx-dryrun__stage-progress" data-testid="dryrun-stage-progress">
+            {stages.label}
+          </p>
+          <ol className="hx-dryrun__list" aria-label="단계별 진행">
+            {stages.rows.map((r, k) => (
+              <li key={r.nodeId} data-stage={r.nodeId} data-status={r.status}>
+                <span>
+                  {k + 1}. {r.title}
+                </span>
+                <span>{STATUS_LABEL[r.status]}</span>
+                <span />
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
       {overlay && (
         <>

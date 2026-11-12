@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { badgeLabel, type ActionCardModel } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface ActionCardProps {
   card: ActionCardModel;
@@ -91,6 +92,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
       <div className="hx-action-card__buttons">
         {card.buttons.map((b, i) => (
           <button
+            {...act('approvals.choose')}
             key={b.id}
             ref={i === 0 ? first : undefined}
             type="button"
@@ -98,6 +100,15 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
             data-choice={b.id}
             aria-keyshortcuts={String(i + 1)}
             disabled={busy || !onChoose || (b.requiresCheck && !checked)}
+            title={
+              busy
+                ? '처리하는 중이에요'
+                : !onChoose
+                  ? '지금은 답할 수 없어요'
+                  : b.requiresCheck && !checked
+                    ? '먼저 확인 칸에 체크해 주세요'
+                    : undefined
+            }
             onClick={() => choose(b.id)}
           >
             <span className="hx-action-card__key" aria-hidden="true">
@@ -116,6 +127,7 @@ export function ActionCard({ card, onChoose, busy, error, autoFocus, children }:
       {card.technical && card.technical.length > 0 && (
         <div className="hx-action-card__tech">
           <button
+            {...act('approvals.more')}
             type="button"
             className="hx-action-card__more"
             aria-expanded={open}

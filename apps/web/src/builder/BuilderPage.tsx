@@ -37,6 +37,7 @@ import { animationEnabled, useDraftSession } from './draft/useDraftSession.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
 import { MainEngineContext } from './main-engine-context.js';
+import { act } from '../actions/registry.js';
 
 export interface BuilderPageProps {
   /** 현재 라우트 (/builder/new) */
@@ -183,7 +184,12 @@ export function BuilderPage({
   return (
     <div className="hx-builder" data-route={route}>
       <header className="hx-builder__bar">
-        <button type="button" className="hx-builder__back" onClick={() => navigate('/')}>
+        <button
+          {...act('builder.back')}
+          type="button"
+          className="hx-builder__back"
+          onClick={() => navigate('/')}
+        >
           ← 대화로
         </button>
         <h1 className="hx-builder__title">에이전트 만들기</h1>
@@ -191,6 +197,7 @@ export function BuilderPage({
         {start && (
           <span className="hx-builder__history">
             <button
+              {...act('builder.undo')}
               type="button"
               className="hx-icon-btn"
               aria-label="실행 취소"
@@ -201,6 +208,7 @@ export function BuilderPage({
               ↶
             </button>
             <button
+              {...act('builder.redo')}
               type="button"
               className="hx-icon-btn"
               aria-label="다시 실행"
@@ -222,9 +230,17 @@ export function BuilderPage({
           />
           <div className="hx-savebar" aria-label="초안 저장">
             <button
+              {...act('builder.save-open')}
               type="button"
               className="hx-insp-btn"
               disabled={!api || graph.nodes.length === 0}
+              title={
+                !api
+                  ? '저장할 곳에 연결되지 않았어요'
+                  : graph.nodes.length === 0
+                    ? '블록을 하나 이상 놓아 주세요'
+                    : undefined
+              }
               onClick={() => setSaving(true)}
             >
               저장

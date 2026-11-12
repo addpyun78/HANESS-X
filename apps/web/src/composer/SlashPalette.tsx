@@ -2,6 +2,7 @@ import type { AgentSummary } from '@harness-x/protocol';
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { containsMatch, fuzzyFilter } from './fuzzy.js';
 import './slash.css';
+import { act } from '../actions/registry.js';
 
 /**
  * / 팔레트(컨셉 D): 입력 맨 앞에 /를 치면 입력창 바로 위에 뜬다.
@@ -243,6 +244,7 @@ export function useSlashPalette({ agents = [], skills = [], text, setText }: Use
       <span aria-hidden="true">{agent.icon ?? '✦'}</span>
       <span className="hx-mono">{agent.command}</span>
       <button
+        {...act('composer.clear-agent')}
         type="button"
         className="hx-agent-chip__x"
         aria-label={`${agent.name} 에이전트 해제`}

@@ -12,6 +12,7 @@ import { findUnfinishedSessions, registerRecoveryRoutes, type LedgerView } from 
 import { registerResumeRoutes } from './api/resume-routes.js';
 import { createResumeService } from './resume-service.js';
 import { fallbackTable } from './resume-engine.js';
+import { stageProgressLabels, stageTreeResolver } from './stage-progress.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
 import { cleanupData } from './settings/data-cleanup.js';
 import {
@@ -169,6 +170,12 @@ interface AgentBuilderPluginModule {
   PipelineRunner?: new (o: Record<string, unknown>) => {
     run(pipeline: Pipeline, input: unknown): Promise<DispatchRunResult>;
   };
+  /** T-101 4번 단계 체크리스트: 실행기 옵션 { stages } (stages.json에 단계 트리) */
+  stageRunnerOptions?: (o: {
+    workspace: string;
+    sessionId: string;
+    agent: { name: string; pipeline: Pipeline };
+  }) => Record<string, unknown>;
   /** T-100 P4-A.12 GET /api/builder/inventory (+ engines.json 감시). 핫리로드는 attachHotReload로 연결 */
   registerBuilderInventory?: (
     app: { get(path: string, handler: () => Promise<unknown>): unknown },
@@ -442,6 +449,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     return 1;
   }
   const workspace = resolve(values.workspace ?? process.cwd());
+  const stageTreeOf = stageTreeResolver(workspace);
   /** 로드된 엔진 플러그인이 내보낸 어댑터 (`export const engines: EngineAdapter[]`) */
   const adapters = () =>
     [...loader.plugins.values()].flatMap((p) => {
@@ -587,6 +595,12 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
         ...(i.modifiers.strict ? { maxContractRetries: 0 } : {}),
         resolveAgent: (name: string) => registry()?.get(name)?.pipeline,
+        // T-101 4번 단계 체크리스트: 실행이 시작되는 이 순간에 단계 뼈대(stages.json)를 만든다 (이어하기면 그대로 이어 씀)
+        ...(builder()?.stageRunnerOptions?.({
+          workspace,
+          sessionId: i.sessionId,
+          agent: { name: i.agent.name, pipeline: i.pipeline },
+        }) ?? {}),
         // T-051 /forge: Forge 플러그인이 엔진 래퍼·gate 판정(검사·샌드박스)·scaffold 체크리스트를 준다
         ...(i.pipeline.name === 'forge'
           ? (forge()?.forgeRunnerOptionsFor?.({
@@ -708,6 +722,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
             fallback: () => fallbackTable(loadEnginesSettings().engines),
             ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
+            // T-101 4F.6 단계 트리 기준 이어하기
+            stages: stageTreeOf,
           }),
         });
         // T-100 P4-A.12 자산 전수조사 (5분 캐시, 플러그인 핫리로드·엔진 재스캔 시 새 스냅샷)
@@ -768,7 +784,15 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         });
       },
       workspaces,
-      projects: { projects, sessions: sessionRegistry },
+      projects: {
+        projects,
+        sessions: sessionRegistry,
+        // T-101 4F.8 세션 줄 "단계 2/3"
+        stageProgress: (id: string) => {
+          const t = stageTreeOf(id);
+          return t ? stageProgressLabels(t).short : null;
+        },
+      },
       ...(envToken && envToken.length >= 32 ? { token: envToken } : {}),
       ...(values['token-file'] ? { tokenFile: resolve(values['token-file']) } : {}),
       // 37.2 터미널 셸 cwd = 현재 워크스페이스 (폴더 선택기로 바꾸면 다음 셸부터 반영)

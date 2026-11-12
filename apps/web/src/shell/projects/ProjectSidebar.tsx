@@ -26,6 +26,7 @@ import {
 import { BROWSER_SETTING_EVENT } from '../../design/ui-prefs.js';
 import { loadPrefs, savePrefs, SIDEBAR_GROUP_KEY, SIDEBAR_SORT_KEY, type SidebarPrefs } from './prefs.js';
 import './projects.css';
+import { act, NOT_READY } from '../../actions/registry.js';
 
 /**
  * T-101 0-2 사이드바 (설계 그림 그대로)
@@ -168,6 +169,7 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
     <nav className="hx-sidebar hx-psidebar" aria-label="사이드바">
       <div className="hx-newsession" role="group" aria-label="새 세션">
         <button
+          {...act('projects.new-session')}
           type="button"
           className="hx-newsession__main"
           title="지금 프로젝트에서 새 세션 (Ctrl+N)"
@@ -176,6 +178,7 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
           + 새 세션
         </button>
         <button
+          {...act('projects.pick-new')}
           type="button"
           className="hx-newsession__more"
           aria-label="프로젝트 골라서 새 세션"
@@ -191,9 +194,11 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
             {pickerList.map((p) => (
               <li key={p.id} role="none">
                 <button
+                  {...act('projects.new-in-project')}
                   type="button"
                   role="menuitem"
                   disabled={p.missing}
+                  title={p.missing ? '폴더를 찾을 수 없어요. 먼저 다시 연결해 주세요' : undefined}
                   onClick={() => {
                     setPickerOpen(false);
                     onNewSessionIn(p.id);
@@ -205,6 +210,7 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
             ))}
             <li role="none">
               <button
+                {...act('projects.open-folder')}
                 type="button"
                 role="menuitem"
                 onClick={() => {
@@ -230,7 +236,7 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
 
       <div className="hx-psidebar__head">
         <h2>프로젝트</h2>
-        <button type="button" onClick={onOpenFolder}>
+        <button {...act('projects.open-folder')} type="button" onClick={onOpenFolder}>
           폴더 열기
         </button>
       </div>
@@ -302,7 +308,11 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
       {stale.length > 0 && onArchiveMany && (
         <div className="hx-psidebar__archive" role="note">
           완료된 지 30일 지난 세션이 {stale.length}개 있어요. 보관해 둘까요? (지우지 않아요)
-          <button type="button" onClick={() => onArchiveMany(stale.map((s) => s.id))}>
+          <button
+            {...act('projects.archive-stale')}
+            type="button"
+            onClick={() => onArchiveMany(stale.map((s) => s.id))}
+          >
             보관하기
           </button>
         </div>
@@ -377,10 +387,13 @@ export function ProjectSidebar(props: ProjectSidebarProps) {
       <div className="hx-sidebar__nav" role="menu" aria-label="하단 메뉴">
         {NAV_ITEMS.map((n) => (
           <button
+            {...act(`nav.${n.id}` as const)}
             key={n.id}
             type="button"
             role="menuitem"
             className="hx-nav-item"
+            disabled={n.ready === false}
+            title={n.ready === false ? NOT_READY : undefined}
             onClick={() => onNavigate?.(n.id)}
           >
             <span aria-hidden="true">{n.icon}</span>
@@ -462,6 +475,7 @@ function GroupView(v: GroupViewProps) {
     >
       <div className="hx-pgroup__row" aria-current={v.selected ? 'true' : undefined}>
         <button
+          {...act('projects.group-toggle')}
           type="button"
           className="hx-pgroup__toggle"
           aria-expanded={!collapsed}
@@ -481,6 +495,7 @@ function GroupView(v: GroupViewProps) {
           />
         ) : (
           <button
+            {...act('projects.select')}
             type="button"
             className="hx-pgroup__name"
             onClick={() => (p ? v.onSelectProject(p.id) : v.onToggle())}
@@ -507,15 +522,18 @@ function GroupView(v: GroupViewProps) {
         {p && (
           <>
             <button
+              {...act('projects.new-in-project')}
               type="button"
               className="hx-pgroup__new"
               aria-label={`${p.name}에서 새 세션`}
               disabled={p.missing}
+              title={p.missing ? '폴더를 찾을 수 없어요. 먼저 다시 연결해 주세요' : undefined}
               onClick={() => v.onNewSessionIn(p.id)}
             >
               +
             </button>
             <button
+              {...act('projects.menu')}
               type="button"
               className="hx-pgroup__more"
               aria-label={`${p.name} 메뉴`}
@@ -530,7 +548,11 @@ function GroupView(v: GroupViewProps) {
         {p?.missing && (
           <span className="hx-pgroup__missing" role="status">
             ⚠ 폴더를 찾을 수 없어요
-            <button type="button" onClick={() => v.onProjectAction(p, { type: 'relink' })}>
+            <button
+              {...act('projects.relink')}
+              type="button"
+              onClick={() => v.onProjectAction(p, { type: 'relink' })}
+            >
               다시 연결
             </button>
           </span>
@@ -550,7 +572,12 @@ function GroupView(v: GroupViewProps) {
           {rows(g.active)}
           {g.done.length > 0 && (
             <li className="hx-pgroup__done">
-              <button type="button" aria-expanded={v.doneOpen} onClick={v.onToggleDone}>
+              <button
+                {...act('projects.done-toggle')}
+                type="button"
+                aria-expanded={v.doneOpen}
+                onClick={v.onToggleDone}
+              >
                 {v.doneOpen ? '▾' : '▸'} 완료됨 ({g.done.length})
               </button>
               {v.doneOpen && <ul aria-label={`${g.label} 완료된 세션`}>{rows(g.done)}</ul>}
@@ -578,9 +605,11 @@ function ProjectMenu({
   const item = (label: string, run: () => void, disabled = false) => (
     <li role="none" key={label}>
       <button
+        {...act('projects.menu-item')}
         type="button"
         role="menuitem"
         disabled={disabled}
+        title={disabled ? '폴더를 찾을 수 없어요. 먼저 다시 연결해 주세요' : undefined}
         onClick={() => {
           onClose();
           run();
@@ -628,6 +657,7 @@ function SessionRow({
   const item = (label: string, run: () => void, disabled = false, why?: string) => (
     <li role="none" key={label}>
       <button
+        {...act('conversation.menu-item')}
         type="button"
         role="menuitem"
         disabled={disabled}
@@ -656,6 +686,7 @@ function SessionRow({
         />
       ) : (
         <button
+          {...act('conversation.select')}
           type="button"
           className="hx-srow__main"
           aria-current={active ? 'true' : undefined}
@@ -675,12 +706,18 @@ function SessionRow({
               {mode}
             </span>
           )}
+          {s.stageProgress && (
+            <small className="hx-srow__stage" aria-label={`진행 ${s.stageProgress}`}>
+              {s.stageProgress}
+            </small>
+          )}
           <time className="hx-srow__time" dateTime={s.lastActivityAt}>
             {relativeTime(s.lastActivityAt, now)}
           </time>
         </button>
       )}
       <button
+        {...act('conversation.menu')}
         type="button"
         className="hx-srow__more"
         aria-label={`${title} 메뉴`}

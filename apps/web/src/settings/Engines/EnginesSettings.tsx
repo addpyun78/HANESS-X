@@ -3,6 +3,7 @@ import type { EnginesApi } from './api.js';
 import { EngineCard } from './EngineCard.js';
 import { buildEngineCards, type EngineCardModel } from './model.js';
 import './engines.css';
+import { act } from '../../actions/registry.js';
 
 export interface EnginesSettingsProps {
   api: EnginesApi;
@@ -59,7 +60,14 @@ export function EnginesSettings({ api }: EnginesSettingsProps) {
             마지막으로 찾은 때 <time dateTime={scannedAt}>{scannedAt.slice(0, 16).replace('T', ' ')}</time>
           </span>
         )}
-        <button type="button" className="hx-icon-btn" onClick={rescan} disabled={scanning}>
+        <button
+          {...act('engines.rescan')}
+          type="button"
+          className="hx-icon-btn"
+          onClick={rescan}
+          disabled={scanning}
+          title={scanning ? '찾는 중이에요' : undefined}
+        >
           {scanning ? '찾는 중…' : '다시 찾기'}
         </button>
       </header>

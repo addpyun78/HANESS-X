@@ -44,8 +44,12 @@ describe('좌측 사이드바', () => {
     expect(menu).toEqual(['✦에이전트 만들기', '⧉플러그인', '◇스킬', '⬇설치 관리', '⚙엔진', '☰설정']);
     fireEvent.click(screen.getByText('+ 새 세션'));
     expect(onNew).toHaveBeenCalledOnce();
-    fireEvent.click(screen.getByText('플러그인'));
-    expect(onNav).toHaveBeenCalledWith('plugins');
+    fireEvent.click(screen.getByText('엔진'));
+    expect(onNav).toHaveBeenCalledWith('engines');
+    // T-101 0C.F2 아직 화면이 없는 메뉴는 비활성 + "준비 중이에요"
+    const plugins = screen.getByText('플러그인').closest('button')!;
+    expect(plugins.disabled).toBe(true);
+    expect(plugins.title).toBe('준비 중이에요');
     fireEvent.click(screen.getByText('세션 3'));
     expect(onSel).toHaveBeenCalledWith('3');
     expect(screen.getByText('세션 1').closest('button')?.getAttribute('aria-current')).toBe('true');
