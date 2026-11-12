@@ -671,7 +671,7 @@
       ],
       "doneItems": 4,
       "entries": {
-        "actions": [],
+        "actions": ["chat.mode"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -803,7 +803,7 @@
       ],
       "doneItems": 4,
       "entries": {
-        "actions": [],
+        "actions": ["engines.rescan"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -1419,7 +1419,7 @@
       ],
       "doneItems": 8,
       "entries": {
-        "actions": [],
+        "actions": ["install.search"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -1551,7 +1551,7 @@
       ],
       "doneItems": 7,
       "entries": {
-        "actions": [],
+        "actions": ["install.search"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -1837,7 +1837,7 @@
       ],
       "doneItems": 10,
       "entries": {
-        "actions": [],
+        "actions": ["sidebar.new-session", "sidebar.select-session"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -1969,7 +1969,59 @@
       ],
       "doneItems": 15,
       "entries": {
-        "actions": [],
+        "actions": [
+          "approvals.choose",
+          "approvals.more",
+          "builder.back",
+          "builder.mic",
+          "builder.mic-consent-no",
+          "builder.mic-consent-yes",
+          "builder.redo",
+          "builder.save-open",
+          "builder.undo",
+          "chat.tool-toggle",
+          "checklist.approve-plan",
+          "checklist.decide",
+          "composer.attach-pick",
+          "composer.chip",
+          "composer.chip-option",
+          "composer.mode-keep",
+          "composer.mode-upgrade",
+          "composer.plus",
+          "composer.send",
+          "draft.gap-find-tool",
+          "draft.gap-forge",
+          "draft.gap-remove",
+          "draft.list-delete",
+          "draft.list-resume",
+          "draft.patch-apply",
+          "draft.patch-cancel",
+          "draft.peek-close",
+          "draft.question-choice",
+          "draft.questions-skip",
+          "draft.questions-submit",
+          "draft.resume",
+          "draft.start-new",
+          "draft.version-peek",
+          "draft.version-revert",
+          "draft.versions-toggle",
+          "forge.choice",
+          "forge.option",
+          "forge.submit",
+          "install.add-plan",
+          "install.pick-method",
+          "install.remove",
+          "install.search",
+          "install.tab",
+          "install.update",
+          "install.url-check",
+          "recovery.resume",
+          "save.close",
+          "save.fill-gaps",
+          "save.save",
+          "save.save-incomplete",
+          "save.use-suggestion"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2079,7 +2131,7 @@
       ],
       "doneItems": 6,
       "entries": {
-        "actions": [],
+        "actions": ["composer.chip"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2541,7 +2593,7 @@
       ],
       "doneItems": 14,
       "entries": {
-        "actions": [],
+        "actions": ["engines.rescan", "settings.data-cleanup", "settings.diagnostics"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2595,7 +2647,795 @@
       "code": [],
       "tests": [],
       "status": "정상"
+    },
+    {
+      "id": "F-119",
+      "name": "화면: approvals",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (approvals.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["approvals.mini-open", "approvals.toast", "approvals.undo"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-120",
+      "name": "화면: 에이전트 만들기 화면",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (builder.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "builder.drawer-tab",
+        "builder.sidebar-tab",
+        "builder.start-chat",
+        "builder.start-clone",
+        "builder.start-clone-list",
+        "builder.start-empty",
+        "builder.start-plugin",
+        "builder.start-plugin-list"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-121",
+      "name": "화면: 대화 화면",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (chat.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["chat.approval-option", "chat.open-diff"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-122",
+      "name": "화면: checklist",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (checklist.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["checklist.toggle"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-123",
+      "name": "화면: 입력창",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (composer.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "composer.attachment-preview",
+        "composer.clear-agent",
+        "composer.remove-attachment",
+        "composer.stop",
+        "composer.stop-now",
+        "composer.stop-pause"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-124",
+      "name": "화면: confirm",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (confirm.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["confirm.cancel", "confirm.ok"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-125",
+      "name": "화면: conversation",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (conversation.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["conversation.menu", "conversation.menu-item", "conversation.select"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-126",
+      "name": "화면: dev",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (dev.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["dev.dismiss-banner"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-127",
+      "name": "화면: empty",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (empty.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["empty.agent", "empty.example"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-128",
+      "name": "화면: 엔진 화면",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (engines.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["engines.install-guide", "engines.ping", "engines.save-key", "engines.save-settings"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-129",
+      "name": "화면: inspector",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (inspector.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "inspector.clear-overlay",
+        "inspector.dry-run",
+        "inspector.overwrite",
+        "inspector.save",
+        "inspector.skill-down",
+        "inspector.skill-up",
+        "inspector.tab",
+        "inspector.yaml-apply",
+        "inspector.yaml-reset"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-130",
+      "name": "화면: lego",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (lego.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["lego.detach-plugin", "lego.remove-skill"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-131",
+      "name": "화면: model",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (model.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["model.choose", "model.login", "model.open", "model.scope"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-132",
+      "name": "화면: 화면 이동 메뉴",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (nav.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "nav.agent-builder",
+        "nav.engines",
+        "nav.install",
+        "nav.plugins",
+        "nav.settings",
+        "nav.skills"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-133",
+      "name": "화면: 오른쪽 패널",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (panel.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["panel.tab"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-134",
+      "name": "화면: plus",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (plus.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["plus.attach", "plus.open-folder", "plus.pick-recent", "plus.pin", "plus.recent"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-135",
+      "name": "화면: project-settings",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (project-settings.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["project-settings.close", "project-settings.relink", "project-settings.save"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-136",
+      "name": "화면: projects",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (projects.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "projects.archive-stale",
+        "projects.done-toggle",
+        "projects.group-toggle",
+        "projects.menu",
+        "projects.menu-item",
+        "projects.new-in-project",
+        "projects.new-session",
+        "projects.open-folder",
+        "projects.pick-new",
+        "projects.relink",
+        "projects.select"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-137",
+      "name": "화면: resume",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (resume.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["resume.check-choice", "resume.open-list", "resume.session", "resume.start"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-138",
+      "name": "화면: run-mode",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (run-mode.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "run-mode.auto-cancel",
+        "run-mode.auto-edit-limits",
+        "run-mode.auto-start",
+        "run-mode.open-review",
+        "run-mode.plan-choose",
+        "run-mode.review-action"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-139",
+      "name": "화면: scan",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (scan.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["scan.dismiss", "scan.open-install"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-140",
+      "name": "화면: 설정 화면",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (settings.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "settings.export",
+        "settings.import",
+        "settings.list-add",
+        "settings.list-remove",
+        "settings.pick-folder",
+        "settings.project-pin",
+        "settings.project-relink",
+        "settings.project-remove",
+        "settings.project-remove-cancel",
+        "settings.project-remove-confirm",
+        "settings.project-settings",
+        "settings.reset-all",
+        "settings.reset-all-cancel",
+        "settings.reset-all-confirm",
+        "settings.reset-field",
+        "settings.reset-group",
+        "settings.secret-delete",
+        "settings.secret-save",
+        "settings.show-advanced",
+        "settings.tab",
+        "settings.toggle",
+        "settings.update-check"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-141",
+      "name": "화면: 화면 틀(사이드바·패널 열기)",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (shell.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["shell.open-panel", "shell.open-sidebar", "shell.stop-all"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-142",
+      "name": "화면: subagent",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (subagent.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["subagent.add", "subagent.cancel", "subagent.new-session"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-143",
+      "name": "화면: terminal",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (terminal.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["terminal.login"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-144",
+      "name": "화면: toolpicker",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (toolpicker.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["toolpicker.source-link"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-145",
+      "name": "화면: topbar",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (topbar.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": ["topbar.theme"],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-146",
+      "name": "화면: where",
+      "sources": [
+        {
+          "ticket": "screen",
+          "section": "apps/web/src/actions/registry.ts (where.*)"
+        }
+      ],
+      "doneItems": 0,
+      "extra": true,
+      "keywords": [
+        "where.cancel",
+        "where.keep",
+        "where.open-folder",
+        "where.pick-project",
+        "where.recent",
+        "where.scratch",
+        "where.use-top"
+      ],
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
     }
   ],
-  "generatedAt": "2026-11-12T10:13:19.534Z"
+  "generatedAt": "2026-11-12T10:13:19.534Z",
+  "linkStats": {
+    "actions": 61
+  },
+  "screenAdded": [
+    "F-119 화면: approvals (3)",
+    "F-120 화면: 에이전트 만들기 화면 (8)",
+    "F-121 화면: 대화 화면 (2)",
+    "F-122 화면: checklist (1)",
+    "F-123 화면: 입력창 (6)",
+    "F-124 화면: confirm (2)",
+    "F-125 화면: conversation (3)",
+    "F-126 화면: dev (1)",
+    "F-127 화면: empty (2)",
+    "F-128 화면: 엔진 화면 (4)",
+    "F-129 화면: inspector (9)",
+    "F-130 화면: lego (2)",
+    "F-131 화면: model (4)",
+    "F-132 화면: 화면 이동 메뉴 (6)",
+    "F-133 화면: 오른쪽 패널 (1)",
+    "F-134 화면: plus (5)",
+    "F-135 화면: project-settings (3)",
+    "F-136 화면: projects (11)",
+    "F-137 화면: resume (4)",
+    "F-138 화면: run-mode (6)",
+    "F-139 화면: scan (2)",
+    "F-140 화면: 설정 화면 (22)",
+    "F-141 화면: 화면 틀(사이드바·패널 열기) (3)",
+    "F-142 화면: subagent (3)",
+    "F-143 화면: terminal (1)",
+    "F-144 화면: toolpicker (1)",
+    "F-145 화면: topbar (1)",
+    "F-146 화면: where (7)"
+  ]
 }
