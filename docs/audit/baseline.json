@@ -1,0 +1,423 @@
+{
+  "lines": {
+    "total": {
+      "files": 577,
+      "lines": 73808
+    },
+    "packages": {
+      "apps/desktop": {
+        "files": 0,
+        "lines": 0,
+        "testFilesOutsideSrc": 1
+      },
+      "apps/web": {
+        "files": 196,
+        "lines": 23787,
+        "testFilesOutsideSrc": 145
+      },
+      "packages/engines/acp-generic": {
+        "files": 6,
+        "lines": 668,
+        "testFilesOutsideSrc": 4
+      },
+      "packages/engines/antigravity": {
+        "files": 5,
+        "lines": 300,
+        "testFilesOutsideSrc": 4
+      },
+      "packages/engines/claude-code": {
+        "files": 5,
+        "lines": 340,
+        "testFilesOutsideSrc": 6
+      },
+      "packages/engines/codex": {
+        "files": 7,
+        "lines": 919,
+        "testFilesOutsideSrc": 7
+      },
+      "packages/engines/openai-compat": {
+        "files": 9,
+        "lines": 961,
+        "testFilesOutsideSrc": 6
+      },
+      "packages/kernel": {
+        "files": 79,
+        "lines": 13528,
+        "testFilesOutsideSrc": 89
+      },
+      "packages/plugins-core/agent-builder": {
+        "files": 43,
+        "lines": 5331,
+        "testFilesOutsideSrc": 59
+      },
+      "packages/plugins-core/approvals": {
+        "files": 12,
+        "lines": 1609,
+        "testFilesOutsideSrc": 21
+      },
+      "packages/plugins-core/attachments": {
+        "files": 23,
+        "lines": 2558,
+        "testFilesOutsideSrc": 27
+      },
+      "packages/plugins-core/checklist-ledger": {
+        "files": 29,
+        "lines": 5318,
+        "testFilesOutsideSrc": 54
+      },
+      "packages/plugins-core/engine-scanner": {
+        "files": 17,
+        "lines": 917,
+        "testFilesOutsideSrc": 17
+      },
+      "packages/plugins-core/forge": {
+        "files": 17,
+        "lines": 2488,
+        "testFilesOutsideSrc": 13
+      },
+      "packages/plugins-core/installer": {
+        "files": 18,
+        "lines": 4253,
+        "testFilesOutsideSrc": 12
+      },
+      "packages/plugins-core/mcp-host": {
+        "files": 8,
+        "lines": 935,
+        "testFilesOutsideSrc": 10
+      },
+      "packages/plugins-core/permission-gate": {
+        "files": 9,
+        "lines": 1289,
+        "testFilesOutsideSrc": 10
+      },
+      "packages/plugins-core/tool-finder": {
+        "files": 23,
+        "lines": 1993,
+        "testFilesOutsideSrc": 11
+      },
+      "packages/plugins-core/verifiers/comparators": {
+        "files": 19,
+        "lines": 1250,
+        "testFilesOutsideSrc": 24
+      },
+      "packages/plugins-core/verifiers/judge": {
+        "files": 12,
+        "lines": 1064,
+        "testFilesOutsideSrc": 14
+      },
+      "packages/plugins-core/verifiers/ladder": {
+        "files": 12,
+        "lines": 1540,
+        "testFilesOutsideSrc": 16
+      },
+      "packages/plugins/stt-browser": {
+        "files": 1,
+        "lines": 158,
+        "testFilesOutsideSrc": 1
+      },
+      "packages/plugins/stt-local": {
+        "files": 1,
+        "lines": 224,
+        "testFilesOutsideSrc": 1
+      },
+      "packages/plugins/verifier-local": {
+        "files": 2,
+        "lines": 121,
+        "testFilesOutsideSrc": 1
+      },
+      "packages/protocol": {
+        "files": 16,
+        "lines": 1955,
+        "testFilesOutsideSrc": 19
+      },
+      "packages/sdk": {
+        "files": 3,
+        "lines": 180,
+        "testFilesOutsideSrc": 3
+      },
+      "packages/sdk/templates/hook": {
+        "files": 1,
+        "lines": 35,
+        "testFilesOutsideSrc": 0
+      },
+      "packages/sdk/templates/panel": {
+        "files": 1,
+        "lines": 27,
+        "testFilesOutsideSrc": 0
+      },
+      "packages/sdk/templates/pipeline": {
+        "files": 1,
+        "lines": 15,
+        "testFilesOutsideSrc": 0
+      },
+      "packages/sdk/templates/skill": {
+        "files": 1,
+        "lines": 14,
+        "testFilesOutsideSrc": 0
+      },
+      "packages/sdk/templates/tool": {
+        "files": 1,
+        "lines": 31,
+        "testFilesOutsideSrc": 0
+      }
+    }
+  },
+  "updatedAt": "2026-11-12T10:02:53.122Z",
+  "deps": {
+    "installedPackages": 457,
+    "uniqueDirectExternal": 43,
+    "perPackage": {
+      "apps/desktop": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      },
+      "apps/web": {
+        "dependencies": 12,
+        "devDependencies": 11,
+        "external": 20
+      },
+      ".": {
+        "dependencies": 0,
+        "devDependencies": 10,
+        "external": 10
+      },
+      "packages/engines/acp-generic": {
+        "dependencies": 3,
+        "devDependencies": 0,
+        "external": 1
+      },
+      "packages/engines/antigravity": {
+        "dependencies": 2,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/engines/claude-code": {
+        "dependencies": 2,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/engines/codex": {
+        "dependencies": 2,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/engines/openai-compat": {
+        "dependencies": 2,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/kernel": {
+        "dependencies": 9,
+        "devDependencies": 3,
+        "external": 11
+      },
+      "packages/plugins-core/agent-builder": {
+        "dependencies": 10,
+        "devDependencies": 2,
+        "external": 2
+      },
+      "packages/plugins-core/approvals": {
+        "dependencies": 3,
+        "devDependencies": 0,
+        "external": 1
+      },
+      "packages/plugins-core/attachments": {
+        "dependencies": 5,
+        "devDependencies": 1,
+        "external": 2
+      },
+      "packages/plugins-core/checklist-ledger": {
+        "dependencies": 3,
+        "devDependencies": 0,
+        "external": 1
+      },
+      "packages/plugins-core/engine-scanner": {
+        "dependencies": 3,
+        "devDependencies": 3,
+        "external": 4
+      },
+      "packages/plugins-core/forge": {
+        "dependencies": 9,
+        "devDependencies": 0,
+        "external": 3
+      },
+      "packages/plugins-core/installer": {
+        "dependencies": 5,
+        "devDependencies": 3,
+        "external": 3
+      },
+      "packages/plugins-core/mcp-host": {
+        "dependencies": 6,
+        "devDependencies": 0,
+        "external": 2
+      },
+      "packages/plugins-core/permission-gate": {
+        "dependencies": 4,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/plugins-core/tool-finder": {
+        "dependencies": 6,
+        "devDependencies": 2,
+        "external": 2
+      },
+      "packages/plugins-core/verifiers/comparators": {
+        "dependencies": 4,
+        "devDependencies": 0,
+        "external": 1
+      },
+      "packages/plugins-core/verifiers/judge": {
+        "dependencies": 6,
+        "devDependencies": 0,
+        "external": 1
+      },
+      "packages/plugins-core/verifiers/ladder": {
+        "dependencies": 6,
+        "devDependencies": 2,
+        "external": 1
+      },
+      "packages/plugins/stt-browser": {
+        "dependencies": 1,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/plugins/stt-local": {
+        "dependencies": 1,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/plugins/verifier-local": {
+        "dependencies": 1,
+        "devDependencies": 0,
+        "external": 0
+      },
+      "packages/protocol": {
+        "dependencies": 2,
+        "devDependencies": 0,
+        "external": 2
+      },
+      "packages/sdk": {
+        "dependencies": 3,
+        "devDependencies": 0,
+        "external": 2
+      },
+      "packages/sdk/templates/hook": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      },
+      "packages/sdk/templates/panel": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      },
+      "packages/sdk/templates/pipeline": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      },
+      "packages/sdk/templates/skill": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      },
+      "packages/sdk/templates/tool": {
+        "dependencies": 0,
+        "devDependencies": 1,
+        "external": 1
+      }
+    }
+  },
+  "bundle": {
+    "bytes": 18710559,
+    "gzip": 7001156,
+    "files": 214,
+    "top": [
+      {
+        "file": "apps/web/dist/assets/ts.worker-BrLZGe_E.js",
+        "bytes": 7034760,
+        "gzip": 1549559
+      },
+      {
+        "file": "apps/web/dist/assets/index-L02UQduj.js",
+        "bytes": 4075312,
+        "gzip": 1052412
+      },
+      {
+        "file": "apps/web/dist/assets/css.worker-C_6RgliQ.js",
+        "bytes": 1054215,
+        "gzip": 239485
+      },
+      {
+        "file": "apps/web/dist/assets/html.worker-CLyYFd_g.js",
+        "bytes": 716964,
+        "gzip": 188677
+      },
+      {
+        "file": "apps/web/dist/assets/index-CtrmmwtA.js",
+        "bytes": 691822,
+        "gzip": 216701
+      },
+      {
+        "file": "apps/web/dist/assets/json.worker-BggoxaER.js",
+        "bytes": 406907,
+        "gzip": 121162
+      },
+      {
+        "file": "apps/web/dist/assets/xterm-B-qIQCd3.js",
+        "bytes": 329310,
+        "gzip": 83043
+      },
+      {
+        "file": "apps/web/dist/assets/BuilderPage-eSP4dWcR.js",
+        "bytes": 263745,
+        "gzip": 86617
+      },
+      {
+        "file": "apps/web/dist/assets/index-Ced-qlZg.css",
+        "bytes": 186532,
+        "gzip": 27759
+      },
+      {
+        "file": "apps/web/dist/assets/codicon-DF1abBS2.ttf",
+        "bytes": 153228,
+        "gzip": 75392
+      }
+    ]
+  },
+  "tests": {
+    "total": 4375,
+    "passed": 4368,
+    "failed": 3,
+    "skipped": 4,
+    "files": 2767,
+    "failedFiles": 6,
+    "failedNames": [
+      "packages/kernel/test/cli.judge-wiring.test.ts > harness-x serve — 판정 연결 (T-100 Part 1) 깨끗한 환경(설정·예전 키 없음): 안내 없음 → 비교는 정규화로 통과, 판정 AI가 없으면 승인 카드",
+      "packages/kernel/test/cli.sidecar.test.ts > harness-x serve --exit-with-stdin (데스크톱 사이드카) HARNESS_X_TOKEN·--token-file 사용, Tauri 출처 CORS, stdin 닫힘 → 종료",
+      "packages/kernel/test/cli.test.ts > harness-x serve 실행 후 API 응답"
+    ],
+    "source": "docs/audit/raw/test-run-1.json"
+  },
+  "size": {
+    "sourceBytes": 7010976,
+    "nodeModulesBytes": 539237477,
+    "nodeModulesDirs": 27,
+    "gitBytes": 23214029,
+    "otherBytes": 26311457,
+    "worktrees": {
+      "count": 39,
+      "sample": "agent-a03839709f0de5e8d",
+      "sampleBytes": 261298666,
+      "estimateBytes": 10190647974
+    },
+    "mb": {
+      "source": 6.7,
+      "nodeModules": 514.3,
+      "git": 22.1,
+      "other": 25.1,
+      "worktreesEstimate": 9718.6
+    }
+  }
+}
