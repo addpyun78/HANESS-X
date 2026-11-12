@@ -446,7 +446,7 @@
       "bundle": "must"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": [],
       "area": "bug",
       "severity": "medium",
@@ -460,7 +460,9 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C2.19"
+        "source": "C2.19",
+        "resolution": "install·tools·run·reindex --help/-h → 사용법만",
+        "resolvedAt": "2026-11-12T16:23:12.416Z"
       },
       "id": "C2-003",
       "plain": "명령 4개가 도움말을 부르면 진짜로 실행돼요.",
