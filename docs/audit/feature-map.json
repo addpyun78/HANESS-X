@@ -188,7 +188,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/plugins"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -254,7 +254,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/engines/rescan", "GET /api/engines"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -562,7 +562,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/approvals/:id", "GET /api/approvals"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -584,7 +584,7 @@
       "doneItems": 6,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/checklist/:session/status", "GET /api/checklist/:session"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -694,7 +694,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/plugins"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -716,7 +716,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/native/pick-folder"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -738,7 +738,7 @@
       "doneItems": 7,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/workspaces/open", "POST /api/workspaces/pin", "GET /api/workspaces"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -760,7 +760,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/approvals/:id", "GET /api/approvals", "GET /api/checklist/:session"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -804,7 +804,7 @@
       "doneItems": 4,
       "entries": {
         "actions": ["engines.rescan"],
-        "api": [],
+        "api": ["GET /api/engines/:id/login", "POST /api/engines/rescan", "GET /api/engines"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -892,7 +892,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/agents"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -958,7 +958,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["PUT /api/agents/:name", "GET /api/agents"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -980,7 +980,7 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/agents"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1002,7 +1002,16 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "PUT /api/agents/:name",
+          "GET /api/agents",
+          "POST /api/sessions/:id/subagents",
+          "DELETE /api/sessions/:id",
+          "GET /api/sessions/:id",
+          "PATCH /api/sessions/:id",
+          "GET /api/sessions",
+          "POST /api/sessions"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1046,7 +1055,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/forge/answers/:id"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1068,7 +1077,7 @@
       "doneItems": 6,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/agents", "GET /api/plugins", "GET /api/sessions", "POST /api/sessions"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1090,7 +1099,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/plugins"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1112,7 +1121,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/quota"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1134,7 +1143,7 @@
       "doneItems": 3,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/recovery"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1156,7 +1165,7 @@
       "doneItems": 3,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/plugins/:id/promote", "GET /api/plugins"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1200,7 +1209,18 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "GET /api/agents",
+          "POST /api/approvals/:id",
+          "GET /api/approvals",
+          "POST /api/native/pick-folder",
+          "POST /api/recovery/:session/resume",
+          "GET /api/recovery",
+          "GET /api/sessions",
+          "POST /api/sessions",
+          "POST /api/workspaces/open",
+          "GET /api/workspaces"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1376,7 +1396,7 @@
       "doneItems": 24,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/approvals/:id", "POST /api/approvals/undo", "GET /api/approvals"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1398,7 +1418,7 @@
       "doneItems": 7,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/approvals", "POST /api/compare", "GET /api/notices"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1420,7 +1440,7 @@
       "doneItems": 8,
       "entries": {
         "actions": ["install.search"],
-        "api": [],
+        "api": ["POST /api/install/execute"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1464,7 +1484,7 @@
       "doneItems": 7,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/install/resolve"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1530,7 +1550,7 @@
       "doneItems": 7,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/install/first-run/:id", "GET /api/install/first-run"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1552,7 +1572,7 @@
       "doneItems": 7,
       "entries": {
         "actions": ["install.search"],
-        "api": [],
+        "api": ["POST /api/gesture-tokens"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1618,7 +1638,7 @@
       "doneItems": 8,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/tools/continue", "POST /api/tools/find", "POST /api/tools/plan-selected"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1662,7 +1682,7 @@
       "doneItems": 13,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/agents", "GET /api/builder/inventory"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1772,7 +1792,12 @@
       "doneItems": 10,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "PUT /api/agents/:name",
+          "POST /api/agents/save",
+          "GET /api/agents",
+          "POST /api/gesture-tokens"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1794,7 +1819,7 @@
       "doneItems": 6,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["PUT /api/agents/:name", "POST /api/agents/save", "GET /api/agents"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1816,7 +1841,7 @@
       "doneItems": 10,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/settings/reset", "GET /api/settings", "PUT /api/settings"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1838,7 +1863,19 @@
       "doneItems": 10,
       "entries": {
         "actions": ["sidebar.new-session", "sidebar.select-session"],
-        "api": [],
+        "api": [
+          "POST /api/projects/:id/relink",
+          "GET /api/projects/:id/sessions",
+          "DELETE /api/projects/:id",
+          "PATCH /api/projects/:id",
+          "POST /api/projects/suggest-root",
+          "GET /api/projects",
+          "POST /api/projects",
+          "POST /api/sessions/:id/subagents",
+          "GET /api/sessions/:id",
+          "GET /api/sessions",
+          "POST /api/sessions"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1860,7 +1897,15 @@
       "doneItems": 11,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "POST /api/sessions/:id/commit",
+          "POST /api/sessions/:id/project",
+          "DELETE /api/sessions/:id",
+          "GET /api/sessions/:id",
+          "PATCH /api/sessions/:id",
+          "GET /api/sessions",
+          "POST /api/sessions"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1882,7 +1927,13 @@
       "doneItems": 11,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "DELETE /api/projects/:id",
+          "PATCH /api/projects/:id",
+          "POST /api/projects/order",
+          "GET /api/projects",
+          "POST /api/projects"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -1904,7 +1955,12 @@
       "doneItems": 5,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "DELETE /api/projects/:id",
+          "PATCH /api/projects/:id",
+          "GET /api/projects",
+          "POST /api/projects"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2044,7 +2100,15 @@
       "doneItems": 8,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "GET /api/sessions/:id/attachments",
+          "POST /api/sessions/:id/attachments",
+          "DELETE /api/sessions/:id",
+          "GET /api/sessions/:id",
+          "PATCH /api/sessions/:id",
+          "GET /api/sessions",
+          "POST /api/sessions"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2198,7 +2262,7 @@
       "doneItems": 13,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/resume"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2220,7 +2284,7 @@
       "doneItems": 2,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/resume/:id/check", "POST /api/resume/:id", "GET /api/resume"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2330,7 +2394,7 @@
       "doneItems": 6,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/resume/:id", "GET /api/resume", "GET /api/sessions", "POST /api/sessions"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2462,7 +2526,13 @@
       "doneItems": 7,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "GET /api/projects/:id/sessions",
+          "DELETE /api/projects/:id",
+          "PATCH /api/projects/:id",
+          "GET /api/projects",
+          "POST /api/projects"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2506,7 +2576,7 @@
       "doneItems": 8,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["POST /api/engines/:id/ping", "GET /api/engines"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2528,7 +2598,7 @@
       "doneItems": 4,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/main-ai", "PUT /api/main-ai", "GET /api/models"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2550,7 +2620,20 @@
       "doneItems": 6,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": [
+          "GET /api/main-ai",
+          "PUT /api/main-ai",
+          "DELETE /api/projects/:id",
+          "PATCH /api/projects/:id",
+          "GET /api/projects",
+          "POST /api/projects",
+          "PUT /api/sessions/:id/ai",
+          "DELETE /api/sessions/:id",
+          "GET /api/sessions/:id",
+          "PATCH /api/sessions/:id",
+          "GET /api/sessions",
+          "POST /api/sessions"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2572,7 +2655,7 @@
       "doneItems": 8,
       "entries": {
         "actions": [],
-        "api": [],
+        "api": ["GET /api/models"],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -2594,7 +2677,14 @@
       "doneItems": 14,
       "entries": {
         "actions": ["engines.rescan", "settings.data-cleanup", "settings.diagnostics"],
-        "api": [],
+        "api": [
+          "POST /api/compare",
+          "GET /api/notices",
+          "POST /api/settings/data/cleanup",
+          "GET /api/settings/diagnostics",
+          "GET /api/settings",
+          "PUT /api/settings"
+        ],
         "cli": [],
         "mcp": [],
         "hooks": [],
@@ -3489,7 +3579,8 @@
   ],
   "generatedAt": "2026-11-12T10:13:19.534Z",
   "linkStats": {
-    "actions": 184
+    "actions": 184,
+    "api": 147
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
