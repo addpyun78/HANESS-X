@@ -1,0 +1,738 @@
+[
+  {
+    "path": "apps/web/test/__snapshots__/app.workspace.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/approvals.panel.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/approvals.viewport.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/builder.dryrun.stages.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/builder.layout.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/chat.render.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/chat.sent-message.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/chat.stopblock.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/chat.toolcard.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.chips.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.mobile-picker.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.mode.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.plus-menu.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.slash.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/composer.toolbar.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/engines.builder.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/engines.model-button.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/engines.scan.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/forge.cards.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/install.card.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/install.manager.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/install.resolve-fail.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/panels.checklist.detail.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/panels.checklist.stages.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/panels.checklist.tree.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/projects.flows.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/projects.hook.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/projects.sidebar.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/resume.project-card.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/run-mode.auto-summary.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/run-mode.badges.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/run-mode.review-list.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.engines.auto.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.engines.grid.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.engines.rescan.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.form.widgets.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.about.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.ai.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.approval.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.attachments.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.checklist.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.general.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.judge.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.mode.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.plugins.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.project.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.scope.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.tools.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/settings.screen.voice.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/shell.agent-sessions.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/shell.quota.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/shell.sidebar.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/shell.topbar.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/__snapshots__/stages.session-row.test.tsx.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "apps/web/test/fixtures/events.ts",
+    "kind": "fixture"
+  },
+  {
+    "path": "e2e/__snapshots__/judge-none-card.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "e2e/fixtures/claude-usage-limit.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "e2e/fixtures/crash-session.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "e2e/fixtures/fake-claude.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/limit-exceeded-1.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/limit-exceeded-2.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/no-judge-1.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/no-judge-2.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/number-1.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/number-2.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/path-1.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/path-2.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/text-1.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/approvals/text-2.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/bomb.zip",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/bundle.tar.gz",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/clip.mp4",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/cp949.txt",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/deck.pptx",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/disguised.txt",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/gps.jpg",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/memo.docx",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/meta.png",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/old.hwp",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/plan.hwpx",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/report.pdf",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/run.sh",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/sample.env",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/scanned.pdf",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/setup.exe",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/three-sheets.xlsx",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/traversal.zip",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/unknown.bin",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/utf16.txt",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/files/voice.wav",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/attachments/make-fixtures.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/01-design-review.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/02-kotlin-style.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/03-plan-only.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/04-screenshot.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/05-reuse-agent.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/06-vague-helper.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/07-vague-check.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/08-vague-auto.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/09-missing-diff.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/builder-chat/10-missing-figma.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/exact.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/exit-code.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/json.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/number.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/path.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/regex.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/text.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "fixtures/comparators/version.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/antigravity/test/fixtures/agy-errors.txt",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/antigravity/test/fixtures/fake-agy.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/antigravity/test/fixtures/headless-not-logged-in.stderr.txt",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/antigravity/test/fixtures/hi.real.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/antigravity/test/fixtures/tool-denied.real.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/claude-code/test/fixtures/auth-error.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/claude-code/test/fixtures/fake-long-claude.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/claude-code/test/fixtures/hi.real.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/claude-code/test/fixtures/tool-write.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/app-server-turn.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/app-server-usage-limit.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/exec-auth-failed.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/exec-shell.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/fake-codex.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/ratelimits-auth-error.real.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/codex/test/fixtures/ratelimits-ok.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/engines/openai-compat/test/__snapshots__/attachments.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/kernel/test/fixtures/crash-writer.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/__snapshots__/stages.handoff.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build-fixed.codex.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build-missing.codex.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build.codex.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/plan.claude.jsonl",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/replay-claude-resume.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/test/fixtures/runner/replay-engine.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/approvals/test/__snapshots__/templates.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/attachments/test/__snapshots__/unknown.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/attachments/test/fixtures/fake-cli.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/fixtures/non-atomic.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/export.stage.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/export.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/lint.message.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.auto-summary.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.render.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.resume.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.rework.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.skeleton.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.slice.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/__snapshots__/forge.extract.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/__snapshots__/forge.install-card.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/.claude-plugin/plugin.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/agents/helper.md",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/commands/review.md",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/block-rm.sh",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/hooks.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/skills/kotlin-style/SKILL.md",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/echo-mcp-server.mjs",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/kotlin-hook.ts",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/plugins.ts",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/test/__snapshots__/recommend.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/index.js",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/test/__snapshots__/evidence.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/fixtures/replays/antigravity.stdout",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/fixtures/replays/claude-code.stdout",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/fixtures/replays/codex-tool-call.stdout",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/fixtures/replays/codex.stdout",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/test/__snapshots__/local.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/test/__snapshots__/questions.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/01-exact-match.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/02-hangul-nfd.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/03-backslash.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/04-windows-drive-case.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/05-wsl-mount.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/06-trailing-slash-dots.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/07-glossary-alias.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/08-naming-style.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/09-harness-mobile-vs-ai-mobile.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/10-learned-alias.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/11-wrong-target.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/12-missing.json",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/test/__snapshots__/ladder.record.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "packages/protocol/test/fixtures/event-samples.ts",
+    "kind": "fixture"
+  },
+  {
+    "path": "packages/sdk/test/__snapshots__/templates.substitute.test.ts.snap",
+    "kind": "snapshot"
+  },
+  {
+    "path": "tests/fixtures/fake-stop-engine.mjs",
+    "kind": "fixture"
+  }
+]
