@@ -249,7 +249,7 @@
       "bundle": "nice"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": ["F-007"],
       "area": "bug",
       "severity": "high",
@@ -269,7 +269,9 @@
         "source": "C1.9",
         "top": 1,
         "userApproved": true,
-        "research": "core 출처 코드를 바꿀 수 있으면 커널도 바꿀 수 있어 core 지문 검사는 보안 이득이 없고 사용만 막음. 외부 플러그인 검사는 유지하므로 위험 보통"
+        "research": "core 출처 코드를 바꿀 수 있으면 커널도 바꿀 수 있어 core 지문 검사는 보안 이득이 없고 사용만 막음. 외부 플러그인 검사는 유지하므로 위험 보통",
+        "resolution": "core 출처는 지문·버전 변경 시 lock 새로 고침+기록, 외부 플러그인 검사 유지",
+        "resolvedAt": "2026-11-12T15:20:57.410Z"
       },
       "id": "C1-005",
       "plain": "코드를 고친 뒤 켜면 기본 부품 5개가 막혀요. 사용자 요청으로 꼭 고쳐요.",
