@@ -27,6 +27,8 @@ export interface ResumableSession {
   itemId?: string;
   /** 시작 시각 */
   startedAt: string | null;
+  /** T-101 4F.6 단계가 있는 에이전트: "단계 2/3 · 항목 4/7" */
+  stageProgress?: string;
 }
 
 const str = (v: unknown) => (typeof v === 'string' && v ? v : undefined);

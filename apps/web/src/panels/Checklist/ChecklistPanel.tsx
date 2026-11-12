@@ -11,6 +11,7 @@ import {
   type ChecklistView,
 } from './model.js';
 import { PlanReview } from './PlanReview.js';
+import { StageTree } from './StageTree.js';
 import './checklist.css';
 
 export interface ChecklistPanelProps {
@@ -173,7 +174,9 @@ export function ChecklistPanel({
   return (
     <section className="hx-ck" aria-label="체크리스트" data-version={view.checklist.version}>
       {cards}
-      {view.plan.locked ? (
+      {view.plan.locked && view.stages && view.stages.stages.length > 1 ? (
+        <StageTree tree={view.stages} />
+      ) : view.plan.locked ? (
         <>
           <ChecklistProgress items={items} />
           {tree()}

@@ -1,3 +1,4 @@
+import { stageProgressLabels, stageRecap, type StageTreeLike } from './stage-progress.js';
 import { dirname, join } from 'node:path';
 import type { Dispatcher } from './dispatch.js';
 import type { EventLog } from './event-log.js';
@@ -37,6 +38,8 @@ export interface ResumeServiceOptions {
   interrupted?: ResumeRunDeps['interrupted'];
   /** 대답 안 한 승인 카드 */
   pendingApprovals?: (sessionId: string) => { id: string; title: string }[];
+  /** T-101 4F.6 단계 트리 (진행률 "단계 2/3 · 항목 4/7", 7일 이상 요약, 재구성 컨텍스트) */
+  stages?: (sessionId: string) => StageTreeLike | null | undefined;
   now?: () => Date;
 }
 
@@ -73,7 +76,15 @@ function changedOf(r: ResumeCheckResult): string[] {
 
 export function createResumeService(o: ResumeServiceOptions): ResumeService {
   const sessionDir = (id: string) => dirname(o.log.sessionFile(id));
-  const get = (id: string) => findResumableSessions(o.log).find((s) => s.sessionId === id);
+  /** 단계가 2개 이상인 세션은 진행률을 단계 기준으로 */
+  const withStages = (s: ResumableSession): ResumableSession => {
+    const t = o.stages?.(s.sessionId);
+    return t && t.stages.length > 1 ? { ...s, stageProgress: stageProgressLabels(t).resume } : s;
+  };
+  const get = (id: string) => {
+    const s = findResumableSessions(o.log).find((x) => x.sessionId === id);
+    return s ? withStages(s) : undefined;
+  };
   const deps = (s: ResumableSession): ResumeCheckDeps => {
     const snap = readPauseSnapshot(sessionDir(s.sessionId));
     const pin = readPinnedVersion(sessionDir(s.sessionId));
@@ -99,15 +110,19 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
         : {}),
       ...(pin ? { changedSinceStart: () => changedSinceStart(pin, current) } : {}),
       ...(o.pendingApprovals ? { pendingApprovals: () => o.pendingApprovals!(s.sessionId) } : {}),
-      doneItems: () =>
-        (o.ledger?.(s.sessionId)?.read()?.items ?? [])
+      doneItems: () => {
+        // T-101 4F.6 단계가 있으면 7일 이상 요약에 단계 요약을 쓴다
+        const t = o.stages?.(s.sessionId);
+        if (t && t.stages.length > 1) return stageRecap(t);
+        return (o.ledger?.(s.sessionId)?.read()?.items ?? [])
           .filter((i) => i.status === 'done')
-          .map((i) => ({ id: i.id, title: i.title })),
+          .map((i) => ({ id: i.id, title: i.title }));
+      },
       conflicts: () => conflictsFromLog(o.log, s.sessionId, running),
     };
   };
   return {
-    list: () => findResumableSessions(o.log),
+    list: () => findResumableSessions(o.log).map(withStages),
     get,
     check(id) {
       const s = get(id);
@@ -135,6 +150,7 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
           ...(o.engineCanResume ? { engineCanResume: o.engineCanResume } : {}),
           ...(o.ledger ? { ledger: o.ledger } : {}),
           ...(o.interrupted ? { interrupted: o.interrupted } : {}),
+          ...(o.stages ? { stages: o.stages } : {}),
           ...(o.now ? { now: o.now } : {}),
         },
         id,

@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`4C.2 단계 슬라이스: 현재 단계 목록 + 앞 단계 요약 + handoff 값만 > 스냅샷 1`] = `
+"<harness-checklist>
+단계 2/3: build 단계
+앞 단계 요약:
+- plan: 화면 2개를 만들기로 했어요
+받은 값: {"screens":["home","cfg"]}
+진행: 0/2 완료
+현재 항목 build1 [todo, 시도 0]: build 틀 항목 1 쓰기
+정식 경로 (art.app): (manifest 미확정)
+완료 조건: command: true
+다음 항목:
+- build2: build 틀 항목 2 쓰기
+정식 경로에만 쓰고, 끝나면 checklist.submit으로 증거를 제출하세요.
+</harness-checklist>"
+`;

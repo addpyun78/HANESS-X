@@ -1,4 +1,5 @@
 import type { HarnessEvent } from '@harness-x/protocol';
+import type { StageTreeView } from './stages.js';
 
 /**
  * 체크리스트 패널 모델 (T-036)
@@ -63,6 +64,8 @@ export interface ChecklistView {
     artifacts: Record<string, { displayName: string; path: string; kind: string }>;
   };
   lint: { ok: boolean; violations: LintViolation[] };
+  /** 단계 트리 (T-101 4F.4 — 단계가 2개 이상이면 단계 트리로 보여 준다) */
+  stages?: StageTreeView | null;
 }
 
 export const STATUS_ICON: Record<ItemStatus, string> = {

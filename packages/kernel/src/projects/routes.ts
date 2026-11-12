@@ -34,6 +34,8 @@ export interface ProjectRoutesOptions {
   sessions: SessionRegistry;
   /** 탐색기에서 열기 (기본: explorer.exe / open / xdg-open) */
   reveal?: (path: string) => void;
+  /** T-101 4F.8 세션 줄의 단계 진행 "단계 2/3" (단계 1개면 null) */
+  stageProgress?: (sessionId: string) => string | null | undefined;
 }
 
 const PROJECT_STATUS: Record<string, number> = {
@@ -85,6 +87,10 @@ const str = (v: unknown) => (typeof v === 'string' ? v : '');
 
 export function registerProjectRoutes(app: FastifyInstance, o: ProjectRoutesOptions): void {
   const { projects, sessions } = o;
+  const withStage = <T extends { id: string }>(r: T): T & { stageProgress?: string } => {
+    const sp = o.stageProgress?.(r.id);
+    return sp ? { ...r, stageProgress: sp } : r;
+  };
   const view = (p: Project) => ({
     ...p,
     sessionCount: sessions.list({ projectId: p.id }).length,
@@ -182,7 +188,7 @@ export function registerProjectRoutes(app: FastifyInstance, o: ProjectRoutesOpti
   app.get('/api/projects/:id/sessions', async (req, reply) => {
     const { id } = req.params as { id: string };
     if (!projects.get(id)) return reply.code(404).send({ error: 'not_found' });
-    return { sessions: sessions.list({ projectId: id }) };
+    return { sessions: sessions.list({ projectId: id }).map(withStage) };
   });
 
   app.get('/api/projects/:id/info', async (req, reply) => {
@@ -225,7 +231,7 @@ export function registerProjectRoutes(app: FastifyInstance, o: ProjectRoutesOpti
   });
 
   // ── 세션 ──────────────────────────────────────────────────
-  app.get('/api/session-records', async () => ({ sessions: sessions.list() }));
+  app.get('/api/session-records', async () => ({ sessions: sessions.list().map(withStage) }));
 
   app.post('/api/sessions/:id/commit', async (req, reply) => {
     const { id } = req.params as { id: string };

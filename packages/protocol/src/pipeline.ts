@@ -51,6 +51,17 @@ const nodeBase = {
   description: z.string().optional(),
 };
 
+/**
+ * 단계 범위·출구 조건 (T-101 4A.5·4B.4)
+ *  artifacts: 이 노드(단계)가 쓸 수 있는 경로 패턴 / canModify: 산출물을 고쳐도 되는 다른 노드 id
+ *  acceptance: 단계 출구 조건 (체크리스트 acceptance와 같은 모양, checklist-ledger가 검사)
+ */
+const stageScope = {
+  artifacts: z.array(z.string().min(1)).optional(),
+  canModify: z.array(NodeIdSchema).optional(),
+  acceptance: z.array(z.record(z.string(), z.unknown())).optional(),
+};
+
 // ── 40.1 / 40.2 노드 7종 ─────────────────────────────────────
 /** role: 엔진 세션 하나가 맡는 세부 담당 */
 export const RoleNodeSchema = z
@@ -65,6 +76,7 @@ export const RoleNodeSchema = z
     permission: NodePermissionSchema.default('workspace-write'),
     /** 이 노드의 체크리스트 템플릿 (경로 또는 id). 완료 조건 = 전 항목 done */
     checklistTemplate: z.string().min(1).optional(),
+    ...stageScope,
     /** 노드 지시문 */
     prompt: z.string().optional(),
     inputSchema: JsonSchemaObjectSchema.optional(),
@@ -79,6 +91,7 @@ export const GateNodeSchema = z
     type: z.literal('gate'),
     verifiers: z.array(z.string().min(1)).default([]),
     checklistTemplate: z.string().min(1).optional(),
+    ...stageScope,
     /** onFail로 되돌리는 최대 횟수 */
     maxRetries: z.number().int().min(0).max(20).default(2),
   })
