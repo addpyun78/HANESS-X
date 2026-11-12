@@ -162,7 +162,7 @@
       }
     }
   },
-  "updatedAt": "2026-11-12T10:02:53.122Z",
+  "updatedAt": "2026-11-12T12:27:26.278Z",
   "deps": {
     "installedPackages": 457,
     "uniqueDirectExternal": 43,
@@ -419,5 +419,22 @@
       "other": 25.1,
       "worktreesEstimate": 9718.6
     }
-  }
+  },
+  "flaky": [
+    {
+      "test": "packages/kernel/test/cli.judge-wiring.test.ts > harness-x serve — 판정 연결 (T-100 Part 1) 깨끗한 환경(설정·예전 키 없음): 안내 없음 → 비교는 정규화로 통과, 판정 AI가 없으면 승인 카드",
+      "statuses": ["failed", "passed", "passed"],
+      "durationsMs": [170024.03100099997, 111388.496661, 93220.68285000001]
+    },
+    {
+      "test": "packages/kernel/test/cli.sidecar.test.ts > harness-x serve --exit-with-stdin (데스크톱 사이드카) HARNESS_X_TOKEN·--token-file 사용, Tauri 출처 CORS, stdin 닫힘 → 종료",
+      "statuses": ["failed", "passed", "passed"],
+      "durationsMs": [150091.966878, 37502.238193, 94879.540792]
+    },
+    {
+      "test": "packages/kernel/test/cli.test.ts > harness-x serve 실행 후 API 응답",
+      "statuses": ["failed", "passed", "passed"],
+      "durationsMs": [11511.181477000006, 36767.090102, 94079.778576]
+    }
+  ]
 }
