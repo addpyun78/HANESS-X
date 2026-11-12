@@ -1,0 +1,108 @@
+{
+  "area": "retry",
+  "implementations": [
+    "kernel/hooks.ts withTimeout",
+    "kernel/loader.ts withTimeout",
+    "engine-scanner/progress.ts withTimeout"
+  ],
+  "inputs": 100,
+  "differing": 64,
+  "examples": [
+    {
+      "input": {
+        "kind": "reject",
+        "delay": 1,
+        "value": 91
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 Error",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "slow",
+        "delay": 2,
+        "value": 68
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 HookTimeout",
+        "kernel/loader.ts withTimeout": "값 68",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "reject",
+        "delay": 0,
+        "value": 4
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 Error",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "slow",
+        "delay": 2,
+        "value": 36
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 HookTimeout",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "slow",
+        "delay": 2,
+        "value": 45
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 HookTimeout",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "slow",
+        "delay": 2,
+        "value": 80
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 HookTimeout",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "slow",
+        "delay": 0,
+        "value": 51
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 HookTimeout",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    },
+    {
+      "input": {
+        "kind": "reject",
+        "delay": 2,
+        "value": 85
+      },
+      "outputs": {
+        "kernel/hooks.ts withTimeout": "거절 Error",
+        "kernel/loader.ts withTimeout": "거절 Error",
+        "engine-scanner/progress.ts withTimeout": "값 \"__fallback__\""
+      }
+    }
+  ]
+}
