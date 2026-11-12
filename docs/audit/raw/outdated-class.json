@@ -1,0 +1,284 @@
+[
+  {
+    "package": "typescript-eslint",
+    "key": "typescript-eslint",
+    "current": "8.72.1",
+    "latest": "8.72.2",
+    "latestPublished": "2026-11-09T17:08:00.049Z",
+    "latestAgeDays": 2,
+    "latestTooNew": true,
+    "sameMajorLatest": "8.72.2",
+    "sameMajorAgeDays": 2,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "작은 버전",
+    "minorCandidate": {
+      "to": "8.72.2",
+      "ageDays": 2,
+      "ok14": false
+    }
+  },
+  {
+    "package": "@agentclientprotocol/sdk",
+    "key": "@agentclientprotocol/sdk",
+    "current": "2.5.0",
+    "latest": "2.6.0",
+    "latestPublished": "2026-11-10T21:31:52.340Z",
+    "latestAgeDays": 1,
+    "latestTooNew": true,
+    "sameMajorLatest": "2.6.0",
+    "sameMajorAgeDays": 1,
+    "dependents": [
+      "@harness-x/engine-acp-generic"
+    ],
+    "security": false,
+    "class": "작은 버전",
+    "minorCandidate": {
+      "to": "2.6.0",
+      "ageDays": 1,
+      "ok14": false
+    }
+  },
+  {
+    "package": "@eslint/js",
+    "key": "@eslint/js",
+    "current": "9.39.5",
+    "latest": "10.0.1",
+    "latestPublished": "2026-02-06T22:34:56.290Z",
+    "latestAgeDays": 278,
+    "latestTooNew": false,
+    "sameMajorLatest": "9.39.5",
+    "sameMajorAgeDays": 124,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "@types/node",
+    "key": "@types/node",
+    "current": "22.20.5",
+    "latest": "26.6.6",
+    "latestPublished": "2026-10-28T18:36:36.455Z",
+    "latestAgeDays": 14,
+    "latestTooNew": false,
+    "sameMajorLatest": "22.20.5",
+    "sameMajorAgeDays": 41,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "@vitejs/plugin-react",
+    "key": "@vitejs/plugin-react",
+    "current": "5.2.0",
+    "latest": "6.3.0",
+    "latestPublished": "2026-11-09T06:12:31.033Z",
+    "latestAgeDays": 3,
+    "latestTooNew": true,
+    "sameMajorLatest": "5.2.0",
+    "sameMajorAgeDays": 244,
+    "dependents": [
+      "@harness-x/web"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "@vitest/coverage-v8",
+    "key": "@vitest/coverage-v8",
+    "current": "3.2.7",
+    "latest": "5.1.0",
+    "latestPublished": "2026-11-02T16:11:15.655Z",
+    "latestAgeDays": 9,
+    "latestTooNew": true,
+    "sameMajorLatest": "3.2.7",
+    "sameMajorAgeDays": 129,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "chokidar",
+    "key": "chokidar",
+    "current": "4.0.3",
+    "latest": "6.0.0",
+    "latestPublished": "2026-10-19T20:52:41.519Z",
+    "latestAgeDays": 23,
+    "latestTooNew": false,
+    "sameMajorLatest": "4.0.3",
+    "sameMajorAgeDays": 693,
+    "dependents": [
+      "@harness-x/kernel"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "eslint",
+    "key": "eslint",
+    "current": "9.39.5",
+    "latest": "10.14.0",
+    "latestPublished": "2026-10-30T14:12:27.179Z",
+    "latestAgeDays": 12,
+    "latestTooNew": true,
+    "sameMajorLatest": "9.39.5",
+    "sameMajorAgeDays": 124,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "globals",
+    "key": "globals",
+    "current": "16.5.0",
+    "latest": "17.14.0",
+    "latestPublished": "2026-11-01T11:01:01.622Z",
+    "latestAgeDays": 11,
+    "latestTooNew": true,
+    "sameMajorLatest": "16.5.0",
+    "sameMajorAgeDays": 376,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "typescript",
+    "key": "typescript@5.8.3",
+    "current": "5.8.3",
+    "latest": "7.0.2",
+    "latestPublished": "2026-07-08T15:55:18.431Z",
+    "latestAgeDays": 126,
+    "latestTooNew": false,
+    "sameMajorLatest": "5.9.3",
+    "sameMajorAgeDays": 407,
+    "dependents": [
+      "@harness-x/forge"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": {
+      "to": "5.9.3",
+      "ageDays": 407,
+      "ok14": true
+    }
+  },
+  {
+    "package": "typescript@5.8.3",
+    "key": "typescript@5.8.3 (dev)",
+    "current": "5.8.3",
+    "latest": "7.0.2",
+    "latestPublished": "2026-07-08T15:55:18.431Z",
+    "latestAgeDays": 126,
+    "latestTooNew": false,
+    "sameMajorLatest": "5.9.3",
+    "sameMajorAgeDays": 407,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": {
+      "to": "5.9.3",
+      "ageDays": 407,
+      "ok14": true
+    }
+  },
+  {
+    "package": "vite",
+    "key": "vite",
+    "current": "7.3.8",
+    "latest": "8.3.8",
+    "latestPublished": "2026-11-11T02:49:46.387Z",
+    "latestAgeDays": 1,
+    "latestTooNew": true,
+    "sameMajorLatest": "7.3.8",
+    "sameMajorAgeDays": 3,
+    "dependents": [
+      "@harness-x/web"
+    ],
+    "security": false,
+    "class": "큰 버전",
+    "minorCandidate": null
+  },
+  {
+    "package": "vitest",
+    "key": "vitest",
+    "current": "3.2.7",
+    "latest": "5.1.0",
+    "latestPublished": "2026-11-02T16:12:37.770Z",
+    "latestAgeDays": 9,
+    "latestTooNew": true,
+    "sameMajorLatest": "3.2.7",
+    "sameMajorAgeDays": 129,
+    "dependents": [
+      "harness-x"
+    ],
+    "security": true,
+    "class": "보안 수정",
+    "minorCandidate": null
+  },
+  {
+    "package": "@vitest/mocker",
+    "current": "3.2.7",
+    "latest": ">=4.1.11",
+    "class": "보안 수정",
+    "security": true,
+    "transitive": true,
+    "path": ".>vitest>@vitest/mocker"
+  },
+  {
+    "package": "dompurify",
+    "current": "3.4.15",
+    "latest": ">=3.4.16",
+    "class": "보안 수정",
+    "security": true,
+    "transitive": true,
+    "path": "apps__web>monaco-editor>dompurify"
+  },
+  {
+    "package": "tinypool",
+    "current": "1.1.1",
+    "latest": ">=2.1.1",
+    "class": "보안 수정",
+    "security": true,
+    "transitive": true,
+    "path": ".>vitest>tinypool"
+  },
+  {
+    "package": "glob",
+    "current": "10.5.0",
+    "latest": ">=14.0.2",
+    "class": "보안 수정",
+    "security": true,
+    "transitive": true,
+    "path": ".>@vitest/coverage-v8>test-exclude>glob"
+  },
+  {
+    "package": "minimatch",
+    "current": "10.2.6",
+    "latest": ">=11.0.1",
+    "class": "보안 수정",
+    "security": true,
+    "transitive": true,
+    "path": ".>typescript-eslint>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch"
+  }
+]
