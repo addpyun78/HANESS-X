@@ -2661,7 +2661,7 @@
       "extra": true,
       "keywords": ["approvals.mini-open", "approvals.toast", "approvals.undo"],
       "entries": {
-        "actions": [],
+        "actions": ["approvals.mini-open", "approvals.toast", "approvals.undo"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2694,7 +2694,16 @@
         "builder.start-plugin-list"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "builder.drawer-tab",
+          "builder.sidebar-tab",
+          "builder.start-chat",
+          "builder.start-clone",
+          "builder.start-clone-list",
+          "builder.start-empty",
+          "builder.start-plugin",
+          "builder.start-plugin-list"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2718,7 +2727,7 @@
       "extra": true,
       "keywords": ["chat.approval-option", "chat.open-diff"],
       "entries": {
-        "actions": [],
+        "actions": ["chat.approval-option", "chat.open-diff"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2742,7 +2751,7 @@
       "extra": true,
       "keywords": ["checklist.toggle"],
       "entries": {
-        "actions": [],
+        "actions": ["checklist.toggle"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2773,7 +2782,14 @@
         "composer.stop-pause"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "composer.attachment-preview",
+          "composer.clear-agent",
+          "composer.remove-attachment",
+          "composer.stop",
+          "composer.stop-now",
+          "composer.stop-pause"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2797,7 +2813,7 @@
       "extra": true,
       "keywords": ["confirm.cancel", "confirm.ok"],
       "entries": {
-        "actions": [],
+        "actions": ["confirm.cancel", "confirm.ok"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2821,7 +2837,7 @@
       "extra": true,
       "keywords": ["conversation.menu", "conversation.menu-item", "conversation.select"],
       "entries": {
-        "actions": [],
+        "actions": ["conversation.menu", "conversation.menu-item", "conversation.select"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2845,7 +2861,7 @@
       "extra": true,
       "keywords": ["dev.dismiss-banner"],
       "entries": {
-        "actions": [],
+        "actions": ["dev.dismiss-banner"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2869,7 +2885,7 @@
       "extra": true,
       "keywords": ["empty.agent", "empty.example"],
       "entries": {
-        "actions": [],
+        "actions": ["empty.agent", "empty.example"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2893,7 +2909,7 @@
       "extra": true,
       "keywords": ["engines.install-guide", "engines.ping", "engines.save-key", "engines.save-settings"],
       "entries": {
-        "actions": [],
+        "actions": ["engines.install-guide", "engines.ping", "engines.save-key", "engines.save-settings"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2927,7 +2943,17 @@
         "inspector.yaml-reset"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "inspector.clear-overlay",
+          "inspector.dry-run",
+          "inspector.overwrite",
+          "inspector.save",
+          "inspector.skill-down",
+          "inspector.skill-up",
+          "inspector.tab",
+          "inspector.yaml-apply",
+          "inspector.yaml-reset"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2951,7 +2977,7 @@
       "extra": true,
       "keywords": ["lego.detach-plugin", "lego.remove-skill"],
       "entries": {
-        "actions": [],
+        "actions": ["lego.detach-plugin", "lego.remove-skill"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -2975,7 +3001,7 @@
       "extra": true,
       "keywords": ["model.choose", "model.login", "model.open", "model.scope"],
       "entries": {
-        "actions": [],
+        "actions": ["model.choose", "model.login", "model.open", "model.scope"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3006,7 +3032,14 @@
         "nav.skills"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "nav.agent-builder",
+          "nav.engines",
+          "nav.install",
+          "nav.plugins",
+          "nav.settings",
+          "nav.skills"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3030,7 +3063,7 @@
       "extra": true,
       "keywords": ["panel.tab"],
       "entries": {
-        "actions": [],
+        "actions": ["panel.tab"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3054,7 +3087,7 @@
       "extra": true,
       "keywords": ["plus.attach", "plus.open-folder", "plus.pick-recent", "plus.pin", "plus.recent"],
       "entries": {
-        "actions": [],
+        "actions": ["plus.attach", "plus.open-folder", "plus.pick-recent", "plus.pin", "plus.recent"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3078,7 +3111,7 @@
       "extra": true,
       "keywords": ["project-settings.close", "project-settings.relink", "project-settings.save"],
       "entries": {
-        "actions": [],
+        "actions": ["project-settings.close", "project-settings.relink", "project-settings.save"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3114,7 +3147,19 @@
         "projects.select"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "projects.archive-stale",
+          "projects.done-toggle",
+          "projects.group-toggle",
+          "projects.menu",
+          "projects.menu-item",
+          "projects.new-in-project",
+          "projects.new-session",
+          "projects.open-folder",
+          "projects.pick-new",
+          "projects.relink",
+          "projects.select"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3138,7 +3183,7 @@
       "extra": true,
       "keywords": ["resume.check-choice", "resume.open-list", "resume.session", "resume.start"],
       "entries": {
-        "actions": [],
+        "actions": ["resume.check-choice", "resume.open-list", "resume.session", "resume.start"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3169,7 +3214,14 @@
         "run-mode.review-action"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "run-mode.auto-cancel",
+          "run-mode.auto-edit-limits",
+          "run-mode.auto-start",
+          "run-mode.open-review",
+          "run-mode.plan-choose",
+          "run-mode.review-action"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3193,7 +3245,7 @@
       "extra": true,
       "keywords": ["scan.dismiss", "scan.open-install"],
       "entries": {
-        "actions": [],
+        "actions": ["scan.dismiss", "scan.open-install"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3240,7 +3292,30 @@
         "settings.update-check"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "settings.export",
+          "settings.import",
+          "settings.list-add",
+          "settings.list-remove",
+          "settings.pick-folder",
+          "settings.project-pin",
+          "settings.project-relink",
+          "settings.project-remove",
+          "settings.project-remove-cancel",
+          "settings.project-remove-confirm",
+          "settings.project-settings",
+          "settings.reset-all",
+          "settings.reset-all-cancel",
+          "settings.reset-all-confirm",
+          "settings.reset-field",
+          "settings.reset-group",
+          "settings.secret-delete",
+          "settings.secret-save",
+          "settings.show-advanced",
+          "settings.tab",
+          "settings.toggle",
+          "settings.update-check"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3264,7 +3339,7 @@
       "extra": true,
       "keywords": ["shell.open-panel", "shell.open-sidebar", "shell.stop-all"],
       "entries": {
-        "actions": [],
+        "actions": ["shell.open-panel", "shell.open-sidebar", "shell.stop-all"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3288,7 +3363,7 @@
       "extra": true,
       "keywords": ["subagent.add", "subagent.cancel", "subagent.new-session"],
       "entries": {
-        "actions": [],
+        "actions": ["subagent.add", "subagent.cancel", "subagent.new-session"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3312,7 +3387,7 @@
       "extra": true,
       "keywords": ["terminal.login"],
       "entries": {
-        "actions": [],
+        "actions": ["terminal.login"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3336,7 +3411,7 @@
       "extra": true,
       "keywords": ["toolpicker.source-link"],
       "entries": {
-        "actions": [],
+        "actions": ["toolpicker.source-link"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3360,7 +3435,7 @@
       "extra": true,
       "keywords": ["topbar.theme"],
       "entries": {
-        "actions": [],
+        "actions": ["topbar.theme"],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3392,7 +3467,15 @@
         "where.use-top"
       ],
       "entries": {
-        "actions": [],
+        "actions": [
+          "where.cancel",
+          "where.keep",
+          "where.open-folder",
+          "where.pick-project",
+          "where.recent",
+          "where.scratch",
+          "where.use-top"
+        ],
         "api": [],
         "cli": [],
         "mcp": [],
@@ -3406,7 +3489,7 @@
   ],
   "generatedAt": "2026-11-12T10:13:19.534Z",
   "linkStats": {
-    "actions": 61
+    "actions": 184
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
