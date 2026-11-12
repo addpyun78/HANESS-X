@@ -838,7 +838,7 @@
       "id": "C6-006"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": ["F-006"],
       "area": "bug",
       "severity": "medium",
@@ -855,7 +855,9 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C1.7"
+        "source": "C1.7",
+        "resolution": "ensureBuilt(새 dist면 다시 빌드 안 함)+기동 대기 300초+경고 찾기 5초",
+        "resolvedAt": "2026-11-12T16:06:03.630Z"
       },
       "id": "C1-010",
       "plain": "시험 3개가 컴퓨터가 바쁠 때만 가끔 실패해요.",
