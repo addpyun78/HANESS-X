@@ -1,0 +1,2012 @@
+{
+  "generatedAt": "2026-11-12T10:32:52.055Z",
+  "count": 401,
+  "missing": [],
+  "entries": [
+    {
+      "path": ".claude/settings.json",
+      "kinds": ["hook-config"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "apps/web/src/actions/registry.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/composer/run-mode.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/AutoLimitsCard.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/AutoSummaryCard.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/ModeBadge.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/notify-policy.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/PlanDoneCard.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/ResumeModeChoice.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/src/run-mode/ReviewListSection.tsx",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/app.workspace.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/approvals.panel.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/approvals.viewport.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/builder.dryrun.stages.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/builder.layout.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/chat.render.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/chat.sent-message.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/chat.stopblock.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/chat.toolcard.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.chips.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.mobile-picker.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.mode.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.plus-menu.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.slash.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/composer.toolbar.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/engines.builder.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/engines.model-button.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/engines.scan.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/forge.cards.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/install.card.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/install.manager.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/install.resolve-fail.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/panels.checklist.detail.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/panels.checklist.stages.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/panels.checklist.tree.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/projects.flows.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/projects.hook.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/projects.sidebar.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/resume.project-card.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/run-mode.auto-summary.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/run-mode.badges.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/run-mode.review-list.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.engines.auto.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.engines.grid.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.engines.rescan.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.form.widgets.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.about.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.ai.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.approval.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.attachments.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.checklist.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.general.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.judge.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.mode.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.plugins.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.project.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.scope.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.tools.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/settings.screen.voice.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/shell.agent-sessions.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/shell.quota.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/shell.sidebar.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/shell.topbar.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/__snapshots__/stages.session-row.test.tsx.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "apps/web/test/fixtures/events.ts",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "e2e/__snapshots__/judge-none-card.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "e2e/fixtures/claude-usage-limit.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "e2e/fixtures/crash-session.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "e2e/fixtures/fake-claude.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "examples/agents/design-qa/agent.yaml",
+      "kinds": ["example"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "examples/agents/design-qa/pipeline.yaml",
+      "kinds": ["example"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "examples/plugins/hello/harness-plugin.json",
+      "kinds": ["manifest", "example"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "examples/plugins/hello/index.js",
+      "kinds": ["main", "example"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "fixtures/approvals/limit-exceeded-1.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/limit-exceeded-2.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/no-judge-1.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/no-judge-2.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/number-1.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/number-2.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/path-1.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/path-2.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/text-1.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/approvals/text-2.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/bomb.zip",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/bundle.tar.gz",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/clip.mp4",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/cp949.txt",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/deck.pptx",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/disguised.txt",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/gps.jpg",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/memo.docx",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/meta.png",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/old.hwp",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/plan.hwpx",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/report.pdf",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/run.sh",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/sample.env",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/scanned.pdf",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/setup.exe",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/three-sheets.xlsx",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/traversal.zip",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/unknown.bin",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/utf16.txt",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/files/voice.wav",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/attachments/make-fixtures.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/01-design-review.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/02-kotlin-style.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/03-plan-only.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/04-screenshot.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/05-reuse-agent.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/06-vague-helper.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/07-vague-check.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/08-vague-auto.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/09-missing-diff.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/builder-chat/10-missing-figma.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/exact.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/exit-code.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/json.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/number.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/path.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/regex.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/text.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "fixtures/comparators/version.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/acp-generic/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/acp-generic/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/acp-generic/src/adapter.ts",
+      "kinds": ["mcp-server", "name-registry"],
+      "sources": ["dyn-mcp", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/acp-generic/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/antigravity/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/antigravity/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/antigravity/src/engine.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/engines/antigravity/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/antigravity/test/fixtures/agy-errors.txt",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/antigravity/test/fixtures/fake-agy.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/antigravity/test/fixtures/headless-not-logged-in.stderr.txt",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/antigravity/test/fixtures/hi.real.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/antigravity/test/fixtures/tool-denied.real.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/claude-code/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/claude-code/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/claude-code/src/args.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/engines/claude-code/src/engine.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/engines/claude-code/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/claude-code/test/fixtures/auth-error.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/claude-code/test/fixtures/fake-long-claude.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/claude-code/test/fixtures/hi.real.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/claude-code/test/fixtures/tool-write.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/codex/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/codex/src/args.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/engines/codex/src/engine.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/engines/codex/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/app-server-turn.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/app-server-usage-limit.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/exec-auth-failed.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/exec-shell.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/fake-codex.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/ratelimits-auth-error.real.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/codex/test/fixtures/ratelimits-ok.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/engines/openai-compat/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/openai-compat/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/engines/openai-compat/src/adapter.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/engines/openai-compat/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/engines/openai-compat/test/__snapshots__/attachments.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/kernel/src/api/approvals-routes.ts",
+      "kinds": ["cli-command"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/api/models-routes.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/api/resume-routes.ts",
+      "kinds": ["cli-command"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/api/server.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/auth-status.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/cli.ts",
+      "kinds": ["package-bin"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/dispatch.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/engines-settings.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/event-log.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/hooks.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/hot-reload.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/install-wiring.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/loader.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/main-ai.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/models.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/pause-snapshot.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/projects/cli-commands.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/projects/index.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/resume-cli.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/resume-engine.ts",
+      "kinds": ["cli-command"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/resume-pin.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/resume-service.ts",
+      "kinds": ["cli-command"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/index.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/limits.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/resolve.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/resume.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/review-list.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/run-mode/transition.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/sandbox/host.ts",
+      "kinds": ["hook-template-source"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "packages/kernel/src/sandbox/worker-source.ts",
+      "kinds": ["hook-template-source"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "packages/kernel/src/secrets.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/settings/registry.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/kernel/src/settings/runtime.ts",
+      "kinds": ["cli-command"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/src/workspaces.ts",
+      "kinds": ["cli-lazy-import"],
+      "sources": ["dyn-cli"]
+    },
+    {
+      "path": "packages/kernel/test/fixtures/crash-writer.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/inventory/build.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/inventory/comparators.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/inventory/schema.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/inventory/tools.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/registry.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/src/runner/types.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/__snapshots__/stages.handoff.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build-fixed.codex.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build-missing.codex.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/build.codex.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/plan.claude.jsonl",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/replay-claude-resume.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/agent-builder/test/fixtures/runner/replay-engine.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/approvals/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/approvals/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/approvals/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/approvals/test/__snapshots__/templates.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/attachments/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/attachments/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/attachments/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/attachments/test/__snapshots__/unknown.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/attachments/test/fixtures/fake-cli.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/fixtures/non-atomic.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+      "kinds": ["hook-template-source"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/export.stage.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/export.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/lint.message.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.auto-summary.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.render.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.resume.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.rework.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.skeleton.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/checklist-ledger/test/__snapshots__/stages.slice.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/engine-scanner/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/engine-scanner/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/engine-scanner/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/forge/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/forge/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/forge/src/import/claude-plugin.ts",
+      "kinds": ["hook-template-source"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "packages/plugins-core/forge/src/import/mcp.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/forge/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/__snapshots__/forge.extract.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/__snapshots__/forge.install-card.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/.claude-plugin/plugin.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/agents/helper.md",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/commands/review.md",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/block-rm.sh",
+      "kinds": ["hook-script", "fixture"],
+      "sources": ["dyn-hooks", "dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/hooks.json",
+      "kinds": ["hook-config", "fixture"],
+      "sources": ["dyn-hooks", "dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/skills/kotlin-style/SKILL.md",
+      "kinds": ["skill", "fixture"],
+      "sources": ["dyn-registries", "dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/echo-mcp-server.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/kotlin-hook.ts",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/forge/test/fixtures/plugins.ts",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/installer/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/installer/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/adapters/download.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/adapters/mcp.ts",
+      "kinds": ["mcp-server", "name-registry"],
+      "sources": ["dyn-mcp", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/adapters/windows-pkg.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/installer/src/service.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/src/bin.ts",
+      "kinds": ["mcp-bin", "package-bin"],
+      "sources": ["dyn-mcp", "dyn-cli"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/src/server.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/mcp-host/src/transports.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/permission-gate/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/permission-gate/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/permission-gate/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/permission-gate/src/run-mode-gate.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/src/trigger.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/plugins-core/tool-finder/test/__snapshots__/recommend.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest", "fixture"],
+      "sources": ["dyn-plugins", "dyn-registries", "dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/index.js",
+      "kinds": ["main", "fixture"],
+      "sources": ["dyn-plugins", "dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/builtins.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/exact.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/exit-code.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/json.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/number.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/regex.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/text.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/comparators/version.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/compare.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/evidence.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/guards.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/index.ts",
+      "kinds": ["main-src", "name-registry"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/infer.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/migrate.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/path-alias.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/path-normalize.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/registry.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/src/types.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/comparators/test/__snapshots__/evidence.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/fixtures/replays/antigravity.stdout",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/fixtures/replays/claude-code.stdout",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/fixtures/replays/codex-tool-call.stdout",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/fixtures/replays/codex.stdout",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/budget.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/cache.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/chain.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/confidence.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/engine.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/index.ts",
+      "kinds": ["main-src", "name-registry"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/local.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/questions.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/sanitize.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/select.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/settings.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/src/types.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/test/__snapshots__/local.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/judge/test/__snapshots__/questions.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/01-exact-match.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/02-hangul-nfd.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/03-backslash.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/04-windows-drive-case.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/05-wsl-mount.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/06-trailing-slash-dots.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/07-glossary-alias.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/08-naming-style.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/09-harness-mobile-vs-ai-mobile.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/10-learned-alias.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/11-wrong-target.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/fixtures/path-equivalence/12-missing.json",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/alias.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/candidates.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/cleanup.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/evidence.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/index.ts",
+      "kinds": ["main-src", "name-registry"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/l4.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/ladder.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/normalize.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/pipeline.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/record.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/runtime.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/src/settings.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/plugins-core/verifiers/ladder/test/__snapshots__/ladder.record.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/plugins/stt-browser/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins/stt-browser/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins/stt-browser/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins/stt-local/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins/stt-local/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins/stt-local/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins/verifier-local/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/plugins/verifier-local/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/plugins/verifier-local/src/index.ts",
+      "kinds": ["main-src"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/protocol/src/engine.ts",
+      "kinds": ["mcp-server"],
+      "sources": ["dyn-mcp"]
+    },
+    {
+      "path": "packages/protocol/src/run-mode.ts",
+      "kinds": ["name-registry"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/protocol/test/fixtures/event-samples.ts",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/package.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/src/index.ts",
+      "kinds": ["main-src", "sdk-template"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/template.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/hook/tsconfig.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/package.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/src/index.ts",
+      "kinds": ["main-src", "sdk-template"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/template.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/panel/tsconfig.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/agent.yaml",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/package.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/pipeline.yaml",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/src/index.ts",
+      "kinds": ["main-src", "sdk-template"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/template.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/pipeline/tsconfig.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/package.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/SKILL.md",
+      "kinds": ["skill"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/src/index.ts",
+      "kinds": ["main-src", "sdk-template"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/template.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/skill/tsconfig.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/dist/index.js",
+      "kinds": ["main"],
+      "sources": ["dyn-plugins"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/harness-plugin.json",
+      "kinds": ["manifest", "plugin-manifest"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/package.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/src/index.ts",
+      "kinds": ["main-src", "sdk-template"],
+      "sources": ["dyn-plugins", "dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/template.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/templates/tool/tsconfig.json",
+      "kinds": ["sdk-template"],
+      "sources": ["dyn-registries"]
+    },
+    {
+      "path": "packages/sdk/test/__snapshots__/templates.substitute.test.ts.snap",
+      "kinds": ["snapshot"],
+      "sources": ["dyn-fixtures"]
+    },
+    {
+      "path": "scripts/hooks/stop-bridge.mjs",
+      "kinds": ["referenced-script"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "scripts/ticket-gate.mjs",
+      "kinds": ["hook-script"],
+      "sources": ["dyn-hooks"]
+    },
+    {
+      "path": "tests/fixtures/fake-stop-engine.mjs",
+      "kinds": ["fixture"],
+      "sources": ["dyn-fixtures"]
+    }
+  ]
+}
