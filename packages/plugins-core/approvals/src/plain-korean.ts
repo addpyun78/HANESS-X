@@ -243,6 +243,14 @@ export function checkPlainKorean(text: string, opts: PlainCheckOptions = {}): Pl
   return { ok: violations.length === 0, violations };
 }
 
+/**
+ * 쉬운 말이면 true — 화면에 내보낼지 고를 때 쓰는 대표 함수(T-102 C5-001: 플러그인마다 따로 두던 isPlain을 여기로 모음)
+ * label=true면 버튼·제목처럼 짧은 글(존댓말 검사 생략)
+ */
+export function isPlainKorean(text: string, label = false): boolean {
+  return checkPlainKorean(text, { label }).ok;
+}
+
 /** 여러 글을 한 번에 검사 (모두 통과해야 ok) */
 export function checkPlainAll(texts: readonly string[], opts: PlainCheckOptions = {}): PlainCheckResult {
   const violations = texts.flatMap((t) => checkPlainKorean(t, opts).violations);

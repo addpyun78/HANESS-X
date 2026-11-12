@@ -39,3 +39,15 @@ describe('쉬운 말 판정 동작 동일 (T-102 C5-001)', () => {
     expect(new Set(base).size).toBe(2); // 통과·실패가 섞인 입력이라 의미 있는 비교
   });
 });
+
+describe('대표 구현 isPlainKorean (T-102 C5-001)', () => {
+  it('입력 300개에서 기준과 같은 답(보통·label)', async () => {
+    const { isPlainKorean } = await import('../../packages/plugins-core/approvals/src/plain-korean.js');
+    expect(PLAIN_INPUTS.map((s) => isPlainKorean(s))).toEqual(
+      PLAIN_INPUTS.map((s) => checkPlainKorean(s).ok),
+    );
+    expect(PLAIN_INPUTS.map((s) => isPlainKorean(s, true))).toEqual(
+      PLAIN_INPUTS.map((s) => checkPlainKorean(s, { label: true }).ok),
+    );
+  });
+});
