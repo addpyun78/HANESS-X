@@ -1,0 +1,9 @@
+Checking formatting...
+[warn] docs/audit/upgrade-research.md
+[warn] scripts/audit/m-coverage.mjs
+[warn] scripts/audit/m-startup.mjs
+[warn] scripts/audit/render-baseline.mjs
+[warn] scripts/audit/settings-readers.mjs
+[warn] scripts/audit/static-scan.mjs
+[warn] scripts/ticket-gate.mjs
+[warn] Code style issues found in 7 files. Run Prettier with --write to fix.

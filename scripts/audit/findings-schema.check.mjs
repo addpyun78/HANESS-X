@@ -1,4 +1,4 @@
-import { validate, Finding } from './findings-schema.mjs';
+import { validate } from './findings-schema.mjs';
 const ok = {
   id: 'C1-001',
   area: 'bug',

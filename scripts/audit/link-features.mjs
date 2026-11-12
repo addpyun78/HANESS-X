@@ -188,21 +188,25 @@ function linkCode() {
     const code = [];
     for (const a of f.entries.actions) {
       const loc = actUse.get(a) ?? (regLine(a) ? `apps/web/src/actions/registry.ts:${regLine(a)}` : null);
-      loc ? code.push({ entry: `action:${a}`, at: loc }) : unlinked++;
+      if (loc) code.push({ entry: `action:${a}`, at: loc });
+      else unlinked++;
     }
     for (const a of f.entries.api) {
       const [m, p] = a.split(' ');
       const r = routes.find((x) => x.method === m && x.path === p);
-      r ? code.push({ entry: `api:${a}`, at: `${r.file}:${r.line}` }) : unlinked++;
+      if (r) code.push({ entry: `api:${a}`, at: `${r.file}:${r.line}` });
+      else unlinked++;
     }
     for (const c of f.entries.cli) {
       const w = c.split(' ')[0];
       const i = cliSrc.findIndex((l) => l.includes(`'${w}'`));
-      i >= 0 ? code.push({ entry: `cli:${c}`, at: `packages/kernel/src/cli.ts:${i + 1}` }) : unlinked++;
+      if (i >= 0) code.push({ entry: `cli:${c}`, at: `packages/kernel/src/cli.ts:${i + 1}` });
+      else unlinked++;
     }
     for (const t of f.entries.mcp) {
       const x = tools.find((y) => y.name === t);
-      x ? code.push({ entry: `mcp:${t}`, at: `${x.file}:${x.line}` }) : unlinked++;
+      if (x) code.push({ entry: `mcp:${t}`, at: `${x.file}:${x.line}` });
+      else unlinked++;
     }
     for (const k of f.entries.hooks) {
       const [name, file] = k.split('@');
