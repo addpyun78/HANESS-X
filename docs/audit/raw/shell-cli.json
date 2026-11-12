@@ -1,0 +1,98 @@
+[
+  {
+    "args": "--help",
+    "exit": 0,
+    "firstLine": "harness-x — 엔진 중립 에이전트 하네스",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "serve --help",
+    "exit": 0,
+    "firstLine": "harness-x — 엔진 중립 에이전트 하네스",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "approvals --help",
+    "exit": 0,
+    "firstLine": "사용법: harness-x approvals [--workspace <폴더>] [--session <id>] [카드 번호 선택 번호 [자동]]",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "install --help",
+    "exit": 1,
+    "firstLine": "\"--help\"을(를) 찾지 못했어요. 이름을 확인하거나 주소로 설치해 보세요.",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": true
+  },
+  {
+    "args": "tools --help",
+    "exit": 1,
+    "firstLine": "사용법:",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "tools list",
+    "exit": 0,
+    "firstLine": "아직 설치한 도구가 없어요. harness-x install <이름>으로 설치해 보세요.",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "tools allow --help",
+    "exit": 1,
+    "firstLine": "도구 목록에 없는 id예요: --help",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": true
+  },
+  {
+    "args": "run --help",
+    "exit": 1,
+    "firstLine": "하네스 서버가 켜져 있지 않아요. 먼저 harness-x serve 를 실행해 주세요",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": true
+  },
+  {
+    "args": "reindex --help",
+    "exit": 0,
+    "firstLine": "세션 0개를 다시 읽었어요 (/tmp/hx-cli-probe-VdEo8O/.harness-x/sessions/index.json)",
+    "notImplemented": false,
+    "wroteFiles": true,
+    "helpIgnored": true
+  },
+  {
+    "args": "resume --help",
+    "exit": 0,
+    "firstLine": "harness-x resume <세션 id> [옵션]",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "resume",
+    "exit": 1,
+    "firstLine": "harness-x resume <세션 id> [옵션]",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  },
+  {
+    "args": "approvals",
+    "exit": 0,
+    "firstLine": "확인이 필요한 카드가 없어요.",
+    "notImplemented": false,
+    "wroteFiles": false,
+    "helpIgnored": false
+  }
+]
