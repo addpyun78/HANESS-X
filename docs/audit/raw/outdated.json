@@ -1,0 +1,171 @@
+{
+  "typescript-eslint": {
+    "current": "8.72.1",
+    "latest": "8.72.2",
+    "wanted": "8.72.1",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "@agentclientprotocol/sdk": {
+    "current": "2.5.0",
+    "latest": "2.6.0",
+    "wanted": "2.5.0",
+    "isDeprecated": false,
+    "dependencyType": "dependencies",
+    "dependentPackages": [
+      {
+        "name": "@harness-x/engine-acp-generic",
+        "location": "/mnt/c/agentCli/harness-x/packages/engines/acp-generic"
+      }
+    ]
+  },
+  "@eslint/js": {
+    "current": "9.39.5",
+    "latest": "10.0.1",
+    "wanted": "9.39.5",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "@types/node": {
+    "current": "22.20.5",
+    "latest": "26.6.6",
+    "wanted": "22.20.5",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "@vitejs/plugin-react": {
+    "current": "5.2.0",
+    "latest": "6.3.0",
+    "wanted": "5.2.0",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "@harness-x/web",
+        "location": "/mnt/c/agentCli/harness-x/apps/web"
+      }
+    ]
+  },
+  "@vitest/coverage-v8": {
+    "current": "3.2.7",
+    "latest": "5.1.0",
+    "wanted": "3.2.7",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "chokidar": {
+    "current": "4.0.3",
+    "latest": "6.0.0",
+    "wanted": "4.0.3",
+    "isDeprecated": false,
+    "dependencyType": "dependencies",
+    "dependentPackages": [
+      {
+        "name": "@harness-x/kernel",
+        "location": "/mnt/c/agentCli/harness-x/packages/kernel"
+      }
+    ]
+  },
+  "eslint": {
+    "current": "9.39.5",
+    "latest": "10.14.0",
+    "wanted": "9.39.5",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "globals": {
+    "current": "16.5.0",
+    "latest": "17.14.0",
+    "wanted": "16.5.0",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "typescript@5.8.3": {
+    "current": "5.8.3",
+    "latest": "7.0.2",
+    "wanted": "5.8.3",
+    "isDeprecated": false,
+    "dependencyType": "dependencies",
+    "dependentPackages": [
+      {
+        "name": "@harness-x/forge",
+        "location": "/mnt/c/agentCli/harness-x/packages/plugins-core/forge"
+      }
+    ]
+  },
+  "typescript@5.8.3 (dev)": {
+    "current": "5.8.3",
+    "latest": "7.0.2",
+    "wanted": "5.8.3",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  },
+  "vite": {
+    "current": "7.3.8",
+    "latest": "8.3.8",
+    "wanted": "7.3.8",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "@harness-x/web",
+        "location": "/mnt/c/agentCli/harness-x/apps/web"
+      }
+    ]
+  },
+  "vitest": {
+    "current": "3.2.7",
+    "latest": "5.1.0",
+    "wanted": "3.2.7",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "harness-x",
+        "location": "/mnt/c/agentCli/harness-x"
+      }
+    ]
+  }
+}
