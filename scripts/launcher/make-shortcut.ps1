@@ -13,6 +13,9 @@ $desktop = [Environment]::GetFolderPath('Desktop')
 $ws = New-Object -ComObject WScript.Shell
 $icon = "$root\assets\brand\harness-x.ico,0"
 $launcher = "$root\scripts\launcher\start-harness.cmd"
+# T-102 I.2: the main shortcut runs the launcher hidden (no black console window) via wscript + start-harness.vbs
+$hidden = "$root\scripts\launcher\start-harness.vbs"
+$wscript = Join-Path $env:WINDIR 'System32\wscript.exe'
 
 function Find-DesktopApp {
   $candidates = @(
@@ -25,10 +28,11 @@ function Find-DesktopApp {
   return $null
 }
 
-function New-Shortcut($name, $target, $workdir, $iconLocation) {
+function New-Shortcut($name, $target, $workdir, $iconLocation, $arguments = '') {
   $path = Join-Path $desktop $name
   $lnk = $ws.CreateShortcut($path)
   $lnk.TargetPath = $target
+  $lnk.Arguments = $arguments
   $lnk.WorkingDirectory = $workdir
   $lnk.IconLocation = $iconLocation
   $lnk.Description = 'HARNESS-X'
@@ -36,7 +40,7 @@ function New-Shortcut($name, $target, $workdir, $iconLocation) {
   $lnk.Save()
   $chk = $ws.CreateShortcut($path)
   Write-Output ("shortcut=" + $path)
-  Write-Output ("target=" + $chk.TargetPath)
+  Write-Output ("target=" + $chk.TargetPath + ' ' + $chk.Arguments)
   Write-Output ("icon=" + $chk.IconLocation)
 }
 
@@ -47,7 +51,9 @@ if (-not $Browser) {
 
 if ($exe) {
   New-Shortcut 'HARNESS-X.lnk' $exe (Split-Path $exe) ($exe + ',0')
-  New-Shortcut 'HARNESS-X (browser).lnk' $launcher $root $icon
+  New-Shortcut 'HARNESS-X (browser).lnk' $wscript $root $icon ('"' + $hidden + '"')
 } else {
-  New-Shortcut 'HARNESS-X.lnk' $launcher $root $icon
+  New-Shortcut 'HARNESS-X.lnk' $wscript $root $icon ('"' + $hidden + '"')
 }
+# troubleshooting shortcut: same launcher with the console window visible
+New-Shortcut 'HARNESS-X (troubleshoot).lnk' $launcher $root $icon

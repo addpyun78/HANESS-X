@@ -9,3 +9,4 @@ docs/tickets
 apps/desktop/src-tauri/target
 apps/desktop/src-tauri/gen
 docs/audit/raw
+*.vbs
