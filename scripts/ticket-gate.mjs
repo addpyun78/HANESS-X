@@ -62,7 +62,9 @@ try {
   if (/^[CD]$/.test(phase) && existsSync(guard)) {
     const r = spawnSync(process.execPath, [guard], { cwd: root, encoding: 'utf8' });
     if (r.status !== 0) {
-      process.stderr.write(`ticket-gate: 진단 단계(${phase})인데 허용 밖 변경이 있습니다. 되돌리고 계속하세요.\n${r.stderr}`);
+      process.stderr.write(
+        `ticket-gate: 진단 단계(${phase})인데 허용 밖 변경이 있습니다. 되돌리고 계속하세요.\n${r.stderr}`,
+      );
       process.exit(2);
     }
   }
