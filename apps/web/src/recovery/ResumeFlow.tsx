@@ -3,6 +3,7 @@ import type { RunMode } from '@harness-x/protocol';
 import { ResumeModeChoice } from '../run-mode/ResumeModeChoice.js';
 import { ResumeCheckCard, type ResumeIssueData } from './ResumeCheckCard.js';
 import './recovery.css';
+import { act } from '../actions/registry.js';
 
 /** 이어하기 API (POST /api/resume/:id/check · POST /api/resume/:id) */
 export interface ResumeApi {
@@ -120,6 +121,8 @@ export function ResumeFlow({ api, sessionId, onShowApprovals, onDone, sessionMod
             type="button"
             className="hx-resume__button hx-resume__button--primary"
             disabled={blocked}
+            {...act('resume.start')}
+            {...(blocked ? { title: '먼저 확인 카드에 대답해 주세요' } : {})}
             onClick={() => {
               const c = toStartChoices(picked);
               if (!c) {

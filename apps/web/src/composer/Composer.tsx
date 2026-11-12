@@ -345,6 +345,7 @@ export function Composer({
           <button
             type="button"
             className="hx-mode-confirm__yes"
+            {...act('composer.mode-upgrade')}
             onClick={() => {
               update({ mode: modeAsk.mode, permission: modeAsk.upgradeTo });
               setModeAsk(undefined);
@@ -352,7 +353,12 @@ export function Composer({
           >
             워크스페이스 쓰기로 바꾸기
           </button>
-          <button type="button" className="hx-mode-confirm__no" onClick={() => setModeAsk(undefined)}>
+          <button
+            type="button"
+            className="hx-mode-confirm__no"
+            {...act('composer.mode-keep')}
+            onClick={() => setModeAsk(undefined)}
+          >
             그대로 두기
           </button>
         </div>

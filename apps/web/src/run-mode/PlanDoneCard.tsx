@@ -1,5 +1,6 @@
 import type { RunMode } from '@harness-x/protocol';
 import './run-mode.css';
+import { act } from '../actions/registry.js';
 
 /**
  * T-101 3B.2 계획 완료 카드 (계획 모드에서 체크리스트를 만든 뒤)
@@ -50,6 +51,8 @@ export function PlanDoneCard({ itemCount, onChoose, busy }: PlanDoneCardProps) {
       className={`hx-ck-btn${primary ? ' hx-ck-btn--primary' : ''}`}
       data-choice={c}
       disabled={busy}
+      {...act('run-mode.plan-choose')}
+      {...(busy ? { title: '처리하는 중이에요' } : {})}
       onClick={() => onChoose(planDoneAction(c), c)}
     >
       {PLAN_DONE_LABEL[c]}

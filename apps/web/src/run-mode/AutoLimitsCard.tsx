@@ -1,6 +1,7 @@
 import { describeLimits, normalizeLimits, type AutoLimits } from '@harness-x/protocol';
 import { useState } from 'react';
 import './run-mode.css';
+import { act } from '../actions/registry.js';
 
 /**
  * T-101 3D.5 오토 시작 카드: 상한(시간·토큰·비용·반복)을 쉬운 말로 보여주고, 시작 전에 바꿀 수 있다.
@@ -51,16 +52,26 @@ export function AutoLimitsCard({ limits, onStart, onCancel }: AutoLimitsCardProp
         </div>
       )}
       <div className="hx-auto-limits__actions">
-        <button type="button" className="hx-ck-btn hx-ck-btn--primary" onClick={() => onStart(shown)}>
+        <button
+          type="button"
+          className="hx-ck-btn hx-ck-btn--primary"
+          {...act('run-mode.auto-start')}
+          onClick={() => onStart(shown)}
+        >
           이 한도로 시작
         </button>
         {!editing && (
-          <button type="button" className="hx-ck-btn" onClick={() => setEditing(true)}>
+          <button
+            type="button"
+            className="hx-ck-btn"
+            {...act('run-mode.auto-edit-limits')}
+            onClick={() => setEditing(true)}
+          >
             한도 바꾸기
           </button>
         )}
         {onCancel && (
-          <button type="button" className="hx-ck-btn" onClick={onCancel}>
+          <button type="button" className="hx-ck-btn" {...act('run-mode.auto-cancel')} onClick={onCancel}>
             취소
           </button>
         )}

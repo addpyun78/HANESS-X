@@ -1,4 +1,5 @@
 import './run-mode.css';
+import { act } from '../actions/registry.js';
 /**
  * T-101 3D.7 "돌아오면 확인할 것" 패널 섹션 — 오토 모드가 사람에게 미룬 일.
  * 항목마다 이유(쉬운 말) + 처리 버튼. 모양은 kernel run-mode/review-list.ts ReviewItem과 같다.
@@ -70,6 +71,7 @@ export function ReviewListSection({ items, onAction }: ReviewListSectionProps) {
                       key={a}
                       type="button"
                       className={`hx-ck-btn${i === 0 ? ' hx-ck-btn--primary' : ''}`}
+                      {...act('run-mode.review-action')}
                       onClick={() => onAction(it.id, a)}
                     >
                       {REVIEW_ACTION_LABEL[a]}

@@ -67,6 +67,25 @@ export const ACTIONS = {
   'subagent.cancel': { description: '묻는 창을 닫아요', effect: 'state' },
 
   'recovery.resume': { description: '멈춘 작업을 이어서 해요', effect: 'api' },
+  'resume.start': { description: '고른 대로 멈춘 작업을 이어서 해요', effect: 'api' },
+
+  // T-101 2A.8 정지 버튼
+  'composer.stop': { description: '멈추는 방법을 고르는 메뉴를 열어요', effect: 'open' },
+  'composer.stop-pause': { description: '하던 일을 마무리하기 좋은 때에 멈춰요', effect: 'api' },
+  'composer.stop-now': { description: '하던 일을 바로 멈춰요', effect: 'api' },
+
+  // T-101 3 실행 모드
+  'composer.mode-upgrade': {
+    description: '권한을 워크스페이스 쓰기로 바꾸고 오토 모드로 해요',
+    effect: 'state',
+  },
+  'composer.mode-keep': { description: '모드와 권한을 그대로 둬요', effect: 'state' },
+  'run-mode.plan-choose': { description: '계획대로 실행하거나 계획을 고쳐요', effect: 'api' },
+  'run-mode.auto-start': { description: '보이는 한도로 오토 모드를 시작해요', effect: 'api' },
+  'run-mode.auto-edit-limits': { description: '오토 모드 한도를 바꾸는 칸을 열어요', effect: 'state' },
+  'run-mode.auto-cancel': { description: '오토 모드 시작을 그만둬요', effect: 'state' },
+  'run-mode.open-review': { description: '돌아오면 확인할 것 목록을 열어요', effect: 'open' },
+  'run-mode.review-action': { description: '확인할 것을 처리해요', effect: 'api' },
 
   'terminal.login': { description: '터미널에서 엔진 로그인을 시작해요', effect: 'state' },
 

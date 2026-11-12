@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { browserNotifier, type NotifierLike } from '../panels/Approvals/useApprovals.js';
 import './run-mode.css';
+import { act } from '../actions/registry.js';
 
 /**
  * T-101 3D.8 오토 종료 요약 카드: 한 일 / 못 한 일 / 확인할 것 개수 + OS 알림(브라우저 알림 — 승인 영역 알림 모듈 재사용).
@@ -60,7 +61,12 @@ export function AutoSummaryCard({ summary, notifier, onOpenReview }: AutoSummary
         </div>
       </dl>
       {summary.review > 0 && onOpenReview && (
-        <button type="button" className="hx-ck-btn hx-ck-btn--primary" onClick={onOpenReview}>
+        <button
+          type="button"
+          className="hx-ck-btn hx-ck-btn--primary"
+          {...act('run-mode.open-review')}
+          onClick={onOpenReview}
+        >
           확인할 것 보기
         </button>
       )}
