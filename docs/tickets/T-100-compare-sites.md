@@ -24,6 +24,7 @@ D.6 검사(`packages/plugins-core/verifiers/comparators/test/compare-sites.test.
 - allow: packages/plugins-core/checklist-ledger/src/learn.ts|if (ee !== ae || eb === ab) continue; — 별칭 학습에서 조각 쌍 추출, 판정 아님
 - allow: packages/plugins-core/checklist-ledger/src/store.ts|opts.expectedVersion !== actual — 낙관적 잠금 버전 충돌(정수 동시성 검사)
 - allow: packages/plugins-core/checklist-ledger/src/manifest.ts|opts.expectedRevision !== cur.revision — 낙관적 잠금 개정 충돌
+- allow: packages/kernel/src/settings/registry.ts|if (i.expected === ' — 설정 값 검사 오류(Zod issue)의 기대 타입별 쉬운 말 문구 고르기, 판정 아님
 - allow: packages/plugins-core/forge/src/sandbox.ts|if (ex.expect.decision === undefined) { — 기대값이 없는지 확인(비교 아님)
 - allow: apps/web/src/panels/Checklist/model.ts|a.expectExit !== undefined && a.expectExit !== 0 — 화면 표시 문구(기본값 0이면 생략)
 - allow: packages/plugins-core/verifiers/ladder/src/ladder.ts|target === expKey — 판정 사유 문구 선택(기대 경로 자체인지 manifest 별칭 경로인지), 판정 아님

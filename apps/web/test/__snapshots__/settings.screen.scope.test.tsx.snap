@@ -13,7 +13,7 @@ exports[`6B.14 적용 범위 표시 > 프로젝트 값이 전체 값을 덮고 �
       class="hx-setting__title"
       for="hx-setting-mode-default"
     >
-      기본 모드
+      기본 실행 모드
     </label>
     <span
       class="hx-setting__tag hx-setting__scope"
@@ -33,14 +33,14 @@ exports[`6B.14 적용 범위 표시 > 프로젝트 값이 전체 값을 덮고 �
   <p
     class="hx-setting__desc"
   >
-    새 작업을 시작할 때의 모드예요.
+    새 작업을 시작할 때 쓸 모드예요. 프로젝트마다 따로 정하면 그 값이 먼저 쓰여요.
   </p>
   <p
     class="hx-setting__override"
     role="note"
   >
     이 프로젝트에서는 "
-    계획
+    계획 — 목록까지만 만들어요
     " 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.
   </p>
   <div
@@ -53,17 +53,17 @@ exports[`6B.14 적용 범위 표시 > 프로젝트 값이 전체 값을 덮고 �
       <option
         value="plan"
       >
-        계획
+        계획 — 목록까지만 만들어요
       </option>
       <option
         value="normal"
       >
-        일반
+        일반 — 확인받으며 해요
       </option>
       <option
         value="auto"
       >
-        오토
+        오토 — 묻지 않고 해요
       </option>
     </select>
   </div>

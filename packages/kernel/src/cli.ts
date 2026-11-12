@@ -502,7 +502,6 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     home,
     scratchRoot: () => scratchRootFrom(readSettingsFile(settingsFile)),
   });
-  const { readSetting, SettingsStore } = await import('./settings/index.js');
   const modeSettings = new SettingsStore({ file: settingsFile });
   const plainTitle = (
     loader.plugins.get('approvals')?.module as

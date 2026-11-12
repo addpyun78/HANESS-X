@@ -9,11 +9,6 @@ import type { ProjectView } from '../src/shell/projects/api.js';
 import { memorySettings } from './settings-form-fixtures.js';
 import { keysIn, openTab, registryWith, renderScreen, rowsOf } from './settings-screen-fixtures.js';
 
-/** 병합 뒤에는 3번 구역의 진짜 mode.default 등록이 쓰인다 → 이름·선택지 글은 등록에서 읽는다 */
-const REG = registryWith(MODE);
-const MODE_DEF = REG.get('mode.default')!;
-const PLAN_LABEL = (MODE_DEF.options as Record<string, string>).plan!;
-
 /**
  * T-101 6B.14 모든 항목에 "이 값이 어디에 적용되나요?"(전체 / 이 프로젝트 / 이 기기 화면에만) 표시,
  * 프로젝트 값이 전체 값을 덮으면 "이 프로젝트에서는 "○○" 값을 써요." 안내.
@@ -31,6 +26,11 @@ const MODE = defineSetting('mode.default', z.enum(['plan', 'normal', 'auto']).de
   scope: 'both',
   options: { plan: '계획', normal: '일반', auto: '오토' },
 });
+
+/** 병합 뒤에는 3번 구역의 진짜 mode.default 등록이 쓰인다 → 이름·선택지 글은 등록에서 읽는다 */
+const REG = registryWith(MODE);
+const MODE_DEF = REG.get('mode.default')!;
+const PLAN_LABEL = (MODE_DEF.options as Record<string, string>).plan!;
 
 function memoryProjects(init: Record<string, Record<string, unknown>> = {}): ProjectSettingsIO & {
   data: Record<string, Record<string, unknown>>;
