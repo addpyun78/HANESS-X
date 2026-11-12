@@ -1,0 +1,367 @@
+[
+  {
+    "file": "apps/web/src/App.tsx",
+    "line": 414,
+    "comment": "noop */"
+  },
+  {
+    "file": "apps/web/src/api/client.ts",
+    "line": 376,
+    "comment": "noop */"
+  },
+  {
+    "file": "apps/web/src/builder/chat/stt.ts",
+    "line": 40,
+    "comment": "저장 실패 → 기본 규칙"
+  },
+  {
+    "file": "apps/web/src/builder/draft/forge-handoff.ts",
+    "line": 16,
+    "comment": "저장소를 못 쓰면 채우기 없이 이동만 한다"
+  },
+  {
+    "file": "apps/web/src/builder/draft/useDraftSession.tsx",
+    "line": 190,
+    "comment": ""
+  },
+  {
+    "file": "apps/web/src/builder/draft/useDraftSession.tsx",
+    "line": 209,
+    "comment": ""
+  },
+  {
+    "file": "apps/web/src/design/theme.ts",
+    "line": 16,
+    "comment": "저장소 사용 불가 */"
+  },
+  {
+    "file": "apps/web/src/design/theme.ts",
+    "line": 27,
+    "comment": "noop */"
+  },
+  {
+    "file": "apps/web/src/design/ui-prefs.ts",
+    "line": 48,
+    "comment": "이벤트를 못 보내도 저장은 됐다 */"
+  },
+  {
+    "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+    "line": 57,
+    "comment": "소리를 못 내도 알림 카드는 그대로 */"
+  },
+  {
+    "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+    "line": 90,
+    "comment": "저장 못 해도 동작에는 지장 없음 */"
+  },
+  {
+    "file": "apps/web/src/panels/TerminalPanel.tsx",
+    "line": 31,
+    "comment": "보이지 않는 탭 */"
+  },
+  {
+    "file": "apps/web/src/settings/form/SettingsForm.tsx",
+    "line": 149,
+    "comment": "저장소를 쓸 수 없음 */"
+  },
+  {
+    "file": "apps/web/src/settings/form/SettingsForm.tsx",
+    "line": 178,
+    "comment": "noop */"
+  },
+  {
+    "file": "apps/web/src/shell/layout-store.ts",
+    "line": 59,
+    "comment": "noop */"
+  },
+  {
+    "file": "apps/web/src/shell/projects/prefs.ts",
+    "line": 40,
+    "comment": "저장소를 못 써도 이번 화면에서는 유지된다 */"
+  },
+  {
+    "file": "packages/engines/acp-generic/src/adapter.ts",
+    "line": 273,
+    "comment": "연결이 이미 닫혔으면 무시"
+  },
+  {
+    "file": "packages/engines/codex/src/engine.ts",
+    "line": 204,
+    "comment": "쿼터 조회 실패는 턴을 막지 않는다 (인증 문제면 턴에서 오류로 나온다) */"
+  },
+  {
+    "file": "packages/engines/openai-compat/src/anthropic.ts",
+    "line": 119,
+    "comment": ""
+  },
+  {
+    "file": "packages/engines/openai-compat/src/gemini.ts",
+    "line": 119,
+    "comment": ""
+  },
+  {
+    "file": "packages/engines/openai-compat/src/openai.ts",
+    "line": 116,
+    "comment": ""
+  },
+  {
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 125,
+    "comment": "noop */"
+  },
+  {
+    "file": "packages/kernel/src/auth-status.ts",
+    "line": 70,
+    "comment": "로그 줄 무시 */"
+  },
+  {
+    "file": "packages/kernel/src/cli.ts",
+    "line": 546,
+    "comment": "정리 실패는 시작을 막지 않는다 */"
+  },
+  {
+    "file": "packages/kernel/src/cli.ts",
+    "line": 671,
+    "comment": "검증 거부 폴더는 워크스페이스로 쓰지 않는다 */"
+  },
+  {
+    "file": "packages/kernel/src/dispatch.ts",
+    "line": 354,
+    "comment": "버전 고정 실패는 실행을 막지 않는다 (이어하기 때 지금 버전으로)"
+  },
+  {
+    "file": "packages/kernel/src/event-log.ts",
+    "line": 126,
+    "comment": "구독자 오류는 로그 쓰기에 영향을 주지 않는다"
+  },
+  {
+    "file": "packages/kernel/src/event-log.ts",
+    "line": 185,
+    "comment": "잘린 줄은 건너뛴다"
+  },
+  {
+    "file": "packages/kernel/src/event-log.ts",
+    "line": 212,
+    "comment": "비정상 종료로 잘린 마지막 줄은 건너뛴다"
+  },
+  {
+    "file": "packages/kernel/src/event-log.ts",
+    "line": 330,
+    "comment": "일부 파일시스템은 fsync 미지원 */"
+  },
+  {
+    "file": "packages/kernel/src/hooks.ts",
+    "line": 248,
+    "comment": "로그 실패는 훅 흐름을 막지 않는다"
+  },
+  {
+    "file": "packages/kernel/src/loader.ts",
+    "line": 183,
+    "comment": "접근 불가 폴더 무시 */"
+  },
+  {
+    "file": "packages/kernel/src/loader.ts",
+    "line": 681,
+    "comment": "로그 실패는 로딩을 막지 않는다 */"
+  },
+  {
+    "file": "packages/kernel/src/models.ts",
+    "line": 282,
+    "comment": "캐시 기록 실패는 목록 응답을 막지 않는다 */"
+  },
+  {
+    "file": "packages/kernel/src/proc.ts",
+    "line": 64,
+    "comment": "이미 종료 */"
+  },
+  {
+    "file": "packages/kernel/src/proc.ts",
+    "line": 67,
+    "comment": "이미 종료 */"
+  },
+  {
+    "file": "packages/kernel/src/projects/project-store.ts",
+    "line": 242,
+    "comment": "읽기 전용 폴더: 표식 없이도 projects.json으로 동작 */"
+  },
+  {
+    "file": "packages/kernel/src/recover.ts",
+    "line": 55,
+    "comment": "강제 종료로 잘린 줄"
+  },
+  {
+    "file": "packages/kernel/src/sandbox/host.ts",
+    "line": 119,
+    "comment": "워커가 이미 죽었으면 그냥 정리 */"
+  },
+  {
+    "file": "packages/kernel/src/sandbox/trust.ts",
+    "line": 29,
+    "comment": "없거나 깨진 파일 = 빈 목록 */"
+  },
+  {
+    "file": "packages/kernel/src/secrets.ts",
+    "line": 235,
+    "comment": "없는 파일 */"
+  },
+  {
+    "file": "packages/kernel/src/settings/coverage.ts",
+    "line": 113,
+    "comment": ""
+  },
+  {
+    "file": "packages/kernel/src/settings/data-cleanup.ts",
+    "line": 63,
+    "comment": "이미 없음 */"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/designer/structure.ts",
+    "line": 122,
+    "comment": "노드 명세가 잘못된 경우는 스키마 검사(C.5)에서 걸린다"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/designer/wire.ts",
+    "line": 46,
+    "comment": "잘못된 설정은 기본값으로"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/inventory/agents.ts",
+    "line": 61,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/inventory/workspace.ts",
+    "line": 134,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/inventory/workspace.ts",
+    "line": 170,
+    "comment": "깨진 package.json은 무시"
+  },
+  {
+    "file": "packages/plugins-core/attachments/src/detect.ts",
+    "line": 106,
+    "comment": "망가진 zip도 압축 파일로 본다 */"
+  },
+  {
+    "file": "packages/plugins-core/attachments/src/store.ts",
+    "line": 208,
+    "comment": "망가진 기록은 건너뜀 */"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/fs-util.ts",
+    "line": 43,
+    "comment": "일부 파일시스템은 fsync 미지원 */"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/fs-util.ts",
+    "line": 53,
+    "comment": "Windows·일부 FS는 디렉터리 fsync 불가 */"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/fs-util.ts",
+    "line": 102,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+    "line": 239,
+    "comment": "이미 없음 */"
+  },
+  {
+    "file": "packages/plugins-core/forge/src/engine.ts",
+    "line": 453,
+    "comment": "무시 */"
+  },
+  {
+    "file": "packages/plugins-core/forge/src/install.ts",
+    "line": 235,
+    "comment": "없음 */"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/resolve.ts",
+    "line": 228,
+    "comment": "깨진 package.json은 무시 */"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/runner.ts",
+    "line": 120,
+    "comment": "이미 끝남 */"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/service.ts",
+    "line": 231,
+    "comment": "기록 실패가 설치를 막지 않는다 */"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/service.ts",
+    "line": 650,
+    "comment": "깨진 기록은 무시 */"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/service.ts",
+    "line": 662,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/installer/src/service.ts",
+    "line": 679,
+    "comment": "계획을 못 만들면 건너뜀 */"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/auto-policy.ts",
+    "line": 51,
+    "comment": "이미 끝난 항목이면 기록만 남긴다"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/plan-gate.ts",
+    "line": 213,
+    "comment": "기록 실패가 교정 자체를 막지 않는다"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/tool-first-run.ts",
+    "line": 93,
+    "comment": "깨진 파일 = 빈 목록 */"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/judge/src/engine.ts",
+    "line": 97,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/verifiers/judge/src/engine.ts",
+    "line": 155,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/verifiers/judge/src/questions.ts",
+    "line": 104,
+    "comment": "아래에서 중괄호 범위로 다시 시도 */"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/judge/src/sanitize.ts",
+    "line": 42,
+    "comment": "JSON 아님 */"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/ladder/src/evidence.ts",
+    "line": 81,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins-core/verifiers/ladder/src/evidence.ts",
+    "line": 142,
+    "comment": ""
+  },
+  {
+    "file": "packages/plugins/stt-browser/src/index.ts",
+    "line": 81,
+    "comment": "저장 실패 → 이번 세션 메모리만"
+  },
+  {
+    "file": "packages/plugins/stt-local/src/index.ts",
+    "line": 48,
+    "comment": "없음"
+  }
+]
