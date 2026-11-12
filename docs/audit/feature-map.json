@@ -125,7 +125,16 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": [
+          "session.start",
+          "prompt.submit",
+          "tool.before",
+          "tool.after",
+          "turn.end",
+          "stop.before",
+          "context.compact",
+          "item.verify"
+        ],
         "settings": []
       },
       "code": [],
@@ -389,7 +398,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -505,7 +514,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -593,7 +602,11 @@
         "api": ["GET /api/checklist/:session/status", "GET /api/checklist/:session"],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": [
+          "stop.before",
+          "stop.before@packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+          "native:Stop@packages/plugins-core/checklist-ledger/src/stop-guard.ts"
+        ],
         "settings": []
       },
       "code": [],
@@ -615,7 +628,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["context.compact"],
         "settings": []
       },
       "code": [],
@@ -747,7 +760,7 @@
         "api": ["POST /api/workspaces/open", "POST /api/workspaces/pin", "GET /api/workspaces"],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -1064,7 +1077,7 @@
         "api": ["POST /api/forge/answers/:id"],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -1086,7 +1099,7 @@
         "api": ["GET /api/agents", "GET /api/plugins", "GET /api/sessions", "POST /api/sessions"],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -1108,7 +1121,7 @@
         "api": ["GET /api/plugins"],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -1229,7 +1242,7 @@
         ],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -2249,7 +2262,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["stop.before@packages/plugins-core/checklist-ledger/src/stages/stop.ts"],
         "settings": []
       },
       "code": [],
@@ -2425,7 +2438,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["stop.before"],
         "settings": []
       },
       "code": [],
@@ -2447,7 +2460,7 @@
         "api": [],
         "cli": [],
         "mcp": [],
-        "hooks": [],
+        "hooks": ["tool.before"],
         "settings": []
       },
       "code": [],
@@ -3588,7 +3601,8 @@
     "actions": 184,
     "api": 147,
     "cli": 9,
-    "mcp": 20
+    "mcp": 20,
+    "hooks": 22
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
