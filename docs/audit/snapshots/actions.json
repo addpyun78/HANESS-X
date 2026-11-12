@@ -1,0 +1,722 @@
+[
+  {
+    "id": "approvals.choose",
+    "effect": "api"
+  },
+  {
+    "id": "approvals.mini-open",
+    "effect": "state"
+  },
+  {
+    "id": "approvals.more",
+    "effect": "state"
+  },
+  {
+    "id": "approvals.toast",
+    "effect": "state"
+  },
+  {
+    "id": "approvals.undo",
+    "effect": "api"
+  },
+  {
+    "id": "builder.back",
+    "effect": "navigate"
+  },
+  {
+    "id": "builder.drawer-tab",
+    "effect": "state"
+  },
+  {
+    "id": "builder.mic",
+    "effect": "state"
+  },
+  {
+    "id": "builder.mic-consent-no",
+    "effect": "state"
+  },
+  {
+    "id": "builder.mic-consent-yes",
+    "effect": "state"
+  },
+  {
+    "id": "builder.redo",
+    "effect": "state"
+  },
+  {
+    "id": "builder.save-open",
+    "effect": "open"
+  },
+  {
+    "id": "builder.sidebar-tab",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-chat",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-clone",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-clone-list",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-empty",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-plugin",
+    "effect": "state"
+  },
+  {
+    "id": "builder.start-plugin-list",
+    "effect": "state"
+  },
+  {
+    "id": "builder.undo",
+    "effect": "state"
+  },
+  {
+    "id": "chat.approval-option",
+    "effect": "api"
+  },
+  {
+    "id": "chat.mode",
+    "effect": "state"
+  },
+  {
+    "id": "chat.open-diff",
+    "effect": "open"
+  },
+  {
+    "id": "chat.tool-toggle",
+    "effect": "state"
+  },
+  {
+    "id": "checklist.approve-plan",
+    "effect": "api"
+  },
+  {
+    "id": "checklist.decide",
+    "effect": "api"
+  },
+  {
+    "id": "checklist.toggle",
+    "effect": "state"
+  },
+  {
+    "id": "composer.attach-pick",
+    "effect": "open"
+  },
+  {
+    "id": "composer.attachment-preview",
+    "effect": "state"
+  },
+  {
+    "id": "composer.chip",
+    "effect": "open"
+  },
+  {
+    "id": "composer.chip-option",
+    "effect": "state"
+  },
+  {
+    "id": "composer.clear-agent",
+    "effect": "state"
+  },
+  {
+    "id": "composer.mode-keep",
+    "effect": "state"
+  },
+  {
+    "id": "composer.mode-upgrade",
+    "effect": "state"
+  },
+  {
+    "id": "composer.plus",
+    "effect": "open"
+  },
+  {
+    "id": "composer.remove-attachment",
+    "effect": "state"
+  },
+  {
+    "id": "composer.send",
+    "effect": "api"
+  },
+  {
+    "id": "composer.stop",
+    "effect": "open"
+  },
+  {
+    "id": "composer.stop-now",
+    "effect": "api"
+  },
+  {
+    "id": "composer.stop-pause",
+    "effect": "api"
+  },
+  {
+    "id": "confirm.cancel",
+    "effect": "state"
+  },
+  {
+    "id": "confirm.ok",
+    "effect": "api"
+  },
+  {
+    "id": "conversation.menu",
+    "effect": "open"
+  },
+  {
+    "id": "conversation.menu-item",
+    "effect": "api"
+  },
+  {
+    "id": "conversation.select",
+    "effect": "state"
+  },
+  {
+    "id": "dev.dismiss-banner",
+    "effect": "state"
+  },
+  {
+    "id": "draft.gap-find-tool",
+    "effect": "open"
+  },
+  {
+    "id": "draft.gap-forge",
+    "effect": "navigate"
+  },
+  {
+    "id": "draft.gap-remove",
+    "effect": "state"
+  },
+  {
+    "id": "draft.list-delete",
+    "effect": "api"
+  },
+  {
+    "id": "draft.list-resume",
+    "effect": "state"
+  },
+  {
+    "id": "draft.patch-apply",
+    "effect": "state"
+  },
+  {
+    "id": "draft.patch-cancel",
+    "effect": "state"
+  },
+  {
+    "id": "draft.peek-close",
+    "effect": "state"
+  },
+  {
+    "id": "draft.question-choice",
+    "effect": "state"
+  },
+  {
+    "id": "draft.questions-skip",
+    "effect": "api"
+  },
+  {
+    "id": "draft.questions-submit",
+    "effect": "api"
+  },
+  {
+    "id": "draft.resume",
+    "effect": "state"
+  },
+  {
+    "id": "draft.start-new",
+    "effect": "state"
+  },
+  {
+    "id": "draft.version-peek",
+    "effect": "state"
+  },
+  {
+    "id": "draft.version-revert",
+    "effect": "state"
+  },
+  {
+    "id": "draft.versions-toggle",
+    "effect": "state"
+  },
+  {
+    "id": "empty.agent",
+    "effect": "state"
+  },
+  {
+    "id": "empty.example",
+    "effect": "state"
+  },
+  {
+    "id": "engines.install-guide",
+    "effect": "open"
+  },
+  {
+    "id": "engines.ping",
+    "effect": "api"
+  },
+  {
+    "id": "engines.rescan",
+    "effect": "api"
+  },
+  {
+    "id": "engines.save-key",
+    "effect": "api"
+  },
+  {
+    "id": "engines.save-settings",
+    "effect": "api"
+  },
+  {
+    "id": "forge.choice",
+    "effect": "api"
+  },
+  {
+    "id": "forge.option",
+    "effect": "api"
+  },
+  {
+    "id": "forge.submit",
+    "effect": "api"
+  },
+  {
+    "id": "inspector.clear-overlay",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.dry-run",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.overwrite",
+    "effect": "api"
+  },
+  {
+    "id": "inspector.save",
+    "effect": "api"
+  },
+  {
+    "id": "inspector.skill-down",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.skill-up",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.tab",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.yaml-apply",
+    "effect": "state"
+  },
+  {
+    "id": "inspector.yaml-reset",
+    "effect": "state"
+  },
+  {
+    "id": "install.add-plan",
+    "effect": "state"
+  },
+  {
+    "id": "install.pick-method",
+    "effect": "api"
+  },
+  {
+    "id": "install.remove",
+    "effect": "api"
+  },
+  {
+    "id": "install.search",
+    "effect": "api"
+  },
+  {
+    "id": "install.tab",
+    "effect": "state"
+  },
+  {
+    "id": "install.update",
+    "effect": "api"
+  },
+  {
+    "id": "install.url-check",
+    "effect": "api"
+  },
+  {
+    "id": "lego.detach-plugin",
+    "effect": "state"
+  },
+  {
+    "id": "lego.remove-skill",
+    "effect": "state"
+  },
+  {
+    "id": "model.choose",
+    "effect": "state"
+  },
+  {
+    "id": "model.login",
+    "effect": "open"
+  },
+  {
+    "id": "model.open",
+    "effect": "open"
+  },
+  {
+    "id": "model.scope",
+    "effect": "api"
+  },
+  {
+    "id": "nav.agent-builder",
+    "effect": "navigate"
+  },
+  {
+    "id": "nav.engines",
+    "effect": "navigate"
+  },
+  {
+    "id": "nav.install",
+    "effect": "navigate"
+  },
+  {
+    "id": "nav.plugins",
+    "effect": "navigate"
+  },
+  {
+    "id": "nav.settings",
+    "effect": "navigate"
+  },
+  {
+    "id": "nav.skills",
+    "effect": "navigate"
+  },
+  {
+    "id": "panel.tab",
+    "effect": "state"
+  },
+  {
+    "id": "plus.attach",
+    "effect": "open"
+  },
+  {
+    "id": "plus.open-folder",
+    "effect": "open"
+  },
+  {
+    "id": "plus.pick-recent",
+    "effect": "api"
+  },
+  {
+    "id": "plus.pin",
+    "effect": "api"
+  },
+  {
+    "id": "plus.recent",
+    "effect": "state"
+  },
+  {
+    "id": "project-settings.close",
+    "effect": "state"
+  },
+  {
+    "id": "project-settings.relink",
+    "effect": "open"
+  },
+  {
+    "id": "project-settings.save",
+    "effect": "api"
+  },
+  {
+    "id": "projects.archive-stale",
+    "effect": "api"
+  },
+  {
+    "id": "projects.done-toggle",
+    "effect": "state"
+  },
+  {
+    "id": "projects.group-toggle",
+    "effect": "state"
+  },
+  {
+    "id": "projects.menu",
+    "effect": "open"
+  },
+  {
+    "id": "projects.menu-item",
+    "effect": "api"
+  },
+  {
+    "id": "projects.new-in-project",
+    "effect": "api"
+  },
+  {
+    "id": "projects.new-session",
+    "effect": "api"
+  },
+  {
+    "id": "projects.open-folder",
+    "effect": "open"
+  },
+  {
+    "id": "projects.pick-new",
+    "effect": "open"
+  },
+  {
+    "id": "projects.relink",
+    "effect": "open"
+  },
+  {
+    "id": "projects.select",
+    "effect": "state"
+  },
+  {
+    "id": "recovery.resume",
+    "effect": "api"
+  },
+  {
+    "id": "resume.check-choice",
+    "effect": "state"
+  },
+  {
+    "id": "resume.open-list",
+    "effect": "open"
+  },
+  {
+    "id": "resume.session",
+    "effect": "api"
+  },
+  {
+    "id": "resume.start",
+    "effect": "api"
+  },
+  {
+    "id": "run-mode.auto-cancel",
+    "effect": "state"
+  },
+  {
+    "id": "run-mode.auto-edit-limits",
+    "effect": "state"
+  },
+  {
+    "id": "run-mode.auto-start",
+    "effect": "api"
+  },
+  {
+    "id": "run-mode.open-review",
+    "effect": "open"
+  },
+  {
+    "id": "run-mode.plan-choose",
+    "effect": "api"
+  },
+  {
+    "id": "run-mode.review-action",
+    "effect": "api"
+  },
+  {
+    "id": "save.close",
+    "effect": "state"
+  },
+  {
+    "id": "save.fill-gaps",
+    "effect": "state"
+  },
+  {
+    "id": "save.save",
+    "effect": "api"
+  },
+  {
+    "id": "save.save-incomplete",
+    "effect": "api"
+  },
+  {
+    "id": "save.use-suggestion",
+    "effect": "state"
+  },
+  {
+    "id": "scan.dismiss",
+    "effect": "state"
+  },
+  {
+    "id": "scan.open-install",
+    "effect": "navigate"
+  },
+  {
+    "id": "settings.data-cleanup",
+    "effect": "api"
+  },
+  {
+    "id": "settings.diagnostics",
+    "effect": "download"
+  },
+  {
+    "id": "settings.export",
+    "effect": "download"
+  },
+  {
+    "id": "settings.import",
+    "effect": ["open", "api"]
+  },
+  {
+    "id": "settings.list-add",
+    "effect": "api"
+  },
+  {
+    "id": "settings.list-remove",
+    "effect": "api"
+  },
+  {
+    "id": "settings.pick-folder",
+    "effect": "open"
+  },
+  {
+    "id": "settings.project-pin",
+    "effect": "api"
+  },
+  {
+    "id": "settings.project-relink",
+    "effect": "open"
+  },
+  {
+    "id": "settings.project-remove",
+    "effect": "state"
+  },
+  {
+    "id": "settings.project-remove-cancel",
+    "effect": "state"
+  },
+  {
+    "id": "settings.project-remove-confirm",
+    "effect": "api"
+  },
+  {
+    "id": "settings.project-settings",
+    "effect": "navigate"
+  },
+  {
+    "id": "settings.reset-all",
+    "effect": "state"
+  },
+  {
+    "id": "settings.reset-all-cancel",
+    "effect": "state"
+  },
+  {
+    "id": "settings.reset-all-confirm",
+    "effect": "api"
+  },
+  {
+    "id": "settings.reset-field",
+    "effect": "api"
+  },
+  {
+    "id": "settings.reset-group",
+    "effect": "api"
+  },
+  {
+    "id": "settings.secret-delete",
+    "effect": "api"
+  },
+  {
+    "id": "settings.secret-save",
+    "effect": "api"
+  },
+  {
+    "id": "settings.show-advanced",
+    "effect": "state"
+  },
+  {
+    "id": "settings.tab",
+    "effect": "state"
+  },
+  {
+    "id": "settings.toggle",
+    "effect": "api"
+  },
+  {
+    "id": "settings.update-check",
+    "effect": "api"
+  },
+  {
+    "id": "shell.open-panel",
+    "effect": "state"
+  },
+  {
+    "id": "shell.open-sidebar",
+    "effect": "state"
+  },
+  {
+    "id": "shell.stop-all",
+    "effect": "api"
+  },
+  {
+    "id": "sidebar.new-session",
+    "effect": "state"
+  },
+  {
+    "id": "sidebar.select-session",
+    "effect": "state"
+  },
+  {
+    "id": "subagent.add",
+    "effect": "api"
+  },
+  {
+    "id": "subagent.cancel",
+    "effect": "state"
+  },
+  {
+    "id": "subagent.new-session",
+    "effect": "api"
+  },
+  {
+    "id": "terminal.login",
+    "effect": "state"
+  },
+  {
+    "id": "toolpicker.source-link",
+    "effect": "open"
+  },
+  {
+    "id": "topbar.theme",
+    "effect": "state"
+  },
+  {
+    "id": "where.cancel",
+    "effect": "state"
+  },
+  {
+    "id": "where.keep",
+    "effect": "api"
+  },
+  {
+    "id": "where.open-folder",
+    "effect": "open"
+  },
+  {
+    "id": "where.pick-project",
+    "effect": "api"
+  },
+  {
+    "id": "where.recent",
+    "effect": "state"
+  },
+  {
+    "id": "where.scratch",
+    "effect": "api"
+  },
+  {
+    "id": "where.use-top",
+    "effect": "api"
+  }
+]
