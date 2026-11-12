@@ -666,6 +666,9 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
             engines: () => adapters().map((a) => a.id),
             engineCanResume: (id) => adapters().find((a) => a.id === id)?.capabilities.resume ?? false,
             fallback: () => fallbackTable(loadEnginesSettings().engines),
+            // T-101 3E.6 이어하기 때 모드 유지·카드에서 바꾸기
+            sessionMode: (id) => sessionRegistry.get(id)?.mode,
+            setSessionMode: (id, mode) => void sessionRegistry.setMode(id, mode),
             ...(ledgerFor ? { ledger: (id: string) => ledgerFor(id) as LedgerView | null } : {}),
           }),
         });

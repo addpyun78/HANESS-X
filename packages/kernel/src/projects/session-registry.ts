@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, w
 import { join } from 'node:path';
 import type { LogRecord } from '../event-log.js';
 import { harnessHome } from '../loader.js';
-import { toRunMode } from '@harness-x/protocol';
+import { toRunMode, type RunMode } from '@harness-x/protocol';
 import { resolveSessionDefaults, type GlobalDefaultsSource } from './defaults.js';
 import type { ProjectStore } from './project-store.js';
 import {
@@ -382,6 +382,13 @@ export class SessionRegistry extends EventEmitter {
       { status, ...(status === 'done' ? { doneAt: this.now().toISOString() } : {}) },
       true,
     );
+  }
+
+  /** T-101 3E.6 실행 모드 바꾸기 (이어하기 카드에서 바꿀 때 — 사이드바 배지가 따라 바뀐다) */
+  setMode(id: string, mode: RunMode): SessionRecord | undefined {
+    const s = this.saved.get(id) ?? this.drafts.get(id);
+    if (!s) return undefined;
+    return this.update(s, { mode });
   }
 
   archive(id: string, archived = true): SessionRecord {

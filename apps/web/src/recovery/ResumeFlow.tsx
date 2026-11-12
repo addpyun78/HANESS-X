@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import type { RunMode } from '@harness-x/protocol';
+import { ResumeModeChoice } from '../run-mode/ResumeModeChoice.js';
 import { ResumeCheckCard, type ResumeIssueData } from './ResumeCheckCard.js';
 import './recovery.css';
 
@@ -12,6 +14,8 @@ export interface ResumeStartChoices {
   files?: 'keep' | 'revert' | 'replan';
   engine?: string;
   version?: 'pinned' | 'latest';
+  /** T-101 3E.6 이어하기 카드에서 바꾼 실행 모드 */
+  runMode?: RunMode;
 }
 
 /** 카드에서 고른 선택지 → 시작 요청. 기다리기·나중에는 null (이어하지 않음) */
@@ -41,13 +45,16 @@ export interface ResumeFlowProps {
   /** 승인 카드 먼저 보기 (blocking 카드의 [카드 보기]) */
   onShowApprovals?(sessionId: string): void;
   onDone?(r: { mode: string; version: string } | null): void;
+  /** T-101 3E.6 멈춘 세션의 실행 모드 (카드에서 바꿀 수 있음, 기본 유지) */
+  sessionMode?: string;
 }
 
 /**
  * T-101 2B.2 모든 입구가 여는 이어하기 흐름:
  * 점검(6가지) → 문제가 없으면 바로 이어함, 있으면 카드로 묻고 [이 선택으로 이어하기].
  */
-export function ResumeFlow({ api, sessionId, onShowApprovals, onDone }: ResumeFlowProps) {
+export function ResumeFlow({ api, sessionId, onShowApprovals, onDone, sessionMode }: ResumeFlowProps) {
+  const [runMode, setRunMode] = useState<RunMode>();
   const [state, setState] = useState<'checking' | 'asking' | 'starting' | 'done' | 'cancelled' | 'error'>(
     'checking',
   );
@@ -98,6 +105,16 @@ export function ResumeFlow({ api, sessionId, onShowApprovals, onDone }: ResumeFl
           />
         ))}
       {state === 'asking' && (
+        <div className="hx-resume-check__mode">
+          <span>실행 모드</span>
+          <ResumeModeChoice
+            {...(sessionMode ? { sessionMode } : {})}
+            {...(runMode ? { value: runMode } : {})}
+            onChange={setRunMode}
+          />
+        </div>
+      )}
+      {state === 'asking' && (
         <div className="hx-resume-check__choices">
           <button
             type="button"
@@ -110,7 +127,7 @@ export function ResumeFlow({ api, sessionId, onShowApprovals, onDone }: ResumeFl
                 onDone?.(null);
                 return;
               }
-              void start(c);
+              void start(runMode ? { ...c, runMode } : c);
             }}
           >
             이 선택으로 이어하기

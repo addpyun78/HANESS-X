@@ -546,6 +546,10 @@ export function App() {
                       key={resumeId}
                       api={rsApi}
                       sessionId={resumeId}
+                      {...(() => {
+                        const m = proj.sessions.find((s) => s.id === resumeId)?.mode;
+                        return m ? { sessionMode: m } : {};
+                      })()}
                       onDone={(r) => {
                         setResumeId(undefined);
                         setProjectResume((xs) => xs.filter((x) => x.sessionId !== resumeId));

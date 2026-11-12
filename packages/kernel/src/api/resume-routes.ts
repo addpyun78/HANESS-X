@@ -4,6 +4,7 @@ import { findResumableSessions, resumableForProject } from '../resume.js';
 import { staleCleanupSuggestion } from '../resume-cleanup.js';
 import { ResumeServiceError, type ResumeService, type ResumeStartChoices } from '../resume-service.js';
 import { ResumeError } from '../resume-run.js';
+import { isRunMode } from '@harness-x/protocol';
 
 export interface ResumeRoutesOptions {
   log: EventLog;
@@ -16,7 +17,7 @@ export interface ResumeRoutesOptions {
  * - GET /api/resume?projectId=…  → {sessions: ResumableSession[]} (프로젝트를 열면 "이어서 할 작업이 있어요")
  *   projectId가 없으면 모든 미완료 세션. 2B.13 30일 지난 세션이 있으면 cleanup 제안(삭제는 하지 않음)
  * - POST /api/resume/:id/check → 6가지 점검 결과 {ok, issues} (2B.3)
- * - POST /api/resume/:id {files?, engine?, version?} → 202 {mode, version, interrupted?} (이어서 실행)
+ * - POST /api/resume/:id {files?, engine?, version?, runMode?} → 202 {mode, version, runMode, interrupted?} (이어서 실행, runMode = T-101 3E.6 실행 모드)
  *   404 이어할 세션 없음, 409 먼저 대답할 확인 카드 있음 {issues}
  */
 export function registerResumeRoutes(app: FastifyInstance, o: ResumeRoutesOptions): void {
@@ -51,6 +52,7 @@ export function registerResumeRoutes(app: FastifyInstance, o: ResumeRoutesOption
       ...(b.files === 'keep' || b.files === 'revert' || b.files === 'replan' ? { files: b.files } : {}),
       ...(typeof b.engine === 'string' && b.engine ? { engine: b.engine } : {}),
       ...(b.version === 'pinned' || b.version === 'latest' ? { version: b.version } : {}),
+      ...(isRunMode(b.runMode) ? { runMode: b.runMode } : {}),
     };
     try {
       const r = await svc.start(id, choices);
@@ -58,6 +60,7 @@ export function registerResumeRoutes(app: FastifyInstance, o: ResumeRoutesOption
         sessionId: id,
         mode: r.mode,
         version: r.version,
+        runMode: r.runMode,
         ...(r.interrupted ? { interrupted: r.interrupted } : {}),
         ...(r.revert ? { revert: { ref: r.revert.backup.ref, cannotRestore: r.revert.cannotRestore } } : {}),
       });
