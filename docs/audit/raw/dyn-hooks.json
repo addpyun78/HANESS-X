@@ -1,0 +1,41 @@
+[
+  {
+    "path": ".claude/settings.json",
+    "kind": "hook-config"
+  },
+  {
+    "path": "packages/kernel/src/sandbox/host.ts",
+    "kind": "hook-template-source"
+  },
+  {
+    "path": "packages/kernel/src/sandbox/worker-source.ts",
+    "kind": "hook-template-source"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+    "kind": "hook-template-source"
+  },
+  {
+    "path": "packages/plugins-core/forge/src/import/claude-plugin.ts",
+    "kind": "hook-template-source"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/block-rm.sh",
+    "kind": "hook-script",
+    "from": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/hooks.json"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/hooks/hooks.json",
+    "kind": "hook-config"
+  },
+  {
+    "path": "scripts/hooks/stop-bridge.mjs",
+    "kind": "referenced-script",
+    "from": "packages/plugins-core/checklist-ledger/src/stop-guard.ts"
+  },
+  {
+    "path": "scripts/ticket-gate.mjs",
+    "kind": "hook-script",
+    "from": ".claude/settings.json"
+  }
+]
