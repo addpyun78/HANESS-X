@@ -1,0 +1,70 @@
+[
+  {
+    "path": "packages/engines/acp-generic/src/adapter.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/engines/claude-code/src/args.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/engines/codex/src/args.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/inventory/build.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/inventory/schema.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/inventory/tools.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/runner/types.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/forge/src/import/mcp.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/mcp.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/service.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/bin.ts",
+    "kind": "mcp-bin"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/plugin.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/server.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/transports.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/src/trigger.ts",
+    "kind": "mcp-server"
+  },
+  {
+    "path": "packages/protocol/src/engine.ts",
+    "kind": "mcp-server"
+  }
+]
