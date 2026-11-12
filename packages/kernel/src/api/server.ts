@@ -132,7 +132,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   assertLoopback(host); // 8.1 — listen 전에 거부
   const token = opts.token ?? randomBytes(32).toString('base64url');
   const tokenFile = opts.tokenFile ?? join(harnessHome(), 'run', 'token');
-  writeTokenFile(tokenFile, token);
+  // T-102 I.2: 토큰 파일은 포트를 연 뒤에 쓴다 — 두 번째 serve가 포트 충돌로 실패해도 켜져 있던 서버의 토큰을 덮어쓰지 않게
 
   const app = Fastify({ logger: opts.logger ?? false });
   await app.register(websocket);
@@ -296,6 +296,7 @@ export async function startApiServer(opts: ApiServerOptions): Promise<ApiServer>
   if (opts.routes) await opts.routes(app);
 
   await app.listen({ host, port: boundPort });
+  writeTokenFile(tokenFile, token);
   const addr = app.server.address();
   if (addr && typeof addr === 'object') boundPort = addr.port;
   const urlHost = host === '::1' ? '[::1]' : host;
