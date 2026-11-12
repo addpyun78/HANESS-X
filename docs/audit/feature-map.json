@@ -51,7 +51,14 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -73,7 +80,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/protocol/test/event-base.test.ts",
+        "packages/protocol/test/event-schema.test.ts",
+        "packages/protocol/test/event-union.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -95,7 +106,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/protocol/test/example-hello.test.ts",
+        "packages/protocol/test/manifest-permissions.test.ts",
+        "packages/protocol/test/manifest-schema.test.ts",
+        "packages/protocol/test/manifest-slots.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -117,7 +133,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/event-log.append.test.ts",
+        "packages/kernel/test/event-log.index.test.ts",
+        "packages/kernel/test/event-log.mask.test.ts",
+        "packages/kernel/test/event-log.perf.test.ts",
+        "packages/kernel/test/event-log.replay.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -181,7 +203,15 @@
           "at": "packages/kernel/src/hooks.ts:20"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -203,7 +233,14 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/loader.deps.test.ts",
+        "packages/kernel/test/loader.discover.test.ts",
+        "packages/kernel/test/loader.lifecycle.test.ts",
+        "packages/kernel/test/loader.lock.test.ts",
+        "packages/kernel/test/loader.reject.test.ts",
+        "packages/kernel/test/loader.slots.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -230,7 +267,7 @@
           "at": "scripts/smoke/hot-reload.mjs:1"
         }
       ],
-      "tests": [],
+      "tests": ["packages/kernel/test/hot-reload.test.ts"],
       "status": "정상"
     },
     {
@@ -261,7 +298,20 @@
           "at": "packages/kernel/src/cli.ts:330"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/install.app-wiring.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.plugins.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.token.test.ts",
+        "packages/kernel/test/api.ws.test.ts",
+        "packages/kernel/test/cli.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/approvals/test/cli.test.ts",
+        "packages/plugins-core/installer/test/cli.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -288,7 +338,21 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/engine-scanner/test/cache.test.ts",
+        "packages/plugins-core/engine-scanner/test/min-versions.test.ts",
+        "packages/plugins-core/engine-scanner/test/targets.test.ts",
+        "packages/plugins-core/engine-scanner/test/version.test.ts",
+        "packages/plugins-core/engine-scanner/test/which.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/version.test.ts",
+        "packages/plugins-core/verifiers/judge/test/cache.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -310,7 +374,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/engine-scanner/test/wsl.both.test.ts",
+        "packages/plugins-core/engine-scanner/test/wsl.decode.test.ts",
+        "packages/plugins-core/engine-scanner/test/wsl.scan.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -345,7 +413,23 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/engines.scan.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.engines.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/engine-scanner/test/plugin.test.ts",
+        "packages/plugins-core/engine-scanner/test/probe.all.test.ts",
+        "packages/plugins-core/engine-scanner/test/probe.lmstudio.test.ts",
+        "packages/plugins-core/engine-scanner/test/probe.ollama.test.ts",
+        "packages/plugins-core/engine-scanner/test/probe.openai-compat.test.ts",
+        "packages/plugins-core/engine-scanner/test/scanner.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -372,7 +456,20 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/auth-status.test.ts",
+        "packages/kernel/test/engines-settings.test.ts",
+        "packages/kernel/test/secrets.env-apikey.test.ts",
+        "packages/kernel/test/secrets.env-subscription.test.ts",
+        "packages/kernel/test/secrets.keyring.test.ts",
+        "packages/kernel/test/secrets.token-guard.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -399,7 +496,22 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/engines/antigravity/test/args.test.ts",
+        "packages/engines/antigravity/test/parser.test.ts",
+        "packages/engines/claude-code/test/args.test.ts",
+        "packages/engines/claude-code/test/errors.test.ts",
+        "packages/engines/claude-code/test/interrupt.test.ts",
+        "packages/engines/claude-code/test/parser.test.ts",
+        "packages/engines/claude-code/test/real.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "tests/real-claude-mcp.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -421,7 +533,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/engines/codex/test/app-server.test.ts",
+        "packages/engines/codex/test/exec.test.ts",
+        "packages/engines/codex/test/jsonrpc.test.ts",
+        "packages/engines/codex/test/quota.test.ts",
+        "packages/engines/codex/test/sandbox.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -443,7 +561,14 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/engines/antigravity/test/args.test.ts",
+        "packages/engines/antigravity/test/auth.test.ts",
+        "packages/engines/antigravity/test/capabilities.test.ts",
+        "packages/engines/antigravity/test/parser.test.ts",
+        "packages/engines/claude-code/test/args.test.ts",
+        "packages/engines/claude-code/test/parser.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -470,7 +595,19 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/engines/openai-compat/test/json-fallback.test.ts",
+        "packages/engines/openai-compat/test/providers.test.ts",
+        "packages/engines/openai-compat/test/sse.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/tool-finder/test/providers.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/json-fallback.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -497,7 +634,19 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/engines/acp-generic/test/client.test.ts",
+        "packages/engines/acp-generic/test/permission.test.ts",
+        "packages/engines/acp-generic/test/resolver.test.ts",
+        "packages/engines/acp-generic/test/session-load.test.ts",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -519,7 +668,15 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/attachments/test/schema.test.ts",
+        "packages/plugins-core/attachments/test/store.test.ts",
+        "packages/plugins-core/checklist-ledger/test/ledger.events.test.ts",
+        "packages/plugins-core/checklist-ledger/test/ledger.revise.test.ts",
+        "packages/plugins-core/checklist-ledger/test/schema.test.ts",
+        "packages/plugins-core/checklist-ledger/test/state.test.ts",
+        "packages/plugins-core/checklist-ledger/test/store.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -541,7 +698,14 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/checklist-ledger/test/lint.message.test.ts",
+        "packages/plugins-core/checklist-ledger/test/lint.r1.test.ts",
+        "packages/plugins-core/checklist-ledger/test/lint.r2.test.ts",
+        "packages/plugins-core/checklist-ledger/test/lint.r3.test.ts",
+        "packages/plugins-core/checklist-ledger/test/lint.r4.test.ts",
+        "packages/plugins-core/checklist-ledger/test/lint.r5.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -563,7 +727,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/checklist-ledger/test/glossary.test.ts",
+        "packages/plugins-core/checklist-ledger/test/manifest.lock.test.ts",
+        "packages/plugins-core/checklist-ledger/test/manifest.revise.test.ts",
+        "packages/plugins-core/checklist-ledger/test/manifest.schema.test.ts",
+        "packages/plugins-core/checklist-ledger/test/naming.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -612,7 +782,17 @@
           "at": "packages/plugins-core/mcp-host/src/server.ts:204"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.extract.test.ts",
+        "packages/plugins-core/mcp-host/test/current.test.ts",
+        "packages/plugins-core/mcp-host/test/propose.test.ts",
+        "packages/plugins-core/mcp-host/test/resolve.test.ts",
+        "packages/plugins-core/mcp-host/test/start-submit.test.ts",
+        "packages/plugins-core/permission-gate/test/run-mode.plan.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -639,7 +819,21 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/permission-gate/test/bash-classifier.test.ts",
+        "packages/plugins-core/permission-gate/test/evidence.test.ts",
+        "packages/plugins-core/permission-gate/test/modes.test.ts",
+        "packages/plugins-core/permission-gate/test/path-match.test.ts",
+        "packages/plugins-core/permission-gate/test/plan-lock.test.ts",
+        "packages/plugins-core/permission-gate/test/replay.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -661,7 +855,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/verifiers/ladder/test/ladder.alias.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.candidates.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.normalize.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.record.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -683,7 +883,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4.test.ts",
+        "packages/plugins/verifier-local/test/local.ollama.test.ts",
+        "packages/protocol/test/verifier-interface.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -714,7 +919,14 @@
           "at": "packages/kernel/src/api/approvals-routes.ts:50"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/api.approvals.test.ts",
+        "packages/plugins-core/checklist-ledger/test/escalate.api.test.ts",
+        "packages/plugins-core/checklist-ledger/test/escalate.approval.test.ts",
+        "packages/plugins-core/checklist-ledger/test/escalate.engine.test.ts",
+        "packages/plugins-core/checklist-ledger/test/escalate.move.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l5-learn.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -765,7 +977,24 @@
           "at": "scripts/hooks/stop-bridge.mjs:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/checklist-ledger/test/plan-routes.lock.test.ts",
+        "packages/plugins-core/checklist-ledger/test/plan-routes.test.ts",
+        "packages/plugins-core/checklist-ledger/test/slice.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stall.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stop-bridge.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stop-guard.inject.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stop-guard.status.test.ts",
+        "tests/epic2-stop-gate.test.ts",
+        "tests/stop-guard-reinject.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -796,7 +1025,19 @@
           "at": "packages/plugins-core/checklist-ledger/src/export.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/checklist-ledger/test/export.stage.test.ts",
+        "packages/plugins-core/checklist-ledger/test/export.test.ts",
+        "packages/plugins-core/checklist-ledger/test/slice.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stall.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -818,7 +1059,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/api-client.test.ts",
+        "apps/web/test/stylelint.test.ts",
+        "apps/web/test/theme.test.tsx",
+        "apps/web/test/tokens.css.test.ts",
+        "apps/web/test/tokens.schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -840,7 +1087,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/shell.filter.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "apps/web/test/shell.tabs.test.tsx",
+        "apps/web/test/shell.topbar.test.tsx",
+        "apps/web/test/shell.viewport.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -867,7 +1120,13 @@
           "at": "apps/web/src/chat/ChatStream.tsx:24"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/chat.modes.test.tsx",
+        "apps/web/test/chat.render.test.tsx",
+        "apps/web/test/chat.stopblock.test.tsx",
+        "apps/web/test/chat.toolcard.test.tsx",
+        "apps/web/test/chat.virtual.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -894,7 +1153,21 @@
           "at": "packages/kernel/src/api/server.ts:176"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/composer.attach.test.tsx",
+        "apps/web/test/composer.engine.test.tsx",
+        "apps/web/test/composer.ime.test.tsx",
+        "apps/web/test/composer.permission.test.tsx",
+        "apps/web/test/install.app-wiring.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.plugins.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.token.test.ts",
+        "packages/kernel/test/cli.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -921,7 +1194,16 @@
           "at": "packages/kernel/src/api/server.ts:226"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.pick-folder.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/folder-picker.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -960,7 +1242,23 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.workspace.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.workspaces.test.ts",
+        "packages/kernel/test/cli.sidecar.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/workspaces.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -995,7 +1293,11 @@
           "at": "packages/plugins-core/checklist-ledger/src/plan-routes.ts:152"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/api.approvals.test.ts",
+        "packages/plugins-core/checklist-ledger/test/plan-routes.lock.test.ts",
+        "packages/plugins-core/checklist-ledger/test/plan-routes.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1017,7 +1319,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/panels.diff.test.tsx",
+        "apps/web/test/panels.terminal.test.tsx",
+        "apps/web/test/panels.trajectory.test.tsx",
+        "packages/kernel/test/api.terminal.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1060,7 +1367,22 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/engines.scan.test.tsx",
+        "apps/web/test/settings.engines.auth.test.tsx",
+        "apps/web/test/settings.engines.grid.test.tsx",
+        "apps/web/test/settings.engines.model.test.tsx",
+        "apps/web/test/settings.engines.rescan.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.engines.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1082,7 +1404,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/protocol/test/agent-schema.test.ts",
+        "packages/protocol/test/example-design-qa.test.ts",
+        "packages/protocol/test/pipeline-graph.test.ts",
+        "packages/protocol/test/pipeline-nodes.test.ts",
+        "packages/protocol/test/pipeline-role.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1109,7 +1437,20 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.checklist.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.engines.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.events.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.fanout.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.gate.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.loop.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1136,7 +1477,16 @@
           "at": "packages/plugins-core/mcp-host/src/server.ts:215"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.compat.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.extract.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.inject.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.retry.test.ts",
+        "packages/plugins-core/mcp-host/test/node-output.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1163,7 +1513,24 @@
           "at": "packages/kernel/src/api/server.ts:209"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.command.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.conflict.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.pipeline.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.user.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1185,7 +1552,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.canvas.test.tsx",
+        "apps/web/test/builder.drawer.test.tsx",
+        "apps/web/test/builder.route.test.tsx",
+        "apps/web/test/builder.start.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -1207,7 +1579,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.lego.dom.test.tsx",
+        "apps/web/test/builder.lego.model.test.ts",
+        "packages/protocol/test/schema-compat.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1276,7 +1652,30 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/builder.inspector.test.tsx",
+        "apps/web/test/builder.save.test.tsx",
+        "apps/web/test/builder.yaml.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.agents-save.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1303,7 +1702,21 @@
           "at": "packages/kernel/src/api/server.ts:209"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/composer.slash.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1405,7 +1818,35 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/shell.agent-sessions.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/dispatch.modifiers.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1427,7 +1868,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/sdk/test/skill-md.test.ts",
+        "packages/sdk/test/templates.build.test.ts",
+        "packages/sdk/test/templates.substitute.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1458,7 +1903,20 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/forge.cards.test.tsx",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/forge/test/forge.agent.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "packages/plugins-core/forge/test/forge.scaffold.test.ts",
+        "packages/plugins-core/forge/test/forge.spec.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1539,7 +1997,53 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/forge.cards.test.tsx",
+        "apps/web/test/install.app-wiring.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.plugins.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.token.test.ts",
+        "packages/kernel/test/cli.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/loader.discover.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/approvals/test/cli.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.check.test.ts",
+        "packages/plugins-core/forge/test/forge.install-card.test.ts",
+        "packages/plugins-core/forge/test/forge.install.test.ts",
+        "packages/plugins-core/forge/test/forge.permissions.test.ts",
+        "packages/plugins-core/forge/test/forge.sandbox.test.ts",
+        "packages/plugins-core/installer/test/cli.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1570,7 +2074,28 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/install.app-wiring.test.tsx",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.plugins.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.token.test.ts",
+        "packages/kernel/test/cli.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/forge/test/forge.extract.test.ts",
+        "packages/plugins-core/forge/test/forge.import-claude.test.ts",
+        "packages/plugins-core/forge/test/forge.import-mcp.test.ts",
+        "packages/plugins-core/forge/test/forge.import-skill.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1597,7 +2122,12 @@
           "at": "packages/kernel/src/api/quota-route.ts:12"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/shell.quota.test.tsx",
+        "packages/kernel/test/quota.aggregate.test.ts",
+        "packages/kernel/test/quota.failover.test.ts",
+        "packages/kernel/test/quota.resume.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1628,7 +2158,11 @@
           "at": "packages/kernel/src/cli.ts:330"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/recovery.card.test.tsx",
+        "packages/kernel/test/recover.detect.test.ts",
+        "tests/recover-e2e.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1659,7 +2193,19 @@
           "at": "packages/kernel/src/api/server.ts:176"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/install.app-wiring.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.plugins.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.token.test.ts",
+        "packages/kernel/test/cli.test.ts",
+        "packages/kernel/test/sandbox.isolation.test.ts",
+        "packages/kernel/test/sandbox.permissions.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1681,7 +2227,7 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": ["apps/desktop/test/desktop.config.test.ts", "packages/kernel/test/cli.sidecar.test.ts"],
       "status": "정상"
     },
     {
@@ -1759,7 +2305,44 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.desktop.test.tsx",
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/app.pick-folder.test.tsx",
+        "apps/web/test/app.workspace.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "e2e/crash-resume.test.ts",
+        "e2e/forge-hook-next-session.test.ts",
+        "e2e/path-equivalence.test.ts",
+        "e2e/plus-folder-design-qa.test.ts",
+        "e2e/quota-fallback.test.ts",
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/api.approvals.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.pick-folder.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.workspaces.test.ts",
+        "packages/kernel/test/cli.sidecar.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/recover.detect.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1802,7 +2385,32 @@
           "at": "packages/plugins-core/verifiers/ladder/src/l4.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/projects.sessions.test.ts",
+        "packages/kernel/test/projects.store.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.cache.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.health.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.relevance.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/checklist-ledger/test/export.stage.test.ts",
+        "packages/plugins-core/checklist-ledger/test/ledger.ai-judged.test.ts",
+        "packages/plugins-core/checklist-ledger/test/ledger.revise.test.ts",
+        "packages/plugins-core/checklist-ledger/test/schema.compare.test.ts",
+        "packages/plugins-core/checklist-ledger/test/schema.test.ts",
+        "packages/plugins-core/checklist-ledger/test/state.test.ts",
+        "packages/plugins-core/checklist-ledger/test/store.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence-compare.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-chain-fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l5-learn.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.record.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/pipeline.misjudge.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1853,7 +2461,38 @@
           "at": "packages/protocol/src/verifier.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/loader.discover.test.ts",
+        "packages/kernel/test/loader.lock-retired.test.ts",
+        "packages/kernel/test/loader.lock.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.main.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.settings.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select-author.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select-main.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/cleanup.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/runtime.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/settings-coverage.test.ts",
+        "tests/setup/block-network.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1875,7 +2514,13 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/installer/test/registry.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/ctx.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/registry.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/result.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/types.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1922,7 +2567,33 @@
           "at": "packages/plugins-core/verifiers/ladder/src/ladder.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/engines/openai-compat/test/json-fallback.test.ts",
+        "packages/plugins-core/engine-scanner/test/version.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/exact.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/exit-code.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/json-fallback.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/json.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/manifest.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/number.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/path-separator.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/path.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/regex.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/text.modes.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/text.normalize.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/text.options.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/version.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.alias.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-chain-fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l5-learn.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.normalize.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.record.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/pipeline.misjudge.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -1953,7 +2624,18 @@
           "at": "packages/plugins-core/verifiers/ladder/src/evidence.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/checklist-ledger/test/schema.compare.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/compare-off.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/compare-sites.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/compare-strict.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/evidence.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/infer.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence-compare.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/pipeline.misjudge.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2016,7 +2698,24 @@
           "at": "packages/plugins-core/verifiers/ladder/src/l4.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.registry.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-chain-fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2043,7 +2742,13 @@
           "at": "packages/plugins-core/checklist-ledger/src/export.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/checklist-ledger/test/export.stage.test.ts",
+        "packages/plugins-core/checklist-ledger/test/export.test.ts",
+        "packages/plugins-core/checklist-ledger/test/ledger.ai-judged.test.ts",
+        "packages/plugins-core/permission-gate/test/evidence.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/evidence.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2082,7 +2787,7 @@
           "at": "packages/kernel/src/cli.ts:104"
         }
       ],
-      "tests": [],
+      "tests": ["packages/kernel/test/api.approvals.test.ts"],
       "status": "정상"
     },
     {
@@ -2194,7 +2899,66 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/notices.toast.test.tsx",
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "e2e/approval-card-flow.test.ts",
+        "e2e/judge-fallback.test.ts",
+        "e2e/judge-none-card.test.ts",
+        "packages/kernel/test/api.approvals.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/cli.judge-wiring.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.runtime.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/approvals/test/cli.test.ts",
+        "packages/plugins-core/approvals/test/confidence.test.ts",
+        "packages/plugins-core/approvals/test/dictionary.learn.test.ts",
+        "packages/plugins-core/approvals/test/handle.accept.test.ts",
+        "packages/plugins-core/approvals/test/handle.move.test.ts",
+        "packages/plugins-core/approvals/test/handle.redo.test.ts",
+        "packages/plugins-core/approvals/test/handle.stop.test.ts",
+        "packages/plugins-core/approvals/test/options.test.ts",
+        "packages/plugins-core/approvals/test/recommend.test.ts",
+        "packages/plugins-core/approvals/test/store.batch.test.ts",
+        "packages/plugins-core/approvals/test/store.log.test.ts",
+        "packages/plugins-core/approvals/test/store.remind.test.ts",
+        "packages/plugins-core/approvals/test/store.undo.test.ts",
+        "packages/plugins-core/approvals/test/technical.test.ts",
+        "packages/plugins-core/approvals/test/templates.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/evidence.test.ts",
+        "packages/plugins-core/verifiers/comparators/test/fixtures.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence-compare.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.evidence.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/pipeline.misjudge.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/runtime.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "packages/protocol/test/example-design-qa.test.ts",
+        "packages/protocol/test/pipeline-graph.test.ts",
+        "packages/protocol/test/pipeline-nodes.test.ts",
+        "packages/protocol/test/pipeline-role.test.ts",
+        "packages/protocol/test/run-mode.agent.test.ts",
+        "packages/sdk/test/skill-md.test.ts",
+        "packages/sdk/test/templates.build.test.ts",
+        "packages/sdk/test/templates.substitute.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2237,7 +3001,18 @@
           "at": "packages/plugins-core/mcp-host/src/server.ts:312"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/install.app-wiring.test.tsx",
+        "apps/web/test/install.chat.test.tsx",
+        "apps/web/test/install.manager.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.install.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/installer/test/structure.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/mcp-host/test/install-tools.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2259,7 +3034,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/installer/test/adapters-dev.test.ts",
+        "packages/plugins-core/installer/test/adapters-ext.test.ts",
+        "packages/plugins-core/installer/test/adapters-pkg.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2336,7 +3115,25 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/install.app-wiring.test.tsx",
+        "apps/web/test/install.chat.test.tsx",
+        "apps/web/test/install.resolve-fail.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.install.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/installer/test/resolve.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/mcp-host/test/install-tools.test.ts",
+        "packages/plugins-core/tool-finder/test/need.trigger.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2358,7 +3155,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/install.area.test.tsx",
+        "apps/web/test/install.card.test.tsx",
+        "packages/plugins-core/installer/test/license.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2380,7 +3181,7 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": ["packages/plugins-core/installer/test/execute.test.ts"],
       "status": "정상"
     },
     {
@@ -2411,7 +3212,12 @@
           "at": "packages/kernel/src/api/install-routes.ts:170"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/agent-builder/test/inventory.tools.test.ts",
+        "packages/plugins-core/installer/test/inventory.test.ts",
+        "packages/plugins-core/installer/test/registry.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2496,7 +3302,27 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/install.chat.test.tsx",
+        "apps/web/test/install.manager.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "packages/kernel/test/api.agents-save.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.install.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/installer/test/cli.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/mcp-host/test/install-tools.test.ts",
+        "tests/epic4-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2539,7 +3365,33 @@
           "at": "packages/plugins-core/tool-finder/src/settings.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.tools.test.tsx",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.main.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.settings.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/tool-finder/test/need.schema.test.ts",
+        "packages/plugins-core/tool-finder/test/need.trigger.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select-author.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select-main.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/ladder.l4-select.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2561,7 +3413,15 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/engines/openai-compat/test/providers.test.ts",
+        "packages/plugins-core/tool-finder/test/candidate.schema.test.ts",
+        "packages/plugins-core/tool-finder/test/finder.search.test.ts",
+        "packages/plugins-core/tool-finder/test/pricing.test.ts",
+        "packages/plugins-core/tool-finder/test/providers.test.ts",
+        "packages/plugins-core/tool-finder/test/sanitize.test.ts",
+        "packages/plugins-core/verifiers/judge/test/sanitize.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2596,7 +3456,14 @@
           "at": "packages/kernel/src/api/tool-routes.ts:34"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/install.app-wiring.test.tsx",
+        "apps/web/test/toolpicker.card.test.tsx",
+        "packages/plugins-core/approvals/test/recommend.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/tool-finder/test/flow.test.ts",
+        "packages/plugins-core/tool-finder/test/recommend.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2618,7 +3485,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/toolpicker.card.test.tsx",
+        "packages/plugins-core/tool-finder/test/e2e.test.ts",
+        "packages/plugins-core/tool-finder/test/flow.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2653,7 +3524,37 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.cache.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.engines.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.filter.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.health.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.plugins.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.relevance.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.skills.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.tools.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.wire-login.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.workspace.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2675,7 +3576,18 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.chat.fill.test.tsx",
+        "apps/web/test/builder.chat.ime.test.tsx",
+        "apps/web/test/builder.chat.mic.test.tsx",
+        "apps/web/test/builder.chat.start.test.tsx",
+        "apps/web/test/builder.chat.tabs.test.tsx",
+        "apps/web/test/builder.start.test.tsx",
+        "apps/web/test/composer.ime.test.tsx",
+        "packages/plugins/stt-browser/test/stt-browser.test.ts",
+        "packages/protocol/test/stt-choice.test.ts",
+        "packages/protocol/test/stt-interface.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2710,7 +3622,24 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.draft.display.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.assets.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.critic.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.engines.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.parse.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.questions.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.session.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.settings.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.structure.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/protocol/test/agent-draft.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2737,7 +3666,11 @@
           "at": "packages/kernel/src/settings/registry.ts:411"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.draft.display.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "packages/kernel/test/settings.json-schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2759,7 +3692,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.draft.edit.test.tsx",
+        "packages/plugins-core/agent-builder/test/designer.patch.test.ts",
+        "packages/plugins-core/agent-builder/test/drafts.store.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2849,7 +3786,37 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/builder.draft.save.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/install.chat.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.agents-save.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.install.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/contract.extract.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.e2e.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.session.test.ts",
+        "packages/plugins-core/agent-builder/test/drafts.store.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.route.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/mcp-host/test/no-save-tool.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -2884,7 +3851,26 @@
           "at": "packages/kernel/src/api/server.ts:209"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/builder.draft.e2e.test.tsx",
+        "apps/web/test/builder.draft.voice.e2e.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/plugins-core/agent-builder/test/api-agents.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.e2e.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.fabrication.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.fixtures.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.agents.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.route.test.ts",
+        "packages/plugins-core/agent-builder/test/registry.hot-save.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3182,7 +4168,42 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.plugins.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.form.widgets.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.approval.test.tsx",
+        "apps/web/test/settings.screen.checklist.test.tsx",
+        "apps/web/test/settings.screen.data.test.tsx",
+        "apps/web/test/settings.screen.general.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.project.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.tools.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "apps/web/test/settings.screen.voice.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/main-ai.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.plugins.test.ts",
+        "packages/kernel/test/settings.registry.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3324,7 +4345,38 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/install.manager.test.tsx",
+        "apps/web/test/projects.e2e.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/shell.agent-sessions.test.tsx",
+        "apps/web/test/shell.filter.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "apps/web/test/stop.sidebar.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.sessions.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/projects.store.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.filter.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3383,7 +4435,21 @@
           "at": "packages/kernel/src/api/sessions-routes.ts:40"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/projects.flows.test.tsx",
+        "apps/web/test/projects.sidebar.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.sessions.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3432,7 +4498,15 @@
           "at": "packages/kernel/src/projects/routes.ts:109"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/projects.e2e.test.tsx",
+        "apps/web/test/projects.flows.test.tsx",
+        "apps/web/test/projects.hook.test.tsx",
+        "apps/web/test/projects.sidebar.test.tsx",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3480,7 +4554,16 @@
           "at": "packages/kernel/src/cli.ts:307"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/projects.e2e.test.tsx",
+        "apps/web/test/projects.flows.test.tsx",
+        "apps/web/test/projects.sidebar.test.tsx",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.sessions.test.ts",
+        "packages/kernel/test/projects.store.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3502,7 +4585,7 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": ["apps/web/test/projects.e2e.test.tsx"],
       "status": "정상"
     },
     {
@@ -3529,7 +4612,13 @@
           "at": "apps/web/src/main.tsx:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/actions.dev-guard.test.tsx",
+        "apps/web/test/actions.registry.test.ts",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/click-all.test.tsx",
+        "scripts/eslint/no-dead-button.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -3808,7 +4897,41 @@
           "at": "apps/web/src/builder/draft/SaveDialog.tsx:112"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/actions.registry.test.ts",
+        "apps/web/test/approvals.card.test.tsx",
+        "apps/web/test/builder.canvas.test.tsx",
+        "apps/web/test/builder.chat.start.test.tsx",
+        "apps/web/test/builder.chat.tabs.test.tsx",
+        "apps/web/test/builder.draft.display.test.tsx",
+        "apps/web/test/builder.draft.edit.test.tsx",
+        "apps/web/test/builder.draft.save.test.tsx",
+        "apps/web/test/builder.draft.voice.e2e.test.tsx",
+        "apps/web/test/builder.dryrun.test.tsx",
+        "apps/web/test/builder.inspector.test.tsx",
+        "apps/web/test/builder.layout.test.tsx",
+        "apps/web/test/builder.lego.dom.test.tsx",
+        "apps/web/test/builder.save.test.tsx",
+        "apps/web/test/builder.start.test.tsx",
+        "apps/web/test/builder.yaml.test.tsx",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/click-all.test.tsx",
+        "apps/web/test/composer.ai-hint.test.tsx",
+        "apps/web/test/composer.attach-flow.test.tsx",
+        "apps/web/test/composer.chips.test.tsx",
+        "apps/web/test/engines.builder.test.tsx",
+        "apps/web/test/engines.model-button.test.tsx",
+        "apps/web/test/engines.scan.test.tsx",
+        "apps/web/test/forge.app-wiring.test.tsx",
+        "apps/web/test/forge.cards.test.tsx",
+        "apps/web/test/install.area.test.tsx",
+        "apps/web/test/install.manager.test.tsx",
+        "apps/web/test/recovery.card.test.tsx",
+        "apps/web/test/toolpicker.card.test.tsx",
+        "packages/plugins-core/installer/test/wiring.test.ts",
+        "packages/plugins-core/mcp-host/test/install-tools.test.ts",
+        "scripts/eslint/no-dead-button.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4134,7 +5257,56 @@
           "at": "apps/web/src/composer/attach-flow.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/composer.attach-flow.test.tsx",
+        "apps/web/test/composer.attach-upload.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.approval.test.tsx",
+        "apps/web/test/settings.screen.checklist.test.tsx",
+        "apps/web/test/settings.screen.data.test.tsx",
+        "apps/web/test/settings.screen.general.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.project.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.tools.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "apps/web/test/settings.screen.voice.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/main-ai.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.registry.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/dedupe.test.ts",
+        "packages/plugins-core/attachments/test/detect.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/attachments/test/schema.test.ts",
+        "packages/plugins-core/attachments/test/session-flow.test.ts",
+        "packages/plugins-core/attachments/test/store.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4156,7 +5328,19 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/attachments/test/archive.test.ts",
+        "packages/plugins-core/attachments/test/audio.test.ts",
+        "packages/plugins-core/attachments/test/folder.test.ts",
+        "packages/plugins-core/attachments/test/hwp.test.ts",
+        "packages/plugins-core/attachments/test/image.test.ts",
+        "packages/plugins-core/attachments/test/office.test.ts",
+        "packages/plugins-core/attachments/test/pdf.test.ts",
+        "packages/plugins-core/attachments/test/queue.test.ts",
+        "packages/plugins-core/attachments/test/text.test.ts",
+        "packages/plugins-core/attachments/test/unknown.test.ts",
+        "packages/plugins-core/attachments/test/video.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4178,7 +5362,11 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/attachments/test/no-content-log.test.ts",
+        "packages/plugins-core/attachments/test/no-exec.test.ts",
+        "packages/plugins-core/attachments/test/secrets.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4213,7 +5401,25 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/engines/openai-compat/test/attachments.test.ts",
+        "packages/engines/openai-compat/test/local-attachments.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.attachments.test.ts",
+        "packages/plugins-core/attachments/test/cli-replay.test.ts",
+        "packages/plugins-core/attachments/test/delivery.test.ts",
+        "packages/plugins-core/attachments/test/engine-inputs.test.ts",
+        "packages/plugins-core/attachments/test/redeliver.test.ts",
+        "packages/plugins-core/mcp-host/test/attachments-tools.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4240,7 +5446,14 @@
           "at": "apps/web/src/composer/ChipMenu.tsx:58"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/chat.sent-message.test.tsx",
+        "apps/web/test/composer.ai-hint.test.tsx",
+        "apps/web/test/composer.chips.test.tsx",
+        "apps/web/test/composer.mobile-picker.test.tsx",
+        "apps/web/test/composer.paste-files.test.tsx",
+        "apps/web/test/composer.picker-multi.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -4267,7 +5480,16 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/fixtures.test.ts",
+        "packages/plugins-core/attachments/test/four-engines.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4302,7 +5524,29 @@
           "at": "packages/kernel/src/dispatch.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/stop.controls.test.tsx",
+        "apps/web/test/stop.sidebar.test.tsx",
+        "packages/kernel/test/dispatch.modifiers.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.sessions.test.ts",
+        "packages/kernel/test/resume.entrances.test.ts",
+        "packages/kernel/test/resume.interrupted.test.ts",
+        "packages/kernel/test/resume.pin.test.ts",
+        "packages/kernel/test/run-mode.modifiers.test.ts",
+        "packages/kernel/test/run-mode.resolve.test.ts",
+        "packages/kernel/test/run-mode.resume-wiring.test.ts",
+        "packages/kernel/test/stage-progress.routes.test.ts",
+        "packages/kernel/test/stop.kill-tree.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/kernel/test/stop.safe-point.test.ts",
+        "packages/kernel/test/stop.snapshot.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.e2e.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.stop-parallel.test.ts",
+        "packages/plugins-core/installer/test/stop-all.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4337,7 +5581,31 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/resume.project-card.test.tsx",
+        "apps/web/test/resume.project-entrances.test.tsx",
+        "apps/web/test/resume.stale-card.test.tsx",
+        "apps/web/test/resume.timeline.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/resume.check.test.ts",
+        "packages/kernel/test/resume.cleanup.test.ts",
+        "packages/kernel/test/resume.conflict.test.ts",
+        "packages/kernel/test/resume.engine.test.ts",
+        "packages/kernel/test/resume.entrances.test.ts",
+        "packages/kernel/test/resume.files.test.ts",
+        "packages/kernel/test/resume.interrupted.test.ts",
+        "packages/kernel/test/resume.list.test.ts",
+        "packages/kernel/test/resume.pin.test.ts",
+        "packages/kernel/test/resume.policy.test.ts",
+        "packages/kernel/test/run-mode.resume-wiring.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.resume-replay.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4372,7 +5640,13 @@
           "at": "packages/kernel/src/api/resume-routes.ts:24"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/resume.entrances.test.tsx",
+        "packages/kernel/test/resume.entrances.test.ts",
+        "packages/kernel/test/resume.list.test.ts",
+        "packages/kernel/test/run-mode.resume-wiring.test.ts",
+        "packages/plugins-core/agent-builder/test/e2e.pause-resume.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4399,7 +5673,15 @@
           "at": "packages/kernel/src/settings/registry.ts:716"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/composer.mode-permission.test.tsx",
+        "apps/web/test/composer.mode.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.store.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4434,7 +5716,25 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/run-mode.plan-done.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/engines/claude-code/test/run-mode.test.ts",
+        "packages/engines/codex/test/run-mode.test.ts",
+        "packages/kernel/test/api.bind.test.ts",
+        "packages/kernel/test/api.routes.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/sandbox.trust.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/mcp-host/test/current.test.ts",
+        "packages/plugins-core/mcp-host/test/propose.test.ts",
+        "packages/plugins-core/mcp-host/test/resolve.test.ts",
+        "packages/plugins-core/mcp-host/test/start-submit.test.ts",
+        "packages/plugins-core/permission-gate/test/run-mode.plan.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4456,7 +5756,7 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": ["packages/plugins-core/permission-gate/test/run-mode.normal.test.ts"],
       "status": "정상"
     },
     {
@@ -4495,7 +5795,25 @@
           "at": "apps/web/src/App.tsx:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/run-mode.auto-limits.test.tsx",
+        "apps/web/test/run-mode.auto-summary.test.tsx",
+        "apps/web/test/run-mode.notify.test.tsx",
+        "apps/web/test/run-mode.review-list.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/run-mode.limits.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/approvals/test/auto-mode.test.ts",
+        "packages/plugins-core/checklist-ledger/test/auto-approve.test.ts",
+        "packages/plugins-core/permission-gate/test/run-mode.auto-permission.test.ts",
+        "packages/plugins-core/permission-gate/test/run-mode.human-only.test.ts",
+        "tests/run-mode-auto-engines.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4534,7 +5852,27 @@
           "at": "packages/kernel/src/api/sessions-routes.ts:40"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/run-mode.badges.test.tsx",
+        "apps/web/test/run-mode.resume-flow.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/resume.entrances.test.ts",
+        "packages/kernel/test/resume.list.test.ts",
+        "packages/kernel/test/run-mode.modifiers.test.ts",
+        "packages/kernel/test/run-mode.resolve.test.ts",
+        "packages/kernel/test/run-mode.resume-wiring.test.ts",
+        "packages/kernel/test/run-mode.resume.test.ts",
+        "packages/kernel/test/run-mode.transition.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/protocol/test/run-mode.agent.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4561,7 +5899,20 @@
           "at": "packages/kernel/src/hooks.ts:18"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.complete.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.migrate.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.schema.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.state.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.stop.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4588,7 +5939,19 @@
           "at": "packages/kernel/src/hooks.ts:15"
         }
       ],
-      "tests": [],
+      "tests": [
+        "packages/kernel/test/agent-loop.test.ts",
+        "packages/kernel/test/hooks.blocking.test.ts",
+        "packages/kernel/test/hooks.log.test.ts",
+        "packages/kernel/test/hooks.names.test.ts",
+        "packages/kernel/test/hooks.notify.test.ts",
+        "packages/kernel/test/hooks.timeout.test.ts",
+        "packages/kernel/test/workspaces.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.enter.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.lock.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.scope.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.skeleton.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4615,7 +5978,17 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.engines.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.handoff.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.slice.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4637,7 +6010,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/checklist-ledger/test/stages.gate-limit.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.recheck.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.rework-scope.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.rework.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4659,7 +6037,12 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/agent-builder/test/stages.fanout.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.loop.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.router.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.subagent.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4708,7 +6091,20 @@
           "at": "packages/kernel/src/projects/routes.ts:109"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.dryrun.stages.test.tsx",
+        "apps/web/test/stages.session-row.test.tsx",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/stage-progress.routes.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.resume.e2e.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.auto-summary.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.kernel-parity.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.regress.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.render.test.ts",
+        "packages/plugins-core/checklist-ledger/test/stages.stall.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4730,7 +6126,10 @@
         "settings": []
       },
       "code": [],
-      "tests": [],
+      "tests": [
+        "packages/plugins-core/agent-builder/test/stages.e2e.test.ts",
+        "packages/plugins-core/agent-builder/test/stages.situations.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4769,7 +6168,18 @@
           "at": "apps/web/src/App.tsx:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/engines.scan.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.engines.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/engine-scanner/test/scanner.no-model-call.test.ts",
+        "packages/plugins-core/engine-scanner/test/scanner.progress.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -4808,7 +6218,19 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/engines.builder.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/engines/codex/test/models.test.ts",
+        "packages/kernel/test/api.models.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/models.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/protocol/test/models.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5155,7 +6577,55 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/app.dispatch.test.tsx",
+        "apps/web/test/engines.builder.test.tsx",
+        "apps/web/test/engines.model-button.test.tsx",
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.approval.test.tsx",
+        "apps/web/test/settings.screen.checklist.test.tsx",
+        "apps/web/test/settings.screen.data.test.tsx",
+        "apps/web/test/settings.screen.general.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.project.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.tools.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "apps/web/test/settings.screen.voice.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "e2e/plus-folder-design-qa.test.ts",
+        "packages/kernel/test/api.models.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/dispatch.session.test.ts",
+        "packages/kernel/test/main-ai.test.ts",
+        "packages/kernel/test/projects.routes.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.registry.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/kernel/test/stop.kinds.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.main.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/attachments/test/routes.test.ts",
+        "packages/plugins-core/forge/test/forge.interview.test.ts",
+        "packages/plugins-core/tool-finder/test/assist.main.test.ts",
+        "packages/plugins-core/verifiers/judge/test/select-main.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.schema.test.ts",
+        "tests/epic4-gate.test.ts",
+        "tests/epic5-gate.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5194,7 +6664,20 @@
           "at": "packages/kernel/src/settings/registry.ts:375"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/engines.builder.test.tsx",
+        "apps/web/test/settings.engines.auto.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.models.test.ts",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/main-ai.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/designer.main.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/agent-builder/test/runner.engine-main.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5367,7 +6850,43 @@
           "at": "packages/plugins-core/installer/src/cli.ts:1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/notices.toast.test.tsx",
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.about.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/settings.screen.approval.test.tsx",
+        "apps/web/test/settings.screen.attachments.test.tsx",
+        "apps/web/test/settings.screen.checklist.test.tsx",
+        "apps/web/test/settings.screen.data.test.tsx",
+        "apps/web/test/settings.screen.general.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.mode.test.tsx",
+        "apps/web/test/settings.screen.plugins.test.tsx",
+        "apps/web/test/settings.screen.project.test.tsx",
+        "apps/web/test/settings.screen.scope.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.tools.test.tsx",
+        "apps/web/test/settings.screen.voice.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/cli.judge-wiring.test.ts",
+        "packages/kernel/test/main-ai.test.ts",
+        "packages/kernel/test/projects.settings-io.test.ts",
+        "packages/kernel/test/run-mode.schema.test.ts",
+        "packages/kernel/test/settings.data-cleanup.test.ts",
+        "packages/kernel/test/settings.diagnostics.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.runtime.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts",
+        "packages/plugins-core/attachments/test/limits.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/runtime.test.ts",
+        "packages/plugins-core/verifiers/ladder/test/settings.migrate.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5398,7 +6917,21 @@
           "at": "packages/kernel/src/settings/registry.ts:317"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.advanced.test.tsx",
+        "apps/web/test/settings.screen.general.test.tsx",
+        "apps/web/test/settings.screen.judge.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/kernel/test/settings.registry.test.ts",
+        "packages/kernel/test/settings.store.test.ts",
+        "packages/kernel/test/settings.transfer.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5429,7 +6962,12 @@
           "at": "packages/kernel/src/settings/registry.ts:384"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "packages/kernel/test/main-ai.test.ts",
+        "tests/settings-coverage.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5466,7 +7004,18 @@
           "at": "apps/web/src/panels/Approvals/ApprovalsArea.tsx:136"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/approvals.alerts.test.tsx",
+        "apps/web/test/approvals.card.test.tsx",
+        "apps/web/test/approvals.chat.test.tsx",
+        "apps/web/test/approvals.panel.test.tsx",
+        "apps/web/test/approvals.viewport.test.tsx",
+        "apps/web/test/install.area.test.tsx",
+        "apps/web/test/install.chat.test.tsx",
+        "apps/web/test/notices.toast.test.tsx",
+        "apps/web/test/run-mode.notify.test.tsx",
+        "apps/web/test/toolpicker.card.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -5541,7 +7090,7 @@
           "at": "apps/web/src/builder/StartChoice.tsx:30"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/builder.drawer.test.tsx", "apps/web/test/engines.builder.test.tsx"],
       "status": "정상"
     },
     {
@@ -5574,7 +7123,14 @@
           "at": "apps/web/src/chat/BlockView.tsx:146"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/approvals.chat.test.tsx",
+        "apps/web/test/chat.render.test.tsx",
+        "apps/web/test/chat.toolcard.test.tsx",
+        "apps/web/test/forge.cards.test.tsx",
+        "apps/web/test/panels.diff.test.tsx",
+        "apps/web/test/resume.timeline.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -5666,7 +7222,11 @@
           "at": "apps/web/src/composer/StopButton.tsx:66"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/builder.draft.e2e.test.tsx",
+        "apps/web/test/builder.draft.save.test.tsx",
+        "apps/web/test/composer.slash.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -5736,7 +7296,11 @@
           "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:689"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/projects.sidebar.test.tsx",
+        "apps/web/test/run-mode.badges.test.tsx",
+        "apps/web/test/stages.session-row.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -5765,7 +7329,7 @@
           "at": "apps/web/src/actions/DevActionGuard.tsx:54"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/actions.dev-guard.test.tsx"],
       "status": "정상"
     },
     {
@@ -5843,7 +7407,15 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -5924,7 +7496,7 @@
           "at": "apps/web/src/builder/inspector/YamlTab.tsx:58"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/builder.dryrun.stages.test.tsx"],
       "status": "정상"
     },
     {
@@ -5998,7 +7570,7 @@
           "at": "apps/web/src/engines/ModelButton.tsx:153"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/engines.model-button.test.tsx"],
       "status": "정상"
     },
     {
@@ -6065,7 +7637,16 @@
           "at": "packages/kernel/src/settings/registry.ts:364"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/actions.registry.test.ts",
+        "apps/web/test/click-all.self.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.screen.ai.test.tsx",
+        "apps/web/test/shell.sidebar.test.tsx",
+        "packages/kernel/test/api.settings.test.ts",
+        "packages/kernel/test/settings.json-schema.test.ts",
+        "packages/plugins-core/agent-builder/test/inventory.schema.test.ts"
+      ],
       "status": "정상"
     },
     {
@@ -6094,7 +7675,7 @@
           "at": "apps/web/src/shell/RightPanel.tsx:52"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/panels.checklist.tree.test.tsx", "apps/web/test/panels.diff.test.tsx"],
       "status": "정상"
     },
     {
@@ -6176,7 +7757,7 @@
           "at": "apps/web/src/shell/projects/ProjectSettings.tsx:147"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/settings.screen.scope.test.tsx"],
       "status": "정상"
     },
     {
@@ -6269,7 +7850,11 @@
           "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:498"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/projects.sidebar.test.tsx",
+        "apps/web/test/run-mode.badges.test.tsx",
+        "apps/web/test/stages.session-row.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -6310,7 +7895,14 @@
           "at": "apps/web/src/recovery/ResumeFlow.tsx:124"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/resume.entrances.test.tsx",
+        "apps/web/test/resume.project-card.test.tsx",
+        "apps/web/test/resume.project-entrances.test.tsx",
+        "apps/web/test/resume.stale-card.test.tsx",
+        "apps/web/test/run-mode.resume-flow.test.tsx",
+        "apps/web/test/stages.session-row.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -6373,7 +7965,12 @@
           "at": "apps/web/src/run-mode/ReviewListSection.tsx:74"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/run-mode.auto-limits.test.tsx",
+        "apps/web/test/run-mode.auto-summary.test.tsx",
+        "apps/web/test/run-mode.plan-done.test.tsx",
+        "apps/web/test/run-mode.review-list.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -6406,7 +8003,7 @@
           "at": "apps/web/src/engines/ScanBubble.tsx:56"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/engines.scan.test.tsx"],
       "status": "정상"
     },
     {
@@ -6565,7 +8162,18 @@
           "at": "apps/web/src/settings/sections/AboutSection.tsx:48"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/settings.form.coverage.test.tsx",
+        "apps/web/test/settings.form.custom.test.tsx",
+        "apps/web/test/settings.form.plugins.test.tsx",
+        "apps/web/test/settings.form.save.test.tsx",
+        "apps/web/test/settings.screen.about.test.tsx",
+        "apps/web/test/settings.screen.approval.test.tsx",
+        "apps/web/test/settings.screen.data.test.tsx",
+        "apps/web/test/settings.screen.project.test.tsx",
+        "apps/web/test/settings.screen.search.test.tsx",
+        "apps/web/test/settings.screen.transfer.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -6602,7 +8210,16 @@
           "at": "apps/web/src/shell/StopAllButton.tsx:14"
         }
       ],
-      "tests": [],
+      "tests": [
+        "apps/web/test/approvals.panel.test.tsx",
+        "apps/web/test/approvals.viewport.test.tsx",
+        "apps/web/test/projects.hook.test.tsx",
+        "apps/web/test/shell.layout.test.tsx",
+        "apps/web/test/shell.tabs.test.tsx",
+        "apps/web/test/shell.viewport.test.tsx",
+        "apps/web/test/stop.controls.test.tsx",
+        "apps/web/test/toolpicker.card.test.tsx"
+      ],
       "status": "정상"
     },
     {
@@ -6639,7 +8256,7 @@
           "at": "apps/web/src/composer/SubagentConfirm.tsx:59"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/app.dispatch.test.tsx", "apps/web/test/click-all.self.test.tsx"],
       "status": "정상"
     },
     {
@@ -6668,7 +8285,7 @@
           "at": "apps/web/src/panels/TerminalPanel.tsx:115"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/panels.terminal.test.tsx"],
       "status": "정상"
     },
     {
@@ -6697,7 +8314,7 @@
           "at": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx:84"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/toolpicker.card.test.tsx"],
       "status": "정상"
     },
     {
@@ -6726,7 +8343,7 @@
           "at": "apps/web/src/design/ThemeToggle.tsx:12"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/theme.test.tsx"],
       "status": "정상"
     },
     {
@@ -6808,7 +8425,8 @@
     "hooks": 22,
     "settings": 257,
     "noEntry": 42,
-    "unlinkedEntries": 0
+    "unlinkedEntries": 0,
+    "testLinks": 1516
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
