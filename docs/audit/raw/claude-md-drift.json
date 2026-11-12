@@ -1,0 +1,41 @@
+{
+  "missingPaths": [],
+  "unknownScripts": [],
+  "notMentioned": [
+    "scripts/ticket-gate.mjs (Stop 훅 작업 게이트)",
+    "scripts/dev/env.sh (리눅스 Node 22 + pnpm 환경)",
+    "scripts/dev/tick.sh·check-and-tick.sh (체크 도우미)",
+    "packages/kernel/src/settings/registry.ts (새 설정 키 등록 필수)",
+    "pnpm lint (eslint + prettier)"
+  ],
+  "checked": [
+    {
+      "path": "audit/2026-11",
+      "exists": false
+    },
+    {
+      "path": "scripts/audit/",
+      "exists": true
+    },
+    {
+      "path": "docs/audit/",
+      "exists": true
+    },
+    {
+      "path": "docs/audit/",
+      "exists": true
+    },
+    {
+      "path": "scripts/audit/",
+      "exists": true
+    },
+    {
+      "path": "docs/audit/approved.json",
+      "exists": false
+    },
+    {
+      "path": "docs/audit/progress.md",
+      "exists": true
+    }
+  ]
+}
