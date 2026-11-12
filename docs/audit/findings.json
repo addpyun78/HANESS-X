@@ -735,6 +735,60 @@
         "source": "C1.7"
       },
       "id": "C1-010"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "unused",
+      "severity": "low",
+      "title": "안 쓰는 의존성 1개: @harness-x/mcp-host의 package.json dependencies에 @harness-x/protocol이 있지만 코드 어디서도 불러오지 않음",
+      "evidence": [
+        "docs/audit/raw/knip.json dependencies",
+        "docs/audit/delete-candidates.md",
+        "packages/plugins-core/mcp-host/package.json:24"
+      ],
+      "proposal": "G.4에서 pnpm remove(검증 묶음 통과 시)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C4.10",
+        "kind": "dependency",
+        "fourEvidence": true
+      },
+      "id": "C4-001"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "unused",
+      "severity": "low",
+      "title": "안 쓰는 export 145개(4근거 모두 해당, 대부분 apps/web·플러그인 안의 타입·상수 — 패키지 공개 부품은 제외)",
+      "evidence": ["docs/audit/raw/delete-candidates.json", "docs/audit/delete-candidates.md"],
+      "proposal": "G.5에서 export 표시만 떼고(파일 안에서 쓰면 그대로), 파일 안에서도 안 쓰면 선언을 지움 → 빌드·린트·테스트",
+      "risk": "low",
+      "effort": "M",
+      "meta": {
+        "source": "C4.10",
+        "kind": "export",
+        "fourEvidence": true
+      },
+      "id": "C4-002"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "unused",
+      "severity": "low",
+      "title": "안 쓰는 파일 0개(한 번도 실행 안 된 파일 9개는 실행 입구·SDK 템플릿이라 지우면 안 됨), 확인 필요 453개는 남김",
+      "evidence": ["docs/audit/raw/never-run-files.json", "docs/audit/raw/knip.json files"],
+      "proposal": "조치 없음(기록만)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C4.10",
+        "noAction": true
+      },
+      "id": "C4-003"
     }
   ]
 }
