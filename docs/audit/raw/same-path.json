@@ -1,0 +1,31 @@
+{
+  "area": "경로 정규화",
+  "implementations": 4,
+  "files": 3,
+  "list": [
+    {
+      "name": "toPosixForm",
+      "file": "packages/kernel/src/path-normalize.ts",
+      "line": 28,
+      "exported": true
+    },
+    {
+      "name": "normalizePath",
+      "file": "packages/kernel/src/path-normalize.ts",
+      "line": 67,
+      "exported": true
+    },
+    {
+      "name": "toPosix",
+      "file": "packages/kernel/src/pause-snapshot.ts",
+      "line": 50,
+      "exported": false
+    },
+    {
+      "name": "normPath",
+      "file": "packages/plugins-core/checklist-ledger/src/stages/scope.ts",
+      "line": 39,
+      "exported": true
+    }
+  ]
+}
