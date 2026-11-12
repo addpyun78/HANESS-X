@@ -292,6 +292,53 @@
         "noAction": true
       },
       "id": "C1-007"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "security",
+      "severity": "critical",
+      "title": "웹 화면 코드 편집기(monaco-editor)가 쓰는 dompurify 3.4.15에 보안 취약점(치명 1·높음 1·낮음 3, SAFE_FOR_TEMPLATES 우회 등)",
+      "evidence": [
+        "docs/audit/raw/pnpm-audit.json",
+        "경로: apps__web>monaco-editor>dompurify 3.4.15",
+        "해결 버전 >=3.4.17 (같은 큰 버전 3)"
+      ],
+      "proposal": "pnpm overrides로 dompurify를 3.4.17 이상(같은 큰 버전)으로 올림 → 빌드·테스트·화면 검사",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C1.20",
+        "package": "dompurify",
+        "from": "3.4.15",
+        "to": ">=3.4.17",
+        "major": false,
+        "prod": true
+      },
+      "id": "C1-008"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "security",
+      "severity": "high",
+      "title": "개발용 테스트 도구 묶음(vitest 3.2.7·@vitest/mocker·tinypool 1.1.1·glob 10·minimatch 9/10)에 보안 취약점(치명 2·보통 5) — 고치려면 큰 버전 변경 필요(vitest 4, tinypool 2, glob 14, minimatch 11)",
+      "evidence": [
+        "docs/audit/raw/pnpm-audit.json",
+        ".>vitest>tinypool 1.1.1 (>=2.1.2 필요)",
+        ".>vitest>@vitest/mocker 3.2.7 (>=4.1.12 필요)",
+        ".>@vitest/coverage-v8>test-exclude>glob 10.5.0",
+        ".>typescript-eslint>…>minimatch 9.0.9·10.2.6"
+      ],
+      "proposal": "개발 기기에서만 쓰는 도구라 사용자 화면에는 영향 없음. vitest 4로 큰 버전 올림은 테스트 671개 영향 → 별도 티켓으로",
+      "risk": "high",
+      "effort": "L",
+      "meta": {
+        "source": "C1.20",
+        "major": true,
+        "prod": false
+      },
+      "id": "C1-009"
     }
   ]
 }

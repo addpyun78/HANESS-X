@@ -1,0 +1,302 @@
+{
+  "advisories": {
+    "1193683": {
+      "findings": [
+        {
+          "version": "3.2.7",
+          "paths": [
+            ".>vitest",
+            ".>@vitest/coverage-v8>vitest"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1193683,
+      "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+      "module_name": "vitest",
+      "vulnerable_versions": ">=2.1.0 <4.1.11",
+      "patched_versions": ">=4.1.11",
+      "severity": "moderate",
+      "cwe": "CWE-22",
+      "github_advisory_id": "GHSA-82fw-gwwq-j7x9",
+      "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9"
+    },
+    "1193684": {
+      "findings": [
+        {
+          "version": "3.2.7",
+          "paths": [
+            ".>vitest>@vitest/mocker",
+            ".>@vitest/coverage-v8>vitest>@vitest/mocker"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1193684,
+      "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+      "module_name": "@vitest/mocker",
+      "vulnerable_versions": ">=2.1.0 <4.1.11",
+      "patched_versions": ">=4.1.11",
+      "severity": "moderate",
+      "cwe": "CWE-22",
+      "github_advisory_id": "GHSA-82fw-gwwq-j7x9",
+      "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9"
+    },
+    "1240621": {
+      "findings": [
+        {
+          "version": "3.4.15",
+          "paths": [
+            "apps__web>monaco-editor>dompurify"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1240621,
+      "title": "DOMPurify: IN_PLACE: node-removing afterSanitize hook leaves detached subtree event handlers armed, causing DOM XSS",
+      "module_name": "dompurify",
+      "vulnerable_versions": ">=3.4.13 <=3.4.15",
+      "patched_versions": ">=3.4.16",
+      "severity": "low",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-p98j-92pf-mc4p",
+      "url": "https://github.com/advisories/GHSA-p98j-92pf-mc4p"
+    },
+    "1241204": {
+      "findings": [
+        {
+          "version": "3.4.15",
+          "paths": [
+            "apps__web>monaco-editor>dompurify"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1241204,
+      "title": "DOMPurify: IN_PLACE returns a force-removed rawtext root whose text carries attacker markup — pure HTML reparse executes",
+      "module_name": "dompurify",
+      "vulnerable_versions": "<=3.4.15",
+      "patched_versions": ">=3.4.16",
+      "severity": "low",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-6688-9rhm-gjv2",
+      "url": "https://github.com/advisories/GHSA-6688-9rhm-gjv2"
+    },
+    "1241260": {
+      "findings": [
+        {
+          "version": "1.1.1",
+          "paths": [
+            ".>vitest>tinypool",
+            ".>@vitest/coverage-v8>vitest>tinypool"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1241260,
+      "title": "Tinypool: Prototype Pollution gadget in worker options leads to Remote Code Execution",
+      "module_name": "tinypool",
+      "vulnerable_versions": "<=2.1.0",
+      "patched_versions": ">=2.1.1",
+      "severity": "critical",
+      "cwe": "CWE-1321",
+      "github_advisory_id": "GHSA-5gmw-xhrv-c9v3",
+      "url": "https://github.com/advisories/GHSA-5gmw-xhrv-c9v3"
+    },
+    "1241261": {
+      "findings": [
+        {
+          "version": "1.1.1",
+          "paths": [
+            ".>vitest>tinypool",
+            ".>@vitest/coverage-v8>vitest>tinypool"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1241261,
+      "title": "Tinypool: Prototype Pollution Gadget to RCE in run() options",
+      "module_name": "tinypool",
+      "vulnerable_versions": "<2.1.2",
+      "patched_versions": ">=2.1.2",
+      "severity": "critical",
+      "cwe": "CWE-94, CWE-1321",
+      "github_advisory_id": "GHSA-85c8-ppgw-ccpr",
+      "url": "https://github.com/advisories/GHSA-85c8-ppgw-ccpr"
+    },
+    "1242767": {
+      "findings": [
+        {
+          "version": "3.2.7",
+          "paths": [
+            ".>vitest>@vitest/mocker",
+            ".>@vitest/coverage-v8>vitest>@vitest/mocker"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1242767,
+      "title": "Vitest: Code injection via unauthenticated manual mock registration",
+      "module_name": "@vitest/mocker",
+      "vulnerable_versions": ">=2.1.0-beta.7 <4.1.12",
+      "patched_versions": ">=4.1.12",
+      "severity": "moderate",
+      "cwe": "CWE-94, CWE-116, CWE-306",
+      "github_advisory_id": "GHSA-qxg6-89mg-rqv8",
+      "url": "https://github.com/advisories/GHSA-qxg6-89mg-rqv8"
+    },
+    "1242880": {
+      "findings": [
+        {
+          "version": "3.4.15",
+          "paths": [
+            "apps__web>monaco-editor>dompurify"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1242880,
+      "title": "DOMPurify SAFE_FOR_TEMPLATES bypass: split template expressions survive in attached shadow root content on DOM output modes",
+      "module_name": "dompurify",
+      "vulnerable_versions": ">=3.4.4 <=3.4.16",
+      "patched_versions": ">=3.4.17",
+      "severity": "critical",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-cg2g-xh64-v4q7",
+      "url": "https://github.com/advisories/GHSA-cg2g-xh64-v4q7"
+    },
+    "1242881": {
+      "findings": [
+        {
+          "version": "3.4.15",
+          "paths": [
+            "apps__web>monaco-editor>dompurify"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1242881,
+      "title": "DOMPurify IN_PLACE: hook that removes a parent or sibling leaves the detached subtree's event handlers armed (incomplete fix for GHSA-p98j-92pf-mc4p)",
+      "module_name": "dompurify",
+      "vulnerable_versions": "<=3.4.16",
+      "patched_versions": ">=3.4.17",
+      "severity": "high",
+      "cwe": "CWE-79, CWE-693",
+      "github_advisory_id": "GHSA-mrv2-3pqr-j5jr",
+      "url": "https://github.com/advisories/GHSA-mrv2-3pqr-j5jr"
+    },
+    "1242882": {
+      "findings": [
+        {
+          "version": "3.4.15",
+          "paths": [
+            "apps__web>monaco-editor>dompurify"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1242882,
+      "title": "DOMPurify: SMIL attributeName=href guard is skipped when PARSER_MEDIA_TYPE is application/xhtml+xml",
+      "module_name": "dompurify",
+      "vulnerable_versions": "<=3.4.16",
+      "patched_versions": ">=3.4.17",
+      "severity": "low",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-c6gr-qvv4-5v3f",
+      "url": "https://github.com/advisories/GHSA-c6gr-qvv4-5v3f"
+    },
+    "1244013": {
+      "findings": [
+        {
+          "version": "10.5.0",
+          "paths": [
+            ".>@vitest/coverage-v8>test-exclude>glob"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1244013,
+      "title": "Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal",
+      "module_name": "glob",
+      "vulnerable_versions": ">=9.0.0 <=14.0.1",
+      "patched_versions": ">=14.0.2",
+      "severity": "moderate",
+      "cwe": "CWE-400",
+      "github_advisory_id": "GHSA-3g3m-2fjr-6pw4",
+      "url": "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4"
+    },
+    "1244623": {
+      "findings": [
+        {
+          "version": "10.2.6",
+          "paths": [
+            ".>typescript-eslint>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/eslint-plugin>@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch",
+            ".>typescript-eslint>@typescript-eslint/eslint-plugin>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch",
+            ".>@vitest/coverage-v8>test-exclude>minimatch"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "version": "9.0.9",
+          "paths": [
+            ".>@vitest/coverage-v8>test-exclude>glob>minimatch"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1244623,
+      "title": "minimatch has potential denial of service via globparts amplification",
+      "module_name": "minimatch",
+      "vulnerable_versions": ">=7.0.0 <11.0.1",
+      "patched_versions": ">=11.0.1",
+      "severity": "moderate",
+      "cwe": "CWE-405",
+      "github_advisory_id": "GHSA-g3hv-75wg-m249",
+      "url": "https://github.com/advisories/GHSA-g3hv-75wg-m249"
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 3,
+      "moderate": 5,
+      "high": 1,
+      "critical": 3
+    },
+    "dependencies": 188,
+    "devDependencies": 353,
+    "optionalDependencies": 98,
+    "totalDependencies": 574
+  }
+}
