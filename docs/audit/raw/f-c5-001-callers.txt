@@ -1,0 +1,10 @@
+packages/plugins-core/agent-builder/src/designer/plain.ts:9:export const isPlain = (text: string, label = false) => checkPlainKorean(text, { label }).ok;
+packages/plugins-core/agent-builder/src/designer/plain.ts:13:  if (isPlain(text, label)) return text;
+packages/plugins-core/agent-builder/src/designer/plain.ts:15:  return isPlain(r, label) ? r : undefined;
+packages/plugins-core/approvals/src/plain-korean.ts:247: * 쉬운 말이면 true — 화면에 내보낼지 고를 때 쓰는 대표 함수(T-102 C5-001: 플러그인마다 따로 두던 isPlain을 여기로 모음)
+packages/plugins-core/tool-finder/src/reasons.ts:34:export function isPlain(s: string): boolean {
+packages/plugins-core/tool-finder/src/reasons.ts:74:  const pros = c.pros.filter(isPlain).slice(0, 2);
+packages/plugins-core/tool-finder/src/reasons.ts:76:  let replaced = pros.length < Math.min(2, c.pros.length) || (c.cons.length > 0 && !c.cons.some(isPlain));
+packages/plugins-core/tool-finder/src/reasons.ts:78:  if (!reason || !isPlain(reason)) {
+packages/plugins-core/tool-finder/src/reasons.ts:82:  let con = c.cons.find(isPlain) ?? conPart(c);
+packages/plugins-core/tool-finder/src/reasons.ts:83:  if (!isPlain(con)) {
