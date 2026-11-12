@@ -1,0 +1,381 @@
+{
+  "plugins": [
+    {
+      "plugin": "hello",
+      "manifest": "examples/plugins/hello/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "command:/hello"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "예시 플러그인"
+    },
+    {
+      "plugin": "engine-acp-generic",
+      "manifest": "packages/engines/acp-generic/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "engine:acp-generic"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "엔진 어댑터: 커널 엔진 레지스트리가 직접 사용"
+    },
+    {
+      "plugin": "engine-antigravity",
+      "manifest": "packages/engines/antigravity/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "engine:antigravity"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "엔진 어댑터: 커널 엔진 레지스트리가 직접 사용"
+    },
+    {
+      "plugin": "engine-claude-code",
+      "manifest": "packages/engines/claude-code/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "engine:claude-code"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "엔진 어댑터: 커널 엔진 레지스트리가 직접 사용"
+    },
+    {
+      "plugin": "engine-codex",
+      "manifest": "packages/engines/codex/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "engine:codex"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "엔진 어댑터: 커널 엔진 레지스트리가 직접 사용"
+    },
+    {
+      "plugin": "engine-openai-compat",
+      "manifest": "packages/engines/openai-compat/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "engine:openai-compat",
+        "engine:openai-compat:ollama",
+        "engine:anthropic-api",
+        "engine:gemini-api",
+        "engine:deepseek-api"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "엔진 어댑터: 커널 엔진 레지스트리가 직접 사용"
+    },
+    {
+      "plugin": "agent-builder",
+      "manifest": "packages/plugins-core/agent-builder/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "panel:agent-builder"
+      ],
+      "registeredSlots": [
+        "panel"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "approvals",
+      "manifest": "packages/plugins-core/approvals/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:approvals"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "attachments",
+      "manifest": "packages/plugins-core/attachments/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:attachments.list",
+        "tool:attachments.read"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "checklist-ledger",
+      "manifest": "packages/plugins-core/checklist-ledger/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:checklist-ledger"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "engine-scanner",
+      "manifest": "packages/plugins-core/engine-scanner/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:engine-scan"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "forge",
+      "manifest": "packages/plugins-core/forge/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "pipeline:forge"
+      ],
+      "registeredSlots": [
+        "pipeline"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "installer",
+      "manifest": "packages/plugins-core/installer/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:install-search",
+        "tool:install-resolve",
+        "tool:install-plan"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "mcp-host",
+      "manifest": "packages/plugins-core/mcp-host/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:mcp-host"
+      ],
+      "registeredSlots": [
+        "tool"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "permission-gate",
+      "manifest": "packages/plugins-core/permission-gate/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "hook:tool.before"
+      ],
+      "registeredSlots": [
+        "hook"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "tool-finder",
+      "manifest": "packages/plugins-core/tool-finder/harness-plugin.json",
+      "loaded": true,
+      "state": "active",
+      "declared": [
+        "tool:tools-request",
+        "tool:search.package-repos",
+        "tool:search.user-ai-web",
+        "tool:search.searxng",
+        "tool:search.brave",
+        "command:/tools"
+      ],
+      "registeredSlots": [
+        "tool",
+        "command"
+      ],
+      "missingSlots": [],
+      "notLoadedReason": null
+    },
+    {
+      "plugin": "sample-comparator",
+      "manifest": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "comparator:case-insensitive"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "판정 라이브러리: 커널·checklist-ledger가 직접 사용"
+    },
+    {
+      "plugin": "comparators",
+      "manifest": "packages/plugins-core/verifiers/comparators/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "comparator:exact",
+        "comparator:path",
+        "comparator:text",
+        "comparator:json",
+        "comparator:number",
+        "comparator:version",
+        "comparator:regex",
+        "comparator:exitCode"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "판정 라이브러리: 커널·checklist-ledger가 직접 사용"
+    },
+    {
+      "plugin": "judge",
+      "manifest": "packages/plugins-core/verifiers/judge/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "verifier:judge"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "판정 라이브러리: 커널·checklist-ledger가 직접 사용"
+    },
+    {
+      "plugin": "verifier-ladder",
+      "manifest": "packages/plugins-core/verifiers/ladder/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "verifier:ladder-l1-l3"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "판정 라이브러리: 커널·checklist-ledger가 직접 사용"
+    },
+    {
+      "plugin": "stt-browser",
+      "manifest": "packages/plugins/stt-browser/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "tool:stt.browser"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "STT 라이브러리: 웹·attachments가 직접 사용"
+    },
+    {
+      "plugin": "stt-local",
+      "manifest": "packages/plugins/stt-local/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "tool:stt.local"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "STT 라이브러리: 웹·attachments가 직접 사용"
+    },
+    {
+      "plugin": "verifier-local",
+      "manifest": "packages/plugins/verifier-local/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "verifier:local"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "판정 라이브러리: 커널·checklist-ledger가 직접 사용"
+    },
+    {
+      "plugin": "{{id}}",
+      "manifest": "packages/sdk/templates/hook/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "hook:{{id}}"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "SDK 템플릿(틀)"
+    },
+    {
+      "plugin": "{{id}}",
+      "manifest": "packages/sdk/templates/panel/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "panel:{{id}}"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "SDK 템플릿(틀)"
+    },
+    {
+      "plugin": "{{id}}",
+      "manifest": "packages/sdk/templates/pipeline/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "pipeline:{{id}}"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "SDK 템플릿(틀)"
+    },
+    {
+      "plugin": "{{id}}",
+      "manifest": "packages/sdk/templates/skill/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "skill:{{id}}"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "SDK 템플릿(틀)"
+    },
+    {
+      "plugin": "{{id}}",
+      "manifest": "packages/sdk/templates/tool/harness-plugin.json",
+      "loaded": false,
+      "state": "not-loaded",
+      "declared": [
+        "tool:{{id}}"
+      ],
+      "registeredSlots": [],
+      "missingSlots": [],
+      "notLoadedReason": "SDK 템플릿(틀)"
+    }
+  ],
+  "mcpToolCount": 12
+}
