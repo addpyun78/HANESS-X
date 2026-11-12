@@ -1,0 +1,31 @@
+{
+  "area": "엔진 실행 인자 만들기",
+  "implementations": 4,
+  "files": 4,
+  "list": [
+    {
+      "name": "buildAgyArgs",
+      "file": "packages/engines/antigravity/src/args.ts",
+      "line": 21,
+      "exported": true
+    },
+    {
+      "name": "buildClaudeArgs",
+      "file": "packages/engines/claude-code/src/args.ts",
+      "line": 55,
+      "exported": true
+    },
+    {
+      "name": "buildExecArgs",
+      "file": "packages/engines/codex/src/args.ts",
+      "line": 75,
+      "exported": true
+    },
+    {
+      "name": "buildJudgeCliArgs",
+      "file": "packages/plugins-core/verifiers/judge/src/engine.ts",
+      "line": 103,
+      "exported": true
+    }
+  ]
+}
