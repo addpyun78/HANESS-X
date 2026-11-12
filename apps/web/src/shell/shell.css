@@ -327,6 +327,13 @@
   background: var(--hx-surface-2);
 }
 
+/* T-101 0C.8 아직 준비 중인 메뉴·버튼 (title로 이유 표시) */
+.hx-nav-item:disabled,
+.hx-sidebar__new:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* 경계 리사이즈 */
 .hx-resizer {
   background: var(--hx-border);

@@ -8,6 +8,7 @@ import { NodeFields } from './NodeFields.js';
 import { AiChoiceField } from './AiChoiceField.js';
 import { YamlTab } from './YamlTab.js';
 import type { PipelineMeta } from './yaml.js';
+import { act } from '../../actions/registry.js';
 
 export type InspectorTab = 'node' | 'yaml' | 'dryrun';
 const TABS: { id: InspectorTab; label: string }[] = [
@@ -41,6 +42,7 @@ export function InspectorPanel(p: InspectorPanelProps) {
       <div className="hx-inspector__tabs" role="tablist" aria-label="인스펙터 탭">
         {TABS.map((t) => (
           <button
+            {...act('inspector.tab')}
             key={t.id}
             type="button"
             role="tab"

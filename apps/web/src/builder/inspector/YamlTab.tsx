@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { BuilderGraph } from '../graph.js';
 import type { InspectorAction } from './model.js';
 import { graphFromYaml, graphToYaml, type PipelineMeta } from './yaml.js';
+import { act } from '../../actions/registry.js';
 
 export interface YamlTabProps {
   graph: BuilderGraph;
@@ -43,13 +44,22 @@ export function YamlTab({ graph, meta, dispatch, onMeta }: YamlTabProps) {
         }}
       />
       <div className="hx-yaml__bar">
-        <button type="button" className="hx-insp-btn" disabled={!dirty} onClick={apply}>
+        <button
+          {...act('inspector.yaml-apply')}
+          type="button"
+          className="hx-insp-btn"
+          disabled={!dirty}
+          title={dirty ? undefined : '고친 내용이 없어요'}
+          onClick={apply}
+        >
           그래프에 적용
         </button>
         <button
+          {...act('inspector.yaml-reset')}
           type="button"
           className="hx-insp-btn hx-insp-btn--ghost"
           disabled={!dirty}
+          title={dirty ? undefined : '고친 내용이 없어요'}
           onClick={() => {
             setDirty(false);
             setErrors([]);

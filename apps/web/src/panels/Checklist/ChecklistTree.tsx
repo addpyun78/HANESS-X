@@ -10,6 +10,7 @@ import {
   type ChecklistItem,
   type TreeNode,
 } from './model.js';
+import { act } from '../../actions/registry.js';
 
 /** 36.1 진행률 바 */
 export function ChecklistProgress({ items }: { items: readonly ChecklistItem[] }) {
@@ -117,6 +118,7 @@ export function ChecklistTree({ items, currentItemId, expanded, onToggle, flagge
         data-flagged={flagged?.has(it.id) ? 'true' : undefined}
       >
         <button
+          {...act('checklist.toggle')}
           type="button"
           className="hx-ck-row"
           style={{ paddingLeft: `calc(var(--hx-space-3) * ${n.depth + 1})` }}

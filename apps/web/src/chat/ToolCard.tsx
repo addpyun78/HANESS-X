@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { act } from '../actions/registry.js';
 
 export function ItemTag({ itemId }: { itemId?: string }) {
   if (!itemId) return null;
@@ -43,10 +44,12 @@ export function CollapsibleCard({
     <div className={`hx-card ${className}`} data-open={open} data-status={status}>
       <div className="hx-card__head">
         <button
+          {...act('chat.tool-toggle')}
           type="button"
           className="hx-card__toggle"
           aria-expanded={hasBody ? open : undefined}
           disabled={!hasBody}
+          title={hasBody ? undefined : '펼쳐 볼 내용이 없어요'}
           onClick={() => setOpen(!open)}
         >
           <span className="hx-card__chev" aria-hidden="true">

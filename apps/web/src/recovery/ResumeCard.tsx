@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './recovery.css';
+import { act } from '../actions/registry.js';
 
 /** GET /api/recovery 의 카드 한 장 (kernel recover.ts ResumeCard와 같은 모양) */
 export interface ResumeCardData {
@@ -51,10 +52,18 @@ export function ResumeCard({ card, onResume }: ResumeCardProps) {
         </p>
       )}
       <button
+        {...act('recovery.resume')}
         type="button"
         className="hx-resume__button"
         onClick={() => void resume()}
         disabled={state === 'pending' || state === 'done'}
+        title={
+          state === 'pending'
+            ? '이어서 하는 중이에요'
+            : state === 'done'
+              ? '이미 이어서 하고 있어요'
+              : undefined
+        }
       >
         {state === 'done' ? '재개됨' : state === 'pending' ? '재개 중…' : '이어서 하기'}
       </button>

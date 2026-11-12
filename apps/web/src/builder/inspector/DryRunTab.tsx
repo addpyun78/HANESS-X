@@ -10,6 +10,7 @@ import {
   type RunEvent,
 } from './dryrun.js';
 import { graphToPipeline, type PipelineMeta } from './yaml.js';
+import { act } from '../../actions/registry.js';
 
 export interface DryRunTabProps {
   graph: BuilderGraph;
@@ -85,11 +86,19 @@ export function DryRunTab({ graph, meta, defaultEngine, overlay, onOverlay, step
         />
       </label>
       <div className="hx-yaml__bar">
-        <button type="button" className="hx-insp-btn" disabled={running} onClick={run}>
+        <button
+          {...act('inspector.dry-run')}
+          type="button"
+          className="hx-insp-btn"
+          disabled={running}
+          title={running ? '시험 실행 중이에요' : undefined}
+          onClick={run}
+        >
           시험 실행
         </button>
         {overlay && (
           <button
+            {...act('inspector.clear-overlay')}
             type="button"
             className="hx-insp-btn hx-insp-btn--ghost"
             onClick={() => {

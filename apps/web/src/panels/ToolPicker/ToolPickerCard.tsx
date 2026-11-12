@@ -14,6 +14,7 @@ import {
   type ToolPickerData,
 } from './model.js';
 import './toolpicker.css';
+import { act } from '../../actions/registry.js';
 
 export interface ToolPickerCardProps {
   data: ToolPickerData;
@@ -79,7 +80,12 @@ function CandidateRow({
       </p>
       <p className="hx-tool-cand__install">
         설치: {c.installLabel} ·{' '}
-        <a href={c.pricing.sourceUrl} target="_blank" rel="noreferrer noopener">
+        <a
+          {...act('toolpicker.source-link')}
+          href={c.pricing.sourceUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           출처 링크
         </a>{' '}
         · <time dateTime={c.pricing.checkedAt}>{c.checkedLabel}</time>
