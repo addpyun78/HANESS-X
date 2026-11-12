@@ -1,0 +1,10 @@
+{
+  "id": "attachments",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "displayName": "Attachments",
+  "description": "입력창 첨부: 파일을 프로젝트 폴더 안(.harness-x/attachments)에 저장하고 원본·글·그림 형태로 바꿔 두어, 어떤 AI·에이전트든 받을 수 있는 형태로 전달한다. 첨부는 절대 실행하지 않는다",
+  "main": "dist/index.js",
+  "provides": { "tool": ["attachments.list", "attachments.read"] },
+  "permissions": { "fs": ["workspace:read", "workspace:write"], "net": [], "shell": true }
+}

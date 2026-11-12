@@ -1,6 +1,13 @@
 import { randomUUID } from 'node:crypto';
 import { runAgentLoop, toEngineRun, type AgentTool, type HookBus, type ModelClient } from '@harness-x/kernel';
-import type { EngineAdapter, EngineRun, EngineRunOptions, HarnessEvent } from '@harness-x/protocol';
+import type {
+  EngineAdapter,
+  EngineInputs,
+  EngineRun,
+  EngineRunOptions,
+  HarnessEvent,
+} from '@harness-x/protocol';
+import { apiInputs, buildApiAttachmentInput } from './attachments.js';
 import type { FetchLike } from './http.js';
 import { AnthropicClient } from './anthropic.js';
 import { GeminiClient } from './gemini.js';
@@ -36,6 +43,13 @@ export interface ApiEngineConfig {
   fetch?: FetchLike;
   /** 도구 호출 방식: native(function calling), json(JSON 모드 폴백), auto(미지원 응답 시 json으로 전환, 기본) */
   toolMode?: 'native' | 'json' | 'auto';
+  /** T-101 1D.1 모델별 입력 능력 덮어쓰기 (기본: 공급자·모델 이름으로 판단) */
+  inputs?: (model: string | undefined) => EngineInputs;
+}
+
+/** 로컬 모델(Ollama 등)인지: 기준 URL이 이 PC */
+function isLocal(cfg: ApiEngineConfig): boolean {
+  return /^https?:\/\/(127\.0\.0\.1|localhost|\[::1\])/.test(cfg.baseUrl ?? OLLAMA_BASE_URL);
 }
 
 export const DEFAULT_SYSTEM_PROMPT =
@@ -90,10 +104,14 @@ function failRun(opts: EngineRunOptions, engineId: string, code: string, message
 }
 
 export function createApiEngine(cfg: ApiEngineConfig): EngineAdapter {
+  const inputsFor = (model?: string): EngineInputs =>
+    cfg.inputs?.(model ?? cfg.defaultModel) ??
+    apiInputs(cfg.provider, model ?? cfg.defaultModel, cfg.provider === 'openai-compat' && isLocal(cfg));
   return {
     id: cfg.id,
     displayName: cfg.displayName,
-    capabilities: { nativeStopHook: false, resume: false, mcp: false, interrupt: true },
+    capabilities: { nativeStopHook: false, resume: false, mcp: false, interrupt: true, inputs: inputsFor() },
+    inputsFor,
     run(opts: EngineRunOptions): EngineRun {
       const model = opts.model ?? cfg.defaultModel;
       if (!model) return failRun(opts, cfg.id, 'invalid_request', `${cfg.id}: model이 지정되지 않았습니다`);
@@ -101,13 +119,16 @@ export function createApiEngine(cfg: ApiEngineConfig): EngineAdapter {
       if (cfg.requireApiKey && !apiKey)
         return failRun(opts, cfg.id, 'auth_required', `${cfg.id}: ${cfg.apiKeyEnv ?? 'API 키'}가 필요합니다`);
       const client = makeClient(cfg, model, apiKey);
+      // 1D.4·1D.5 첨부: 직접 받을 수 있으면 그림·PDF 블록, 아니면 글 형태를 프롬프트에
+      const att = buildApiAttachmentInput(opts.prompt, opts.attachments, inputsFor(model));
       return toEngineRun(
         (signal) =>
           runAgentLoop({
             client,
             sessionId: opts.sessionId,
             cwd: opts.cwd,
-            prompt: opts.prompt,
+            prompt: att.prompt,
+            ...(att.media.length ? { media: att.media } : {}),
             engineId: cfg.id,
             ...(opts.itemId ? { itemId: opts.itemId } : {}),
             system: cfg.system ?? DEFAULT_SYSTEM_PROMPT,

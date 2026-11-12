@@ -2,6 +2,7 @@ import type { MissingEngineCard, MissingEngineChoice } from './missing-engine.js
 import type { LogRecord } from '@harness-x/kernel';
 import type { ChecklistItem, ChecklistItemInput, ChecklistLedger } from '@harness-x/checklist-ledger';
 import type {
+  Attachment,
   EngineAdapter,
   GateNode,
   HarnessEvent,
@@ -112,6 +113,50 @@ export type GateVerifier = (input: {
   subjects: GateSubject[];
 }) => GateVerdict | Promise<GateVerdict>;
 
+/**
+ * 실행기 → 단계 트리 알림 (T-101 4번). 모두 선택. nodeStart가 { stop }을 돌려주면(계획 모드) 실행을 멈춘다.
+ */
+export interface RunnerStageHooks {
+  nodeStart?(i: {
+    node: PipelineNode;
+    visit: number;
+    engineId?: string;
+    /** gate 부분 재실행으로 같은 방문을 다시 시작 */
+    rerun?: boolean;
+  }): void | { stop: string } | Promise<void | { stop: string }>;
+  nodeEnd?(i: {
+    node: PipelineNode;
+    visit: number;
+    status: NodeStatus;
+    output: unknown;
+    reason?: string;
+    /** role 노드 원장 항목 */
+    items?: ChecklistItem[];
+    /** 정지(일시정지·지금 멈추기)로 끝남 — 단계는 막힘이 아니라 그대로 둔다 */
+    interrupted?: boolean;
+  }): void;
+  gateFailed?(i: {
+    gate: GateNode;
+    attempt: number;
+    failed: Required<GateFailure>[];
+    exhausted: boolean;
+  }): void;
+  loopIteration?(i: { loop: PipelineNode; iteration: number }): void;
+  loopEnd?(i: { loop: PipelineNode; iterations: number; reason?: string }): void;
+  routeChosen?(i: { router: PipelineNode; to: string }): void;
+  /** subagent 노드: 그 에이전트 트리를 단계 아래에 넣고 하위 실행기용 알림을 돌려준다 */
+  subagent?(i: {
+    node: PipelineNode;
+    visit: number;
+    agent: string;
+    pipeline: Pipeline;
+  }): RunnerStageHooks | undefined;
+  /** role 노드 프롬프트 다듬기 (단계 슬라이스 붙이기) */
+  prompt?(i: { node: RoleNode; engineId: string; prompt: string }): string;
+  /** role 노드 원장 항목이 바뀌었을 수 있는 때(원장 생성 직후·턴이 끝날 때마다) — 진행률을 맞춘다 */
+  nodeItems?(i: { node: PipelineNode; items: ChecklistItem[] }): void;
+}
+
 /** 노드 출력 추출기 (T-042 contract가 기본) */
 export type OutputExtractor = (node: RoleNode, events: readonly HarnessEvent[]) => unknown;
 
@@ -144,12 +189,19 @@ export interface PipelineRunnerOptions {
   env?: Record<string, string | undefined>;
   /** 차단 뒤 자동 전송 최대 턴 (runWithStopGuard, 기본 20) */
   maxAutoTurns?: number;
+  /**
+   * T-101 1D.7 세션 첨부: 첫 단계 엔진 입력에 목록(전달은 엔진 능력대로), 뒤 단계는 MCP(attachments.*)로 읽기.
+   * inputSchema에 attachments 필드를 선언한 노드는 입력 값에도 첨부 목록을 받는다.
+   */
+  attachments?: { list: Attachment[]; /** 세션 첨부 폴더 (harness MCP --attachments) */ dir?: string };
   /** subagent 노드: 에이전트 이름 → 파이프라인 (예: AgentRegistry.get(name)?.pipeline) */
   resolveAgent?: (name: string) => Pipeline | undefined;
   /** 노드 출력 추출기 (주면 계약 검증·재요청을 하지 않는다) */
   extractOutput?: OutputExtractor;
   /** outputSchema 검증 실패 시 같은 노드에 재요청할 최대 횟수 (기본 2) */
   maxContractRetries?: number;
+  /** 단계 체크리스트 연결 (T-101 4번 — StageTracker.hooks()) */
+  stages?: RunnerStageHooks;
   signal?: AbortSignal;
   /** T-101 2B.9 엔진 자체 재개: 노드 id → 엔진 세션 id (그 노드 첫 턴에 resumeId로 넘김) */
   resumeIds?: Record<string, string>;

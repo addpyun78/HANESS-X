@@ -18,6 +18,7 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@harness-x/attachments": "workspace:*",
     "@harness-x/checklist-ledger": "workspace:*",
     "@harness-x/kernel": "workspace:*",
     "@harness-x/protocol": "workspace:*",

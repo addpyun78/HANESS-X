@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`4F.6 이어하기를 단계 트리 기준으로 (데이터) > 재구성 컨텍스트에 단계 트리 + handoff + 지금 단계 할 일 1`] = `
+"## 단계 트리
+① plan 단계 [완료] — 화면 3개를 고치기로 했어요
+② build 단계 [진행 중] ← 지금
+③ critic 단계 [예상]
+
+## 단계가 넘긴 값
+- plan: {"screens":3}
+
+## 지금 단계(build) 할 일
+- ✓ build1: build 틀 항목 1 쓰기
+- ● build2: build 틀 항목 2 쓰기
+- ○ b-home: 홈 화면 만들기
+- ○ build-r1: 다시 하기: 버튼 글자가 작아요"
+`;

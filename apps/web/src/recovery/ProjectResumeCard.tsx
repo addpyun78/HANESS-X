@@ -44,7 +44,7 @@ export function ProjectResumeCard({ sessions, onResume, now }: ProjectResumeCard
                 aria-valuemax={100}
                 aria-valuenow={pct}
               >
-                {pct}%
+                {s.stageProgress ?? `${pct}%`}
               </span>
               <span className="hx-resume__reason">{pausedLabel(s.paused.reason)}</span>
               <time className="hx-resume__time" dateTime={s.paused.at}>

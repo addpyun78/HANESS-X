@@ -27,9 +27,18 @@ export interface ToolCallRequest {
   arguments: unknown;
 }
 
+/** T-101 1D.4 user 메시지에 직접 붙이는 그림·PDF·소리 (base64) */
+export interface UserMedia {
+  kind: 'image' | 'pdf' | 'audio';
+  mime: string;
+  /** base64 */
+  data: string;
+  name?: string;
+}
+
 export type ChatMessage =
   | { role: 'system'; content: string }
-  | { role: 'user'; content: string }
+  | { role: 'user'; content: string; media?: UserMedia[] }
   | { role: 'assistant'; content: string; toolCalls?: ToolCallRequest[] }
   | { role: 'tool'; toolCallId: string; name: string; content: string };
 
@@ -195,6 +204,8 @@ export interface AgentLoopOptions {
   system?: string;
   /** 이전 대화 (system 제외) — 그 뒤에 prompt를 user 메시지로 붙인다 */
   history?: ChatMessage[];
+  /** T-101 1D.4 첫 user 메시지에 붙일 그림·PDF (첨부 직접 전달) */
+  media?: UserMedia[];
   /** 기본 workspaceTools() */
   tools?: AgentTool[];
   /** read-only면 mutates 도구 제외 */
@@ -256,7 +267,11 @@ export async function* runAgentLoop(opts: AgentLoopOptions): AsyncGenerator<Harn
   }));
   const messages: ChatMessage[] = [];
   if (opts.system) messages.push({ role: 'system', content: opts.system });
-  messages.push(...(opts.history ?? []), { role: 'user', content: opts.prompt });
+  messages.push(...(opts.history ?? []), {
+    role: 'user',
+    content: opts.prompt,
+    ...(opts.media?.length ? { media: opts.media } : {}),
+  });
 
   const scope = {
     sessionId: opts.sessionId,

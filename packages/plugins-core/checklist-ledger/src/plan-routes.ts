@@ -3,6 +3,8 @@ import { currentItemOf, type ChecklistLedger, type EventSink } from './ledger.js
 import { lintChecklist, type LintItem, type LintOptions, type LintResult } from './lint.js';
 import { ManifestStore, type ArtifactKind, type ManifestDraft } from './manifest.js';
 import type { Checklist } from './schema.js';
+import { StageTreeStore } from './stages/store.js';
+import type { StageTree } from './stages/schema.js';
 
 /**
  * 체크리스트 패널용 라우트 (T-036)
@@ -30,6 +32,16 @@ export interface ChecklistView {
   currentItemId: string | null;
   plan: ChecklistPlanView;
   lint: LintResult;
+  /** 단계 트리 (T-101 4F.4, 실행이 시작된 세션만 — 없으면 null) */
+  stages: StageTree | null;
+}
+
+function stagesOf(ledger: ChecklistLedger): StageTree | null {
+  try {
+    return new StageTreeStore({ dir: ledger.store.dir, sessionId: ledger.sessionId }).read();
+  } catch {
+    return null;
+  }
 }
 
 export function manifestForLedger(ledger: ChecklistLedger, log?: EventSink): ManifestStore {
@@ -65,6 +77,7 @@ export function checklistView(
     currentItemId: currentItemOf(c)?.id ?? null,
     plan: planOf(manifest),
     lint: lintChecklist(c.items as unknown as LintItem[], lint),
+    stages: stagesOf(ledger),
   };
 }
 

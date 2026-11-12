@@ -27,6 +27,8 @@ export interface EngineOption {
   available: boolean;
   /** 지원하는 인증 방식 (없으면 둘 다) */
   auth?: AuthMode[];
+  /** T-101 1D.1 AI가 직접 받는 입력 (그림·PDF·소리). 없으면 첨부 안내를 하지 않는다 */
+  inputs?: { image: boolean; pdf: boolean; audio: boolean; maxImageMB: number };
 }
 
 export interface Attachment {
@@ -36,6 +38,12 @@ export interface Attachment {
   size: number;
   source: 'drop' | 'paste' | 'picker';
   file: File;
+  /** T-101 1E.4 형태 바꾸기 상태 (서버가 알려 줌) */
+  status?: 'converting' | 'ready' | 'failed';
+  /** ⚠일 때 쉬운 말 안내 */
+  warning?: string;
+  /** 서버가 만든 미리보기 그림 (PDF 첫 장 등) */
+  previewUrl?: string;
 }
 
 /** 첨부 이벤트 (드래그앤드롭·붙여넣기) */

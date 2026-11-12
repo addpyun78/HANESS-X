@@ -56,6 +56,7 @@ import type { NavTarget, RunState, SessionSummary, Workspace } from './shell/typ
 import { useQuota } from './shell/useQuota.js';
 import { projectsApi } from './shell/projects/api.js';
 import { useProjectShell } from './shell/projects/useProjectShell.js';
+import { useAttachUpload } from './composer/useAttachUpload.js';
 import { takeForgePrefill } from './builder/draft/forge-handoff.js';
 
 const DEMO_ENGINES: EngineOption[] = [
@@ -181,6 +182,13 @@ export function App() {
       setView('install');
     },
     onLogin: () => panels.setActive('terminal'),
+  });
+  // T-101 1A.7·1A.8 첨부 → 세션의 프로젝트 폴더에 저장 (프로젝트가 없으면 "어디서 작업할까요?" 먼저)
+  const attachUp = useAttachUpload({
+    ...(client ? { request: <T,>(path: string, init?: RequestInit) => client.request<T>(path, init) } : {}),
+    ...(proj.activeId ? { sessionId: proj.activeId } : {}),
+    projectReady: proj.enabled && !!proj.current && !!proj.activeId,
+    askProject: proj.newSession,
   });
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
@@ -580,6 +588,9 @@ export function App() {
                     onSend={onSend}
                     // T-101 2A.8 실행 중이면 [■ 정지] → 일시정지·지금 멈추기 (Esc 두 번)
                     stop={stopControls(sessions, activeId, client)}
+                    {...(proj.enabled
+                      ? { onAttach: attachUp.onAttach, attachmentStatus: attachUp.status }
+                      : {})}
                     {...((proj.composer.fill ?? forgeFill) ? { fill: proj.composer.fill ?? forgeFill } : {})}
                     {...(proj.composer.pin ? { pinAgent: proj.composer.pin } : {})}
                     focusSeq={proj.composer.focusSeq}

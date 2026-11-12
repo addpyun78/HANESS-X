@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`1B.11 알 수 없는 파일: 메타데이터만 + 안내 > 형식을 모르는 바이너리는 이름·크기·형식만 남기고 안내한다 (스냅샷) 1`] = `
+{
+  "createdAt": "<time>",
+  "id": "att_<hash12>",
+  "kind": "unknown",
+  "mime": "application/octet-stream",
+  "originalName": "설계도.dwg",
+  "representations": [],
+  "sessionId": "s",
+  "sha256": "<sha256>",
+  "sizeBytes": 64,
+  "status": "ready",
+  "storedPath": "<project>/.harness-x/attachments/s/<hash12>/original.dwg",
+  "warnings": [
+    {
+      "code": "unknown-format",
+      "message": "내용은 읽을 수 없어요. 이름과 크기, 형식만 보내요.",
+    },
+  ],
+}
+`;

@@ -37,7 +37,23 @@ export function toAnthropicMessages(messages: ChatMessage[]): {
   const out: { role: 'user' | 'assistant'; content: string | Block[] }[] = [];
   for (const m of messages) {
     if (m.role === 'system') continue;
-    if (m.role === 'user') out.push({ role: 'user', content: m.content });
+    if (m.role === 'user')
+      out.push({
+        role: 'user',
+        content: m.media?.length
+          ? [
+              ...m.media.map((x) =>
+                x.kind === 'pdf'
+                  ? {
+                      type: 'document',
+                      source: { type: 'base64', media_type: 'application/pdf', data: x.data },
+                    }
+                  : { type: 'image', source: { type: 'base64', media_type: x.mime, data: x.data } },
+              ),
+              { type: 'text', text: m.content },
+            ]
+          : m.content,
+      });
     else if (m.role === 'assistant') {
       const blocks: Block[] = [];
       if (m.content) blocks.push({ type: 'text', text: m.content });

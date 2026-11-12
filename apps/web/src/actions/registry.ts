@@ -52,6 +52,8 @@ export const ACTIONS = {
   'composer.plus': { description: '+ 메뉴를 열어요', effect: 'open' },
   'composer.send': { description: '적은 내용을 보내요', effect: 'api' },
   'composer.remove-attachment': { description: '첨부한 파일을 빼요', effect: 'state' },
+  'composer.attachment-preview': { description: '첨부한 파일을 미리 보거나 닫아요', effect: 'state' },
+  'composer.attach-pick': { description: '첨부할 파일을 고르는 창을 열어요', effect: 'open' },
   'composer.chip': { description: '선택 메뉴를 열어요', effect: 'open' },
   'composer.chip-option': { description: '메뉴에서 값을 골라요', effect: 'state' },
   'composer.clear-agent': { description: '고른 에이전트를 해제해요', effect: 'state' },

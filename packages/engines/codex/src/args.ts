@@ -32,6 +32,8 @@ export interface CodexRunInput {
   permission?: PermissionMode;
   resumeId?: string;
   mcpServers?: McpServerRef[];
+  /** T-101 1D.3 그림 직접 입력 (exec --image / app-server localImage) */
+  images?: string[];
 }
 
 /** app-server thread/start · thread/resume 파라미터 (승인은 묻지 않음: 샌드박스가 경계) */
@@ -67,9 +69,18 @@ export function buildExecArgs(input: CodexRunInput): string[] {
   if (input.model) args.push('--model', input.model);
   for (const [name, cfg] of Object.entries(codexMcpServers(input.mcpServers)))
     for (const [k, v] of Object.entries(cfg)) args.push('-c', `mcp_servers.${name}.${k}=${toToml(v)}`);
+  for (const img of input.images ?? []) args.push('--image', img);
   if (input.resumeId) args.push('resume', input.resumeId);
   args.push('--', input.prompt);
   return args;
 }
 
 export const APP_SERVER_ARGS = ['app-server'];
+
+/** T-101 1D.3 app-server turn/start 입력: 글 + 그림(localImage) */
+export function turnInput(input: Pick<CodexRunInput, 'prompt' | 'images'>): Record<string, unknown>[] {
+  return [
+    { type: 'text', text: input.prompt, text_elements: [] },
+    ...(input.images ?? []).map((path) => ({ type: 'localImage', path })),
+  ];
+}

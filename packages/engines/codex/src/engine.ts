@@ -9,20 +9,25 @@ import {
   type EventBody,
   type LineRun,
 } from '@harness-x/kernel';
-import type {
-  EngineAdapter,
-  EngineRun,
-  EngineRunOptions,
-  HarnessEvent,
-  UsageEvent,
+import {
+  deliverToCli,
+  type EngineAdapter,
+  type EngineInputs,
+  type EngineRun,
+  type EngineRunOptions,
+  type HarnessEvent,
+  type UsageEvent,
 } from '@harness-x/protocol';
-import { APP_SERVER_ARGS, buildExecArgs, threadParams } from './args.js';
+import { APP_SERVER_ARGS, buildExecArgs, threadParams, turnInput } from './args.js';
 import { CodexAppServerMapper, quotaRatioFromRateLimits, rateLimitsToUsage } from './app-server.js';
 import { classifyCodexError } from './errors.js';
 import { CodexExecParser } from './exec-parser.js';
 import { JsonRpcClient, JsonRpcError } from './jsonrpc.js';
 
 export const CODEX_ENGINE_ID = 'codex';
+
+/** T-101 1D.1 Codex 입력 능력: 그림은 --image / localImage로 직접, PDF·소리는 글 형태 */
+export const CODEX_INPUTS: EngineInputs = { image: true, pdf: false, audio: false, maxImageMB: 20 };
 const CLIENT_INFO = { name: 'harness-x', title: 'HARNESS-X', version: '0.0.0' };
 
 export type CodexTransport = 'app-server' | 'exec' | 'auto';
@@ -115,7 +120,10 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
     return { child, client, stderr };
   }
 
-  function runExec(opts: EngineRunOptions, event: (b: EventBody) => HarnessEvent): LineRun {
+  function runExec(
+    opts: EngineRunOptions & { images?: string[] },
+    event: (b: EventBody) => HarnessEvent,
+  ): LineRun {
     return runLineProcess({
       command,
       args: [...prefix, ...buildExecArgs(opts)],
@@ -128,7 +136,10 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
     });
   }
 
-  function run(opts: EngineRunOptions): CodexRun {
+  function run(original: EngineRunOptions): CodexRun {
+    // 1D.3 첨부: 프롬프트에 목록 + 그림은 그림 직접 입력(--image / localImage)
+    const delivered = deliverToCli(original.prompt, original.attachments, CODEX_INPUTS, { imageFlag: true });
+    const opts = { ...original, prompt: delivered.prompt, images: delivered.images };
     const event = eventFactory({ sessionId: opts.sessionId, engineId: CODEX_ENGINE_ID, itemId: opts.itemId });
     const transport = o.transport ?? 'auto';
     if (transport === 'exec') return { ...runExec(opts, event), transport: () => 'exec' };
@@ -202,7 +213,7 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
         mapper.threadId = th?.thread?.id ?? mapper.threadId ?? opts.resumeId;
         const turn = await client.request<{ turn?: { id?: string } }>(
           'turn/start',
-          { threadId: mapper.threadId, input: [{ type: 'text', text: opts.prompt, text_elements: [] }] },
+          { threadId: mapper.threadId, input: turnInput(opts) },
           timeout,
         );
         mapper.turnId = turn?.turn?.id ?? mapper.turnId;
@@ -282,7 +293,8 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
   return {
     id: CODEX_ENGINE_ID,
     displayName: 'Codex',
-    capabilities: { nativeStopHook: false, resume: true, mcp: true, interrupt: true },
+    capabilities: { nativeStopHook: false, resume: true, mcp: true, interrupt: true, inputs: CODEX_INPUTS },
+    inputsFor: () => CODEX_INPUTS,
     run,
     quota,
     listModels,

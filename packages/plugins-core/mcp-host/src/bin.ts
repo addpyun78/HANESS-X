@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
+import { attachmentsProvider } from '@harness-x/attachments';
 import { openSession } from './host.js';
 import { createHarnessMcpServer } from './server.js';
 import { serveStdio, startMcpHttpServer } from './transports.js';
@@ -9,6 +10,7 @@ import { serveStdio, startMcpHttpServer } from './transports.js';
  * harness-mcp — 하네스 MCP 서버 단독 실행
  *   harness-mcp --dir <세션 폴더> [--session <id>] [--glossary <file>]            (stdio)
  *   (--node-output: 파이프라인 노드 출력 도구 node.output 추가, T-042)
+ *   (--attachments <세션 첨부 폴더>: attachments.list·attachments.read 추가, T-101 1D.6)
  *   harness-mcp --dir <세션 폴더> --http [--port <n>] [--token <t>]               (streamable HTTP)
  * stdout은 stdio 전송이 쓰므로 진단은 stderr로만 낸다.
  */
@@ -23,6 +25,7 @@ async function main(): Promise<void> {
       token: { type: 'string' },
       'tool-names': { type: 'string' },
       'node-output': { type: 'boolean' },
+      attachments: { type: 'string' },
     },
   });
   const dir = resolve(values.dir ?? process.cwd());
@@ -32,7 +35,13 @@ async function main(): Promise<void> {
     ...(values.glossary ? { glossaryFile: resolve(values.glossary) } : {}),
   });
   const toolNames = values['tool-names'] === 'underscore' ? 'underscore' : 'dotted';
-  const make = () => createHarnessMcpServer(deps, { toolNames, nodeOutput: values['node-output'] === true });
+  const attachments = values.attachments ? attachmentsProvider(resolve(values.attachments)) : undefined;
+  const make = () =>
+    createHarnessMcpServer(deps, {
+      toolNames,
+      nodeOutput: values['node-output'] === true,
+      ...(attachments ? { attachments } : {}),
+    });
   if (values.http) {
     const srv = await startMcpHttpServer({
       createServer: make,

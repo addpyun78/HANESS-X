@@ -416,6 +416,28 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
 
+  packages/plugins-core/attachments:
+    dependencies:
+      '@harness-x/kernel':
+        specifier: workspace:*
+        version: link:../../kernel
+      '@harness-x/protocol':
+        specifier: workspace:*
+        version: link:../../protocol
+      '@harness-x/stt-local':
+        specifier: workspace:*
+        version: link:../../plugins/stt-local
+      iconv-lite:
+        specifier: ^0.7.3
+        version: 0.7.3
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@harness-x/approvals':
+        specifier: workspace:*
+        version: link:../approvals
+
   packages/plugins-core/checklist-ledger:
     dependencies:
       '@harness-x/kernel':
@@ -510,6 +532,9 @@ importers:
 
   packages/plugins-core/mcp-host:
     dependencies:
+      '@harness-x/attachments':
+        specifier: workspace:*
+        version: link:../attachments
       '@harness-x/checklist-ledger':
         specifier: workspace:*
         version: link:../checklist-ledger
