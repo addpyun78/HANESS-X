@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`3E.5 모드 배지 > 사이드바 세션 줄: 계획·일반·오토 배지 (스냅샷) 1`] = `
+"<span class="hx-srow__mode" aria-label="모드 계획">계획</span>
+<span class="hx-srow__mode" aria-label="모드 오토">오토</span>
+<span class="hx-srow__mode" aria-label="모드 일반">일반</span>"
+`;
+
+exports[`3E.5 모드 배지 > 체크리스트 패널 머리에 모드 배지 — 세션 기록 이벤트에서 찾는다 (스냅샷) 1`] = `"<span class="hx-mode-badge hx-mode-badge--auto" aria-label="모드 오토">오토</span>"`;

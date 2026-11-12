@@ -40,7 +40,7 @@ describe('2B.7 멈춘 지 7일 이상 → 지금까지 한 일 요약 확인 카
       '끝냄: 비밀번호 찾기 버튼 달기',
     ]);
     expect(container.innerHTML).toMatchInlineSnapshot(
-      `"<section class="hx-resume hx-resume-check" aria-label="멈춘 지 오래됐어요" data-check="stale"><div class="hx-resume__head"><span aria-hidden="true">ℹ</span><strong>멈춘 지 오래됐어요</strong></div><p class="hx-resume__body">멈춘 지 11일이 지났어요. 지금까지 2개를 끝냈어요. 이대로 이어할까요?</p><ul class="hx-resume-check__list"><li>끝냄: 로그인 화면 만들기</li><li>끝냄: 비밀번호 찾기 버튼 달기</li></ul><div class="hx-resume-check__choices"><button type="button" class="hx-resume__button hx-resume__button--primary">이어서 하기</button><button type="button" class="hx-resume__button">계획부터 다시</button></div></section>"`,
+      `"<section class="hx-resume hx-resume-check" aria-label="멈춘 지 오래됐어요" data-check="stale"><div class="hx-resume__head"><span aria-hidden="true">ℹ</span><strong>멈춘 지 오래됐어요</strong></div><p class="hx-resume__body">멈춘 지 11일이 지났어요. 지금까지 2개를 끝냈어요. 이대로 이어할까요?</p><ul class="hx-resume-check__list"><li>끝냄: 로그인 화면 만들기</li><li>끝냄: 비밀번호 찾기 버튼 달기</li></ul><div class="hx-resume-check__choices"><button type="button" data-action="resume.check-choice" class="hx-resume__button hx-resume__button--primary">이어서 하기</button><button type="button" data-action="resume.check-choice" class="hx-resume__button">계획부터 다시</button></div></section>"`,
     );
     fireEvent.click(screen.getByRole('button', { name: '이어서 하기' }));
     expect(onChoose).toHaveBeenCalledWith('stale', 'continue');

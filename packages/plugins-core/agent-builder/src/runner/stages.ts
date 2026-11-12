@@ -18,6 +18,7 @@ import {
   getStage,
   isStageSettled,
   recheckStage,
+  renderAutoSummary,
   setStageStatus,
   startIteration,
   StageTreeStore,
@@ -85,6 +86,11 @@ export class StageTracker {
 
   get mode(): RunMode {
     return this.opts.mode ?? 'normal';
+  }
+
+  /** T-101 4F.7 + 3D.8 끝난 뒤 요약 (세션 실행 모드가 오토면 단계별 묶음) */
+  autoSummary(extra: readonly ReviewEntry[] = []): string {
+    return renderAutoSummary(this.tree, [...this.review, ...extra], this.mode);
   }
 
   private set(t: StageTree) {

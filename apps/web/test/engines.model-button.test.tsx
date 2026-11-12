@@ -59,7 +59,7 @@ describe('T-101 5C 입력창 오른쪽 아래 모델 선택 = 메인 AI', () => 
         [...el.classList].find((c) => c.startsWith('hx-chip--') || c === 'hx-send') ??
         el.className,
     );
-    expect(slots).toEqual(['plus', 'hx-chip--permission', 'spacer', 'model', 'hx-send']);
+    expect(slots).toEqual(['plus', 'hx-chip--permission', 'hx-chip--mode', 'spacer', 'model', 'hx-send']);
     expect(container.querySelector('.hx-chip--engine')).toBeNull();
     expect(container.querySelector('.hx-chip--auth')).toBeNull();
     expect(bar.outerHTML).toMatchSnapshot();

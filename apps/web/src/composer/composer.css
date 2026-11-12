@@ -361,6 +361,27 @@
   color: var(--hx-on-accent);
 }
 
+/* T-101 3A.4 모드-권한 연동: 잠긴 권한 칩, 오토 전환 확인 */
+.hx-chip[data-locked] {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.hx-mode-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border-strong);
+  border-radius: var(--hx-radius);
+}
+
+.hx-mode-confirm p {
+  flex: 1 1 100%;
+  margin: 0;
+}
+
 /* T-101 2A.8 실행 중 [■ 정지] → [일시정지] [지금 멈추기] */
 .hx-stop {
   position: relative;

@@ -11,6 +11,7 @@ import {
   type ChoiceScope,
 } from './model.js';
 import './engines.css';
+import { act } from '../actions/registry.js';
 
 export interface ModelButtonProps {
   models: readonly ModelOption[];
@@ -74,6 +75,7 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
       <button
         type="button"
         className="hx-chip"
+        {...act('model.open')}
         aria-label={`AI: ${label}${from === 'project' ? ' (이 프로젝트 기본)' : ''}`}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -104,6 +106,8 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                       role="menuitemradio"
                       aria-checked={selected}
                       aria-disabled={unusable || undefined}
+                      {...act('model.choose')}
+                      {...(unusable ? { title: '지금은 이 AI를 쓸 수 없어요' } : {})}
                       className="hx-model-menu__item"
                       data-status={m.status}
                       onClick={() => {
@@ -125,7 +129,12 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                       )}
                     </button>
                     {needsLogin && onLogin && (
-                      <button type="button" className="hx-icon-btn" onClick={() => onLogin(m.engineId)}>
+                      <button
+                        type="button"
+                        className="hx-icon-btn"
+                        {...act('model.login')}
+                        onClick={() => onLogin(m.engineId)}
+                      >
                         로그인
                       </button>
                     )}
@@ -141,6 +150,7 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                   key={s}
                   type="button"
                   className="hx-icon-btn"
+                  {...act('model.scope')}
                   data-default={i === 0 || undefined}
                   autoFocus={i === 0}
                   onClick={() => choose(s)}

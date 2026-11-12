@@ -19,6 +19,11 @@ import type { CandidateView, InstallPlanView } from '../../src/install/model.js'
 import { ChecklistPanel } from '../../src/panels/Checklist/ChecklistPanel.js';
 import { ToolPickerCard } from '../../src/panels/ToolPicker/ToolPickerCard.js';
 import { ResumeCard } from '../../src/recovery/ResumeCard.js';
+import { AutoLimitsCard } from '../../src/run-mode/AutoLimitsCard.js';
+import { AutoSummaryCard } from '../../src/run-mode/AutoSummaryCard.js';
+import { PlanDoneCard } from '../../src/run-mode/PlanDoneCard.js';
+import { ResumeModeChoice } from '../../src/run-mode/ResumeModeChoice.js';
+import { ReviewListSection } from '../../src/run-mode/ReviewListSection.js';
 import { EnginesSettings } from '../../src/settings/Engines/EnginesSettings.js';
 import { SettingsForm } from '../../src/settings/form/SettingsForm.js';
 import { AboutSection } from '../../src/settings/sections/AboutSection.js';
@@ -506,6 +511,45 @@ export const RENDERERS: Record<string, Renderer> = {
         }}
         onResume={h.api({ r: async () => ({}) }).r}
       />,
+    );
+  },
+
+  // T-101 3 실행 모드 카드 (부모가 처리하는 콜백 자리)
+  'run-mode-cards': (h) => {
+    render(
+      <div>
+        <PlanDoneCard itemCount={3} onChoose={h.cb()} />
+        <AutoLimitsCard
+          limits={{ maxMinutes: 60, maxTokens: 2_000_000, maxCostUsd: 5, maxIterations: 200 }}
+          onStart={h.cb()}
+          onCancel={h.cb()}
+        />
+        <AutoSummaryCard
+          summary={{ done: 3, notDone: 1, review: 2, ended: 'finished' }}
+          notifier={{ permission: 'denied', requestPermission: async () => 'denied', show: () => {} }}
+          onOpenReview={h.cb()}
+        />
+        <ReviewListSection
+          items={[
+            {
+              id: 'r1',
+              kind: 'permission',
+              reason: '작업 폴더 밖에 파일을 쓰려고 해서 하지 않았어요.',
+              actions: ['allow', 'deny'],
+              at: TS,
+            },
+            {
+              id: 'r2',
+              kind: 'human-only',
+              reason: '결제는 사람이 직접 해야 해서 하지 않았어요.',
+              actions: ['do-it', 'dismiss'],
+              at: TS,
+            },
+          ]}
+          onAction={h.cb()}
+        />
+        <ResumeModeChoice sessionMode="auto" onChange={h.cb()} />
+      </div>,
     );
   },
 

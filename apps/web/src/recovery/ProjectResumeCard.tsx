@@ -1,6 +1,7 @@
 import { pausedAgo, type ResumableSessionData } from './resume-list.js';
 import { pausedLabel } from '../shell/paused-label.js';
 import './recovery.css';
+import { act } from '../actions/registry.js';
 
 export interface ProjectResumeCardProps {
   /** projectResumeList(projectId, …) 결과 */
@@ -49,7 +50,12 @@ export function ProjectResumeCard({ sessions, onResume, now }: ProjectResumeCard
               <time className="hx-resume__time" dateTime={s.paused.at}>
                 {pausedAgo(s.paused.at, now)}
               </time>
-              <button type="button" className="hx-resume__button" onClick={() => onResume(s.sessionId)}>
+              <button
+                type="button"
+                className="hx-resume__button"
+                {...act('resume.session')}
+                onClick={() => onResume(s.sessionId)}
+              >
                 이어하기
               </button>
             </li>

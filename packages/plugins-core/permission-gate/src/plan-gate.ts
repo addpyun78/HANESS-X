@@ -53,6 +53,8 @@ export interface ApprovalAsk {
   tool: string;
   paths: string[];
   reason: string;
+  /** 지금 항목 (T-101 3D.2 오토 거부 시 blocked 처리) */
+  itemId?: string;
 }
 
 export interface PlanGateOptions {
@@ -274,7 +276,13 @@ export function createPlanGate(opts: PlanGateOptions): PlanGate {
         decision: 'deny',
         reason: `outside_manifest: ${why}에는 쓸 수 없습니다 (strict 모드): ${paths.join(', ')}. checklist.current / manifest.resolve로 정식 경로를 확인하세요.`,
       };
-    const ask: ApprovalAsk = { approvalId: randomUUID(), tool, paths, reason: why };
+    const ask: ApprovalAsk = {
+      approvalId: randomUUID(),
+      tool,
+      paths,
+      reason: why,
+      ...(typeof ctx.itemId === 'string' ? { itemId: ctx.itemId } : {}),
+    };
     emitApproval(ctx, ask);
     if (opts.approve) {
       const ok = await opts.approve(ask);

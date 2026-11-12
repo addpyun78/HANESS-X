@@ -1,4 +1,4 @@
-import type { McpServerRef, PermissionMode } from '@harness-x/protocol';
+import type { McpServerRef, PermissionMode, RunMode } from '@harness-x/protocol';
 
 export type CodexSandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access';
 
@@ -9,7 +9,15 @@ export const CODEX_SANDBOX: Record<PermissionMode, CodexSandboxMode> = {
   'full-access': 'danger-full-access',
 };
 
-export function codexSandbox(permission: PermissionMode | undefined): CodexSandboxMode {
+/**
+ * T-101 실행 모드가 권한보다 먼저다.
+ *  3B.3 계획 → read-only
+ *  3D.6 오토 → workspace-write + 승인 묻지 않음(--ask-for-approval never, codex 최상위 옵션이라 exec 앞에)
+ */
+export function codexSandbox(permission: PermissionMode | undefined, mode?: RunMode): CodexSandboxMode {
+  if (mode === 'plan') return 'read-only';
+  // 3D.6 오토 → workspace-write (danger-full-access 금지) — 최종 판단은 하네스 게이트
+  if (mode === 'auto') return 'workspace-write';
   return CODEX_SANDBOX[permission ?? 'workspace-write'];
 }
 
@@ -30,6 +38,7 @@ export interface CodexRunInput {
   cwd: string;
   model?: string;
   permission?: PermissionMode;
+  mode?: RunMode;
   resumeId?: string;
   mcpServers?: McpServerRef[];
   /** T-101 1D.3 그림 직접 입력 (exec --image / app-server localImage) */
@@ -42,7 +51,7 @@ export function threadParams(input: CodexRunInput): Record<string, unknown> {
   return {
     ...(input.resumeId ? { threadId: input.resumeId } : {}),
     cwd: input.cwd,
-    sandbox: codexSandbox(input.permission),
+    sandbox: codexSandbox(input.permission, input.mode),
     approvalPolicy: 'never',
     ...(input.model ? { model: input.model } : {}),
     ...(Object.keys(mcp).length ? { config: { mcp_servers: mcp } } : {}),
@@ -64,7 +73,15 @@ function toToml(v: unknown): string {
  * 옵션은 resume 서브커맨드 앞에 두고, 프롬프트는 `--` 뒤 마지막 인자
  */
 export function buildExecArgs(input: CodexRunInput): string[] {
-  const args = ['exec', '--json', '--sandbox', codexSandbox(input.permission), '--cd', input.cwd];
+  const args = [
+    ...(input.mode === 'auto' ? ['--ask-for-approval', 'never'] : []),
+    'exec',
+    '--json',
+    '--sandbox',
+    codexSandbox(input.permission, input.mode),
+    '--cd',
+    input.cwd,
+  ];
   args.push('--skip-git-repo-check');
   if (input.model) args.push('--model', input.model);
   for (const [name, cfg] of Object.entries(codexMcpServers(input.mcpServers)))

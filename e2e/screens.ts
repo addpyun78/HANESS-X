@@ -74,6 +74,11 @@ export const SCREENS: readonly ScreenSpec[] = [
     parts: ['우측 패널 탭', '승인 카드'],
   },
   { id: 'recovery', name: '이어서 하기 카드', parts: ['채팅'] },
+  {
+    id: 'run-mode-cards',
+    name: '실행 모드 카드(계획 완료·오토 한도·오토 요약·돌아오면 확인할 것·이어하기 모드)',
+    parts: ['채팅', '우측 패널 탭'],
+  },
   { id: 'forge-cards', name: 'Forge 질문 카드', parts: ['채팅'] },
   { id: 'builder-start', name: '에이전트 만들기 — 시작 고르기', parts: ['에이전트 만들기(블록·대화)'] },
   {
