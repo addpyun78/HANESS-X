@@ -1,0 +1,479 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "scripts/**/*.{mjs,ts}",
+        "vitest.config.ts",
+        "eslint.config.js",
+        "tests/**/*.ts",
+        "e2e/**/*.ts"
+      ],
+      "project": ["scripts/**/*.{mjs,ts}", "tests/**/*.ts", "e2e/**/*.ts"]
+    },
+    "apps/desktop": {
+      "entry": ["src/index.{ts,tsx}", "src/main.tsx", "src/cli.ts", "src/bin.ts", "test/**/*.{ts,tsx}"],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "apps/web": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/actions/registry.ts",
+        "src/composer/run-mode.ts",
+        "src/run-mode/AutoLimitsCard.tsx",
+        "src/run-mode/AutoSummaryCard.tsx",
+        "src/run-mode/ModeBadge.tsx",
+        "src/run-mode/notify-policy.ts",
+        "src/run-mode/PlanDoneCard.tsx",
+        "src/run-mode/ResumeModeChoice.tsx",
+        "src/run-mode/ReviewListSection.tsx",
+        "test/fixtures/events.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/engines/acp-generic": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/adapter.ts",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/engines/antigravity": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/engine.ts",
+        "src/index.ts",
+        "test/fixtures/fake-agy.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/engines/claude-code": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/args.ts",
+        "src/engine.ts",
+        "src/index.ts",
+        "test/fixtures/fake-long-claude.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/engines/codex": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/args.ts",
+        "src/engine.ts",
+        "src/index.ts",
+        "test/fixtures/fake-codex.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/engines/openai-compat": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/adapter.ts",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/kernel": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/api/approvals-routes.ts",
+        "src/api/models-routes.ts",
+        "src/api/resume-routes.ts",
+        "src/api/server.ts",
+        "src/auth-status.ts",
+        "src/cli.ts",
+        "src/dispatch.ts",
+        "src/engines-settings.ts",
+        "src/event-log.ts",
+        "src/hooks.ts",
+        "src/hot-reload.ts",
+        "src/install-wiring.ts",
+        "src/loader.ts",
+        "src/main-ai.ts",
+        "src/models.ts",
+        "src/pause-snapshot.ts",
+        "src/projects/cli-commands.ts",
+        "src/projects/index.ts",
+        "src/resume-cli.ts",
+        "src/resume-engine.ts",
+        "src/resume-pin.ts",
+        "src/resume-service.ts",
+        "src/run-mode/index.ts",
+        "src/run-mode/limits.ts",
+        "src/run-mode/resolve.ts",
+        "src/run-mode/resume.ts",
+        "src/run-mode/review-list.ts",
+        "src/run-mode/transition.ts",
+        "src/sandbox/host.ts",
+        "src/sandbox/worker-source.ts",
+        "src/secrets.ts",
+        "src/settings/registry.ts",
+        "src/settings/runtime.ts",
+        "src/workspaces.ts",
+        "test/fixtures/crash-writer.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/agent-builder": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts",
+        "src/inventory/build.ts",
+        "src/inventory/comparators.ts",
+        "src/inventory/schema.ts",
+        "src/inventory/tools.ts",
+        "src/registry.ts",
+        "src/runner/types.ts",
+        "test/fixtures/runner/replay-claude-resume.mjs",
+        "test/fixtures/runner/replay-engine.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/approvals": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/attachments": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts",
+        "test/fixtures/fake-cli.mjs"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/checklist-ledger": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts",
+        "src/stop-guard.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/engine-scanner": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/forge": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/import/claude-plugin.ts",
+        "src/import/mcp.ts",
+        "src/index.ts",
+        "test/fixtures/echo-mcp-server.mjs",
+        "test/fixtures/kotlin-hook.ts",
+        "test/fixtures/plugins.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/installer": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/adapters/dev-tools.ts",
+        "src/adapters/download.ts",
+        "src/adapters/mcp.ts",
+        "src/adapters/plugin.ts",
+        "src/adapters/windows-pkg.ts",
+        "src/index.ts",
+        "src/service.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/mcp-host": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/bin.ts",
+        "src/index.ts",
+        "src/plugin.ts",
+        "src/server.ts",
+        "src/transports.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/permission-gate": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts",
+        "src/run-mode-gate.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/tool-finder": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts",
+        "src/providers/package-repos.ts",
+        "src/trigger.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/verifiers/comparators": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "fixtures/sample-plugin/index.js",
+        "src/builtins.ts",
+        "src/comparators/exact.ts",
+        "src/comparators/exit-code.ts",
+        "src/comparators/json.ts",
+        "src/comparators/number.ts",
+        "src/comparators/path.ts",
+        "src/comparators/regex.ts",
+        "src/comparators/text.ts",
+        "src/comparators/version.ts",
+        "src/compare.ts",
+        "src/evidence.ts",
+        "src/guards.ts",
+        "src/index.ts",
+        "src/infer.ts",
+        "src/migrate.ts",
+        "src/path-alias.ts",
+        "src/path-normalize.ts",
+        "src/registry.ts",
+        "src/types.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/verifiers/judge": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/budget.ts",
+        "src/cache.ts",
+        "src/chain.ts",
+        "src/confidence.ts",
+        "src/engine.ts",
+        "src/index.ts",
+        "src/local.ts",
+        "src/questions.ts",
+        "src/sanitize.ts",
+        "src/select.ts",
+        "src/settings.ts",
+        "src/types.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins-core/verifiers/ladder": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/alias.ts",
+        "src/candidates.ts",
+        "src/cleanup.ts",
+        "src/evidence.ts",
+        "src/index.ts",
+        "src/l4.ts",
+        "src/ladder.ts",
+        "src/normalize.ts",
+        "src/pipeline.ts",
+        "src/record.ts",
+        "src/runtime.ts",
+        "src/settings.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins/stt-browser": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins/stt-local": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/plugins/verifier-local": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/protocol": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/engine.ts",
+        "src/run-mode.ts",
+        "test/fixtures/event-samples.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "templates/hook/src/index.ts",
+        "templates/panel/src/index.ts",
+        "templates/pipeline/src/index.ts",
+        "templates/skill/src/index.ts",
+        "templates/tool/src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk/templates/hook": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk/templates/panel": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk/templates/pipeline": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk/templates/skill": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    },
+    "packages/sdk/templates/tool": {
+      "entry": [
+        "src/index.{ts,tsx}",
+        "src/main.tsx",
+        "src/cli.ts",
+        "src/bin.ts",
+        "test/**/*.{ts,tsx}",
+        "src/index.ts"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"]
+    }
+  },
+  "ignore": ["**/dist/**", "**/templates/**", "docs/**"],
+  "ignoreDependencies": ["@harness-x/*"]
+}
