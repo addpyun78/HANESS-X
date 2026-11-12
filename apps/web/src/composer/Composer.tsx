@@ -78,6 +78,8 @@ export interface ComposerProps {
   modelPicker?: ReactNode;
   /** 지금 고른 AI (메인 AI 등) — 보내는 지시의 엔진 */
   ai?: { engine: string; model?: string } | undefined;
+  /** T-101 5D.7a 메인 AI(모델 단위)가 받을 수 있는 입력 — 있으면 첨부 안내를 이 값 기준으로 */
+  aiInputs?: { image: boolean; pdf: boolean; audio: boolean } | undefined;
   /** T-101 2A.8 실행 중이면 전송 버튼 자리가 [■ 정지] (일시정지·지금 멈추기, Esc 두 번) */
   stop?: StopControls;
 }
@@ -116,6 +118,7 @@ export function Composer({
   attachmentStatus,
   modelPicker,
   ai,
+  aiInputs,
   stop,
 }: ComposerProps) {
   const [text, setText] = useState('');
@@ -213,7 +216,7 @@ export function Composer({
 
   // 1E.5 지금 고른 AI 기준 안내 (모델을 바꾸면 문구도 바뀜)
   const engine = engines.find((x) => x.id === (ai?.engine ?? settings.engineId));
-  const hints = attachmentHints(attachments, engine?.inputs);
+  const hints = attachmentHints(attachments, aiInputs ?? engine?.inputs);
   const shown = attachmentStatus
     ? attachments.map((a) => ({ ...a, ...attachmentStatus[a.id] }))
     : attachments;
