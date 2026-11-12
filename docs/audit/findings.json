@@ -122,7 +122,8 @@
           "packages/plugins-core/verifiers/ladder/src/runtime.ts"
         ]
       },
-      "id": "C1-001"
+      "id": "C1-001",
+      "plain": "빈 값을 그대로 넣는 곳이 81곳 있어요. 지금 동작에는 문제가 없어요."
     },
     {
       "status": "open",
@@ -152,7 +153,8 @@
         "count": 10,
         "files": ["packages/plugins-core/installer/src/adapters/dev-tools.ts"]
       },
-      "id": "C1-002"
+      "id": "C1-002",
+      "plain": "덮어쓰는 기능에 표시가 빠진 곳이 10곳 있어요."
     },
     {
       "status": "open",
@@ -215,7 +217,8 @@
           "packages/plugins-core/installer/src/adapters/download.ts"
         ]
       },
-      "id": "C1-003"
+      "id": "C1-003",
+      "plain": "엄격하게 검사하면 값의 종류가 안 맞는 곳이 13곳 나와요."
     },
     {
       "status": "open",
@@ -230,7 +233,8 @@
       "meta": {
         "source": "C1.5"
       },
-      "id": "C1-004"
+      "id": "C1-004",
+      "plain": "작업 확인 장치 파일의 줄 맞춤이 어긋났어요."
     },
     {
       "status": "open",
@@ -255,7 +259,8 @@
         "userApproved": true,
         "research": "core 출처 코드를 바꿀 수 있으면 커널도 바꿀 수 있어 core 지문 검사는 보안 이득이 없고 사용만 막음. 외부 플러그인 검사는 유지하므로 위험 보통"
       },
-      "id": "C1-005"
+      "id": "C1-005",
+      "plain": "코드를 고친 뒤 켜면 기본 부품 5개가 막혀요. 사용자 요청으로 꼭 고쳐요."
     },
     {
       "status": "open",
@@ -276,7 +281,8 @@
         "source": "C1.12",
         "noAction": true
       },
-      "id": "C1-006"
+      "id": "C1-006",
+      "plain": "오류를 조용히 넘기는 곳은 모두 일부러 그런 곳이었어요."
     },
     {
       "status": "open",
@@ -296,7 +302,8 @@
         "source": "C1.19",
         "noAction": true
       },
-      "id": "C1-007"
+      "id": "C1-007",
+      "plain": "경로를 직접 나누는 35곳은 모두 안전했어요."
     },
     {
       "status": "open",
@@ -320,7 +327,8 @@
         "major": false,
         "prod": true
       },
-      "id": "C1-008"
+      "id": "C1-008",
+      "plain": "화면 편집기가 쓰는 부품에 보안 구멍이 있어요. 같은 판에서 고칠 수 있어요."
     },
     {
       "status": "open",
@@ -343,7 +351,8 @@
         "major": true,
         "prod": false
       },
-      "id": "C1-009"
+      "id": "C1-009",
+      "plain": "시험 도구에 보안 구멍이 있어요. 고치려면 큰 판 올림이 필요해요."
     },
     {
       "status": "open",
@@ -369,7 +378,8 @@
         "wiring": true,
         "rootCause": "loader-default-module"
       },
-      "id": "C2-001"
+      "id": "C2-001",
+      "plain": "체크리스트 화면이 부르는 주소가 실제 서버에 없어요. 그래서 화면이 비어요."
     },
     {
       "status": "open",
@@ -389,7 +399,8 @@
         "source": "C2.19",
         "wiring": true
       },
-      "id": "C2-002"
+      "id": "C2-002",
+      "plain": "PC 안 음성 입력 주소를 서버가 몰라요. 그래서 늘 실패해요."
     },
     {
       "status": "open",
@@ -408,7 +419,8 @@
       "meta": {
         "source": "C2.19"
       },
-      "id": "C2-003"
+      "id": "C2-003",
+      "plain": "명령 4개가 도움말을 부르면 진짜로 실행돼요."
     },
     {
       "status": "open",
@@ -429,7 +441,8 @@
       "meta": {
         "source": "C2.19"
       },
-      "id": "C2-004"
+      "id": "C2-004",
+      "plain": "설정 4개는 바꿔도 아무 일도 안 일어나요."
     },
     {
       "status": "open",
@@ -444,7 +457,8 @@
       "meta": {
         "source": "C2.19"
       },
-      "id": "C2-005"
+      "id": "C2-005",
+      "plain": "늘 통과하는 빈 시험이 2개 있어요."
     },
     {
       "status": "open",
@@ -469,7 +483,8 @@
         "source": "C2.19",
         "noAction": true
       },
-      "id": "C2-006"
+      "id": "C2-006",
+      "plain": "할 일 표시, 빈 버튼, 가짜 자료는 하나도 없었어요."
     },
     {
       "status": "open",
@@ -492,7 +507,8 @@
         "userApproved": true,
         "research": "사본은 T-101 병렬 작업자용이고 실행에 쓰이지 않음. 합쳐진 것만 지우면 작업 손실 없음, node_modules는 다시 설치 가능"
       },
-      "id": "C3-001"
+      "id": "C3-001",
+      "plain": "지난 작업 복사본 39개가 약 9.7GB예요. 합쳐 둔 것만 골라 지워요."
     },
     {
       "status": "open",
@@ -507,7 +523,8 @@
       "meta": {
         "source": "C3.18"
       },
-      "id": "C3-002"
+      "id": "C3-002",
+      "plain": "화면 묶음에서 코드 편집기 언어 파일이 가장 커요."
     },
     {
       "status": "open",
@@ -528,7 +545,8 @@
         "noAction": true,
         "next": true
       },
-      "id": "C3-003"
+      "id": "C3-003",
+      "plain": "오래된 기록을 지우는 설정이 기본으로 꺼져 있어요."
     },
     {
       "status": "open",
@@ -544,7 +562,8 @@
         "source": "C3.18",
         "dedupe": true
       },
-      "id": "C3-004"
+      "id": "C3-004",
+      "plain": "기록 조각이 흩어져 있고 같은 부품의 판이 여러 개예요."
     },
     {
       "status": "open",
@@ -565,7 +584,8 @@
         "behaviorDiff": 0,
         "area": "plain"
       },
-      "id": "C5-001"
+      "id": "C5-001",
+      "plain": "쉬운 말 검사 함수가 두 벌인데 결과가 똑같아요."
     },
     {
       "status": "open",
@@ -587,7 +607,8 @@
         "source": "C5.15",
         "behaviorDiff": 4
       },
-      "id": "C5-002"
+      "id": "C5-002",
+      "plain": "이름과 목적은 같지만 동작이 다른 함수 묶음이 4곳이에요."
     },
     {
       "status": "open",
@@ -603,7 +624,8 @@
         "source": "C5.15/C4.4",
         "behaviorDiff": 0
       },
-      "id": "C5-003"
+      "id": "C5-003",
+      "plain": "서로를 부르는 파일 짝이 2쌍 있어요."
     },
     {
       "status": "open",
@@ -618,7 +640,8 @@
       "meta": {
         "source": "C5.14"
       },
-      "id": "C5-004"
+      "id": "C5-004",
+      "plain": "폴더를 옮기면 찾기 쉬워지는 곳이 3곳이에요."
     },
     {
       "status": "open",
@@ -635,7 +658,8 @@
         "tooNew": true,
         "security": false
       },
-      "id": "C6-001"
+      "id": "C6-001",
+      "plain": "작은 새 판 2개는 나온 지 14일이 안 됐어요."
     },
     {
       "status": "open",
@@ -651,7 +675,8 @@
         "source": "C6.10",
         "major": true
       },
-      "id": "C6-002"
+      "id": "C6-002",
+      "plain": "큰 새 판이 10개 나왔어요. 바꿀 것이 많아 따로 해야 해요."
     },
     {
       "status": "open",
@@ -667,7 +692,8 @@
         "source": "C6.10",
         "userAction": true
       },
-      "id": "C6-003"
+      "id": "C6-003",
+      "plain": "엔진 프로그램 두 개가 최신 판이 아니에요. 그중 하나는 다시 로그인해야 해요."
     },
     {
       "status": "open",
@@ -682,7 +708,8 @@
       "meta": {
         "source": "C6.10"
       },
-      "id": "C6-004"
+      "id": "C6-004",
+      "plain": "안내 문서에 일부 명령과 바로가기 설명이 없어요."
     },
     {
       "status": "open",
@@ -697,7 +724,8 @@
       "meta": {
         "source": "C6.10"
       },
-      "id": "C6-005"
+      "id": "C6-005",
+      "plain": "작업 규칙 문서에 실제 장치 5개 설명이 빠졌어요."
     },
     {
       "status": "merged-into: C2-004",
@@ -735,7 +763,8 @@
       "meta": {
         "source": "C1.7"
       },
-      "id": "C1-010"
+      "id": "C1-010",
+      "plain": "시험 3개가 컴퓨터가 바쁠 때만 가끔 실패해요."
     },
     {
       "status": "open",
@@ -756,7 +785,8 @@
         "kind": "dependency",
         "fourEvidence": true
       },
-      "id": "C4-001"
+      "id": "C4-001",
+      "plain": "아무도 안 쓰는 부품 연결 1개가 남아 있어요."
     },
     {
       "status": "open",
@@ -773,7 +803,8 @@
         "kind": "export",
         "fourEvidence": true
       },
-      "id": "C4-002"
+      "id": "C4-002",
+      "plain": "밖에서 안 쓰는데 내보내 둔 이름이 145개 있어요."
     },
     {
       "status": "open",
@@ -789,7 +820,8 @@
         "source": "C4.10",
         "noAction": true
       },
-      "id": "C4-003"
+      "id": "C4-003",
+      "plain": "통째로 안 쓰는 파일은 없었어요."
     }
   ]
 }
