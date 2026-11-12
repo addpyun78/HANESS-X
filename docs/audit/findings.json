@@ -788,7 +788,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": [],
       "area": "docs",
       "severity": "low",
@@ -798,7 +798,9 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C6.10"
+        "source": "C6.10",
+        "resolution": "README 바로가기·명령 모음",
+        "resolvedAt": "2026-11-12T16:58:52.228Z"
       },
       "id": "C6-004",
       "plain": "안내 문서에 일부 명령과 바로가기 설명이 없어요.",
