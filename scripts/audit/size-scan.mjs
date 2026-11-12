@@ -193,7 +193,7 @@ const checks = {
     const re =
       /(^|\/)(dist|coverage|build|out|target|\.harness-x-dev|node_modules)\/|\.log$|(^|\/)\.harness-x\/(attachments|sessions|logs)\/|\.(rec|raw)\.(webm|wav|mp4)$|\.tsbuildinfo$/;
     const list = tracked()
-      .filter((f) => re.test(f))
+      .filter((f) => re.test(f) && !f.startsWith('docs/audit/')) // 점검 기록(raw 로그)은 일부러 남기는 기록
       .map((f) => ({ file: f, bytes: size(f) }));
     save('git-generated', list, `추적 중인 생성물 ${list.length}개`);
   },

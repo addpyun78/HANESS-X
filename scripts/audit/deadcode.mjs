@@ -86,9 +86,9 @@ for (const f of files) {
   const exports = new Set();
   const reexportAll = [];
   const externals = new Set();
-  const addImport = (spec, names) => {
+  const addImport = (spec, names, typeOnly = false) => {
     const t = resolveSpec(f, spec);
-    if (t) imports.push({ target: t, names });
+    if (t) imports.push({ target: t, names, typeOnly });
     else if (!spec.startsWith('.') && !spec.startsWith('node:'))
       externals.add(spec.match(/^(@[^/]+\/[^/]+|[^/]+)/)[1]);
   };
@@ -104,7 +104,15 @@ for (const f of files) {
           else for (const e of c.namedBindings.elements) names.add((e.propertyName ?? e.name).text);
         }
       }
-      addImport(n.moduleSpecifier.text, names);
+      // import type은 실행할 때 사라짐 → 순환 검사에서는 빼고(H.7), 쓰는 export 계산에는 넣는다
+      const typeOnly =
+        !!c?.isTypeOnly ||
+        (!!c?.namedBindings &&
+          ts.isNamedImports(c.namedBindings) &&
+          !c.name &&
+          c.namedBindings.elements.length > 0 &&
+          c.namedBindings.elements.every((e) => e.isTypeOnly));
+      addImport(n.moduleSpecifier.text, names, typeOnly);
     } else if (ts.isExportDeclaration(n)) {
       if (n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) {
         if (!n.exportClause) {
@@ -260,7 +268,7 @@ const strong = (v) => {
   low.set(v, idx++);
   st.push(v);
   onStack.add(v);
-  for (const { target: w } of info.get(v)?.imports ?? []) {
+  for (const { target: w } of (info.get(v)?.imports ?? []).filter((i) => !i.typeOnly)) {
     if (!index.has(w)) {
       strong(w);
       low.set(v, Math.min(low.get(v), low.get(w)));
@@ -289,7 +297,7 @@ writeJson(join(rawDir, `knip${suffix}.json`), {
 });
 writeFileSync(
   join(rawDir, `madge-circular${suffix}.txt`),
-  `# 순환 의존 (scripts/audit/deadcode.mjs, madge 대체 — 파일 단위 강한 연결 요소)\n# 순환 묶음 ${cycles.length}개\n` +
+  `# 순환 의존 (scripts/audit/deadcode.mjs, madge 대체 — 파일 단위 강한 연결 요소, import type은 실행 때 사라져 뺌)\n# 순환 묶음 ${cycles.length}개\n` +
     cycles.map((c, i) => `${i + 1}) ${c.join(' > ')}`).join('\n') +
     '\n',
 );

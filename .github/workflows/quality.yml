@@ -1,0 +1,38 @@
+# T-102 H.5~H.11 재발 방지 검사. 로컬에서도 같은 명령: node scripts/ci/quality-gates.mjs [검사…]
+# 상한 값: scripts/ci/quality-limits.json (점검 결과 기준, 줄이는 쪽으로만 고친다)
+name: quality
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r build
+      - name: H.5 안 쓰는 코드 검사 (파일·의존성 0, 이름으로 불러오는 파일 dynamic-entries.json 포함)
+        run: node scripts/ci/quality-gates.mjs unused
+      - name: H.6 복사 코드 비율 상한
+        run: node scripts/ci/quality-gates.mjs duplicate
+      - name: H.7 순환 의존 금지 (import type 제외)
+        run: node scripts/ci/quality-gates.mjs circular
+      - name: H.8 웹 번들 크기 상한 (점검 때 값 + 10%)
+        run: node scripts/ci/quality-gates.mjs bundle
+      - name: H.9 라이브러리 버전 중복 검사 (pnpm dedupe --check)
+        run: node scripts/ci/quality-gates.mjs dedupe
+      - name: H.10 단언 없는 테스트·.only·의미 없는 단언 금지
+        run: node scripts/ci/quality-gates.mjs tests
+      - name: H.11 Git에 생성물이 올라오면 실패
+        run: node scripts/ci/quality-gates.mjs generated
+      - name: 기능 고정 테스트 (pnpm test:features)
+        run: pnpm test:features

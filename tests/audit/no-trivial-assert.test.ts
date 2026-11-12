@@ -1,4 +1,4 @@
-// T-102 E.C2-005.1 재현·재발 방지: 늘 통과하는 의미 없는 단언(expect(true).toBe(true) 등)이 테스트에 없어야 한다
+// T-102 E.C2-005.1 재현·재발 방지: 늘 통과하는 의미 없는 단언(상수끼리 비교하는 expect 등)이 테스트에 없어야 한다
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

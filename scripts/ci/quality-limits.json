@@ -1,0 +1,13 @@
+{
+  "//": "T-102 H.5~H.11 상한(점검 때 값 기준). 줄이는 쪽으로만 고친다",
+  "unusedFiles": 0,
+  "unusedDependencies": 0,
+  "circular": 0,
+  "duplicatePercent": 0.26,
+  "bundleBytes": 20581615,
+  "assertlessAllow": [
+    "packages/kernel/test/secrets.keyring.test.ts:24",
+    "packages/kernel/test/secrets.keyring.test.ts:28",
+    "packages/plugins-core/attachments/test/four-engines.test.ts:70"
+  ]
+}
