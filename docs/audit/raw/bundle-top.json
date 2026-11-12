@@ -1,0 +1,67 @@
+{
+  "totalFiles": 214,
+  "totalBytes": 18710559,
+  "top10": [
+    {
+      "file": "assets/ts.worker-BrLZGe_E.js",
+      "bytes": 7034760,
+      "guess": "ts.worker",
+      "modules": null
+    },
+    {
+      "file": "assets/index-L02UQduj.js",
+      "bytes": 4075312,
+      "guess": "index",
+      "modules": null
+    },
+    {
+      "file": "assets/css.worker-C_6RgliQ.js",
+      "bytes": 1054215,
+      "guess": "css.worker",
+      "modules": null
+    },
+    {
+      "file": "assets/html.worker-CLyYFd_g.js",
+      "bytes": 716964,
+      "guess": "html.worker",
+      "modules": null
+    },
+    {
+      "file": "assets/index-CtrmmwtA.js",
+      "bytes": 691822,
+      "guess": "index",
+      "modules": null
+    },
+    {
+      "file": "assets/json.worker-BggoxaER.js",
+      "bytes": 406907,
+      "guess": "json.worker",
+      "modules": null
+    },
+    {
+      "file": "assets/xterm-B-qIQCd3.js",
+      "bytes": 329310,
+      "guess": "xterm",
+      "modules": null
+    },
+    {
+      "file": "assets/BuilderPage-eSP4dWcR.js",
+      "bytes": 263745,
+      "guess": "",
+      "modules": null
+    },
+    {
+      "file": "assets/index-Ced-qlZg.css",
+      "bytes": 186532,
+      "guess": "index",
+      "modules": null
+    },
+    {
+      "file": "assets/index-qPzRbnxM.css",
+      "bytes": 130548,
+      "guess": "index",
+      "modules": null
+    }
+  ],
+  "note": "현재 빌드 결과(apps/web/dist) 분석. 소스맵 없으면 파일 이름으로 추정"
+}
