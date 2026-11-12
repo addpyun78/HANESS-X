@@ -526,6 +526,40 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     engineKey: 'assist.engine',
   }),
 
+  // ── 첨부 (T-101 1A.5·1B.1·1B.10 — @harness-x/attachments AttachmentLimitsSchema와 같은 기본값)
+  defineSetting('attachments.maxFileMB', z.number().positive().default(200), {
+    group: 'attachments',
+    title: '한 파일 최대 크기(MB)',
+    description: '이보다 큰 파일은 첨부하지 않고 안내해요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'both',
+  }),
+  defineSetting('attachments.maxBatchMB', z.number().positive().default(1024), {
+    group: 'attachments',
+    title: '한 번에 넣는 최대 크기(MB)',
+    description: '한 번에 넣는 파일을 모두 더한 크기 한도예요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'both',
+  }),
+  defineSetting('attachments.concurrency', z.number().int().min(1).max(8).default(2), {
+    group: 'attachments',
+    title: '동시에 바꾸는 파일 수',
+    description: '파일 내용을 글로 바꾸는 작업을 몇 개까지 함께 할지 정해요.',
+    advanced: true,
+    restartRequired: false,
+    scope: 'global',
+  }),
+  defineSetting('attachments.folderConfirmOver', z.number().int().positive().default(50), {
+    group: 'attachments',
+    title: '폴더 파일이 이보다 많으면 묻기',
+    description: '폴더를 놓았을 때 파일이 이보다 많으면 다 넣을지 먼저 물어봐요.',
+    advanced: true,
+    restartRequired: false,
+    scope: 'global',
+  }),
+
   // ── 음성
   defineSetting('voice.provider', z.enum(['local', 'browser', 'off']).default('local'), {
     group: 'voice',

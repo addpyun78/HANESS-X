@@ -8,7 +8,8 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { formatSize, imagesFromClipboard, toAttachments } from './attachments.js';
+import { AttachmentChips } from './AttachmentChips.js';
+import { attachmentHints, filesFromClipboard, toAttachments } from './attachments.js';
 import { ChipMenu } from './ChipMenu.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
@@ -62,6 +63,8 @@ export interface ComposerProps {
   focusSeq?: number;
   /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
   toolbarExtra?: ReactNode;
+  /** T-101 1E.4 서버가 알려 준 첨부 형태 바꾸기 상태 (첨부 id → 상태) */
+  attachmentStatus?: Record<string, Pick<Attachment, 'status' | 'warning' | 'previewUrl'>>;
   /** T-101 5C.1 아래 줄 오른쪽(전송 버튼 왼쪽) `[엔진 · 모델 ▾]` — 예전 왼쪽 엔진 칩·인증 칩을 대신한다 */
   modelPicker?: ReactNode;
   /** 지금 고른 AI (메인 AI 등) — 보내는 지시의 엔진 */
@@ -101,6 +104,7 @@ export function Composer({
   pinAgent,
   focusSeq,
   toolbarExtra,
+  attachmentStatus,
   modelPicker,
   ai,
   stop,
@@ -187,6 +191,14 @@ export function Composer({
     addFiles(Array.from(e.dataTransfer?.files ?? []), 'drop');
   };
 
+  // 1E.5 지금 고른 AI 기준 안내 (모델을 바꾸면 문구도 바뀜)
+  const engine = engines.find((x) => x.id === (ai?.engine ?? settings.engineId));
+  const hints = attachmentHints(attachments, engine?.inputs);
+  const shown = attachmentStatus
+    ? attachments.map((a) => ({ ...a, ...attachmentStatus[a.id] }))
+    : attachments;
+  const mobile = !!plusMenu?.mobile;
+
   return (
     <div
       className="hx-composer"
@@ -198,25 +210,19 @@ export function Composer({
       onDragLeave={() => setDragOver(false)}
       onDrop={onDrop}
     >
-      {attachments.length > 0 && (
-        <ul className="hx-attachments" aria-label="첨부 파일">
-          {attachments.map((a) => (
-            <li key={a.id} className="hx-attachment">
-              <span aria-hidden="true">{a.mime.startsWith('image/') ? '🖼' : '📄'}</span>
-              <span className="hx-attachment__name">{a.name}</span>
-              <span className="hx-attachment__size">{formatSize(a.size)}</span>
-              <button
-                {...act('composer.remove-attachment')}
-                type="button"
-                className="hx-attachment__remove"
-                aria-label={`${a.name} 첨부 빼기`}
-                onClick={() => setAttachments((xs) => xs.filter((x) => x.id !== a.id))}
-              >
-                ×
-              </button>
-            </li>
-          ))}
-        </ul>
+      {dragOver && (
+        <div className="hx-dropzone" aria-hidden="true">
+          여기에 놓으세요
+        </div>
+      )}
+      <AttachmentChips
+        attachments={shown}
+        onRemove={(id) => setAttachments((xs) => xs.filter((x) => x.id !== id))}
+      />
+      {hints.length > 0 && (
+        <p className="hx-attachment-hint" role="status">
+          {hints.join(' ')}
+        </p>
       )}
       {slash.popover}
       {slash.chip}
@@ -233,17 +239,17 @@ export function Composer({
         onCompositionStart={() => (composing.current = true)}
         onCompositionEnd={() => (composing.current = false)}
         onPaste={(e) => {
-          const imgs = imagesFromClipboard(e.clipboardData);
-          if (imgs.length) {
+          const files = filesFromClipboard(e.clipboardData);
+          if (files.length) {
             e.preventDefault();
-            addFiles(imgs, 'paste');
+            addFiles(files, 'paste');
           }
         }}
       />
       {plusMenu && plusOpen && (
         <PlusMenu {...plusMenu} onClose={closePlus} onAttachFiles={() => fileInput.current?.click()} />
       )}
-      {plusMenu && (
+      {(plusMenu || mobile) && (
         <input
           ref={fileInput}
           type="file"
@@ -290,6 +296,18 @@ export function Composer({
               onChange={(permission) => update({ permission })}
             />
           </>
+        )}
+        {mobile && (
+          // 1E.7 모바일: 끌어 놓기 대신 파일 선택 버튼
+          <button
+            {...act('composer.attach-pick')}
+            type="button"
+            className="hx-attach-pick"
+            aria-label="파일 선택"
+            onClick={() => fileInput.current?.click()}
+          >
+            📎 파일
+          </button>
         )}
         <span className="hx-composer__spacer" />
         {!compact && modelPicker}

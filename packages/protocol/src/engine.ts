@@ -1,3 +1,5 @@
+import type { Attachment } from './attachment.js';
+import type { EngineInputs } from './attachment-delivery.js';
 import type { HarnessEvent } from './events.js';
 import type { AuthMode } from './pipeline.js';
 
@@ -18,6 +20,11 @@ export interface EngineCapabilities {
   mcp: boolean;
   /** 실행 중 중단 지원 */
   interrupt: boolean;
+  /**
+   * T-101 1D.1 AI가 직접 받을 수 있는 입력 (그림·PDF·소리, 그림 최대 MB).
+   * 모델마다 다르면 EngineAdapter.inputsFor(model)이 이 값을 덮는다. 없으면 글만 받는 AI로 본다.
+   */
+  inputs?: EngineInputs;
 }
 
 /** 체크리스트 Stop 처리 경로: 엔진 네이티브 Stop 훅, 또는 하네스가 turn_end 후 재주입 */
@@ -54,6 +61,11 @@ export interface EngineRunOptions {
   /** 현재 체크리스트 항목 */
   itemId?: string;
   signal?: AbortSignal;
+  /**
+   * T-101 1D 첨부 (세션 자산). 어댑터가 실행할 때마다 자기 입력 능력으로 전달 방식을 고른다
+   * — 엔진이 바뀌면(폴백·재개) 같은 값을 넘기기만 해도 새 엔진 방식으로 다시 전달된다.
+   */
+  attachments?: Attachment[];
 }
 
 export interface EngineRun {
@@ -72,6 +84,8 @@ export interface EngineAdapter {
   id: string;
   displayName: string;
   capabilities: EngineCapabilities;
+  /** T-101 1D.1 모델별 입력 능력 (5번 모델 목록이 이 값을 그대로 씀) */
+  inputsFor?(model?: string): EngineInputs;
   run(opts: EngineRunOptions): EngineRun;
 }
 

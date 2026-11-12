@@ -2,6 +2,7 @@ import type { MissingEngineCard, MissingEngineChoice } from './missing-engine.js
 import type { LogRecord } from '@harness-x/kernel';
 import type { ChecklistItem, ChecklistItemInput, ChecklistLedger } from '@harness-x/checklist-ledger';
 import type {
+  Attachment,
   EngineAdapter,
   GateNode,
   HarnessEvent,
@@ -188,6 +189,11 @@ export interface PipelineRunnerOptions {
   env?: Record<string, string | undefined>;
   /** 차단 뒤 자동 전송 최대 턴 (runWithStopGuard, 기본 20) */
   maxAutoTurns?: number;
+  /**
+   * T-101 1D.7 세션 첨부: 첫 단계 엔진 입력에 목록(전달은 엔진 능력대로), 뒤 단계는 MCP(attachments.*)로 읽기.
+   * inputSchema에 attachments 필드를 선언한 노드는 입력 값에도 첨부 목록을 받는다.
+   */
+  attachments?: { list: Attachment[]; /** 세션 첨부 폴더 (harness MCP --attachments) */ dir?: string };
   /** subagent 노드: 에이전트 이름 → 파이프라인 (예: AgentRegistry.get(name)?.pipeline) */
   resolveAgent?: (name: string) => Pipeline | undefined;
   /** 노드 출력 추출기 (주면 계약 검증·재요청을 하지 않는다) */

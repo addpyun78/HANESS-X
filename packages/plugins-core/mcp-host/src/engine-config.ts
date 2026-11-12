@@ -42,6 +42,8 @@ export function stdioLaunch(opts: {
   dir: string;
   sessionId?: string;
   glossaryFile?: string;
+  /** T-101 1D.6 세션 첨부 폴더 → attachments.list·attachments.read */
+  attachmentsDir?: string;
   node?: string;
   bin?: string;
   startupTimeoutSec?: number;
@@ -49,6 +51,7 @@ export function stdioLaunch(opts: {
   const args = [opts.bin ?? MCP_BIN, '--dir', opts.dir];
   if (opts.sessionId) args.push('--session', opts.sessionId);
   if (opts.glossaryFile) args.push('--glossary', opts.glossaryFile);
+  if (opts.attachmentsDir) args.push('--attachments', opts.attachmentsDir);
   return {
     transport: 'stdio',
     command: opts.node ?? process.execPath,

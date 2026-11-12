@@ -1,0 +1,27 @@
+{
+  "name": "@harness-x/attachments",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@harness-x/kernel": "workspace:*",
+    "@harness-x/protocol": "workspace:*",
+    "@harness-x/stt-local": "workspace:*",
+    "iconv-lite": "^0.7.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@harness-x/approvals": "workspace:*"
+  }
+}

@@ -3,14 +3,16 @@ import { randomUUID } from 'node:crypto';
 import { Readable, Writable } from 'node:stream';
 import * as acp from '@agentclientprotocol/sdk';
 import { stripCredentialEnv, type HookBus } from '@harness-x/kernel';
-import type {
-  EngineAdapter,
-  EngineCapabilities,
-  EngineErrorCode,
-  EngineRun,
-  EngineRunOptions,
-  HarnessEvent,
-  McpServerRef,
+import {
+  TEXT_ONLY_INPUTS,
+  deliverToCli,
+  type EngineAdapter,
+  type EngineCapabilities,
+  type EngineErrorCode,
+  type EngineRun,
+  type EngineRunOptions,
+  type HarnessEvent,
+  type McpServerRef,
 } from '@harness-x/protocol';
 import { AcpEventMapper, mapStopReason, type HarnessEventBody } from './events.js';
 import { hookPermissionGate } from './permission.js';
@@ -118,6 +120,7 @@ export class AcpEngine implements EngineAdapter {
     resume: true,
     mcp: true,
     interrupt: true,
+    inputs: TEXT_ONLY_INPUTS,
   };
 
   constructor(readonly config: AcpEngineConfig) {
@@ -241,7 +244,10 @@ export class AcpEngine implements EngineAdapter {
       mapper = new AcpEventMapper();
       return agent.request(acp.methods.agent.session.prompt, {
         sessionId: engineSessionId,
-        prompt: [{ type: 'text', text: opts.prompt }],
+        // T-101 1D.3 첨부: ACP 에이전트는 능력을 모르니 글 형태 + 경로 목록
+        prompt: [
+          { type: 'text', text: deliverToCli(opts.prompt, opts.attachments, TEXT_ONLY_INPUTS).prompt },
+        ],
       });
     };
 
