@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { applyTheme, THEME_KEY, type ThemePref } from '../../design/theme.js';
+import { applyBrowserSetting } from '../../design/ui-prefs.js';
 import { errorMessage, type SettingsApi, type SettingsWidgetContext } from './api.js';
 import { CUSTOM_WIDGETS } from './custom-widgets.js';
 import type { SaveScope, SettingField, SettingGroup, SettingsResponse, SettingValueState } from './types.js';
 import { BASIC_WIDGETS, enumValues } from './widgets.js';
 import './settings-form.css';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 0-1 설정 폼 자동 렌더러 — 레지스트리(GET /api/settings)만 보고 그룹 → 섹션 → 항목을 그린다.
@@ -29,6 +30,28 @@ export interface SettingsFormProps {
   storage?: Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
   /** 브라우저 저장 항목이 바뀐 뒤 (기본: 테마는 바로 적용) */
   onBrowserChange?: (field: SettingField, value: unknown) => void;
+  /** 6C.1 검색: 이 조건에 맞는 항목만 */
+  match?: (field: SettingField) => boolean;
+  /** 보일 항목이 없는 묶음은 감춘다 (검색·프로젝트 범위 화면) */
+  hideEmpty?: boolean;
+  /** hideEmpty로 모두 감췄을 때 안내 */
+  emptyText?: string;
+}
+
+/** 6B.14 "이 값이 어디에 적용되나요?" */
+export function scopeLabel(f: SettingField, formScope: SaveScope): string {
+  if (f.storage === 'browser') return '이 기기 화면에만';
+  if (formScope === 'project' || f.scope === 'project') return '이 프로젝트에만';
+  if (f.scope === 'both') return '전체 (프로젝트마다 바꿀 수 있음)';
+  return '전체';
+}
+
+/** 값 → 화면에 보일 말 (선택지 이름이 있으면 그것) */
+export function displayValue(f: SettingField, v: unknown): string {
+  if (typeof v === 'boolean') return v ? '켜짐' : '꺼짐';
+  if (Array.isArray(v)) return v.join(', ');
+  const s = v === undefined || v === null ? '' : String(v);
+  return f.options?.[s] ?? s;
 }
 
 const RESTART_NOTICE = '다시 시작하면 적용돼요.';
@@ -57,7 +80,7 @@ function readBrowser(f: SettingField, st?: SettingsFormProps['storage']): Settin
 }
 
 const defaultBrowserChange = (f: SettingField, v: unknown) => {
-  if (f.browserKey === THEME_KEY && typeof document !== 'undefined') applyTheme(v as ThemePref);
+  if (f.browserKey && typeof document !== 'undefined') applyBrowserSetting(f.browserKey, v);
 };
 
 export function SettingsForm(props: SettingsFormProps) {
@@ -113,8 +136,9 @@ export function SettingsForm(props: SettingsFormProps) {
     (f: SettingField) =>
       (showAdvanced || !f.advanced) &&
       (!props.groups || props.groups.includes(f.group)) &&
-      (scope === 'global' ? f.scope !== 'project' : f.scope !== 'global'),
-    [showAdvanced, props.groups, scope],
+      (scope === 'global' ? f.scope !== 'project' : f.scope !== 'global' && f.storage === 'settings') &&
+      (!props.match || props.match(f)),
+    [showAdvanced, props.groups, scope, props.match],
   );
 
   const commit = async (f: SettingField, v: unknown) => {
@@ -219,13 +243,20 @@ export function SettingsForm(props: SettingsFormProps) {
           <label className="hx-setting__title" htmlFor={inputId}>
             {f.title}
           </label>
+          <span
+            className="hx-setting__tag hx-setting__scope"
+            title="이 값이 어디에 적용되나요?"
+            data-scope={f.scope}
+          >
+            {scopeLabel(f, scope)}
+          </span>
           {f.restartRequired && <span className="hx-setting__tag">다시 시작 필요</span>}
           {f.advanced && <span className="hx-setting__tag">고급</span>}
           {resettable && (
             <button
               type="button"
               className="hx-setting__link hx-setting__reset"
-              data-action="settings.reset-field"
+              {...act('settings.reset-field')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ key: f.key })}
@@ -235,6 +266,11 @@ export function SettingsForm(props: SettingsFormProps) {
           )}
         </div>
         <p className="hx-setting__desc">{f.description}</p>
+        {scope === 'global' && project && st?.source === 'project' && (
+          <p className="hx-setting__override" role="note">
+            이 프로젝트에서는 "{displayValue(f, st.project)}" 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.
+          </p>
+        )}
         <div className="hx-setting__control">
           {Custom ? (
             <Custom
@@ -271,6 +307,7 @@ export function SettingsForm(props: SettingsFormProps) {
   const renderGroup = (g: SettingGroup) => {
     const fields = data.fields.filter((f) => f.group === g.id && visible(f));
     if (props.groups && !props.groups.includes(g.id)) return null;
+    if (props.hideEmpty && fields.length === 0) return null;
     const plugins = [...new Set(fields.filter((f) => f.plugin).map((f) => f.plugin!.id))];
     const plain = fields.filter((f) => !f.plugin);
     return (
@@ -286,7 +323,7 @@ export function SettingsForm(props: SettingsFormProps) {
             <button
               type="button"
               className="hx-setting__link"
-              data-action="settings.reset-group"
+              {...act('settings.reset-group')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ group: g.id })}
@@ -319,18 +356,14 @@ export function SettingsForm(props: SettingsFormProps) {
             모든 설정을 기본값으로 되돌릴까요?
             <button
               type="button"
-              data-action="settings.reset-all-confirm"
+              {...act('settings.reset-all-confirm')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ all: true })}
             >
               되돌리기
             </button>
-            <button
-              type="button"
-              data-action="settings.reset-all-cancel"
-              onClick={() => setConfirmAll(false)}
-            >
+            <button type="button" {...act('settings.reset-all-cancel')} onClick={() => setConfirmAll(false)}>
               그만두기
             </button>
           </span>
@@ -338,7 +371,7 @@ export function SettingsForm(props: SettingsFormProps) {
           <button
             type="button"
             className="hx-setting__link"
-            data-action="settings.reset-all"
+            {...act('settings.reset-all')}
             onClick={() => setConfirmAll(true)}
           >
             모든 설정 기본값으로
@@ -346,6 +379,11 @@ export function SettingsForm(props: SettingsFormProps) {
         )}
       </div>
       {data.groups.map(renderGroup)}
+      {props.hideEmpty && props.emptyText !== '' && !data.fields.some(visible) && (
+        <p className="hx-settings-form__empty" role="status">
+          {props.emptyText ?? '맞는 설정이 없어요.'}
+        </p>
+      )}
     </div>
   );
 }

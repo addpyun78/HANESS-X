@@ -1,0 +1,145 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.12 플러그인 > 설치된 플러그인마다 소제목 아래 그 플러그인 설정 (스냅샷) 1`] = `
+<section
+  aria-label="플러그인"
+  class="hx-settings-form__section"
+  data-setting-group="plugins"
+>
+  <header
+    class="hx-settings-form__section-head"
+  >
+    <h3>
+      플러그인
+    </h3>
+    <button
+      class="hx-setting__link"
+      data-action="settings.reset-group"
+      type="button"
+    >
+      이 묶음 기본값으로
+    </button>
+  </header>
+  <p
+    class="hx-settings-form__section-desc"
+  >
+    설치한 플러그인마다 따로 정하는 설정이에요.
+  </p>
+  <div
+    class="hx-settings-form__plugin"
+    data-setting-plugin="sample-notes"
+  >
+    <h4>
+      샘플 메모
+    </h4>
+    <div
+      class="hx-setting"
+      data-setting-key="plugins.sample-notes.enabled"
+      data-widget="boolean"
+    >
+      <div
+        class="hx-setting__head"
+      >
+        <label
+          class="hx-setting__title"
+          for="hx-setting-plugins-sample-notes-enabled"
+        >
+          메모 켜기
+        </label>
+        <span
+          class="hx-setting__tag hx-setting__scope"
+          data-scope="global"
+          title="이 값이 어디에 적용되나요?"
+        >
+          전체
+        </span>
+        <span
+          class="hx-setting__tag"
+        >
+          다시 시작 필요
+        </span>
+      </div>
+      <p
+        class="hx-setting__desc"
+      >
+        작업마다 메모를 남겨요.
+      </p>
+      <div
+        class="hx-setting__control"
+      >
+        <button
+          aria-checked="true"
+          class="hx-setting__switch"
+          data-action="settings.toggle"
+          id="hx-setting-plugins-sample-notes-enabled"
+          role="switch"
+          title="메모 켜기"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            class="hx-setting__switch-knob"
+          />
+          <span
+            class="hx-setting__switch-label"
+          >
+            켜짐
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="hx-setting"
+      data-setting-key="plugins.sample-notes.style"
+      data-widget="enum"
+    >
+      <div
+        class="hx-setting__head"
+      >
+        <label
+          class="hx-setting__title"
+          for="hx-setting-plugins-sample-notes-style"
+        >
+          메모 길이
+        </label>
+        <span
+          class="hx-setting__tag hx-setting__scope"
+          data-scope="global"
+          title="이 값이 어디에 적용되나요?"
+        >
+          전체
+        </span>
+        <span
+          class="hx-setting__tag"
+        >
+          다시 시작 필요
+        </span>
+      </div>
+      <p
+        class="hx-setting__desc"
+      >
+        샘플 메모 플러그인의 "메모 길이" 설정이에요.
+      </p>
+      <div
+        class="hx-setting__control"
+      >
+        <select
+          class="hx-setting__select"
+          id="hx-setting-plugins-sample-notes-style"
+        >
+          <option
+            value="short"
+          >
+            short
+          </option>
+          <option
+            value="long"
+          >
+            long
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+`;

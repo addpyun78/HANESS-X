@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ApiError } from '../../api/client.js';
+import { loadAlertPrefs, playChime, type AlertPrefs } from './alert-prefs.js';
 import type { ApprovalsApi } from './api.js';
 import {
   AREA_TITLE,
@@ -44,6 +45,10 @@ export interface UseApprovalsOptions {
   baseTitle?: string;
   /** 브라우저 알림 (테스트에서 바꿔 끼운다). 기본 window.Notification */
   notifier?: NotifierLike;
+  /** T-101 6B.6 알림 설정 (기본: 설정 화면이 브라우저 저장소에 쓴 값) */
+  alertPrefs?: () => AlertPrefs;
+  /** 알림 소리 (기본 playChime) */
+  chime?: () => void;
 }
 
 export interface NotifierLike {
@@ -107,6 +112,8 @@ export function useApprovals({
   baseTitle,
   notifier,
   extra = NO_EXTRA,
+  alertPrefs = loadAlertPrefs,
+  chime = playChime,
 }: UseApprovalsOptions) {
   const [loaded, setLoaded] = useState<ApprovalCardData[]>(initial);
   const [done, setDone] = useState<Set<string>>(() => new Set());
@@ -160,7 +167,9 @@ export function useApprovals({
       ...ts,
       ...fresh.map((c) => ({ id: `t-${c.id}`, cardId: c.id, text: `${AREA_TITLE} — ${c.text}` })),
     ]);
-    if (typeof document !== 'undefined' && document.hidden && notify) {
+    const prefs = alertPrefs();
+    if (prefs.sound) chime();
+    if (typeof document !== 'undefined' && document.hidden && notify && prefs.osNotify) {
       const show = () => notify.show(AREA_TITLE, fresh[0]!.text, () => setFocusId(fresh[0]!.id));
       if (notify.permission === 'granted') show();
       else if (notify.permission === 'default' && !askedBefore()) {
@@ -168,7 +177,22 @@ export function useApprovals({
         void notify.requestPermission().then((p) => p === 'granted' && show());
       }
     }
-  }, [all, notify]);
+  }, [all, notify, alertPrefs, chime]);
+
+  // ── T-101 6B.6 다시 알림: 확인할 일이 남아 있으면 정한 간격마다 (화면을 보고 있지 않을 때만)
+  const pendingCount = all.length;
+  useEffect(() => {
+    const minutes = alertPrefs().remindMinutes;
+    if (!minutes || pendingCount === 0) return;
+    const t = setInterval(() => {
+      const prefs = alertPrefs();
+      if (typeof document === 'undefined' || !document.hidden) return;
+      if (prefs.sound) chime();
+      if (prefs.osNotify && notify?.permission === 'granted')
+        notify.show(AREA_TITLE, `확인할 일이 ${pendingCount}개 남아 있어요.`, () => {});
+    }, minutes * 60_000);
+    return () => clearInterval(t);
+  }, [pendingCount, notify, alertPrefs, chime]);
 
   // ── 탭 제목 "(n)" ───────────────────────────────────────────────
   const base = useRef(baseTitle);

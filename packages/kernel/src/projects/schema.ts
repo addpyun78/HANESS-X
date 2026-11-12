@@ -50,6 +50,8 @@ export const ProjectMarkerSchema = z.object({
   id: z.uuid(),
   name: z.string().min(1),
   createdAt: z.iso.datetime({ offset: true }),
+  /** T-101 6B.14 프로젝트 범위 설정 값 (settings.json과 같은 중첩 객체 — ProjectSettingsIO가 읽고 씀) */
+  settings: z.record(z.string(), z.unknown()).optional(),
 });
 export type ProjectMarker = z.infer<typeof ProjectMarkerSchema>;
 

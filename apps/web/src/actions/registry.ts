@@ -167,6 +167,26 @@ export const ACTIONS = {
   'settings.reset-all': { description: '모든 설정을 되돌릴지 물어요', effect: 'state' },
   'settings.reset-all-confirm': { description: '모든 설정을 기본값으로 되돌려요', effect: 'api' },
   'settings.reset-all-cancel': { description: '되돌리기를 그만둬요', effect: 'state' },
+  // T-101 6번 설정 화면
+  'settings.tab': { description: '설정 묶음(탭)을 바꿔요', effect: 'state' },
+  'settings.show-advanced': { description: '고급 설정을 보이거나 숨겨요', effect: 'state' },
+  'settings.project-pin': { description: '프로젝트를 목록 맨 위에 고정하거나 풀어요', effect: 'api' },
+  'settings.project-relink': { description: '찾을 수 없는 프로젝트 폴더를 다시 연결해요', effect: 'open' },
+  'settings.project-settings': { description: '이 프로젝트의 설정 화면을 열어요', effect: 'navigate' },
+  'settings.project-remove': { description: '목록에서 뺄지 물어요 (파일은 지우지 않아요)', effect: 'state' },
+  'settings.project-remove-confirm': {
+    description: '프로젝트를 목록에서 빼요 (파일은 그대로예요)',
+    effect: 'api',
+  },
+  'settings.project-remove-cancel': { description: '목록에서 빼기를 그만둬요', effect: 'state' },
+  'settings.data-cleanup': { description: '오래된 기록과 첨부 사본을 지금 정리해요', effect: 'api' },
+  'settings.export': { description: '설정을 settings.yaml 파일로 내려받아요', effect: 'download' },
+  'settings.import': { description: 'settings.yaml 파일을 골라 설정을 가져와요', effect: ['open', 'api'] },
+  'settings.update-check': { description: '새 버전이 있는지 확인해요', effect: 'api' },
+  'settings.diagnostics': {
+    description: '문제 알림용 진단 파일을 내려받아요 (키는 빠져요)',
+    effect: 'download',
+  },
 
   'projects.new-session': { description: '지금 프로젝트에서 새 대화를 시작해요', effect: 'api' },
   'projects.pick-new': { description: '어느 프로젝트에서 시작할지 고르는 메뉴를 열어요', effect: 'open' },

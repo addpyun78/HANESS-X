@@ -1,0 +1,137 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.10 프로젝트 > 임시 작업 공간 위치·묶기·정렬 + 프로젝트 목록(고정 먼저, 폴더 없음 ⚠) (스냅샷) 1`] = `
+<section
+  aria-label="프로젝트 목록"
+  class="hx-settings-screen__card"
+>
+  <h3>
+    프로젝트 목록
+  </h3>
+  <p>
+    여기서 빼도 폴더와 파일은 그대로 있어요. 다시 열면 목록에 돌아와요.
+  </p>
+  <ul
+    class="hx-settings-screen__list"
+  >
+    <li
+      class="hx-settings-screen__row"
+      data-project-id="b"
+    >
+      <span>
+        <strong>
+          <span
+            aria-label="고정됨"
+          >
+            📌 
+          </span>
+          하네스
+        </strong>
+         
+        <code
+          title="C:\\work\\b"
+        >
+          C:\\work\\b
+        </code>
+      </span>
+      <button
+        data-action="settings.project-pin"
+        type="button"
+      >
+        고정 해제
+      </button>
+      <button
+        data-action="settings.project-settings"
+        type="button"
+      >
+        프로젝트 설정
+      </button>
+      <button
+        data-action="settings.project-remove"
+        type="button"
+      >
+        목록에서 빼기
+      </button>
+    </li>
+    <li
+      class="hx-settings-screen__row"
+      data-project-id="a"
+    >
+      <span>
+        <strong>
+          임장 노트
+        </strong>
+         
+        <code
+          title="C:\\work\\a"
+        >
+          C:\\work\\a
+        </code>
+      </span>
+      <button
+        data-action="settings.project-pin"
+        type="button"
+      >
+        고정
+      </button>
+      <button
+        data-action="settings.project-settings"
+        type="button"
+      >
+        프로젝트 설정
+      </button>
+      <button
+        data-action="settings.project-remove"
+        type="button"
+      >
+        목록에서 빼기
+      </button>
+    </li>
+    <li
+      class="hx-settings-screen__row"
+      data-project-id="c"
+    >
+      <span>
+        <strong>
+          옛 프로젝트
+        </strong>
+         
+        <code
+          title="C:\\work\\c"
+        >
+          C:\\work\\c
+        </code>
+        <span
+          role="status"
+        >
+           ⚠ 폴더를 찾을 수 없어요
+        </span>
+      </span>
+      <button
+        data-action="settings.project-relink"
+        type="button"
+      >
+        다시 연결
+      </button>
+      <button
+        data-action="settings.project-pin"
+        type="button"
+      >
+        고정
+      </button>
+      <button
+        data-action="settings.project-settings"
+        type="button"
+      >
+        프로젝트 설정
+      </button>
+      <button
+        data-action="settings.project-remove"
+        type="button"
+      >
+        목록에서 빼기
+      </button>
+    </li>
+  </ul>
+</section>
+`;

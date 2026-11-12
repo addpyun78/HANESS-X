@@ -57,7 +57,7 @@ export function EnginesSettings({ api }: EnginesSettingsProps) {
         <h2>엔진</h2>
         {scannedAt && (
           <span className="hx-engines__scanned">
-            마지막 스캔 <time dateTime={scannedAt}>{scannedAt.slice(0, 16).replace('T', ' ')}</time>
+            마지막으로 찾은 때 <time dateTime={scannedAt}>{scannedAt.slice(0, 16).replace('T', ' ')}</time>
           </span>
         )}
         <button

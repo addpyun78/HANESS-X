@@ -157,3 +157,11 @@
   margin: 0;
   color: var(--hx-text-muted);
 }
+
+/* T-101 6B.14 적용 범위·프로젝트 값 안내 */
+.hx-setting__override {
+  margin: 0;
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border-left: 3px solid var(--hx-accent);
+  background: var(--hx-bg);
+}

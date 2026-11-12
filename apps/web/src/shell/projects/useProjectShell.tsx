@@ -6,7 +6,7 @@ import type { NavTarget, Workspace } from '../types.js';
 import type { ProjectInfo, ProjectsApi, ProjectView, RootSuggestion, SessionRecordView } from './api.js';
 import { ConfirmCard } from './ConfirmCard.js';
 import { EmptySession, type RecentAgent } from './EmptySession.js';
-import { ProjectSettings } from './ProjectSettings.js';
+import { ProjectSettings, type ProjectSettingsProps } from './ProjectSettings.js';
 import { ProjectSidebar, type ProjectAction, type SessionAction } from './ProjectSidebar.js';
 import { RootSuggestCard, WhereToWork } from './WhereToWork.js';
 
@@ -36,6 +36,8 @@ export interface UseProjectShellOptions {
   emptyExtra?: ReactNode;
   /** 키보드 단축키를 받을 곳 (기본 window) */
   keyTarget?: Pick<Window, 'addEventListener' | 'removeEventListener'>;
+  /** T-101 6B.14 프로젝트 설정 화면의 "이 프로젝트에서만 바꿀 설정" (0-1 설정 틀, 범위 project) */
+  settings?: ProjectSettingsProps['settings'];
 }
 
 type Overlay =
@@ -537,6 +539,7 @@ export function useProjectShell(o: UseProjectShellOptions) {
         {...(overlay.info ? { info: overlay.info } : {})}
         engines={o.engines ?? []}
         agents={o.agents ?? []}
+        {...(o.settings ? { settings: o.settings } : {})}
         onSave={async (v) => {
           if (!api) return;
           try {
@@ -587,6 +590,8 @@ export function useProjectShell(o: UseProjectShellOptions) {
     draft,
     error,
     renderSidebar,
+    /** T-101 6B.10 설정 > 프로젝트 탭의 목록이 사이드바와 같은 동작을 쓴다 */
+    projectAction,
     /** 채팅 영역 위에 놓는 화면 (어디서 작업할까요 / 빈 세션 / 프로젝트 설정) — 없으면 null */
     main,
     composer: { fill, pin, focusSeq },

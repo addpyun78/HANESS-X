@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.14 적용 범위 표시 > 프로젝트 값이 전체 값을 덮고 있으면 "이 프로젝트에서는 ○○ 값을 써요" (스냅샷) 1`] = `
+<div
+  class="hx-setting"
+  data-setting-key="mode.default"
+  data-widget="enum"
+>
+  <div
+    class="hx-setting__head"
+  >
+    <label
+      class="hx-setting__title"
+      for="hx-setting-mode-default"
+    >
+      기본 모드
+    </label>
+    <span
+      class="hx-setting__tag hx-setting__scope"
+      data-scope="both"
+      title="이 값이 어디에 적용되나요?"
+    >
+      전체 (프로젝트마다 바꿀 수 있음)
+    </span>
+    <button
+      class="hx-setting__link hx-setting__reset"
+      data-action="settings.reset-field"
+      type="button"
+    >
+      기본값으로
+    </button>
+  </div>
+  <p
+    class="hx-setting__desc"
+  >
+    새 작업을 시작할 때의 모드예요.
+  </p>
+  <p
+    class="hx-setting__override"
+    role="note"
+  >
+    이 프로젝트에서는 "
+    계획
+    " 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.
+  </p>
+  <div
+    class="hx-setting__control"
+  >
+    <select
+      class="hx-setting__select"
+      id="hx-setting-mode-default"
+    >
+      <option
+        value="plan"
+      >
+        계획
+      </option>
+      <option
+        value="normal"
+      >
+        일반
+      </option>
+      <option
+        value="auto"
+      >
+        오토
+      </option>
+    </select>
+  </div>
+</div>
+`;

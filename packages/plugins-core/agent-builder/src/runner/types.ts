@@ -194,6 +194,8 @@ export interface PipelineRunnerOptions {
    * inputSchema에 attachments 필드를 선언한 노드는 입력 값에도 첨부 목록을 받는다.
    */
   attachments?: { list: Attachment[]; /** 세션 첨부 폴더 (harness MCP --attachments) */ dir?: string };
+  /** 정체 감지 기준 (T-101 6B.4 설정 checklist.stall*, 기본 2턴·3턴) */
+  stall?: { changeApproachTurns?: number; blockTurns?: number };
   /** subagent 노드: 에이전트 이름 → 파이프라인 (예: AgentRegistry.get(name)?.pipeline) */
   resolveAgent?: (name: string) => Pipeline | undefined;
   /** 노드 출력 추출기 (주면 계약 검증·재요청을 하지 않는다) */

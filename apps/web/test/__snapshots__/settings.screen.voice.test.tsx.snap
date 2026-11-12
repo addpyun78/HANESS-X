@@ -1,0 +1,81 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`6B.9 음성 > 받아쓰기 방식 3가지, 고르면 음성 입력이 읽는 저장 이름(hx.stt.provider)에 남는다 (스냅샷) 1`] = `
+<section
+  aria-label="음성"
+  class="hx-settings-form__section"
+  data-setting-group="voice"
+>
+  <header
+    class="hx-settings-form__section-head"
+  >
+    <h3>
+      음성
+    </h3>
+    <button
+      class="hx-setting__link"
+      data-action="settings.reset-group"
+      type="button"
+    >
+      이 묶음 기본값으로
+    </button>
+  </header>
+  <p
+    class="hx-settings-form__section-desc"
+  >
+    말로 입력하는 방법을 정해요.
+  </p>
+  <div
+    class="hx-setting"
+    data-setting-key="voice.provider"
+    data-widget="enum"
+  >
+    <div
+      class="hx-setting__head"
+    >
+      <label
+        class="hx-setting__title"
+        for="hx-setting-voice-provider"
+      >
+        말로 입력하는 방법
+      </label>
+      <span
+        class="hx-setting__tag hx-setting__scope"
+        data-scope="global"
+        title="이 값이 어디에 적용되나요?"
+      >
+        이 기기 화면에만
+      </span>
+    </div>
+    <p
+      class="hx-setting__desc"
+    >
+      내 컴퓨터에서 바꿀지, 브라우저 기능을 쓸지 골라요.
+    </p>
+    <div
+      class="hx-setting__control"
+    >
+      <select
+        class="hx-setting__select"
+        id="hx-setting-voice-provider"
+      >
+        <option
+          value="local"
+        >
+          내 컴퓨터에서
+        </option>
+        <option
+          value="browser"
+        >
+          브라우저 기능
+        </option>
+        <option
+          value="off"
+        >
+          끄기
+        </option>
+      </select>
+    </div>
+  </div>
+</section>
+`;
