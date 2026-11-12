@@ -16,7 +16,9 @@ import { validate } from './findings-schema.mjs';
 const ffile = join(auditDir, 'findings.json');
 const load = () => readJson(ffile, { findings: [] });
 const save = (d) => writeJson(ffile, d);
-const { checkPlainKorean } = await import(pathToFileURL(join(root, 'packages', 'plugins-core', 'approvals', 'dist', 'plain-korean.js')).href);
+const { checkPlainKorean } = await import(
+  pathToFileURL(join(root, 'packages', 'plugins-core', 'approvals', 'dist', 'plain-korean.js')).href
+);
 const mode = process.argv[2];
 
 // D.2 같은 원인: [남길 id, 합칠 id들]
@@ -24,7 +26,17 @@ const MERGES = [
   ['C2-004', ['C6-006']], // 효과 없는 설정 4개 = 설정 설명 차이
 ];
 
-const AREA_LABEL = { bug: '버그', shell: '껍데기', security: '보안', size: '용량', unused: '안 쓰는 코드', consolidation: '통합', update: '업데이트', docs: '문서', structure: '폴더 구조' };
+const AREA_LABEL = {
+  bug: '버그',
+  shell: '껍데기',
+  security: '보안',
+  size: '용량',
+  unused: '안 쓰는 코드',
+  consolidation: '통합',
+  update: '업데이트',
+  docs: '문서',
+  structure: '폴더 구조',
+};
 const SEV_LABEL = { critical: '치명', high: '높음', medium: '보통', low: '낮음' };
 const RISK_LABEL = { low: '낮음', medium: '보통', high: '높음' };
 
@@ -59,8 +71,10 @@ if (mode === 'severity') {
   for (const f of d.findings) {
     let s = f.severity;
     if (f.area === 'security') s = f.meta?.prod ? 'critical' : 'high';
-    else if (f.area === 'shell' && s !== 'critical' && /404|등록되지 않|등록하지 않|항상 실패/.test(f.title)) s = 'high';
-    else if (['size', 'update', 'docs', 'structure', 'consolidation'].includes(f.area) && s === 'high') s = 'medium';
+    else if (f.area === 'shell' && s !== 'critical' && /404|등록되지 않|등록하지 않|항상 실패/.test(f.title))
+      s = 'high';
+    else if (['size', 'update', 'docs', 'structure', 'consolidation'].includes(f.area) && s === 'high')
+      s = 'medium';
     if (s !== f.severity) {
       changed.push(`${f.id} ${f.severity}→${s}`);
       f.severity = s;
@@ -108,30 +122,48 @@ function decide(f) {
   switch (f.area) {
     case 'bug':
       if (f.severity === 'critical' || f.severity === 'high')
-        return f.risk === 'high' ? ['hold', '고칠 때 위험이 커서 보류해요.'] : ['fix', '심각하고 고칠 위험이 크지 않아 진행해요.'];
-      return f.risk === 'low' ? ['fix', '고칠 위험이 낮아 진행해요.'] : ['hold', '고칠 위험이 낮지 않아 보류해요.'];
+        return f.risk === 'high'
+          ? ['hold', '고칠 때 위험이 커서 보류해요.']
+          : ['fix', '심각하고 고칠 위험이 크지 않아 진행해요.'];
+      return f.risk === 'low'
+        ? ['fix', '고칠 위험이 낮아 진행해요.']
+        : ['hold', '고칠 위험이 낮지 않아 보류해요.'];
     case 'security':
-      return m.major ? ['hold', '큰 판 올림이 필요해 보류해요.'] : ['fix', '같은 큰 판 안에서 고칠 수 있어 진행해요.'];
+      return m.major
+        ? ['hold', '큰 판 올림이 필요해 보류해요.']
+        : ['fix', '같은 큰 판 안에서 고칠 수 있어 진행해요.'];
     case 'shell':
       if (f.effort === 'S' && m.criteria) return ['implement', '작고 원래 할 일이 분명해 구현해요.'];
       if (f.severity === 'high' && f.risk !== 'high' && m.wiring)
         return ['fix', '만들어 둔 기능을 연결만 하면 되는 버그라 고쳐요.'];
-      if (/단언/.test(f.title)) return f.risk === 'low' ? ['fix', '고칠 위험이 낮아 진행해요.'] : ['hold', '보류해요.'];
+      if (/단언/.test(f.title))
+        return f.risk === 'low' ? ['fix', '고칠 위험이 낮아 진행해요.'] : ['hold', '보류해요.'];
       return ['hide', '바로 만들기 어려워 숨기고 준비 중이라고 알려요.'];
     case 'update':
       if (m.security && !m.major && !m.tooNew) return ['fix', '보안 수정이고 작은 판이라 진행해요.'];
-      return ['hold', m.major ? '큰 판 올림이라 보류해요.' : m.tooNew ? '나온 지 14일이 안 돼 보류해요.' : '보안 수정이 아니라 보류해요.'];
+      return [
+        'hold',
+        m.major
+          ? '큰 판 올림이라 보류해요.'
+          : m.tooNew
+            ? '나온 지 14일이 안 돼 보류해요.'
+            : '보안 수정이 아니라 보류해요.',
+      ];
     case 'docs':
       return ['fix', '문서 차이는 모두 고쳐요.'];
     case 'consolidation':
-      return m.behaviorDiff === 0 && f.risk === 'low' ? ['fix', '동작 차이가 없고 위험이 낮아 합쳐요.'] : ['hold', '동작 차이가 있거나 위험이 있어 보류해요.'];
+      return m.behaviorDiff === 0 && f.risk === 'low'
+        ? ['fix', '동작 차이가 없고 위험이 낮아 합쳐요.']
+        : ['hold', '동작 차이가 있거나 위험이 있어 보류해요.'];
     case 'structure':
       return ['hold', '폴더 옮기기는 제안만 해요.'];
     case 'size':
       if (m.dedupe) return ['fix', '같은 큰 판끼리 정리라 위험이 낮아요.'];
       return ['hold', '지우기 표에 없는 종류라 보류해요.'];
     case 'unused':
-      return m.fourEvidence && ['dependency', 'export', 'file', 'generated'].includes(m.kind) ? ['fix', '네 가지 근거가 모두 맞아 지워요.'] : ['hold', '근거가 모자라 보류해요.'];
+      return m.fourEvidence && ['dependency', 'export', 'file', 'generated'].includes(m.kind)
+        ? ['fix', '네 가지 근거가 모두 맞아 지워요.']
+        : ['hold', '근거가 모자라 보류해요.'];
     default:
       return ['hold', '애매해서 보류해요.'];
   }
@@ -152,15 +184,22 @@ if (mode === 'auto') {
   render();
   const c = {};
   for (const f of d.findings) if (f.decision) c[f.decision] = (c[f.decision] ?? 0) + 1;
-  console.log(`auto: 결정 ${n}개 ${JSON.stringify(c)} · 결정 없는 발견 ${d.findings.filter((f) => !f.status.startsWith('merged-into') && !f.decision).length}개`);
+  console.log(
+    `auto: 결정 ${n}개 ${JSON.stringify(c)} · 결정 없는 발견 ${d.findings.filter((f) => !f.status.startsWith('merged-into') && !f.decision).length}개`,
+  );
 }
 
 if (mode === 'approve') {
   const md = readFileSync(join(auditDir, 'report.md'), 'utf8');
   const out = [];
-  for (const m of md.matchAll(/^- \[x\] 승인 `(C\d-\d{3})`(?: \((fix|implement|hide)\))?/gm)) out.push({ id: m[1], choice: m[2] ?? 'fix' });
+  for (const m of md.matchAll(/^- \[x\] 승인 `(C\d-\d{3})`(?: \((fix|implement|hide)\))?/gm))
+    out.push({ id: m[1], choice: m[2] ?? 'fix' });
   const checks = (md.match(/^- \[x\] 승인 `C\d-\d{3}`/gm) ?? []).length;
-  writeJson(join(auditDir, 'approved.json'), { generatedAt: new Date().toISOString(), source: 'docs/audit/report.md', approved: out });
+  writeJson(join(auditDir, 'approved.json'), {
+    generatedAt: new Date().toISOString(),
+    source: 'docs/audit/report.md',
+    approved: out,
+  });
   console.log(`approve: 체크 ${checks}개 = approved ${out.length}개`);
 }
 
@@ -178,7 +217,17 @@ function render() {
   let md = `# T-102 점검 보고서\n\n`;
   md += `## 한눈에 보기\n\n${summary.map((l) => `- ${l}`).join('\n')}\n\n`;
   md += `## 무인 모드 안내\n\n이 보고서는 무인 모드로 자동 결정됐어요.\n규칙은 \`docs/audit/auto-policy.md\`에 있어요.\n결정을 바꾸려면 보류 항목의 [ ]를 [x]로 바꿔 주세요.\n그다음 러너를 다시 실행하면 돼요.\n러너 명령은 \`node scripts/audit/run-audit.mjs\`예요.\n\n`;
-  const order = ['bug', 'shell', 'security', 'size', 'unused', 'consolidation', 'update', 'docs', 'structure'];
+  const order = [
+    'bug',
+    'shell',
+    'security',
+    'size',
+    'unused',
+    'consolidation',
+    'update',
+    'docs',
+    'structure',
+  ];
   for (const a of order) {
     const fs = live.filter((f) => f.area === a);
     md += `## ${AREA_LABEL[a]} (${fs.length}건)\n\n`;
@@ -187,7 +236,8 @@ function render() {
       continue;
     }
     md += `| id | 쉬운 말 설명 | 심각도 | 위험 | 작업량 | 묶음 | 결정 |\n| --- | --- | --- | --- | --- | --- | --- |\n`;
-    for (const f of fs) md += `| ${f.id} | ${f.plain ?? f.title} | ${SEV_LABEL[f.severity]} | ${RISK_LABEL[f.risk]} | ${f.effort} | ${BUNDLE[f.bundle] ?? '—'} | ${f.decision ?? '—'} |\n`;
+    for (const f of fs)
+      md += `| ${f.id} | ${f.plain ?? f.title} | ${SEV_LABEL[f.severity]} | ${RISK_LABEL[f.risk]} | ${f.effort} | ${BUNDLE[f.bundle] ?? '—'} | ${f.decision ?? '—'} |\n`;
     md += `\n${fs.map(box).join('\n')}\n\n`;
   }
   // D.9 용량
@@ -200,7 +250,8 @@ function render() {
   const sec = oc.filter((o) => o.security);
   const rest = oc.filter((o) => !o.security);
   md += `## 업데이트 요약 (보안 수정 먼저)\n\n| 종류 | 이름 | 지금 | 새 판 | 결정 |\n| --- | --- | --- | --- | --- |\n`;
-  for (const o of [...sec, ...rest]) md += `| ${o.class} | \`${o.package}\` | ${o.current ?? '—'} | ${o.latest ?? '—'} | ${o.package === 'dompurify' ? '진행(같은 큰 판, 공개 31일)' : o.class === '작은 버전' ? '보류(나온 지 14일 안 됨)' : '보류(큰 판)'} |\n`;
+  for (const o of [...sec, ...rest])
+    md += `| ${o.class} | \`${o.package}\` | ${o.current ?? '—'} | ${o.latest ?? '—'} | ${o.package === 'dompurify' ? '진행(같은 큰 판, 공개 31일)' : o.class === '작은 버전' ? '보류(나온 지 14일 안 됨)' : '보류(큰 판)'} |\n`;
   md += `\n`;
   writeFileSync(join(auditDir, 'report.md'), md);
   return md;
@@ -218,9 +269,19 @@ if (mode === 'plaincheck') {
   const d = load();
   const texts = [];
   const sum = md.split('## 한눈에 보기')[1]?.split('## ')[0] ?? '';
-  texts.push(...sum.split('\n').filter((l) => l.startsWith('- ')).map((l) => l.slice(2)));
+  texts.push(
+    ...sum
+      .split('\n')
+      .filter((l) => l.startsWith('- '))
+      .map((l) => l.slice(2)),
+  );
   const notice = md.split('## 무인 모드 안내')[1]?.split('## ')[0] ?? '';
-  texts.push(...notice.split('\n').filter(Boolean).map((l) => l.replace(/`[^`]*`/g, '"파일"')));
+  texts.push(
+    ...notice
+      .split('\n')
+      .filter(Boolean)
+      .map((l) => l.replace(/`[^`]*`/g, '"파일"')),
+  );
   for (const f of d.findings) if (f.plain && !f.status.startsWith('merged-into')) texts.push(f.plain);
   for (const f of d.findings) if (f.decisionReason) texts.push(f.decisionReason);
   const bad = [];
