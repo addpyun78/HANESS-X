@@ -226,7 +226,9 @@ function InstalledCard({ card, api, fallbackOptions, onSaved }: EngineCardProps)
           type="button"
           className="hx-icon-btn"
           disabled={ping === 'running'}
-          title={ping === 'running' ? '시험하는 중이에요' : 'AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요.'}
+          title={
+            ping === 'running' ? '시험하는 중이에요' : 'AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요.'
+          }
           onClick={runPing}
         >
           테스트 실행
