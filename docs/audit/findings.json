@@ -471,7 +471,7 @@
       "bundle": "nice"
     },
     {
-      "status": "open",
+      "status": "hidden",
       "features": [],
       "area": "shell",
       "severity": "medium",
@@ -487,7 +487,9 @@
       "risk": "low",
       "effort": "M",
       "meta": {
-        "source": "C2.19"
+        "source": "C2.19",
+        "resolution": "notReady: 비활성 + 준비 중이에요",
+        "resolvedAt": "2026-11-12T16:48:11.658Z"
       },
       "id": "C2-004",
       "plain": "설정 4개는 바꿔도 아무 일도 안 일어나요.",
