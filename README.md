@@ -9,6 +9,25 @@ node packages/kernel/dist/cli.js approvals --workspace <프로젝트 폴더> # �
 pnpm test
 ```
 
+### 바로가기로 켜기 (Windows + WSL)
+
+바탕화면 바로가기 → `scripts/launcher/start-harness.cmd` → `scripts/launcher/start.sh`가 서버와 웹 화면을 켜고 브라우저를 엽니다.
+끌 때는 `scripts/launcher/stop-harness.cmd`(또는 `stop.sh`). 바로가기 만들기: `scripts/launcher/make-shortcut.ps1`.
+
+### 명령 모음 (`node packages/kernel/dist/cli.js <명령>`, 설치하면 `harness-x <명령>`)
+
+| 명령                                           | 하는 일                                       |
+| ---------------------------------------------- | --------------------------------------------- |
+| `serve [--workspace <폴더>] [--port <n>]`      | 로컬 서버 켜기(기본 127.0.0.1:3790, 루프백만) |
+| `approvals [--workspace <폴더>]`               | 확인이 필요한 카드를 글로 보고 번호로 고르기  |
+| `install <이름\|주소>`                         | 설치 계획을 보여 주고 y/n으로 물은 뒤 설치    |
+| `tools list` · `tools allow <id>`              | 설치된 도구 목록 · 새 도구 첫 실행 허락       |
+| `run <에이전트> <지시> [--project <id\|경로>]` | 켜진 서버에서 새 작업 시작                    |
+| `resume <세션 id>`                             | 멈춘 작업을 점검한 뒤 이어서 하기             |
+| `reindex`                                      | 작업 목록 색인 다시 만들기                    |
+
+모든 하위 명령은 `--help`(`-h`)로 사용법만 볼 수 있습니다(실행하지 않음).
+
 ## 체크리스트 판정 — 비교기 · 판정 AI · 승인 카드 (T-100 Part 1)
 
 체크리스트 항목의 "기대값"과 "실제값"(명령 출력·경로·JSON·숫자·버전 …)은 글자 그대로 맞대지 않고 **비교기**를 거친다.
