@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { checkPlainKorean } from '../../packages/plugins-core/approvals/src/plain-korean.js';
 import { isPlain as builderIsPlain } from '../../packages/plugins-core/agent-builder/src/designer/plain.js';
 import { isPlain as finderIsPlain } from '../../packages/plugins-core/tool-finder/src/reasons.js';
+import { plainLine } from '../../packages/plugins-core/agent-builder/src/runner/stages.js';
 
 let seed = 42;
 const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
@@ -32,6 +33,9 @@ describe('쉬운 말 판정 동작 동일 (T-102 C5-001)', () => {
     const base = PLAIN_INPUTS.map((s) => checkPlainKorean(s).ok);
     expect(PLAIN_INPUTS.map((s) => builderIsPlain(s))).toEqual(base);
     expect(PLAIN_INPUTS.map((s) => finderIsPlain(s))).toEqual(base);
+    expect(PLAIN_INPUTS.map((s) => plainLine(s))).toEqual(base);
+    // every(plainLine)처럼 함수를 그대로 넘겨도 같은 답(두 번째 인자가 label로 새지 않음)
+    expect(PLAIN_INPUTS.filter(plainLine)).toEqual(PLAIN_INPUTS.filter((s) => checkPlainKorean(s).ok));
     // label(버튼·제목) 모드도 같음
     expect(PLAIN_INPUTS.map((s) => builderIsPlain(s, true))).toEqual(
       PLAIN_INPUTS.map((s) => checkPlainKorean(s, { label: true }).ok),

@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { checkPlainKorean } from '@harness-x/approvals';
+import { isPlainKorean } from '@harness-x/approvals';
 import {
   ACTIVE_STAGE_STATUSES,
   advanceStage,
@@ -68,8 +68,8 @@ export interface StageTrackerOptions {
   now?: () => Date;
 }
 
-/** H.6 쉬운 말 검사 */
-export const plainLine = (s: string) => checkPlainKorean(s).ok;
+/** H.6 쉬운 말 검사 — 대표 구현 isPlainKorean(T-102 C5-001). every(plainLine)의 두 번째 인자(순번)가 label로 새지 않게 감쌈 */
+export const plainLine = (s: string) => isPlainKorean(s);
 
 export class StageTracker {
   tree!: StageTree;
