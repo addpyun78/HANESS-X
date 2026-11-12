@@ -1,0 +1,12 @@
+[
+  {
+    "file": "apps/web/test/resume.entrances.test.tsx",
+    "line": 69,
+    "code": "expect(true).toBe(true)"
+  },
+  {
+    "file": "apps/web/test/resume.entrances.test.tsx",
+    "line": 118,
+    "code": "expect(true).toBe(true)"
+  }
+]
