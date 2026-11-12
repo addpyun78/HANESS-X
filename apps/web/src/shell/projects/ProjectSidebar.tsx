@@ -695,6 +695,11 @@ function SessionRow({
               {mode}
             </span>
           )}
+          {s.stageProgress && (
+            <small className="hx-srow__stage" aria-label={`진행 ${s.stageProgress}`}>
+              {s.stageProgress}
+            </small>
+          )}
           <time className="hx-srow__time" dateTime={s.lastActivityAt}>
             {relativeTime(s.lastActivityAt, now)}
           </time>

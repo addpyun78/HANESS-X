@@ -39,6 +39,8 @@ export interface SessionRecordView {
   permission?: string;
   agent?: string;
   agentIcon?: string;
+  /** T-101 4F.8 단계가 있는 에이전트의 진행 "단계 2/3" (단계 1개면 없음) */
+  stageProgress?: string;
   cwd: string;
   origin: string;
   draft: boolean;

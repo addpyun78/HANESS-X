@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`4C.1 단계 완료 시 handoff 저장: 출력값 + 쉬운 말 3줄 이내 요약 > 스냅샷 (쉬운 말·3줄을 못 지킨 요약은 기본 문구로) 1`] = `
+[
+  {
+    "handoff": {
+      "at": "2026-11-12T00:00:00.000Z",
+      "output": {
+        "screens": [
+          "home",
+          "cfg",
+        ],
+        "summary": "화면 2개를 고치기로 했어요.",
+      },
+      "summary": "화면 2개를 고치기로 했어요.",
+    },
+    "stage": "plan",
+    "status": "done",
+  },
+  {
+    "handoff": {
+      "at": "2026-11-12T00:00:00.000Z",
+      "output": {
+        "files": 2,
+        "summary": "diff를 regex로 정규화하고 manifest를 커밋했다",
+      },
+      "summary": "할 일 2개를 모두 마쳤어요.",
+    },
+    "stage": "build",
+    "status": "done",
+  },
+  {
+    "handoff": {
+      "at": "2026-11-12T00:00:00.000Z",
+      "output": {
+        "passed": 4,
+        "summary": "첫째 줄이에요.
+둘째 줄이에요.
+셋째 줄이에요.
+넷째 줄이에요.",
+      },
+      "summary": "할 일 2개를 모두 마쳤어요.",
+    },
+    "stage": "test",
+    "status": "done",
+  },
+]
+`;

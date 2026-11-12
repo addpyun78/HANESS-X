@@ -12,6 +12,7 @@ import {
 } from './model.js';
 import { ModeBadge, modeFromEvents } from '../../run-mode/ModeBadge.js';
 import { PlanReview } from './PlanReview.js';
+import { StageTree } from './StageTree.js';
 import './checklist.css';
 
 export interface ChecklistPanelProps {
@@ -181,7 +182,9 @@ export function ChecklistPanel({
     <section className="hx-ck" aria-label="체크리스트" data-version={view.checklist.version}>
       {badge}
       {cards}
-      {view.plan.locked ? (
+      {view.plan.locked && view.stages && view.stages.stages.length > 1 ? (
+        <StageTree tree={view.stages} />
+      ) : view.plan.locked ? (
         <>
           <ChecklistProgress items={items} />
           {tree()}

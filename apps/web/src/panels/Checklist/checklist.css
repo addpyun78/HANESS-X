@@ -297,3 +297,77 @@
   margin: var(--hx-space-1) 0 0;
   color: var(--hx-danger);
 }
+
+/* 단계 트리 (T-101 4F.4) — 현재 단계 펼침, 끝난 단계 접힘 + 요약, 예상 단계 흐리게 */
+.hx-ck-stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+}
+
+.hx-ck-stages__progress {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-ck-stages__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-ck-stages__list--inner {
+  padding-left: var(--hx-space-3);
+}
+
+.hx-ck-stage__head {
+  display: flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+  cursor: pointer;
+}
+
+.hx-ck-stage__title {
+  flex: 1;
+  font-weight: 600;
+}
+
+.hx-ck-stage__status,
+.hx-ck-stage__summary,
+.hx-ck-stage__reason {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}
+
+.hx-ck-stage__summary,
+.hx-ck-stage__reason {
+  margin: 0 0 0 var(--hx-space-3);
+}
+
+.hx-ck-stage__items {
+  margin: var(--hx-space-1) 0 0;
+  padding-left: var(--hx-space-3);
+  list-style: none;
+}
+
+.hx-ck-stage__items li {
+  display: flex;
+  gap: var(--hx-space-2);
+}
+
+.hx-ck-stage__badge {
+  color: var(--hx-warning);
+  font-size: var(--hx-font-12);
+}
+
+.hx-ck-stage--expected,
+.hx-ck-stage--skipped {
+  opacity: 0.55;
+}
+
+.hx-ck-stage--blocked .hx-ck-stage__status {
+  color: var(--hx-danger);
+}

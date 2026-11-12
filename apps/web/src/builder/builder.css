@@ -637,3 +637,16 @@
 .hx-node[data-run='running'] {
   border-color: var(--hx-running);
 }
+
+/* 시험 실행 단계별 진행 (T-101 4F.5) */
+.hx-dryrun__stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-1);
+}
+
+.hx-dryrun__stage-progress {
+  margin: 0;
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+}

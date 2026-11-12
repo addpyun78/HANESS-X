@@ -1,3 +1,4 @@
+import { stageContext, type StageTreeLike } from './stage-progress.js';
 import type { Dispatcher, DispatchAgent, DispatchResumeInfo, DispatchSession } from './dispatch.js';
 import type { EventLog, LogRecord } from './event-log.js';
 import { readSessionEvents, type LedgerView } from './recover.js';
@@ -133,6 +134,8 @@ export interface ResumeRunDeps {
   ledger?(sessionId: string): LedgerView | null | undefined;
   /** 2B.10 interrupted 항목 검증 */
   interrupted?(sessionId: string): InterruptedItemDeps | undefined;
+  /** T-101 4F.6 단계 트리 (있으면 재구성 컨텍스트에 단계 트리·handoff) */
+  stages?(sessionId: string): StageTreeLike | null | undefined;
   now?(): Date;
 }
 
@@ -204,6 +207,8 @@ export async function resumeSession(
     mode === 'engine'
       ? engineResumePrompt(interrupted)
       : buildSummaryContext(s, events, items, interrupted ? { interrupted } : {});
+  const tree = mode === 'engine' ? undefined : deps.stages?.(sessionId);
+  if (tree && tree.stages.length > 1) prompt += `\n${stageContext(tree)}`;
   if (choices.changedFiles?.length)
     prompt += `\n멈춘 뒤 사용자가 바꾼 파일: ${choices.changedFiles.join(', ')} — 지금 파일 내용을 기준으로 이어서 하세요.`;
   if (choices.replan) prompt = `계획부터 다시 세우세요. 지금 파일 상태를 먼저 살펴보세요.\n${prompt}`;
