@@ -1,0 +1,31 @@
+{
+  "home": "~/.harness-x",
+  "totalBytes": 1250623,
+  "totalMB": 1.2,
+  "files": [
+    {
+      "file": "~/.harness-x/logs/index.sqlite-wal",
+      "bytes": 1120672
+    },
+    {
+      "file": "~/.harness-x/logs/index.sqlite",
+      "bytes": 57344
+    },
+    {
+      "file": "~/.harness-x/logs/sessions/kernel/events.jsonl",
+      "bytes": 37158
+    },
+    {
+      "file": "~/.harness-x/logs/index.sqlite-shm",
+      "bytes": 32768
+    },
+    {
+      "file": "~/.harness-x/run/server.log",
+      "bytes": 2608
+    },
+    {
+      "file": "~/.harness-x/run/web.log",
+      "bytes": 73
+    }
+  ]
+}
