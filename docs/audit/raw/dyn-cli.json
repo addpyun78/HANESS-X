@@ -1,0 +1,108 @@
+[
+  {
+    "path": "packages/kernel/src/api/approvals-routes.ts",
+    "kind": "cli-command"
+  },
+  {
+    "path": "packages/kernel/src/api/models-routes.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/api/resume-routes.ts",
+    "kind": "cli-command"
+  },
+  {
+    "path": "packages/kernel/src/api/server.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/auth-status.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/cli.ts",
+    "kind": "package-bin",
+    "pkg": "@harness-x/kernel"
+  },
+  {
+    "path": "packages/kernel/src/dispatch.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/engines-settings.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/event-log.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/hooks.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/hot-reload.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/install-wiring.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/loader.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/main-ai.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/models.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/pause-snapshot.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/projects/cli-commands.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/projects/index.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/resume-cli.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/resume-engine.ts",
+    "kind": "cli-command"
+  },
+  {
+    "path": "packages/kernel/src/resume-pin.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/resume-service.ts",
+    "kind": "cli-command"
+  },
+  {
+    "path": "packages/kernel/src/secrets.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/kernel/src/settings/runtime.ts",
+    "kind": "cli-command"
+  },
+  {
+    "path": "packages/kernel/src/workspaces.ts",
+    "kind": "cli-lazy-import"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/src/bin.ts",
+    "kind": "package-bin",
+    "pkg": "@harness-x/mcp-host"
+  }
+]
