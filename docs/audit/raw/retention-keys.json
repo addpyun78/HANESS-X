@@ -1,0 +1,25 @@
+{
+  "settingKeys": [
+    {
+      "key": "data.attachmentsKeepDays",
+      "group": "data",
+      "scope": "global",
+      "storage": "settings"
+    },
+    {
+      "key": "data.retentionDays",
+      "group": "data",
+      "scope": "global",
+      "storage": "settings"
+    }
+  ],
+  "codeRefs": [
+    "apps/web/src/settings/sections/DataSection.tsx:9: *  - [지금 정리하기]: 보관 기간·첨부 정리 설정을 지금 적용",
+    "packages/kernel/src/api/settings-routes.ts:25: *  POST   /api/settings/data/cleanup   6B.11 [지금 정리하기] (보관 기간·첨부 정리)",
+    "packages/kernel/src/cli.ts:531:  // T-101 6B.11 기록 보관 기간·첨부 정리 (설정이 0이면 아무것도 안 함) — 시작 때 한 번 + [지금 정리하기]",
+    "packages/kernel/src/event-log.ts:256:  /** T-101 6B.11 기록 보관 기간: 세션의 이벤트 기록(파일·색인)을 지운다. 지웠으면 true */",
+    "packages/kernel/src/settings/data-cleanup.ts:6: * T-101 6B.11 데이터 정리 — 설정 data.retentionDays·data.attachmentsKeepDays (0 = 지우지 않음, 기본).",
+    "packages/kernel/src/settings/data-cleanup.ts:42:  const keepLogs = readSetting<number>(o.values, 'data.retentionDays');",
+    "packages/kernel/src/settings/registry.ts:797:  defineSetting('data.retentionDays', z.number().int().min(0).max(3650).default(0), {"
+  ]
+}
