@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { errorMessage } from '../form/api.js';
 import { downloadText, type SettingsExtrasApi } from './api.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 6B.13 설정 > 정보 탭: 버전 / [업데이트 확인] / [진단 파일 내보내기](키·첨부 내용 제외 — 서버가 만들고 키 모양 글자를 가림)
@@ -44,7 +45,7 @@ export function AboutSection({ extras, download = downloadText }: AboutSectionPr
       <div className="hx-settings-screen__row">
         <button
           type="button"
-          data-action="settings.update-check"
+          {...act('settings.update-check')}
           onClick={() =>
             void extras
               .updateCheck()
@@ -59,7 +60,7 @@ export function AboutSection({ extras, download = downloadText }: AboutSectionPr
       <div className="hx-settings-screen__row">
         <button
           type="button"
-          data-action="settings.diagnostics"
+          {...act('settings.diagnostics')}
           onClick={() =>
             void extras
               .diagnostics()

@@ -3,6 +3,7 @@ import { errorMessage, type SettingsApi, type SettingsWidgetContext } from './fo
 import { SettingsForm, type SettingsFormProps } from './form/SettingsForm.js';
 import type { SettingField, SettingGroup } from './form/types.js';
 import './settings-screen.css';
+import { act } from '../actions/registry.js';
 
 /**
  * T-101 6번 설정 화면 — 설계 그림 그대로:
@@ -99,7 +100,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
           <input
             type="checkbox"
             checked={advanced}
-            data-action="settings.show-advanced"
+            {...act('settings.show-advanced')}
             onChange={(e) => setAdvanced(e.currentTarget.checked)}
           />
           고급 설정 보기
@@ -114,7 +115,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
             id={`hx-settings-tab-${g.id}`}
             aria-selected={!q && g.id === active.id}
             aria-controls="hx-settings-panel"
-            data-action="settings.tab"
+            {...act('settings.tab')}
             data-group={g.id}
             className="hx-settings-screen__tab"
             onClick={() => {

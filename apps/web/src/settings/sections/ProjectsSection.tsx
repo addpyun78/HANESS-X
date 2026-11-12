@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ProjectView } from '../../shell/projects/api.js';
 import type { ProjectAction } from '../../shell/projects/ProjectSidebar.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 6B.10 설정 > 프로젝트 탭의 프로젝트 목록 (0-2 프로젝트 저장소).
@@ -35,7 +36,7 @@ export function ProjectsSection({ projects, onAction }: ProjectsSectionProps) {
             {p.missing && (
               <button
                 type="button"
-                data-action="settings.project-relink"
+                {...act('settings.project-relink')}
                 onClick={() => onAction(p, { type: 'relink' })}
               >
                 다시 연결
@@ -43,14 +44,14 @@ export function ProjectsSection({ projects, onAction }: ProjectsSectionProps) {
             )}
             <button
               type="button"
-              data-action="settings.project-pin"
+              {...act('settings.project-pin')}
               onClick={() => onAction(p, { type: 'pin', pinned: !p.pinned })}
             >
               {p.pinned ? '고정 해제' : '고정'}
             </button>
             <button
               type="button"
-              data-action="settings.project-settings"
+              {...act('settings.project-settings')}
               onClick={() => onAction(p, { type: 'settings' })}
             >
               프로젝트 설정
@@ -60,7 +61,7 @@ export function ProjectsSection({ projects, onAction }: ProjectsSectionProps) {
                 폴더와 파일은 지우지 않아요.{' '}
                 <button
                   type="button"
-                  data-action="settings.project-remove-confirm"
+                  {...act('settings.project-remove-confirm')}
                   onClick={() => {
                     setConfirm(undefined);
                     onAction(p, { type: 'remove' });
@@ -70,14 +71,14 @@ export function ProjectsSection({ projects, onAction }: ProjectsSectionProps) {
                 </button>
                 <button
                   type="button"
-                  data-action="settings.project-remove-cancel"
+                  {...act('settings.project-remove-cancel')}
                   onClick={() => setConfirm(undefined)}
                 >
                   그만두기
                 </button>
               </span>
             ) : (
-              <button type="button" data-action="settings.project-remove" onClick={() => setConfirm(p.id)}>
+              <button type="button" {...act('settings.project-remove')} onClick={() => setConfirm(p.id)}>
                 목록에서 빼기
               </button>
             )}

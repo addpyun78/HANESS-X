@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { errorMessage, type SettingsApi } from '../form/api.js';
 import type { SettingsExtrasApi } from './api.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 6B.11 설정 > 데이터·보안 탭의 덧붙임 화면
@@ -77,7 +78,7 @@ export function DataSection({ api, extras, engineKeys }: DataSectionProps) {
               </span>
               <button
                 type="button"
-                data-action="settings.secret-delete"
+                {...act('settings.secret-delete')}
                 onClick={() =>
                   void k
                     .remove()
@@ -98,7 +99,7 @@ export function DataSection({ api, extras, engineKeys }: DataSectionProps) {
           <div className="hx-settings-screen__row">
             <button
               type="button"
-              data-action="settings.data-cleanup"
+              {...act('settings.data-cleanup')}
               onClick={() =>
                 void extras
                   .cleanup()

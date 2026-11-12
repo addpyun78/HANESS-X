@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { errorMessage } from '../form/api.js';
 import { downloadText, type SettingsExtrasApi } from './api.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 6C.3 설정 내보내기/가져오기 `settings.yaml` (키 제외). 가져올 때 서버가 모든 값을 먼저 검사하고,
@@ -48,7 +49,7 @@ export function TransferSection({ extras, download = downloadText, onImported }:
       <div className="hx-settings-screen__row">
         <button
           type="button"
-          data-action="settings.export"
+          {...act('settings.export')}
           onClick={() =>
             void extras
               .exportYaml()
@@ -67,7 +68,7 @@ export function TransferSection({ extras, download = downloadText, onImported }:
           <input
             type="file"
             accept=".yaml,.yml,text/yaml"
-            data-action="settings.import"
+            {...act('settings.import')}
             onChange={(e) => {
               const f = e.currentTarget.files?.[0];
               e.currentTarget.value = '';

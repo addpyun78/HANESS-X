@@ -5,6 +5,7 @@ import { CUSTOM_WIDGETS } from './custom-widgets.js';
 import type { SaveScope, SettingField, SettingGroup, SettingsResponse, SettingValueState } from './types.js';
 import { BASIC_WIDGETS, enumValues } from './widgets.js';
 import './settings-form.css';
+import { act } from '../../actions/registry.js';
 
 /**
  * T-101 0-1 설정 폼 자동 렌더러 — 레지스트리(GET /api/settings)만 보고 그룹 → 섹션 → 항목을 그린다.
@@ -255,7 +256,7 @@ export function SettingsForm(props: SettingsFormProps) {
             <button
               type="button"
               className="hx-setting__link hx-setting__reset"
-              data-action="settings.reset-field"
+              {...act('settings.reset-field')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ key: f.key })}
@@ -322,7 +323,7 @@ export function SettingsForm(props: SettingsFormProps) {
             <button
               type="button"
               className="hx-setting__link"
-              data-action="settings.reset-group"
+              {...act('settings.reset-group')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ group: g.id })}
@@ -355,18 +356,14 @@ export function SettingsForm(props: SettingsFormProps) {
             모든 설정을 기본값으로 되돌릴까요?
             <button
               type="button"
-              data-action="settings.reset-all-confirm"
+              {...act('settings.reset-all-confirm')}
               disabled={busy}
               title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ all: true })}
             >
               되돌리기
             </button>
-            <button
-              type="button"
-              data-action="settings.reset-all-cancel"
-              onClick={() => setConfirmAll(false)}
-            >
+            <button type="button" {...act('settings.reset-all-cancel')} onClick={() => setConfirmAll(false)}>
               그만두기
             </button>
           </span>
@@ -374,7 +371,7 @@ export function SettingsForm(props: SettingsFormProps) {
           <button
             type="button"
             className="hx-setting__link"
-            data-action="settings.reset-all"
+            {...act('settings.reset-all')}
             onClick={() => setConfirmAll(true)}
           >
             모든 설정 기본값으로

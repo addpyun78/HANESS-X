@@ -23,6 +23,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
     </span>
     <button
       class="hx-icon-btn"
+      data-action="engines.rescan"
       type="button"
     >
       다시 찾기
@@ -152,6 +153,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
         </label>
         <button
           class="hx-icon-btn"
+          data-action="engines.save-settings"
           type="button"
         >
           저장
@@ -162,6 +164,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          data-action="engines.ping"
           title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
@@ -257,7 +260,9 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
         />
         <button
           class="hx-icon-btn"
+          data-action="engines.save-key"
           disabled=""
+          title="키를 먼저 넣어 주세요"
           type="button"
         >
           키 저장
@@ -300,6 +305,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
         </label>
         <button
           class="hx-icon-btn"
+          data-action="engines.save-settings"
           type="button"
         >
           저장
@@ -310,6 +316,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          data-action="engines.ping"
           title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
@@ -424,6 +431,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
         </label>
         <button
           class="hx-icon-btn"
+          data-action="engines.save-settings"
           type="button"
         >
           저장
@@ -434,6 +442,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          data-action="engines.ping"
           title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
@@ -465,6 +474,7 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       </header>
       <a
         class="hx-engine-card__install"
+        data-action="engines.install-guide"
         href="https://github.com/google-gemini/gemini-cli"
         rel="noreferrer"
         target="_blank"
