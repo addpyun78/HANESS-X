@@ -1,0 +1,19 @@
+{
+  "area": "설정 읽기",
+  "implementations": 2,
+  "files": 2,
+  "list": [
+    {
+      "name": "readSetting",
+      "file": "packages/kernel/src/settings/registry.ts",
+      "line": 299,
+      "exported": true
+    },
+    {
+      "name": "readSettingsFile",
+      "file": "packages/kernel/src/settings/runtime.ts",
+      "line": 11,
+      "exported": true
+    }
+  ]
+}
