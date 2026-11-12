@@ -1,0 +1,37 @@
+[
+  {
+    "engine": "claude",
+    "installed": "2.1.322 (Claude Code)",
+    "latest": "2.1.322",
+    "source": "npm @anthropic-ai/claude-code",
+    "behind": false
+  },
+  {
+    "engine": "codex",
+    "installed": "codex-cli 0.155.1",
+    "latest": "0.167.2",
+    "source": "npm @openai/codex",
+    "behind": true
+  },
+  {
+    "engine": "agy",
+    "installed": "1.4.12",
+    "latest": "1.4.12",
+    "source": "snap antigravity-cli",
+    "behind": false
+  },
+  {
+    "engine": "gemini",
+    "installed": "0.67.0",
+    "latest": "0.68.0",
+    "source": "npm @google/gemini-cli",
+    "behind": true
+  },
+  {
+    "engine": "ollama",
+    "installed": null,
+    "latest": null,
+    "source": "설치 안 됨",
+    "behind": false
+  }
+]
