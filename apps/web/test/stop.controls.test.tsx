@@ -23,7 +23,7 @@ describe('2A.8 실행 중 전송 버튼 → [■ 정지]', () => {
     expect(screen.queryByRole('button', { name: '전송' })).toBeNull();
     const btn = screen.getByRole('button', { name: '정지' });
     expect(btn.outerHTML).toMatchInlineSnapshot(
-      `"<button type="button" class="hx-send hx-send--stop" aria-label="정지" aria-haspopup="menu" aria-expanded="false">■ 정지</button>"`,
+      `"<button type="button" class="hx-send hx-send--stop" aria-label="정지" aria-haspopup="menu" aria-expanded="false" data-action="composer.stop">■ 정지</button>"`,
     );
   });
 
@@ -34,7 +34,7 @@ describe('2A.8 실행 중 전송 버튼 → [■ 정지]', () => {
     const items = screen.getAllByRole('menuitem');
     expect(items.map((i) => i.textContent)).toEqual(['⏸ 일시정지', '⏹ 지금 멈추기']);
     expect(screen.getByRole('menu').outerHTML).toMatchInlineSnapshot(
-      `"<span class="hx-stop__menu" role="menu" aria-label="정지 방법"><button type="button" role="menuitem" title="하던 일을 마무리하기 좋은 때에 멈춰요">⏸ 일시정지</button><button type="button" role="menuitem" title="바로 멈춰요 (Esc 두 번)">⏹ 지금 멈추기</button></span>"`,
+      `"<span class="hx-stop__menu" role="menu" aria-label="정지 방법"><button type="button" role="menuitem" title="하던 일을 마무리하기 좋은 때에 멈춰요" data-action="composer.stop-pause">⏸ 일시정지</button><button type="button" role="menuitem" title="바로 멈춰요 (Esc 두 번)" data-action="composer.stop-now">⏹ 지금 멈추기</button></span>"`,
     );
     fireEvent.click(items[0]!);
     expect(s.onPause).toHaveBeenCalledOnce();
@@ -91,7 +91,7 @@ describe('2A.8 상단 바 [전체 정지]', () => {
     );
     const b = screen.getByRole('button', { name: '전체 정지 (실행 중 2개)' });
     expect(b.outerHTML).toMatchInlineSnapshot(
-      `"<button type="button" class="hx-stop-all" aria-label="전체 정지 (실행 중 2개)">■ 전체 정지</button>"`,
+      `"<button type="button" class="hx-stop-all" data-action="shell.stop-all" aria-label="전체 정지 (실행 중 2개)">■ 전체 정지</button>"`,
     );
     fireEvent.click(b);
     expect(onStopAll).toHaveBeenCalledOnce();

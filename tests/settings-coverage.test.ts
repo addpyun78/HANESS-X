@@ -70,6 +70,14 @@ describe('T-101 0A.10 코드에서 쓰는 설정 키 ⊆ 레지스트리', () =>
       ['judge.secretKnob', 'literal'],
       ['hx.foo.bar', 'browser'],
     ]);
+    // 화면 동작 id(act('…'))는 설정 키가 아니다 — 같은 파일의 미등록 키 글자는 그대로 잡는다
+    const ui = [
+      "<button {...act('engines.rescan')} {...act( 'judge.fakeAction' )}>",
+      "to['judge.secretKnob'] = 1;",
+    ].join('\n');
+    expect(unregisteredHits(scanSourceText('EnginesSettings.tsx', ui)).map((h) => h.key)).toEqual([
+      'judge.secretKnob',
+    ]);
     // 설정 구역 스키마에 새 필드를 넣고 등록하지 않은 경우
     const grown = JudgeSettingsSchema.extend({ newKnob: JudgeSettingsSchema.shape.samples });
     expect(

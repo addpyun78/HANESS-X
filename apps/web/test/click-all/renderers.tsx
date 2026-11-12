@@ -9,7 +9,10 @@ import { BuilderPage } from '../../src/builder/BuilderPage.js';
 import { DEFAULT_CATALOG } from '../../src/builder/catalog.js';
 import { ChatStream } from '../../src/chat/ChatStream.js';
 import { Composer } from '../../src/composer/Composer.js';
+import { StopButton } from '../../src/composer/StopButton.js';
 import { SubagentConfirm } from '../../src/composer/SubagentConfirm.js';
+import { ModelButton } from '../../src/engines/ModelButton.js';
+import { ScanBubble } from '../../src/engines/ScanBubble.js';
 import { ForgeAnswerContext } from '../../src/forge/ForgeCards.js';
 import type { InstallApi } from '../../src/install/api.js';
 import { FirstRunCard, firstRunsFromEvents } from '../../src/install/FirstRunCard.js';
@@ -18,7 +21,11 @@ import { InstallPlanCard } from '../../src/install/InstallPlanCard.js';
 import type { CandidateView, InstallPlanView } from '../../src/install/model.js';
 import { ChecklistPanel } from '../../src/panels/Checklist/ChecklistPanel.js';
 import { ToolPickerCard } from '../../src/panels/ToolPicker/ToolPickerCard.js';
+import { ProjectResumeCard } from '../../src/recovery/ProjectResumeCard.js';
 import { ResumeCard } from '../../src/recovery/ResumeCard.js';
+import { ResumeCheckCard, type ResumeIssueData } from '../../src/recovery/ResumeCheckCard.js';
+import { ResumeFlow } from '../../src/recovery/ResumeFlow.js';
+import { ResumeCountLink } from '../../src/recovery/resume-entry.js';
 import { AutoLimitsCard } from '../../src/run-mode/AutoLimitsCard.js';
 import { AutoSummaryCard } from '../../src/run-mode/AutoSummaryCard.js';
 import { PlanDoneCard } from '../../src/run-mode/PlanDoneCard.js';
@@ -38,12 +45,14 @@ import { ProjectSettings } from '../../src/shell/projects/ProjectSettings.js';
 import { ProjectSidebar } from '../../src/shell/projects/ProjectSidebar.js';
 import { DEFAULT_PREFS, type SidebarPrefs } from '../../src/shell/projects/prefs.js';
 import { RootSuggestCard, WhereToWork } from '../../src/shell/projects/WhereToWork.js';
+import { StopAllButton } from '../../src/shell/StopAllButton.js';
 import { memorySettings } from '../settings-form-fixtures.js';
 import { fixtureCard, requestEvent } from '../approvals-fixtures.js';
 import { ev, fakeApi as checklistApi, view } from '../checklist-fixtures.js';
 import { DRAFT_CATALOG, fakeDesignerApi, QUESTIONS, sampleDraft } from '../draft-fixtures.js';
 import { blockTransfer } from '../flow-mock.js';
 import { NINE_EVENTS, STOP_BLOCK_EVENT } from '../fixtures/events.js';
+import { done as scanDone, MODELS } from '../engines-fixtures.js';
 import { fixturePlan, fixtureTool } from '../install-fixtures.js';
 import { fakeApi as enginesApi } from '../settings-fixtures.js';
 import { pickerData } from '../toolpicker-fixtures.js';
@@ -282,6 +291,34 @@ function projectSidebar(h: Harness) {
   );
 }
 
+/** 2번 이어하기 전 점검 카드 (파일이 바뀜) */
+const FILES_ISSUE: ResumeIssueData = {
+  check: 'files',
+  title: '멈춘 뒤에 파일이 바뀌었어요',
+  body: '멈춘 뒤에 파일 1개가 바뀌었어요. 어떻게 이어할까요?',
+  list: ['a.ts (고쳐짐)'],
+  choices: [
+    { id: 'keep', label: '바뀐 걸 반영해서 계속', recommended: true, default: true },
+    { id: 'revert', label: '멈춘 때로 되돌리고 계속' },
+    { id: 'replan', label: '계획부터 다시' },
+  ],
+};
+
+/** 5C 모델 버튼 (펼친 상태) */
+function modelButton(h: Harness) {
+  render(
+    <ModelButton
+      models={MODELS}
+      current={{ engine: 'claude-code', model: 'sonnet' }}
+      from="project"
+      hasProject
+      onChoose={h.cb()}
+      onLogin={h.cb()}
+    />,
+  );
+  fireEvent.click(screen.getByLabelText('AI: claude-code · sonnet (이 프로젝트 기본)'));
+}
+
 async function settingsScreen(h: Harness, tab: string) {
   lastSettings?.dispose();
   const m = memorySettings();
@@ -496,6 +533,77 @@ export const RENDERERS: Record<string, Renderer> = {
         />
       </>,
     );
+  },
+
+  'stop-controls': (h) => {
+    render(
+      <>
+        <StopAllButton runningCount={2} onStopAll={h.cb()} />
+        <StopButton onPause={h.cb()} onStopNow={h.cb()} />
+      </>,
+    );
+    fireEvent.click(screen.getByLabelText('정지'));
+  },
+
+  'model-menu': (h) => modelButton(h),
+
+  'model-menu-scope': (h) => {
+    modelButton(h);
+    fireEvent.click(screen.getByRole('menuitemradio', { name: /Opus/ }));
+    return { scope: '.hx-model-menu__scope' };
+  },
+
+  'engine-scan-empty': (h) => {
+    render(
+      <ScanBubble
+        phase="empty"
+        progress={scanDone({ found: 0, engines: [] })}
+        onOpenInstall={h.cb()}
+        onDismiss={h.cb()}
+        reducedMotion
+      />,
+    );
+  },
+
+  'resume-cards': (h) => {
+    render(
+      <>
+        <ProjectResumeCard
+          now={new Date('2026-11-12T12:00:00.000Z')}
+          sessions={[
+            {
+              sessionId: 's1',
+              projectId: 'p1',
+              title: '/design-qa 헤더',
+              agent: { name: 'design-qa', command: '/design-qa', displayName: '디자인 검수', icon: '🎨' },
+              engineId: 'codex',
+              progress: 0.25,
+              paused: { reason: 'user', at: '2026-11-12T09:00:00.000Z', by: 'user' },
+              startedAt: null,
+            },
+          ]}
+          onResume={h.cb()}
+        />
+        <ResumeCheckCard issue={FILES_ISSUE} onChoose={h.cb()} />
+        <ResumeCountLink count={2} onOpen={h.cb()} />
+      </>,
+    );
+  },
+
+  'resume-flow': async (h) => {
+    render(
+      <ResumeFlow
+        api={h.api({
+          check: async () => ({ ok: false, issues: [FILES_ISSUE] }),
+          start: async () => ({ mode: 'summary', version: 'pinned' }),
+        })}
+        sessionId="s1"
+        onDone={h.cb()}
+      />,
+    );
+    await screen.findByText('이 선택으로 이어하기');
+    // 카드 안 선택지는 'resume-cards'에서 본다. 여기서는 흐름의 [이 선택으로 이어하기]
+    return { scope: '.hx-resume-flow > .hx-resume-check__choices' };
   },
 
   recovery: (h) => {
