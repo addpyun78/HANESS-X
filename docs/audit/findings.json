@@ -272,6 +272,26 @@
         "noAction": true
       },
       "id": "C1-006"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "bug",
+      "severity": "low",
+      "title": "경로를 비교기 없이 split(\"/\")로 나누는 곳 35곳 — 확인 결과 모두 이미 정규화된 경로(git 출력·manifest 정식 경로)·주소·패키지 id를 다루는 정상 코드, \\\\ 치환·문자열 더하기 경로는 0곳",
+      "evidence": [
+        "docs/audit/raw/raw-paths.json",
+        "packages/plugins-core/attachments/src/archive.ts:53 (\\\\→/ 먼저 정규화)",
+        "packages/kernel/src/pause-snapshot.ts:91 (git ls-files 출력)"
+      ],
+      "proposal": "조치 없음(기록만)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C1.19",
+        "noAction": true
+      },
+      "id": "C1-007"
     }
   ]
 }

@@ -1,0 +1,212 @@
+[
+  {
+    "file": "packages/kernel/src/pause-snapshot.ts",
+    "line": 91,
+    "kind": "split('/')",
+    "code": ".filter((p) => !p.split('/').some((seg) => SKIP_DIRS.has(seg)))"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+    "line": 55,
+    "kind": "split('/')",
+    "code": "const keys = op.path.split('/').slice(1).map(unescape);"
+  },
+  {
+    "file": "packages/plugins-core/approvals/src/dictionary.ts",
+    "line": 101,
+    "kind": "split('/')",
+    "code": ".split('/')"
+  },
+  {
+    "file": "packages/plugins-core/attachments/src/archive.ts",
+    "line": 55,
+    "kind": "split('/')",
+    "code": "return n.split('/').some((seg) => seg === '..');"
+  },
+  {
+    "file": "packages/plugins-core/attachments/src/folder.ts",
+    "line": 132,
+    "kind": "split('/')",
+    "code": "scan.files.map((f) => ({ name: f.split('/').pop()!, path: join(folder, f) })),"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/escalate.ts",
+    "line": 102,
+    "kind": "split('/')",
+    "code": "fileNames: [c.expectedPath, c.actualPath].map((p) => p.split('/').filter(Boolean).pop() ?? p),"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/learn.ts",
+    "line": 41,
+    "kind": "split('/')",
+    "code": "const e = expectedPath.split('/').filter(Boolean);"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/learn.ts",
+    "line": 42,
+    "kind": "split('/')",
+    "code": "const a = actualPath.split('/').filter(Boolean);"
+  },
+  {
+    "file": "packages/plugins-core/checklist-ledger/src/manifest.ts",
+    "line": 23,
+    "kind": "split('/')",
+    "code": ".refine((p) => !p.startsWith('/') && p.split('/').every((s) => SEGMENT_RE.test(s)), {"
+  },
+  {
+    "file": "packages/plugins-core/forge/src/scaffold.ts",
+    "line": 43,
+    "kind": "split('/')",
+    "code": "if (norm.startsWith('..') || norm.split('/').includes('..'))"
+  },
+  {
+    "file": "packages/plugins-core/forge/src/scaffold.ts",
+    "line": 46,
+    "kind": "split('/')",
+    "code": "const top = norm.split('/')[0]!;"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/abs-path.ts",
+    "line": 25,
+    "kind": "split('/')",
+    "code": "return plan.target.split('/').pop();"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+    "line": 232,
+    "kind": "split('/')",
+    "code": "const bin = t.id.split('/').pop()!;"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+    "line": 238,
+    "kind": "split('/')",
+    "code": "source: { url: `https://pkg.go.dev/${t.id}`, publisher: t.id.split('/')[0]!, verified: false },"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+    "line": 434,
+    "kind": "split('/')",
+    "code": "publisher: repo.includes('/') ? repo.split('/')[0]! : 'Docker 공식 이미지',"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/mcp.ts",
+    "line": 226,
+    "kind": "split('/')",
+    "code": ": (t.id.split('/')[0] ?? ''),"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+    "line": 103,
+    "kind": "split('/')",
+    "code": "const name = t.name ?? repo.split('/').pop()!;"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+    "line": 111,
+    "kind": "split('/')",
+    "code": "source: { url: repo, publisher: repo.split('/')[3] ?? '', verified: false },"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+    "line": 173,
+    "kind": "split('/')",
+    "code": "const name = repo.split('/').pop()!;"
+  },
+  {
+    "file": "packages/plugins-core/installer/src/resolve.ts",
+    "line": 55,
+    "kind": "split('/')",
+    "code": "const parts = u.pathname.split('/').filter(Boolean).map(decodeURIComponent);"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/bash-classifier.ts",
+    "line": 198,
+    "kind": "split('/')",
+    "code": "const b = cmd.split('/').pop() ?? cmd;"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/path-match.ts",
+    "line": 67,
+    "kind": "split('/')",
+    "code": "const rest = rel === key ? [] : rel.slice(key.length + 1).split('/');"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/path-match.ts",
+    "line": 78,
+    "kind": "split('/')",
+    "code": "const depth = key.split('/').length;"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/src/path-match.ts",
+    "line": 79,
+    "kind": "split('/')",
+    "code": "const rest = rel.split('/').slice(depth);"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+    "line": 44,
+    "kind": "split('/')",
+    "code": "const as = a.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+    "line": 45,
+    "kind": "split('/')",
+    "code": "const bs = b.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+    "line": 54,
+    "kind": "split('/')",
+    "code": "const as = a.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+    "line": 55,
+    "kind": "split('/')",
+    "code": "const bs = b.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/guards.ts",
+    "line": 98,
+    "kind": "split('/')",
+    "code": "const as = aliasKeyA.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/guards.ts",
+    "line": 99,
+    "kind": "split('/')",
+    "code": "const bs = aliasKeyB.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/comparators/src/path-alias.ts",
+    "line": 33,
+    "kind": "split('/')",
+    "code": ".split('/')"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/ladder/src/candidates.ts",
+    "line": 101,
+    "kind": "split('/')",
+    "code": "const segs = rel.split('/');"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/ladder/src/ladder.ts",
+    "line": 98,
+    "kind": "split('/')",
+    "code": "const depth = target === '' ? 0 : target.split('/').length;"
+  },
+  {
+    "file": "packages/plugins-core/verifiers/ladder/src/ladder.ts",
+    "line": 99,
+    "kind": "split('/')",
+    "code": "const parts = key.split('/');"
+  },
+  {
+    "file": "packages/protocol/src/agent.ts",
+    "line": 87,
+    "kind": "split('/')",
+    "code": "if (s.split('/').includes('..')) return false;"
+  }
+]
