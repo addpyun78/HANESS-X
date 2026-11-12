@@ -1,0 +1,31 @@
+{
+  "area": "재시도·시간 제한",
+  "implementations": 4,
+  "files": 4,
+  "list": [
+    {
+      "name": "backoffDelay",
+      "file": "apps/web/src/api/client.ts",
+      "line": 27,
+      "exported": true
+    },
+    {
+      "name": "withTimeout",
+      "file": "packages/kernel/src/hooks.ts",
+      "line": 256,
+      "exported": false
+    },
+    {
+      "name": "withTimeout",
+      "file": "packages/kernel/src/loader.ts",
+      "line": 747,
+      "exported": false
+    },
+    {
+      "name": "withTimeout",
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "line": 157,
+      "exported": true
+    }
+  ]
+}
