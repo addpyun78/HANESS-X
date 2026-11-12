@@ -67,6 +67,23 @@ export const ACTIONS = {
   'subagent.cancel': { description: '묻는 창을 닫아요', effect: 'state' },
 
   'recovery.resume': { description: '멈춘 작업을 이어서 해요', effect: 'api' },
+  'recovery.project-resume': { description: '멈춘 작업을 이어하기 전에 먼저 점검해요', effect: 'api' },
+  'recovery.check-choice': { description: '점검 카드에서 어떻게 할지 골라요', effect: 'state' },
+  'recovery.start': { description: '고른 대로 멈춘 작업을 이어서 해요', effect: 'api' },
+  'recovery.open-list': { description: '이어서 할 작업 목록을 열어요', effect: 'open' },
+
+  'stop.open': { description: '정지 방법(일시정지·지금 멈추기)을 펼쳐요', effect: 'open' },
+  'stop.pause': { description: '하던 일을 마무리하기 좋은 때에 멈춰요', effect: 'api' },
+  'stop.now': { description: '하던 일을 바로 멈춰요', effect: 'api' },
+  'shell.stop-all': { description: '실행 중인 대화를 모두 멈춰요', effect: 'api' },
+
+  'model.open': { description: '쓸 AI(엔진·모델) 목록을 펼쳐요', effect: 'open' },
+  'model.pick': { description: '이 AI를 골라요', effect: 'state' },
+  'model.login': { description: '터미널에서 이 엔진에 로그인해요', effect: 'state' },
+  'model.scope': { description: '고른 AI를 어디에 쓸지 정해요', effect: ['api', 'state'] },
+
+  'scan.open-install': { description: '설치 관리에서 쓸 수 있는 AI를 찾아요', effect: 'navigate' },
+  'scan.dismiss': { description: '엔진 찾기 결과를 닫아요', effect: 'state' },
 
   'terminal.login': { description: '터미널에서 엔진 로그인을 시작해요', effect: 'state' },
 

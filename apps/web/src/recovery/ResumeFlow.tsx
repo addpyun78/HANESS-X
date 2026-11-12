@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ResumeCheckCard, type ResumeIssueData } from './ResumeCheckCard.js';
 import './recovery.css';
+import { act } from '../actions/registry.js';
 
 /** 이어하기 API (POST /api/resume/:id/check · POST /api/resume/:id) */
 export interface ResumeApi {
@@ -103,6 +104,8 @@ export function ResumeFlow({ api, sessionId, onShowApprovals, onDone }: ResumeFl
             type="button"
             className="hx-resume__button hx-resume__button--primary"
             disabled={blocked}
+            title={blocked ? '먼저 위 카드의 일을 처리해 주세요' : undefined}
+            {...act('recovery.start')}
             onClick={() => {
               const c = toStartChoices(picked);
               if (!c) {

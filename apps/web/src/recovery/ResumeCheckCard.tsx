@@ -1,4 +1,5 @@
 import './recovery.css';
+import { act } from '../actions/registry.js';
 
 /** kernel resume-check.ts ResumeIssue와 같은 모양 (재개 전 점검 카드 한 장) */
 export interface ResumeIssueData {
@@ -39,6 +40,7 @@ export function ResumeCheckCard({ issue, onChoose }: ResumeCheckCardProps) {
           <button
             key={c.id}
             type="button"
+            {...act('recovery.check-choice')}
             className={
               c.recommended || c.default
                 ? 'hx-resume__button hx-resume__button--primary'

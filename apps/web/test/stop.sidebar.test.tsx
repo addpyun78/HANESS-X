@@ -41,7 +41,7 @@ describe('2A.9 사이드바 멈춘 이유 표시', () => {
     expect(shown).toEqual(['⏸ 멈춤 (사용자가 멈춤)', '⏸ 멈춤 (사용량 한도에 닿음)', '⏸ 멈춤']);
     expect(screen.getByLabelText('멈춤 (사용자가 멈춤)')).toBeTruthy();
     expect(screen.getAllByTestId('session-paused')[0]!.closest('button')!.outerHTML).toMatchInlineSnapshot(
-      `"<button type="button" class="hx-session hx-status--paused"><span class="hx-dot" aria-label="멈춤 (사용자가 멈춤)"></span><span class="hx-session__title">/qa a</span><span class="hx-session__engine">claude-code</span><span class="hx-session__paused" data-testid="session-paused">⏸ 멈춤 (사용자가 멈춤)</span></button>"`,
+      `"<button data-action="sidebar.select-session" type="button" class="hx-session hx-status--paused"><span class="hx-dot" aria-label="멈춤 (사용자가 멈춤)"></span><span class="hx-session__title">/qa a</span><span class="hx-session__engine">claude-code</span><span class="hx-session__paused" data-testid="session-paused">⏸ 멈춤 (사용자가 멈춤)</span></button>"`,
     );
   });
 

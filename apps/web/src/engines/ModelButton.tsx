@@ -11,6 +11,7 @@ import {
   type ChoiceScope,
 } from './model.js';
 import './engines.css';
+import { act } from '../actions/registry.js';
 
 export interface ModelButtonProps {
   models: readonly ModelOption[];
@@ -31,6 +32,11 @@ export interface ModelButtonProps {
  * 펼침 목록: 엔진별 묶음, 모델마다 [구독]/[API]/[무료 로컬] 배지, 이미지 가능 아이콘,
  * 로그인이 필요한 모델은 흐리게 + [로그인]. 고르면 작은 선택 [모든 곳 기본(메인)으로] [이 프로젝트 기본으로] [이 세션만].
  */
+/** 고를 수 없는 모델에 붙이는 이유 (툴팁) */
+function unusableReason(status: ModelOption['status']): string {
+  return status === 'needs-login' ? '로그인해야 쓸 수 있어요' : '지금은 쓸 수 없어요';
+}
+
 export function ModelButton({ models, current, from, hasProject, onChoose, onLogin }: ModelButtonProps) {
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<AiChoice>();
@@ -74,6 +80,7 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
       <button
         type="button"
         className="hx-chip"
+        {...act('model.open')}
         aria-label={`AI: ${label}${from === 'project' ? ' (이 프로젝트 기본)' : ''}`}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -104,6 +111,8 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                       role="menuitemradio"
                       aria-checked={selected}
                       aria-disabled={unusable || undefined}
+                      title={unusable ? unusableReason(m.status) : undefined}
+                      {...act('model.pick')}
                       className="hx-model-menu__item"
                       data-status={m.status}
                       onClick={() => {
@@ -125,7 +134,12 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                       )}
                     </button>
                     {needsLogin && onLogin && (
-                      <button type="button" className="hx-icon-btn" onClick={() => onLogin(m.engineId)}>
+                      <button
+                        type="button"
+                        className="hx-icon-btn"
+                        {...act('model.login')}
+                        onClick={() => onLogin(m.engineId)}
+                      >
                         로그인
                       </button>
                     )}
@@ -142,6 +156,7 @@ export function ModelButton({ models, current, from, hasProject, onChoose, onLog
                   type="button"
                   className="hx-icon-btn"
                   data-default={i === 0 || undefined}
+                  {...act('model.scope')}
                   autoFocus={i === 0}
                   onClick={() => choose(s)}
                 >

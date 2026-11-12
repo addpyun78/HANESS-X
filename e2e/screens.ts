@@ -64,6 +64,16 @@ export const SCREENS: readonly ScreenSpec[] = [
     parts: ['우측 패널 탭', '승인 카드'],
   },
   { id: 'recovery', name: '이어서 하기 카드', parts: ['채팅'] },
+  { id: 'stop-controls', name: '정지 버튼(펼침)·전체 정지(2번)', parts: ['입력창', '상단 바'] },
+  { id: 'model-menu', name: '모델 버튼 펼침(5번)', parts: ['입력창'] },
+  { id: 'model-menu-scope', name: '모델 버튼 — 고른 뒤 어디에 쓸까요(5번)', parts: ['입력창'] },
+  { id: 'engine-scan-empty', name: '엔진 찾기 말풍선 — 0개 찾음(5번)', parts: ['빈 세션 화면'] },
+  {
+    id: 'resume-cards',
+    name: '이어하기 카드·점검 카드·이어서 할 작업 N개(2번)',
+    parts: ['빈 세션 화면', '채팅'],
+  },
+  { id: 'resume-flow', name: '이어하기 흐름 — 점검 뒤 이어하기(2번)', parts: ['채팅'] },
   { id: 'forge-cards', name: 'Forge 질문 카드', parts: ['채팅'] },
   { id: 'builder-start', name: '에이전트 만들기 — 시작 고르기', parts: ['에이전트 만들기(블록·대화)'] },
   {

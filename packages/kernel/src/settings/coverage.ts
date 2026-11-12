@@ -54,7 +54,10 @@ export function settingNamespaces(registry: SettingsRegistry = settingsRegistry)
 /** 'engines.json' 같은 파일 이름은 키가 아니다 */
 const FILE_EXT_RE = /\.(json|ya?ml|tsx?|jsx?|md|lock|txt|log)$/;
 
-const lineOf = (text: string, idx: number) => text.slice(0, idx).split('\n').length;
+/** 화면 동작 id(`act('engines.rescan')`, T-101 0C.1)는 설정 키가 아니다 — 바로 앞이 act( / actionAttr( 이면 건너뛴다 */
+const ACTION_ARG_RE = /\b(?:act|actionAttr)\(\s*$/;
+
+const lineOf =(text: string, idx: number) => text.slice(0, idx).split('\n').length;
 
 /** 소스 글 하나에서 설정 키 사용 찾기 */
 export function scanSourceText(
@@ -70,7 +73,7 @@ export function scanSourceText(
     const ns = namespaces.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
     const LIT = new RegExp(`['"\`]((?:${ns})(?:\\.[a-zA-Z][a-zA-Z0-9]*)+)['"\`]`, 'g');
     for (const m of text.matchAll(LIT))
-      if (!FILE_EXT_RE.test(m[1]!))
+      if (!FILE_EXT_RE.test(m[1]!) && !ACTION_ARG_RE.test(text.slice(Math.max(0, m.index - 40), m.index)))
         hits.push({ key: m[1]!, file, line: lineOf(text, m.index), how: 'literal' });
   }
   const BK = /[A-Z_]*KEY\s*=\s*['"`](hx[.-][^'"`]+)['"`]/g;

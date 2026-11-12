@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { act } from '../actions/registry.js';
 
 /** T-101 2A.8 실행 중 정지 조작 (Composer의 stop prop) */
 export interface StopControls {
@@ -48,6 +49,7 @@ export function StopButton({ onPause, onStopNow }: Omit<StopControls, 'running'>
       <button
         type="button"
         className="hx-send hx-send--stop"
+        {...act('stop.open')}
         aria-label="정지"
         aria-haspopup="menu"
         aria-expanded={open}
@@ -61,6 +63,7 @@ export function StopButton({ onPause, onStopNow }: Omit<StopControls, 'running'>
             type="button"
             role="menuitem"
             title="하던 일을 마무리하기 좋은 때에 멈춰요"
+            {...act('stop.pause')}
             onClick={() => {
               setOpen(false);
               onPause();
@@ -72,6 +75,7 @@ export function StopButton({ onPause, onStopNow }: Omit<StopControls, 'running'>
             type="button"
             role="menuitem"
             title="바로 멈춰요 (Esc 두 번)"
+            {...act('stop.now')}
             onClick={() => {
               setOpen(false);
               onStopNow();
