@@ -1,0 +1,1620 @@
+{
+  "neverRun": 323,
+  "functions": [
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onResume",
+      "line": 172
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onOpen",
+      "line": 174
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onOpenInstall",
+      "line": 184
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onLogin",
+      "line": 188
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "request",
+      "line": 192
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onAction",
+      "line": 201
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onAnswer",
+      "line": 422
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onContinueWithout",
+      "line": 445
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onClose",
+      "line": 472
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onAlternatives",
+      "line": 473
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onClose",
+      "line": 479
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onUndo",
+      "line": 487
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onStopAll",
+      "line": 502
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "pickFolder",
+      "line": 533
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onResume",
+      "line": 550
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onCancel",
+      "line": 604
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onPause",
+      "line": 656
+    },
+    {
+      "file": "apps/web/src/App.tsx",
+      "name": "onStopNow",
+      "line": 657
+    },
+    {
+      "file": "apps/web/src/demo.ts",
+      "name": "demoEvents",
+      "line": 42
+    },
+    {
+      "file": "apps/web/src/main.tsx",
+      "name": "(empty-report)",
+      "line": 1
+    },
+    {
+      "file": "apps/web/src/actions/registry.ts",
+      "name": "actionSpec",
+      "line": 263
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "gestureToken",
+      "line": 212
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "saveAgent",
+      "line": 223
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "pauseSession",
+      "line": 248
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "stopSession",
+      "line": 256
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "stopAllSessions",
+      "line": 264
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "sock.onerror",
+      "line": 325
+    },
+    {
+      "file": "apps/web/src/api/desktop.ts",
+      "name": "isTauriMobile",
+      "line": 18
+    },
+    {
+      "file": "apps/web/src/api/desktop.ts",
+      "name": "sleep",
+      "line": 52
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onHave",
+      "line": 130
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onClick",
+      "line": 217
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onClose",
+      "line": 260
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onOpenUrlInstall",
+      "line": 305
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onContinueWithout",
+      "line": 306
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "onClose",
+      "line": 314
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "save",
+      "line": 427
+    },
+    {
+      "file": "apps/web/src/builder/BuilderPage.tsx",
+      "name": "gestureToken",
+      "line": 429
+    },
+    {
+      "file": "apps/web/src/builder/Canvas.tsx",
+      "name": "onNodeDragStart",
+      "line": 130
+    },
+    {
+      "file": "apps/web/src/builder/catalog.ts",
+      "name": "known",
+      "line": 231
+    },
+    {
+      "file": "apps/web/src/builder/chat/MicButton.tsx",
+      "name": "stt.onError",
+      "line": 30
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "writeSttSetting",
+      "line": 36
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "<instance_members_initializer>",
+      "line": 46
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "browserStt",
+      "line": 94
+    },
+    {
+      "file": "apps/web/src/builder/draft/DraftCards.tsx",
+      "name": "onClick",
+      "line": 75
+    },
+    {
+      "file": "apps/web/src/builder/draft/DraftCards.tsx",
+      "name": "onClick",
+      "line": 176
+    },
+    {
+      "file": "apps/web/src/builder/draft/SaveDialog.tsx",
+      "name": "onChange",
+      "line": 97
+    },
+    {
+      "file": "apps/web/src/builder/draft/api.ts",
+      "name": "httpDesignerApi",
+      "line": 109
+    },
+    {
+      "file": "apps/web/src/builder/draft/useDraftSession.tsx",
+      "name": "onAnswer",
+      "line": 162
+    },
+    {
+      "file": "apps/web/src/builder/draft/useDraftSession.tsx",
+      "name": "dismissResume",
+      "line": 415
+    },
+    {
+      "file": "apps/web/src/builder/inspector/DryRunTab.tsx",
+      "name": "onChange",
+      "line": 87
+    },
+    {
+      "file": "apps/web/src/builder/inspector/NodeFields.tsx",
+      "name": "onClick",
+      "line": 127
+    },
+    {
+      "file": "apps/web/src/builder/inspector/NodeFields.tsx",
+      "name": "onApply",
+      "line": 152
+    },
+    {
+      "file": "apps/web/src/builder/inspector/SaveBar.tsx",
+      "name": "onChange",
+      "line": 81
+    },
+    {
+      "file": "apps/web/src/builder/inspector/SaveBar.tsx",
+      "name": "onBlur",
+      "line": 88
+    },
+    {
+      "file": "apps/web/src/builder/inspector/SaveBar.tsx",
+      "name": "onChange",
+      "line": 104
+    },
+    {
+      "file": "apps/web/src/builder/inspector/YamlTab.tsx",
+      "name": "onClick",
+      "line": 63
+    },
+    {
+      "file": "apps/web/src/builder/lego/CompatEdge.tsx",
+      "name": "CompatEdge",
+      "line": 5
+    },
+    {
+      "file": "apps/web/src/builder/lego/LegoNode.tsx",
+      "name": "onDragLeave",
+      "line": 92
+    },
+    {
+      "file": "apps/web/src/builder/lego/LegoNode.tsx",
+      "name": "onDragStart",
+      "line": 129
+    },
+    {
+      "file": "apps/web/src/chat/SentMessage.tsx",
+      "name": "makeUrl",
+      "line": 48
+    },
+    {
+      "file": "apps/web/src/composer/ChipMenu.tsx",
+      "name": "onDown",
+      "line": 43
+    },
+    {
+      "file": "apps/web/src/composer/ChipMenu.tsx",
+      "name": "onKey",
+      "line": 46
+    },
+    {
+      "file": "apps/web/src/composer/PlusMenu.tsx",
+      "name": "onDown",
+      "line": 42
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "onMouseDown",
+      "line": 154
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "onMouseEnter",
+      "line": 155
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "clearAgent",
+      "line": 263
+    },
+    {
+      "file": "apps/web/src/composer/attachments.ts",
+      "name": "imagesFromClipboard",
+      "line": 37
+    },
+    {
+      "file": "apps/web/src/engines/ModelButton.tsx",
+      "name": "onDown",
+      "line": 49
+    },
+    {
+      "file": "apps/web/src/engines/ModelButton.tsx",
+      "name": "onKey",
+      "line": 52
+    },
+    {
+      "file": "apps/web/src/engines/ScanBubble.tsx",
+      "name": "on",
+      "line": 19
+    },
+    {
+      "file": "apps/web/src/engines/api.ts",
+      "name": "json",
+      "line": 18
+    },
+    {
+      "file": "apps/web/src/engines/api.ts",
+      "name": "rescan",
+      "line": 23
+    },
+    {
+      "file": "apps/web/src/engines/api.ts",
+      "name": "setMainAi",
+      "line": 26
+    },
+    {
+      "file": "apps/web/src/engines/api.ts",
+      "name": "setSessionAi",
+      "line": 27
+    },
+    {
+      "file": "apps/web/src/install/InstallPlanCard.tsx",
+      "name": "openExternal",
+      "line": 27
+    },
+    {
+      "file": "apps/web/src/install/InstallPlanCard.tsx",
+      "name": "errorText",
+      "line": 31
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "search",
+      "line": 59
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "resolve",
+      "line": 60
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "cancel",
+      "line": 67
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "uninstallPlan",
+      "line": 68
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "updates",
+      "line": 69
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "history",
+      "line": 71
+    },
+    {
+      "file": "apps/web/src/panels/MonacoDiff.tsx",
+      "name": "currentTheme",
+      "line": 17
+    },
+    {
+      "file": "apps/web/src/panels/TerminalPanel.tsx",
+      "name": "write",
+      "line": 35
+    },
+    {
+      "file": "apps/web/src/panels/terminal-session.ts",
+      "name": "TerminalSession.socket.onclose",
+      "line": 37
+    },
+    {
+      "file": "apps/web/src/panels/terminal-session.ts",
+      "name": "TerminalSession.socket.onerror",
+      "line": 40
+    },
+    {
+      "file": "apps/web/src/panels/terminal-session.ts",
+      "name": "resize",
+      "line": 83
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+      "name": "playChime",
+      "line": 41
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/api.ts",
+      "name": "undo",
+      "line": 28
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "get permission",
+      "line": 66
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "requestPermission",
+      "line": 69
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "show",
+      "line": 70
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/api.ts",
+      "name": "lock",
+      "line": 19
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/stages.ts",
+      "name": "isFinishedStage",
+      "line": 70
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/api.ts",
+      "name": "find",
+      "line": 36
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/api.ts",
+      "name": "continueWithout",
+      "line": 38
+    },
+    {
+      "file": "apps/web/src/recovery/resume-list.ts",
+      "name": "resumeLine",
+      "line": 55
+    },
+    {
+      "file": "apps/web/src/run-mode/notify-policy.ts",
+      "name": "requestPermission",
+      "line": 36
+    },
+    {
+      "file": "apps/web/src/run-mode/notify-policy.ts",
+      "name": "show",
+      "line": 37
+    },
+    {
+      "file": "apps/web/src/settings/SettingsPage.tsx",
+      "name": "listEngines",
+      "line": 47
+    },
+    {
+      "file": "apps/web/src/settings/SettingsPage.tsx",
+      "name": "renderEngineSettings",
+      "line": 50
+    },
+    {
+      "file": "apps/web/src/settings/SettingsPage.tsx",
+      "name": "list",
+      "line": 56
+    },
+    {
+      "file": "apps/web/src/settings/SettingsPage.tsx",
+      "name": "remove",
+      "line": 64
+    },
+    {
+      "file": "apps/web/src/settings/SettingsPage.tsx",
+      "name": "onImported",
+      "line": 76
+    },
+    {
+      "file": "apps/web/src/settings/Engines/EngineCard.tsx",
+      "name": "onChange",
+      "line": 138
+    },
+    {
+      "file": "apps/web/src/settings/Engines/api.ts",
+      "name": "list",
+      "line": 28
+    },
+    {
+      "file": "apps/web/src/settings/Engines/api.ts",
+      "name": "login",
+      "line": 31
+    },
+    {
+      "file": "apps/web/src/settings/Engines/api.ts",
+      "name": "deleteKey",
+      "line": 34
+    },
+    {
+      "file": "apps/web/src/settings/form/SettingsForm.tsx",
+      "name": "deleteSecret",
+      "line": 124
+    },
+    {
+      "file": "apps/web/src/settings/form/api.ts",
+      "name": "json",
+      "line": 21
+    },
+    {
+      "file": "apps/web/src/settings/form/api.ts",
+      "name": "save",
+      "line": 28
+    },
+    {
+      "file": "apps/web/src/settings/form/api.ts",
+      "name": "reset",
+      "line": 30
+    },
+    {
+      "file": "apps/web/src/settings/form/api.ts",
+      "name": "saveSecret",
+      "line": 32
+    },
+    {
+      "file": "apps/web/src/settings/form/api.ts",
+      "name": "deleteSecret",
+      "line": 33
+    },
+    {
+      "file": "apps/web/src/settings/form/custom-widgets.tsx",
+      "name": "onKeyDown",
+      "line": 140
+    },
+    {
+      "file": "apps/web/src/settings/form/widgets.tsx",
+      "name": "onKeyDown",
+      "line": 171
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "post",
+      "line": 25
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "cleanup",
+      "line": 30
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "about",
+      "line": 31
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "updateCheck",
+      "line": 32
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "diagnostics",
+      "line": 33
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "exportYaml",
+      "line": 34
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "importYaml",
+      "line": 35
+    },
+    {
+      "file": "apps/web/src/settings/sections/api.ts",
+      "name": "downloadText",
+      "line": 40
+    },
+    {
+      "file": "apps/web/src/shell/RightPanel.tsx",
+      "name": "onDragLeave",
+      "line": 73
+    },
+    {
+      "file": "apps/web/src/shell/RightPanel.tsx",
+      "name": "onDragEnd",
+      "line": 82
+    },
+    {
+      "file": "apps/web/src/shell/SessionNav.tsx",
+      "name": "onChange",
+      "line": 39
+    },
+    {
+      "file": "apps/web/src/shell/projects/ConfirmCard.tsx",
+      "name": "onKeyDown",
+      "line": 21
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSettings.tsx",
+      "name": "onChange",
+      "line": 89
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSettings.tsx",
+      "name": "onChange",
+      "line": 133
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSidebar.tsx",
+      "name": "on",
+      "line": 108
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSidebar.tsx",
+      "name": "onCancel",
+      "line": 414
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSidebar.tsx",
+      "name": "onBlur",
+      "line": 774
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "remove",
+      "line": 125
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "reveal",
+      "line": 134
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "leave",
+      "line": 138
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "patchSession",
+      "line": 141
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "removeSession",
+      "line": 142
+    },
+    {
+      "file": "apps/web/src/shell/projects/model.ts",
+      "name": "effectiveState",
+      "line": 59
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onArchiveMany",
+      "line": 497
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onCancel",
+      "line": 513
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onUseTop",
+      "line": 520
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onKeep",
+      "line": 521
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onConfirm",
+      "line": 530
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onCancel",
+      "line": 531
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onRelink",
+      "line": 552
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onOpenFolder",
+      "line": 600
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "onTogglePin",
+      "line": 605
+    },
+    {
+      "file": "packages/engines/acp-generic/src/adapter.ts",
+      "name": "opts.signal.addEventListener.once",
+      "line": 283
+    },
+    {
+      "file": "packages/engines/acp-generic/src/adapter.ts",
+      "name": "failedRun",
+      "line": 327
+    },
+    {
+      "file": "packages/engines/acp-generic/src/adapter.ts",
+      "name": "createAcpEngine",
+      "line": 345
+    },
+    {
+      "file": "packages/engines/acp-generic/src/events.ts",
+      "name": "contentSummary",
+      "line": 90
+    },
+    {
+      "file": "packages/engines/acp-generic/src/index.ts",
+      "name": "activate",
+      "line": 10
+    },
+    {
+      "file": "packages/engines/acp-generic/src/queue.ts",
+      "name": "get isClosed",
+      "line": 18
+    },
+    {
+      "file": "packages/engines/antigravity/src/index.ts",
+      "name": "activate",
+      "line": 12
+    },
+    {
+      "file": "packages/engines/claude-code/src/engine.ts",
+      "name": "initInfo",
+      "line": 76
+    },
+    {
+      "file": "packages/engines/claude-code/src/index.ts",
+      "name": "activate",
+      "line": 12
+    },
+    {
+      "file": "packages/engines/codex/src/engine.ts",
+      "name": "errorBody",
+      "line": 83
+    },
+    {
+      "file": "packages/engines/codex/src/engine.ts",
+      "name": "transport",
+      "line": 145
+    },
+    {
+      "file": "packages/engines/codex/src/engine.ts",
+      "name": "client.onServerRequest",
+      "line": 188
+    },
+    {
+      "file": "packages/engines/codex/src/engine.ts",
+      "name": "opts.signal.addEventListener.once",
+      "line": 256
+    },
+    {
+      "file": "packages/engines/codex/src/index.ts",
+      "name": "activate",
+      "line": 14
+    },
+    {
+      "file": "packages/engines/openai-compat/src/index.ts",
+      "name": "activate",
+      "line": 13
+    },
+    {
+      "file": "packages/engines/openai-compat/src/json-fallback.ts",
+      "name": "mode",
+      "line": 150
+    },
+    {
+      "file": "packages/kernel/src/agent-loop.ts",
+      "name": "opts.signal.addEventListener.once",
+      "line": 402
+    },
+    {
+      "file": "packages/kernel/src/auth-status.ts",
+      "name": "defaultJsonRpcTransport",
+      "line": 49
+    },
+    {
+      "file": "packages/kernel/src/dispatch.ts",
+      "name": "abortAll",
+      "line": 447
+    },
+    {
+      "file": "packages/kernel/src/engines-settings.ts",
+      "name": "defaultEnginesSettingsFile",
+      "line": 62
+    },
+    {
+      "file": "packages/kernel/src/event-log.ts",
+      "name": "appendMany",
+      "line": 133
+    },
+    {
+      "file": "packages/kernel/src/event-log.ts",
+      "name": "fsyncSafe",
+      "line": 327
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "search",
+      "line": 87
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "resolve",
+      "line": 88
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "cancel",
+      "line": 93
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "uninstallPlan",
+      "line": 94
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "checkUpdates",
+      "line": 95
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "importScan",
+      "line": 96
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "importTools",
+      "line": 97
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "tools",
+      "line": 98
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "history",
+      "line": 99
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "onOutput",
+      "line": 100
+    },
+    {
+      "file": "packages/kernel/src/install-wiring.ts",
+      "name": "ledgers",
+      "line": 216
+    },
+    {
+      "file": "packages/kernel/src/loader.ts",
+      "name": "forget",
+      "line": 474
+    },
+    {
+      "file": "packages/kernel/src/main-ai.ts",
+      "name": "defaultMainAiFile",
+      "line": 16
+    },
+    {
+      "file": "packages/kernel/src/models.ts",
+      "name": "defaultModelsCacheFile",
+      "line": 201
+    },
+    {
+      "file": "packages/kernel/src/proc.ts",
+      "name": "get isEnded",
+      "line": 103
+    },
+    {
+      "file": "packages/kernel/src/resume-cli.ts",
+      "name": "ask",
+      "line": 46
+    },
+    {
+      "file": "packages/kernel/src/resume-run.ts",
+      "name": "<instance_members_initializer>",
+      "line": 161
+    },
+    {
+      "file": "packages/kernel/src/resume-service.ts",
+      "name": "doneItems",
+      "line": 127
+    },
+    {
+      "file": "packages/kernel/src/secrets.ts",
+      "name": "guardInstalled",
+      "line": 267
+    },
+    {
+      "file": "packages/kernel/src/stop.ts",
+      "name": "get requested",
+      "line": 93
+    },
+    {
+      "file": "packages/kernel/src/tool-first-run-asker.ts",
+      "name": "isFirstRunChoice",
+      "line": 22
+    },
+    {
+      "file": "packages/kernel/src/api/install-routes.ts",
+      "name": "sendError",
+      "line": 70
+    },
+    {
+      "file": "packages/kernel/src/native/folder-picker.ts",
+      "name": "<instance_members_initializer>",
+      "line": 48
+    },
+    {
+      "file": "packages/kernel/src/native/folder-picker.ts",
+      "name": "readVersion",
+      "line": 64
+    },
+    {
+      "file": "packages/kernel/src/projects/cli-commands.ts",
+      "name": "out",
+      "line": 21
+    },
+    {
+      "file": "packages/kernel/src/projects/cli-commands.ts",
+      "name": "err",
+      "line": 22
+    },
+    {
+      "file": "packages/kernel/src/projects/project-store.ts",
+      "name": "onChange",
+      "line": 175
+    },
+    {
+      "file": "packages/kernel/src/projects/routes.ts",
+      "name": "defaultReveal",
+      "line": 66
+    },
+    {
+      "file": "packages/kernel/src/projects/routes.ts",
+      "name": "toWinPath",
+      "line": 81
+    },
+    {
+      "file": "packages/kernel/src/projects/session-registry.ts",
+      "name": "setMode",
+      "line": 388
+    },
+    {
+      "file": "packages/kernel/src/projects/session-registry.ts",
+      "name": "archive",
+      "line": 394
+    },
+    {
+      "file": "packages/kernel/src/projects/session-registry.ts",
+      "name": "remove",
+      "line": 399
+    },
+    {
+      "file": "packages/kernel/src/run-mode/limits.ts",
+      "name": "usage",
+      "line": 39
+    },
+    {
+      "file": "packages/kernel/src/run-mode/review-list.ts",
+      "name": "all",
+      "line": 74
+    },
+    {
+      "file": "packages/kernel/src/run-mode/review-list.ts",
+      "name": "resolve",
+      "line": 78
+    },
+    {
+      "file": "packages/kernel/src/run-mode/review-list.ts",
+      "name": "onChange",
+      "line": 87
+    },
+    {
+      "file": "packages/kernel/src/run-mode/transition.ts",
+      "name": "ModeController.now",
+      "line": 45
+    },
+    {
+      "file": "packages/kernel/src/sandbox/host.ts",
+      "name": "mode.opts.hooks.onNotify",
+      "line": 215
+    },
+    {
+      "file": "packages/kernel/src/settings/runtime.ts",
+      "name": "scratchRootFrom",
+      "line": 51
+    },
+    {
+      "file": "packages/kernel/src/settings/runtime.ts",
+      "name": "kernelVersion",
+      "line": 56
+    },
+    {
+      "file": "packages/kernel/src/settings/store.ts",
+      "name": "defaultSettingsFile",
+      "line": 83
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/index.ts",
+      "name": "activate",
+      "line": 9
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "noEngine",
+      "line": 70
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "safeUser",
+      "line": 205
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/session.ts",
+      "name": "get rejectedToolCalls",
+      "line": 60
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/session.ts",
+      "name": "ask",
+      "line": 96
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/wire.ts",
+      "name": "registerBuilderDesignerRoutes",
+      "line": 52
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/save.ts",
+      "name": "issues",
+      "line": 74
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "appendConversation",
+      "line": 155
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/service.ts",
+      "name": "peek",
+      "line": 55
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/wire.ts",
+      "name": "agents",
+      "line": 30
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/condition.ts",
+      "name": "<instance_members_initializer>",
+      "line": 16
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "name": "runPipeline",
+      "line": 957
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/stages.ts",
+      "name": "trackStages",
+      "line": 422
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "count",
+      "line": 92
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "undo",
+      "line": 157
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "undo",
+      "line": 205
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/index.ts",
+      "name": "activate",
+      "line": 13
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/archive.ts",
+      "name": "tarEntryData",
+      "line": 117
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/context.ts",
+      "name": "emptyOutput",
+      "line": 30
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/image.ts",
+      "name": "stripWebpMetadata",
+      "line": 50
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/image.ts",
+      "name": "loadSharpResizer",
+      "line": 96
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/index.ts",
+      "name": "activate",
+      "line": 24
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/mcp.ts",
+      "name": "run",
+      "line": 187
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/media.ts",
+      "name": "defaultTranscriber",
+      "line": 18
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/queue.ts",
+      "name": "get pending",
+      "line": 51
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/routes.ts",
+      "name": "onSecret",
+      "line": 92
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/tools.ts",
+      "name": "which",
+      "line": 22
+    },
+    {
+      "file": "packages/plugins-core/attachments/src/tools.ts",
+      "name": "run",
+      "line": 23
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/fs-util.ts",
+      "name": "siblingFile",
+      "line": 117
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/glossary.ts",
+      "name": "get size",
+      "line": 75
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/ledger.ts",
+      "name": "<instance_members_initializer>",
+      "line": 38
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/store.ts",
+      "name": "exists",
+      "line": 60
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/stages/flow.ts",
+      "name": "nextStartable",
+      "line": 419
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/stages/tree.ts",
+      "name": "<instance_members_initializer>",
+      "line": 317
+    },
+    {
+      "file": "packages/plugins-core/checklist-ledger/src/stages/tree.ts",
+      "name": "stageForNode",
+      "line": 337
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/plugin.ts",
+      "name": "onError",
+      "line": 24
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "progressFromCache",
+      "line": 143
+    },
+    {
+      "file": "packages/plugins-core/forge/src/broker.ts",
+      "name": "onAbort",
+      "line": 56
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "typecheckPlugin",
+      "line": 142
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "interrupt",
+      "line": 253
+    },
+    {
+      "file": "packages/plugins-core/forge/src/index.ts",
+      "name": "forgeService",
+      "line": 38
+    },
+    {
+      "file": "packages/plugins-core/forge/src/index.ts",
+      "name": "forgeRunnerOptionsFor",
+      "line": 47
+    },
+    {
+      "file": "packages/plugins-core/forge/src/index.ts",
+      "name": "registerForgeApi",
+      "line": 55
+    },
+    {
+      "file": "packages/plugins-core/forge/src/index.ts",
+      "name": "activate",
+      "line": 63
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "suggestedAnswer",
+      "line": 230
+    },
+    {
+      "file": "packages/plugins-core/forge/src/sandbox.ts",
+      "name": "fail",
+      "line": 60
+    },
+    {
+      "file": "packages/plugins-core/forge/src/sandbox.ts",
+      "name": "logger",
+      "line": 77
+    },
+    {
+      "file": "packages/plugins-core/forge/src/sandbox.ts",
+      "name": "reasonOk",
+      "line": 104
+    },
+    {
+      "file": "packages/plugins-core/forge/src/spec.ts",
+      "name": "parseForgeSpec",
+      "line": 111
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapter.ts",
+      "name": "toolId",
+      "line": 140
+    },
+    {
+      "file": "packages/plugins-core/installer/src/plugin.ts",
+      "name": "activate",
+      "line": 13
+    },
+    {
+      "file": "packages/plugins-core/installer/src/plugin.ts",
+      "name": "deactivate",
+      "line": 29
+    },
+    {
+      "file": "packages/plugins-core/installer/src/plugin.ts",
+      "name": "activeInstallService",
+      "line": 35
+    },
+    {
+      "file": "packages/plugins-core/installer/src/service.ts",
+      "name": "detect",
+      "line": 204
+    },
+    {
+      "file": "packages/plugins-core/installer/src/service.ts",
+      "name": "addPlan",
+      "line": 352
+    },
+    {
+      "file": "packages/plugins-core/installer/src/service.ts",
+      "name": "job",
+      "line": 363
+    },
+    {
+      "file": "packages/plugins-core/installer/src/service.ts",
+      "name": "detection",
+      "line": 541
+    },
+    {
+      "file": "packages/plugins-core/installer/src/service.ts",
+      "name": "recordFromPlan",
+      "line": 760
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+      "name": "latestVersion",
+      "line": 126
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "onOutput",
+      "line": 224
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "onOutput",
+      "line": 254
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "verify",
+      "line": 264
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "uninstall",
+      "line": 268
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "exists",
+      "line": 278
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/download.ts",
+      "name": "available",
+      "line": 324
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "available",
+      "line": 87
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "onOutput",
+      "line": 132
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "verify",
+      "line": 162
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "findInstalled",
+      "line": 172
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "uninstall",
+      "line": 179
+    },
+    {
+      "file": "packages/plugins-core/installer/src/adapters/plugin.ts",
+      "name": "uninstallPlan",
+      "line": 186
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/host.ts",
+      "name": "sessionDir",
+      "line": 41
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "name": "installToolsProvider",
+      "line": 22
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "name": "toolsRequestProvider",
+      "line": 33
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "name": "activate",
+      "line": 45
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "name": "deactivate",
+      "line": 64
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/plugin.ts",
+      "name": "activeMcpServer",
+      "line": 69
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/transports.ts",
+      "name": "sessions",
+      "line": 102
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/transports.ts",
+      "name": "rpcError",
+      "line": 145
+    },
+    {
+      "file": "packages/plugins-core/permission-gate/src/bash-classifier.ts",
+      "name": "isWriteBash",
+      "line": 387
+    },
+    {
+      "file": "packages/plugins-core/permission-gate/src/plugin.ts",
+      "name": "activate",
+      "line": 17
+    },
+    {
+      "file": "packages/plugins-core/permission-gate/src/plugin.ts",
+      "name": "deactivate",
+      "line": 38
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/api.ts",
+      "name": "continueWithout",
+      "line": 49
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/flow.ts",
+      "name": "expected",
+      "line": 190
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/index.ts",
+      "name": "activate",
+      "line": 24
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+      "name": "available",
+      "line": 116
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+      "name": "available",
+      "line": 200
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+      "name": "available",
+      "line": 249
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/providers/package-repos.ts",
+      "name": "available",
+      "line": 287
+    },
+    {
+      "file": "packages/plugins-core/tool-finder/src/providers/types.ts",
+      "name": "get",
+      "line": 77
+    },
+    {
+      "file": "packages/plugins-core/verifiers/comparators/src/registry.ts",
+      "name": "get",
+      "line": 59
+    },
+    {
+      "file": "packages/plugins-core/verifiers/comparators/src/registry.ts",
+      "name": "has",
+      "line": 65
+    },
+    {
+      "file": "packages/plugins-core/verifiers/comparators/src/types.ts",
+      "name": "norm",
+      "line": 155
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/budget.ts",
+      "name": "reset",
+      "line": 26
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/cache.ts",
+      "name": "clear",
+      "line": 58
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/chain.ts",
+      "name": "select",
+      "line": 97
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/confidence.ts",
+      "name": "onOuterAbort",
+      "line": 87
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/engine.ts",
+      "name": "defaultJudgeSpawn",
+      "line": 75
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/engine.ts",
+      "name": "ask",
+      "line": 254
+    },
+    {
+      "file": "packages/plugins-core/verifiers/judge/src/index.ts",
+      "name": "activate",
+      "line": 14
+    },
+    {
+      "file": "packages/plugins/stt-browser/src/index.ts",
+      "name": "localConsentStore",
+      "line": 65
+    },
+    {
+      "file": "packages/plugins/stt-browser/src/index.ts",
+      "name": "activate",
+      "line": 176
+    },
+    {
+      "file": "packages/plugins/stt-browser/src/index.ts",
+      "name": "revokeConsent",
+      "line": 127
+    },
+    {
+      "file": "packages/plugins/stt-browser/src/index.ts",
+      "name": "rec.onerror",
+      "line": 154
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "defaultExec",
+      "line": 27
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "whichSync",
+      "line": 40
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "which",
+      "line": 86
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "get available",
+      "line": 155
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "detect",
+      "line": 208
+    },
+    {
+      "file": "packages/plugins/stt-local/src/index.ts",
+      "name": "activate",
+      "line": 242
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/index.ts",
+      "name": "activate",
+      "line": 4
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "<instance_members_initializer>",
+      "line": 163
+    }
+  ]
+}
