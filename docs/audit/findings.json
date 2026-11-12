@@ -251,6 +251,27 @@
         "top": 1
       },
       "id": "C1-005"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "bug",
+      "severity": "low",
+      "title": "오류를 기록 없이 넘기는 catch 73곳(빈 catch 58곳은 모두 이유 주석 있음, 주석 없는 14곳도 확인 결과 안내 문구 표시·깨진 줄 건너뛰기·다음 항목으로 넘어가기 등 의도된 처리)",
+      "evidence": [
+        "docs/audit/raw/empty-catch.json",
+        "docs/audit/raw/swallowed-catch.json",
+        "packages/engines/openai-compat/src/openai.ts:116",
+        "packages/plugins-core/installer/src/service.ts:662"
+      ],
+      "proposal": "조치 없음(기록만). 재발 방지로 새 빈 catch에는 이유 주석을 다는 규칙 유지",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C1.12",
+        "noAction": true
+      },
+      "id": "C1-006"
     }
   ]
 }
