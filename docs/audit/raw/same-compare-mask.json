@@ -1,0 +1,76 @@
+{
+  "area": "mask",
+  "implementations": [
+    "kernel/secrets-mask.ts maskSecrets",
+    "attachments/secrets.ts maskSecretText",
+    "kernel/settings/diagnostics.ts redactSecrets"
+  ],
+  "inputs": 100,
+  "differing": 90,
+  "examples": [
+    {
+      "input": "AKIADDDDDDDDDDDDDDDD \n다음 줄",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"[REDACTED:aws] \\n다음 줄\"",
+        "attachments/secrets.ts maskSecretText": "\"•••••• \\n다음 줄\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"AKIADDDDDDDDDDDDDDDD \\n다음 줄\""
+      }
+    },
+    {
+      "input": "password=hunter2hunter2 \n다음 줄",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"password=hunter2hunter2 \\n다음 줄\"",
+        "attachments/secrets.ts maskSecretText": "\"password=•••••• \\n다음 줄\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"(가림) \\n다음 줄\""
+      }
+    },
+    {
+      "input": "AIzaBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB 끝",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"[REDACTED:google] 끝\"",
+        "attachments/secrets.ts maskSecretText": "\"•••••• 끝\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"(가림) 끝\""
+      }
+    },
+    {
+      "input": "키: ghp_cccccccccccccccccccccccccccccccccccc \n다음 줄",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"키: [REDACTED:github] \\n다음 줄\"",
+        "attachments/secrets.ts maskSecretText": "\"키: •••••• \\n다음 줄\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"키: (가림) \\n다음 줄\""
+      }
+    },
+    {
+      "input": "Bearer eeeeeeeeeeeeeeeeeeeeeeeeeeeeee ",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"[REDACTED:bearer] \"",
+        "attachments/secrets.ts maskSecretText": "\"•••••• \"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"(가림) \""
+      }
+    },
+    {
+      "input": "token sk-ant-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \n다음 줄",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"token [REDACTED:sk] \\n다음 줄\"",
+        "attachments/secrets.ts maskSecretText": "\"token •••••• \\n다음 줄\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"token (가림) \\n다음 줄\""
+      }
+    },
+    {
+      "input": "설정 password=hunter2hunter2 ",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"설정 password=hunter2hunter2 \"",
+        "attachments/secrets.ts maskSecretText": "\"설정 password=hunter2hunter2 \"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"설정 (가림) \""
+      }
+    },
+    {
+      "input": "token password=hunter2hunter2 끝",
+      "outputs": {
+        "kernel/secrets-mask.ts maskSecrets": "\"token password=hunter2hunter2 끝\"",
+        "attachments/secrets.ts maskSecretText": "\"token password=hunter2hunter2 끝\"",
+        "kernel/settings/diagnostics.ts redactSecrets": "\"token (가림) 끝\""
+      }
+    }
+  ]
+}
