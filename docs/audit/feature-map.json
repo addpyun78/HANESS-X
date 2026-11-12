@@ -1,0 +1,2601 @@
+{
+  "features": [
+    {
+      "id": "F-001",
+      "name": "작업 게이트 부트스트랩",
+      "sources": [
+        {
+          "ticket": "T-000",
+          "section": "T-000 작업 게이트 부트스트랩"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-002",
+      "name": "모노레포 골격",
+      "sources": [
+        {
+          "ticket": "T-001",
+          "section": "T-001 모노레포 골격"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-003",
+      "name": "protocol: HarnessEvent 타입",
+      "sources": [
+        {
+          "ticket": "T-002",
+          "section": "T-002 protocol: HarnessEvent 타입"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-004",
+      "name": "protocol: 플러그인 매니페스트 스키마",
+      "sources": [
+        {
+          "ticket": "T-003",
+          "section": "T-003 protocol: 플러그인 매니페스트 스키마"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-005",
+      "name": "kernel: 이벤트 로그",
+      "sources": [
+        {
+          "ticket": "T-004",
+          "section": "T-004 kernel: 이벤트 로그"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-006",
+      "name": "kernel: 훅 버스",
+      "sources": [
+        {
+          "ticket": "T-005",
+          "section": "T-005 kernel: 훅 버스"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-007",
+      "name": "kernel: 플러그인 로더",
+      "sources": [
+        {
+          "ticket": "T-006",
+          "section": "T-006 kernel: 플러그인 로더"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-008",
+      "name": "kernel: 핫리로드",
+      "sources": [
+        {
+          "ticket": "T-007",
+          "section": "T-007 kernel: 핫리로드"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-009",
+      "name": "kernel: 로컬 API 서버",
+      "sources": [
+        {
+          "ticket": "T-008",
+          "section": "T-008 kernel: 로컬 API 서버"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-010",
+      "name": "engine-scanner: PATH 탐지",
+      "sources": [
+        {
+          "ticket": "T-010",
+          "section": "T-010 engine-scanner: PATH 탐지"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-011",
+      "name": "engine-scanner: WSL 탐지",
+      "sources": [
+        {
+          "ticket": "T-011",
+          "section": "T-011 engine-scanner: WSL 탐지"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-012",
+      "name": "engine-scanner: 로컬 LLM 프로브",
+      "sources": [
+        {
+          "ticket": "T-012",
+          "section": "T-012 engine-scanner: 로컬 LLM 프로브"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-013",
+      "name": "인증 모드와 키체인",
+      "sources": [
+        {
+          "ticket": "T-013",
+          "section": "T-013 인증 모드와 키체인"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-014",
+      "name": "claude-code 어댑터",
+      "sources": [
+        {
+          "ticket": "T-014",
+          "section": "T-014 claude-code 어댑터"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-015",
+      "name": "codex 어댑터",
+      "sources": [
+        {
+          "ticket": "T-015",
+          "section": "T-015 codex 어댑터"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-016",
+      "name": "antigravity 어댑터",
+      "sources": [
+        {
+          "ticket": "T-016",
+          "section": "T-016 antigravity 어댑터"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-017",
+      "name": "openai-compat 어댑터 + 하네스 자체 도구 루프",
+      "sources": [
+        {
+          "ticket": "T-017",
+          "section": "T-017 openai-compat 어댑터 + 하네스 자체 도구 루프"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-018",
+      "name": "acp-generic 어댑터",
+      "sources": [
+        {
+          "ticket": "T-018",
+          "section": "T-018 acp-generic 어댑터"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-019",
+      "name": "체크리스트 원장과 상태 기계",
+      "sources": [
+        {
+          "ticket": "T-020",
+          "section": "T-020 체크리스트 원장과 상태 기계"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-020",
+      "name": "원자성 린터",
+      "sources": [
+        {
+          "ticket": "T-021",
+          "section": "T-021 원자성 린터"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-021",
+      "name": "경로 원장(manifest)과 이름 정책",
+      "sources": [
+        {
+          "ticket": "T-022",
+          "section": "T-022 경로 원장(manifest)과 이름 정책"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-022",
+      "name": "하네스 MCP 서버",
+      "sources": [
+        {
+          "ticket": "T-023",
+          "section": "T-023 하네스 MCP 서버"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-023",
+      "name": "계획 게이트와 조기 경로 감지",
+      "sources": [
+        {
+          "ticket": "T-024",
+          "section": "T-024 계획 게이트와 조기 경로 감지"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-024",
+      "name": "판정 사다리 L1~L3 (코드 판정)",
+      "sources": [
+        {
+          "ticket": "T-025",
+          "section": "T-025 판정 사다리 L1~L3 (코드 판정)"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-025",
+      "name": "판정 사다리 L4 — Jev 판정기 플러그인",
+      "sources": [
+        {
+          "ticket": "T-026",
+          "section": "T-026 판정 사다리 L4 — Jev 판정기 플러그인"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-026",
+      "name": "판정 사다리 L5 — 승인 카드와 사전 학습",
+      "sources": [
+        {
+          "ticket": "T-027",
+          "section": "T-027 판정 사다리 L5 — 승인 카드와 사전 학습"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-027",
+      "name": "종료 차단",
+      "sources": [
+        {
+          "ticket": "T-028",
+          "section": "T-028 종료 차단"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-028",
+      "name": "컨텍스트 슬라이스·정체 감지·내보내기",
+      "sources": [
+        {
+          "ticket": "T-029",
+          "section": "T-029 컨텍스트 슬라이스·정체 감지·내보내기"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-029",
+      "name": "웹 앱 골격과 디자인 토큰",
+      "sources": [
+        {
+          "ticket": "T-030",
+          "section": "T-030 웹 앱 골격과 디자인 토큰"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-030",
+      "name": "앱 셸 레이아웃",
+      "sources": [
+        {
+          "ticket": "T-031",
+          "section": "T-031 앱 셸 레이아웃"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-031",
+      "name": "채팅 스트림",
+      "sources": [
+        {
+          "ticket": "T-032",
+          "section": "T-032 채팅 스트림"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-032",
+      "name": "지시 입력창과 칩",
+      "sources": [
+        {
+          "ticket": "T-033",
+          "section": "T-033 지시 입력창과 칩"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-033",
+      "name": "+ 버튼 → Windows 폴더 대화상자",
+      "sources": [
+        {
+          "ticket": "T-034",
+          "section": "T-034 + 버튼 → Windows 폴더 대화상자"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-034",
+      "name": "워크스페이스 등록과 최근 프로젝트",
+      "sources": [
+        {
+          "ticket": "T-035",
+          "section": "T-035 워크스페이스 등록과 최근 프로젝트"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-035",
+      "name": "체크리스트 패널",
+      "sources": [
+        {
+          "ticket": "T-036",
+          "section": "T-036 체크리스트 패널"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-036",
+      "name": "Diff·터미널·궤적 패널",
+      "sources": [
+        {
+          "ticket": "T-037",
+          "section": "T-037 Diff·터미널·궤적 패널"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-037",
+      "name": "설정 > 엔진 화면",
+      "sources": [
+        {
+          "ticket": "T-038",
+          "section": "T-038 설정 > 엔진 화면"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-038",
+      "name": "파이프라인·에이전트 스키마",
+      "sources": [
+        {
+          "ticket": "T-040",
+          "section": "T-040 파이프라인·에이전트 스키마"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-039",
+      "name": "파이프라인 실행기",
+      "sources": [
+        {
+          "ticket": "T-041",
+          "section": "T-041 파이프라인 실행기"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-040",
+      "name": "노드 간 데이터 계약",
+      "sources": [
+        {
+          "ticket": "T-042",
+          "section": "T-042 노드 간 데이터 계약"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-041",
+      "name": "플러그인 단독 에이전트",
+      "sources": [
+        {
+          "ticket": "T-043",
+          "section": "T-043 플러그인 단독 에이전트"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-042",
+      "name": "메뉴 \"에이전트 만들기\"와 빌더 캔버스",
+      "sources": [
+        {
+          "ticket": "T-044",
+          "section": "T-044 메뉴 \"에이전트 만들기\"와 빌더 캔버스"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-043",
+      "name": "레고 장착·분리",
+      "sources": [
+        {
+          "ticket": "T-045",
+          "section": "T-045 레고 장착·분리"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-044",
+      "name": "인스펙터·YAML 동기화·시험 실행",
+      "sources": [
+        {
+          "ticket": "T-046",
+          "section": "T-046 인스펙터·YAML 동기화·시험 실행"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-045",
+      "name": "/ 에이전트 팔레트",
+      "sources": [
+        {
+          "ticket": "T-047",
+          "section": "T-047 / 에이전트 팔레트"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-046",
+      "name": "/ 실행 디스패치",
+      "sources": [
+        {
+          "ticket": "T-048",
+          "section": "T-048 / 실행 디스패치"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-047",
+      "name": "템플릿 레지스트리",
+      "sources": [
+        {
+          "ticket": "T-050",
+          "section": "T-050 템플릿 레지스트리"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-048",
+      "name": "Forge 인터뷰와 spec",
+      "sources": [
+        {
+          "ticket": "T-051",
+          "section": "T-051 Forge 인터뷰와 spec"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-049",
+      "name": "정적 검사·샌드박스 시험·설치",
+      "sources": [
+        {
+          "ticket": "T-052",
+          "section": "T-052 정적 검사·샌드박스 시험·설치"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-050",
+      "name": "세션에서 스킬 추출·외부 가져오기",
+      "sources": [
+        {
+          "ticket": "T-053",
+          "section": "T-053 세션에서 스킬 추출·외부 가져오기"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-051",
+      "name": "쿼터 미터와 폴백 라우팅",
+      "sources": [
+        {
+          "ticket": "T-060",
+          "section": "T-060 쿼터 미터와 폴백 라우팅"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-052",
+      "name": "크래시 복구",
+      "sources": [
+        {
+          "ticket": "T-061",
+          "section": "T-061 크래시 복구"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-053",
+      "name": "플러그인 격리와 서명 등급",
+      "sources": [
+        {
+          "ticket": "T-062",
+          "section": "T-062 플러그인 격리와 서명 등급"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-054",
+      "name": "Tauri 데스크톱 패키징",
+      "sources": [
+        {
+          "ticket": "T-063",
+          "section": "T-063 Tauri 데스크톱 패키징"
+        }
+      ],
+      "doneItems": 2,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-055",
+      "name": "E2E 회귀 시나리오 묶음",
+      "sources": [
+        {
+          "ticket": "T-064",
+          "section": "T-064 E2E 회귀 시나리오 묶음"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-056",
+      "name": "Part 1 · 준비",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-A. 준비"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-057",
+      "name": "Part 1 · Jev 완전 삭제",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-J. Jev 완전 삭제"
+        }
+      ],
+      "doneItems": 9,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-058",
+      "name": "Part 1 · 비교기 인터페이스",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-B. 비교기 인터페이스"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-059",
+      "name": "Part 1 · 비교기 구현 (코드만, 0원)",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-C. 비교기 구현 (코드만, 0원)"
+        }
+      ],
+      "doneItems": 12,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-060",
+      "name": "Part 1 · acceptance 스키마 연결",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-D. acceptance 스키마 연결"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-061",
+      "name": "Part 1 · 의미 판단 AI 체인",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-E. 의미 판단 AI 체인"
+        }
+      ],
+      "doneItems": 14,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-062",
+      "name": "Part 1 · 기록·학습",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-F. 기록·학습"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-063",
+      "name": "Part 1 · 사용자 승인 카드 (코딩 초보자용)",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-H. 사용자 승인 카드 (코딩 초보자용)"
+        }
+      ],
+      "doneItems": 24,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-064",
+      "name": "Part 1 · 회귀·완료",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P1-G. 회귀·완료"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-065",
+      "name": "Part 2 · 기본 구조",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-A. 기본 구조"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-066",
+      "name": "Part 2 · 설치 어댑터 (종류별 plan · install · verify · uninstall)",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-B. 설치 어댑터 (종류별 plan · install · verify · uninstall)"
+        }
+      ],
+      "doneItems": 14,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-067",
+      "name": "Part 2 · 주소로 설치",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-C. 주소로 설치"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-068",
+      "name": "Part 2 · 설치 계획 카드와 승인",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-D. 설치 계획 카드와 승인"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-069",
+      "name": "Part 2 · 실행·검증·기록·제거",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-E. 실행·검증·기록·제거"
+        }
+      ],
+      "doneItems": 9,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-070",
+      "name": "Part 2 · 도구 목록(레지스트리) 저장과 AI 바로 탑재",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-F. 도구 목록(레지스트리) 저장과 AI 바로 탑재"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-071",
+      "name": "Part 2 · 화면과 지시 방법",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P2-G. 화면과 지시 방법"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-072",
+      "name": "Part 3 · 필요한 도구 알아내기",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P3-A. 필요한 도구 알아내기"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-073",
+      "name": "Part 3 · 검색",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P3-B. 검색"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-074",
+      "name": "Part 3 · 추천과 표시",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P3-C. 추천과 표시"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-075",
+      "name": "Part 3 · 연결과 마무리",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P3-D. 연결과 마무리"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-076",
+      "name": "Part 4 · 자산 전수조사 (Inventory)",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-A. 자산 전수조사 (Inventory)"
+        }
+      ],
+      "doneItems": 13,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-077",
+      "name": "Part 4 · 입력 — 글과 말",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-B. 입력 — 글과 말"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-078",
+      "name": "Part 4 · AI 초안 설계 (Designer)",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-C. AI 초안 설계 (Designer)"
+        }
+      ],
+      "doneItems": 11,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-079",
+      "name": "Part 4 · 초안 표시와 검토",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-D. 초안 표시와 검토"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-080",
+      "name": "Part 4 · 수정 — 캔버스로도, 말로도",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-E. 수정 — 캔버스로도, 말로도"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-081",
+      "name": "Part 4 · 저장 — 사람만",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-F. 저장 — 사람만"
+        }
+      ],
+      "doneItems": 10,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-082",
+      "name": "Part 4 · 회귀·E2E",
+      "sources": [
+        {
+          "ticket": "T-100",
+          "section": "P4-G. 회귀·E2E"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-083",
+      "name": "0-1. 공통 준비 · 공통 준비 — 설정 등록 틀",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "0-1. 공통 준비 — 설정 등록 틀"
+        }
+      ],
+      "doneItems": 10,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-084",
+      "name": "0-2. 프로젝트와 새 세션 · 프로젝트 만들기",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 프로젝트 만들기"
+        }
+      ],
+      "doneItems": 10,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-085",
+      "name": "0-2. 프로젝트와 새 세션 · 새 세션",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 새 세션"
+        }
+      ],
+      "doneItems": 11,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-086",
+      "name": "0-2. 프로젝트와 새 세션 · 사이드바",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 사이드바"
+        }
+      ],
+      "doneItems": 11,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-087",
+      "name": "0-2. 프로젝트와 새 세션 · 함정 방지와 프로젝트 기본값",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "E. 함정 방지와 프로젝트 기본값"
+        }
+      ],
+      "doneItems": 5,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-088",
+      "name": "0-2. 프로젝트와 새 세션 · 회귀",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 회귀"
+        }
+      ],
+      "doneItems": 2,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-089",
+      "name": "0-3. 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검 · 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "0-3. 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검"
+        }
+      ],
+      "doneItems": 10,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-090",
+      "name": "0-3. 동작 없는 버튼 재발 방지 + 기존 화면 전수 점검 · 0C 발견 목록 (0C.6 실행 후 채움)",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "0C 발견 목록 (0C.6 실행 후 채움)"
+        }
+      ],
+      "doneItems": 15,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-091",
+      "name": "1. 입력창 첨부 · 저장과 종류 인식",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 저장과 종류 인식"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-092",
+      "name": "1. 입력창 첨부 · 형태 바꾸기 (백그라운드)",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 형태 바꾸기 (백그라운드)"
+        }
+      ],
+      "doneItems": 11,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-093",
+      "name": "1. 입력창 첨부 · 안전",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 안전"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-094",
+      "name": "1. 입력창 첨부 · 어떤 AI·에이전트든 전달",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 어떤 AI·에이전트든 전달"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-095",
+      "name": "1. 입력창 첨부 · 화면",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "E. 화면"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-096",
+      "name": "1. 입력창 첨부 · 회귀",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "F. 회귀"
+        }
+      ],
+      "doneItems": 2,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-097",
+      "name": "2. 수동 정지와 프로젝트 이어하기 · 정지",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 정지"
+        }
+      ],
+      "doneItems": 9,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-098",
+      "name": "2. 수동 정지와 프로젝트 이어하기 · 이어하기",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 이어하기"
+        }
+      ],
+      "doneItems": 13,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-099",
+      "name": "2. 수동 정지와 프로젝트 이어하기 · 회귀",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 회귀"
+        }
+      ],
+      "doneItems": 2,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-100",
+      "name": "3. 실행 모드 · 기본",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 기본"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-101",
+      "name": "3. 실행 모드 · 계획 모드",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 계획 모드"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-102",
+      "name": "3. 실행 모드 · 일반 모드",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 일반 모드"
+        }
+      ],
+      "doneItems": 1,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-103",
+      "name": "3. 실행 모드 · 오토 모드",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 오토 모드"
+        }
+      ],
+      "doneItems": 9,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-104",
+      "name": "3. 실행 모드 · 다른 기능과 연결",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "E. 다른 기능과 연결"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-105",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 모델",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 모델"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-106",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 목록이 만들어지는 시점",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 목록이 만들어지는 시점"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-107",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 단계 넘어가기",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 단계 넘어가기"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-108",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 검사 실패와 되돌림",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 검사 실패와 되돌림"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-109",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 병렬·반복·분기·하위 에이전트",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "E. 병렬·반복·분기·하위 에이전트"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-110",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 기존 기능 연결",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "F. 기존 기능 연결"
+        }
+      ],
+      "doneItems": 7,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-111",
+      "name": "4. 단계가 있는 에이전트의 체크리스트 · 회귀",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "G. 회귀"
+        }
+      ],
+      "doneItems": 2,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-112",
+      "name": "5. 엔진 자동 탐지 · 모델 선택 · 에이전트 만들기 연결 · 시작 시 자동 탐지",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "A. 시작 시 자동 탐지"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-113",
+      "name": "5. 엔진 자동 탐지 · 모델 선택 · 에이전트 만들기 연결 · 모델 목록",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 모델 목록"
+        }
+      ],
+      "doneItems": 4,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-114",
+      "name": "5. 엔진 자동 탐지 · 모델 선택 · 에이전트 만들기 연결 · 입력창 오른쪽 아래 모델 선택 = 메인 AI",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 입력창 오른쪽 아래 모델 선택 = 메인 AI"
+        }
+      ],
+      "doneItems": 6,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-115",
+      "name": "5. 엔진 자동 탐지 · 모델 선택 · 에이전트 만들기 연결 · 에이전트 만들기 연결",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 에이전트 만들기 연결"
+        }
+      ],
+      "doneItems": 8,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-116",
+      "name": "6. 설정 화면 채우기 · 섹션 (각 섹션 = 레지스트리 그룹 + 쉬운 말 설명)",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "B. 섹션 (각 섹션 = 레지스트리 그룹 + 쉬운 말 설명)"
+        }
+      ],
+      "doneItems": 14,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-117",
+      "name": "6. 설정 화면 채우기 · 검색·고급·내보내기",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "C. 검색·고급·내보내기"
+        }
+      ],
+      "doneItems": 3,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    },
+    {
+      "id": "F-118",
+      "name": "6. 설정 화면 채우기 · 완료 검사",
+      "sources": [
+        {
+          "ticket": "T-101",
+          "section": "D. 완료 검사"
+        }
+      ],
+      "doneItems": 1,
+      "entries": {
+        "actions": [],
+        "api": [],
+        "cli": [],
+        "mcp": [],
+        "hooks": [],
+        "settings": []
+      },
+      "code": [],
+      "tests": [],
+      "status": "정상"
+    }
+  ],
+  "generatedAt": "2026-11-12T10:13:19.534Z"
+}
