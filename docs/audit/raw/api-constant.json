@@ -1,0 +1,824 @@
+[
+  {
+    "route": "PUT /api/agents/:name",
+    "file": "packages/kernel/src/api/agents-routes.ts:56",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/agents/save",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts:175",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/agents",
+    "file": "packages/kernel/src/api/server.ts:209",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"agents\":[{\"name\":\"forge\",\"command\":\"/forge\",\"displayName\":\"Forge\",\"description\":\"대화로 훅·스킬·도구 플러그인을 만들어 시험하고 설치한다\",\"icon\":\"🔨\",\"source\":\"plugin\",\"pluginId\":\"fo"
+  },
+  {
+    "route": "POST /api/approvals/:id",
+    "file": "packages/kernel/src/api/approvals-routes.ts:66",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/approvals/undo",
+    "file": "packages/kernel/src/api/approvals-routes.ts:57",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/approvals",
+    "file": "packages/kernel/src/api/approvals-routes.ts:50",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"approvals\":[]}"
+  },
+  {
+    "route": "POST /api/builder/design",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts:75",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/builder/drafts",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts:124",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"drafts\":[]}"
+  },
+  {
+    "route": "POST /api/builder/edit",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts:114",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/builder/inventory",
+    "file": "packages/plugins-core/agent-builder/src/inventory/route.ts:34",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"inventory\":{\"snapshotId\":\"66ee4815-4f7d-422c-b185-3aac5dcf280b\",\"createdAt\":\"2026-11-12T10:59:38.154Z\",\"plugins\":[{\"id\":\"agent-builder\",\"version\":\"0.0.0\",\"dis"
+  },
+  {
+    "route": "POST /api/checklist/:session/lock",
+    "file": "packages/plugins-core/checklist-ledger/src/plan-routes.ts:160",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/checklist/:session/status",
+    "file": "packages/plugins-core/checklist-ledger/src/stop-guard.ts:127",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"message\":\"Route GET:/api/checklist/audit-a/status not found\",\"error\":\"Not Found\",\"statusCode\":404}"
+  },
+  {
+    "route": "GET /api/checklist/:session",
+    "file": "packages/plugins-core/checklist-ledger/src/plan-routes.ts:152",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"message\":\"Route GET:/api/checklist/audit-a not found\",\"error\":\"Not Found\",\"statusCode\":404}"
+  },
+  {
+    "route": "POST /api/compare",
+    "file": "packages/plugins-core/verifiers/ladder/src/runtime.ts:277",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "DELETE /api/engines/:id/key",
+    "file": "packages/kernel/src/api/engines-routes.ts:234",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "PUT /api/engines/:id/key",
+    "file": "packages/kernel/src/api/engines-routes.ts:225",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/engines/:id/login",
+    "file": "packages/kernel/src/api/engines-routes.ts:179",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 200,
+    "statusB": 200,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"engine\":\"audit-a\",\"state\":\"unknown\",\"source\":\"none\"}"
+  },
+  {
+    "route": "POST /api/engines/:id/ping",
+    "file": "packages/kernel/src/api/engines-routes.ts:240",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "PUT /api/engines/:id/settings",
+    "file": "packages/kernel/src/api/engines-routes.ts:186",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/engines/rescan",
+    "file": "packages/kernel/src/api/engines-routes.ts:176",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/engines",
+    "file": "packages/kernel/src/api/engines-routes.ts:156",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"scan\":null,\"settings\":{\"engines\":{}},\"keys\":{\"claude-code\":null,\"claude\":null,\"codex\":null,\"openai-compat\":null,\"antigravity\":null,\"agy\":null,\"gemini\":null},\""
+  },
+  {
+    "route": "POST /api/forge/answers/:id",
+    "file": "packages/plugins-core/forge/src/routes.ts:30",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/forge/pending",
+    "file": "packages/plugins-core/forge/src/routes.ts:26",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"cards\":[]}"
+  },
+  {
+    "route": "POST /api/gesture-tokens",
+    "file": "packages/kernel/src/api/install-routes.ts:91",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/health",
+    "file": "packages/kernel/src/api/server.ts:173",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"ok\":true,\"port\":39055}"
+  },
+  {
+    "route": "POST /api/install/cancel",
+    "file": "packages/kernel/src/api/install-routes.ts:146",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/execute",
+    "file": "packages/kernel/src/api/install-routes.ts:136",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/first-run/:id",
+    "file": "packages/kernel/src/api/install-routes.ts:171",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/install/first-run",
+    "file": "packages/kernel/src/api/install-routes.ts:170",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"pending\":[]}"
+  },
+  {
+    "route": "GET /api/install/history",
+    "file": "packages/kernel/src/api/install-routes.ts:167",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"records\":[]}"
+  },
+  {
+    "route": "POST /api/install/import/scan",
+    "file": "packages/kernel/src/api/install-routes.ts:156",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/import",
+    "file": "packages/kernel/src/api/install-routes.ts:157",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/plan",
+    "file": "packages/kernel/src/api/install-routes.ts:127",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/install/plans/:id",
+    "file": "packages/kernel/src/api/install-routes.ts:131",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"error\":\"not_found\"}"
+  },
+  {
+    "route": "POST /api/install/resolve",
+    "file": "packages/kernel/src/api/install-routes.ts:121",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/search",
+    "file": "packages/kernel/src/api/install-routes.ts:115",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/install/tools",
+    "file": "packages/kernel/src/api/install-routes.ts:166",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"tools\":[]}"
+  },
+  {
+    "route": "POST /api/install/uninstall-plan",
+    "file": "packages/kernel/src/api/install-routes.ts:151",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/install/updates",
+    "file": "packages/kernel/src/api/install-routes.ts:155",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/main-ai",
+    "file": "packages/kernel/src/api/models-routes.ts:45",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"main\":null}"
+  },
+  {
+    "route": "PUT /api/main-ai",
+    "file": "packages/kernel/src/api/models-routes.ts:47",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/models",
+    "file": "packages/kernel/src/api/models-routes.ts:33",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"models\":[],\"scannedAt\":null}"
+  },
+  {
+    "route": "POST /api/native/pick-folder",
+    "file": "packages/kernel/src/api/server.ts:226",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/notices",
+    "file": "packages/plugins-core/verifiers/ladder/src/runtime.ts:276",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"notices\":[]}"
+  },
+  {
+    "route": "POST /api/plugins/:id/promote",
+    "file": "packages/kernel/src/api/server.ts:194",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/plugins",
+    "file": "packages/kernel/src/api/server.ts:176",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"plugins\":[{\"id\":\"agent-builder\",\"version\":\"0.0.0\",\"displayName\":\"Agent Builder\",\"description\":\"에이전트 레지스트리(플러그인 단독·파이프라인·사용자 에이전트)와 빌더\",\"state\":\"active\",\"origi"
+  },
+  {
+    "route": "GET /api/projects/:id/info",
+    "file": "packages/kernel/src/projects/routes.ts:194",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"error\":\"not_found\",\"message\":\"프로젝트를 찾을 수 없어요: audit-a\"}"
+  },
+  {
+    "route": "POST /api/projects/:id/move",
+    "file": "packages/kernel/src/projects/routes.ts:213",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/:id/relink",
+    "file": "packages/kernel/src/projects/routes.ts:203",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/:id/reveal",
+    "file": "packages/kernel/src/projects/routes.ts:222",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/projects/:id/sessions",
+    "file": "packages/kernel/src/projects/routes.ts:188",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"error\":\"not_found\"}"
+  },
+  {
+    "route": "DELETE /api/projects/:id",
+    "file": "packages/kernel/src/projects/routes.ts:178",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "PATCH /api/projects/:id",
+    "file": "packages/kernel/src/projects/routes.ts:156",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/current",
+    "file": "packages/kernel/src/projects/routes.ts:146",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/order",
+    "file": "packages/kernel/src/projects/routes.ts:135",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/scratch",
+    "file": "packages/kernel/src/projects/routes.ts:127",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/projects/suggest-root",
+    "file": "packages/kernel/src/projects/routes.ts:119",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/projects",
+    "file": "packages/kernel/src/projects/routes.ts:99",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"projects\":[],\"noProject\":1}"
+  },
+  {
+    "route": "POST /api/projects",
+    "file": "packages/kernel/src/projects/routes.ts:109",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/quota",
+    "file": "packages/kernel/src/api/quota-route.ts:12",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"engines\":[]}"
+  },
+  {
+    "route": "POST /api/recovery/:session/resume",
+    "file": "packages/kernel/src/recover.ts:300",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/recovery",
+    "file": "packages/kernel/src/recover.ts:297",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"sessions\":[]}"
+  },
+  {
+    "route": "POST /api/resume/:id/check",
+    "file": "packages/kernel/src/api/resume-routes.ts:40",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/resume/:id",
+    "file": "packages/kernel/src/api/resume-routes.ts:48",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/resume",
+    "file": "packages/kernel/src/api/resume-routes.ts:24",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"sessions\":[],\"cleanup\":null}"
+  },
+  {
+    "route": "GET /api/session-records",
+    "file": "packages/kernel/src/projects/routes.ts:234",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"sessions\":[{\"id\":\"kernel\",\"projectId\":null,\"title\":\"kernel\",\"titleLocked\":false,\"status\":\"paused\",\"mode\":\"normal\",\"permission\":\"workspace-write\",\"cwd\":\"\",\"ori"
+  },
+  {
+    "route": "PUT /api/sessions/:id/ai",
+    "file": "packages/kernel/src/api/models-routes.ts:53",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/sessions/:id/attachments",
+    "file": "packages/plugins-core/attachments/src/routes.ts:56",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"error\":\"not_found\",\"message\":\"세션을 찾을 수 없어요.\"}"
+  },
+  {
+    "route": "POST /api/sessions/:id/attachments",
+    "file": "packages/plugins-core/attachments/src/routes.ts:64",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/commit",
+    "file": "packages/kernel/src/projects/routes.ts:236",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/leave",
+    "file": "packages/kernel/src/projects/routes.ts:245",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/pause",
+    "file": "packages/kernel/src/api/stop-routes.ts:18",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/project",
+    "file": "packages/kernel/src/projects/routes.ts:250",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/stop",
+    "file": "packages/kernel/src/api/stop-routes.ts:27",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/subagents",
+    "file": "packages/kernel/src/api/sessions-routes.ts:83",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/:id/title-suggestion",
+    "file": "packages/kernel/src/projects/routes.ts:259",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "DELETE /api/sessions/:id",
+    "file": "packages/kernel/src/projects/routes.ts:282",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/sessions/:id",
+    "file": "packages/kernel/src/api/sessions-routes.ts:77",
+    "tested": true,
+    "hasParam": true,
+    "statusA": 404,
+    "statusB": 404,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"error\":\"not_found\"}"
+  },
+  {
+    "route": "PATCH /api/sessions/:id",
+    "file": "packages/kernel/src/projects/routes.ts:268",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/sessions/stop-all",
+    "file": "packages/kernel/src/api/stop-routes.ts:17",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/sessions",
+    "file": "packages/kernel/src/api/sessions-routes.ts:75",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": true,
+    "constantSuspect": false,
+    "sample": "{\"sessions\":[]}"
+  },
+  {
+    "route": "POST /api/sessions",
+    "file": "packages/kernel/src/api/sessions-routes.ts:40",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/settings/about",
+    "file": "packages/kernel/src/api/settings-routes.ts:93",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"version\":\"0.0.0\",\"platform\":\"linux\",\"node\":\"v22.23.4\",\"updateCheck\":false}"
+  },
+  {
+    "route": "POST /api/settings/data/cleanup",
+    "file": "packages/kernel/src/api/settings-routes.ts:86",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/settings/diagnostics",
+    "file": "packages/kernel/src/api/settings-routes.ts:120",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"file\":\"harness-x-diagnostics.json\",\"text\":\"{\\n  \\\"kind\\\": \\\"harness-x-diagnostics\\\",\\n  \\\"createdAt\\\": \\\"2026-11-12T10:59:38.631Z\\\",\\n  \\\"version\\\": \\\"0.0.0\\\""
+  },
+  {
+    "route": "GET /api/settings/export",
+    "file": "packages/kernel/src/api/settings-routes.ts:130",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"file\":\"settings.yaml\",\"text\":\"# HARNESS-X 설정 파일 — 키(비밀 값)는 들어 있지 않아요.\\n{}\\n\"}"
+  },
+  {
+    "route": "POST /api/settings/import",
+    "file": "packages/kernel/src/api/settings-routes.ts:132",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/settings/reset",
+    "file": "packages/kernel/src/api/settings-routes.ts:163",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/settings/schema",
+    "file": "packages/kernel/src/api/settings-routes.ts:84",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://harness-x.local/schemas/settings.json\",\"title\":\"하네스 설정\",\"type\":\"object\",\"properties\":{\""
+  },
+  {
+    "route": "DELETE /api/settings/secret",
+    "file": "packages/kernel/src/api/settings-routes.ts:201",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "PUT /api/settings/secret",
+    "file": "packages/kernel/src/api/settings-routes.ts:190",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/settings/update-check",
+    "file": "packages/kernel/src/api/settings-routes.ts:100",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/settings",
+    "file": "packages/kernel/src/api/settings-routes.ts:73",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"groups\":[{\"id\":\"general\",\"title\":\"일반\",\"description\":\"화면 모양처럼 자주 바꾸는 설정이에요.\"},{\"id\":\"ai\",\"title\":\"AI·엔진\",\"description\":\"어떤 AI를 쓸지 고르는 설정이에요.\"},{\"id\":\"mode\",\"ti"
+  },
+  {
+    "route": "PUT /api/settings",
+    "file": "packages/kernel/src/api/settings-routes.ts:148",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/stt/status",
+    "file": "packages/plugins/stt-local/src/index.ts:209",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 404,
+    "statusB": 404,
+    "same": false,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"message\":\"Route GET:/api/stt/status?q=audit-a not found\",\"error\":\"Not Found\",\"statusCode\":404}"
+  },
+  {
+    "route": "POST /api/stt/transcribe",
+    "file": "packages/plugins/stt-local/src/index.ts:218",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/tools/continue",
+    "file": "packages/kernel/src/api/tool-routes.ts:37",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/tools/find",
+    "file": "packages/kernel/src/api/tool-routes.ts:31",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/tools/plan-selected",
+    "file": "packages/kernel/src/api/tool-routes.ts:34",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/workspaces/open",
+    "file": "packages/kernel/src/api/server.ts:251",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "POST /api/workspaces/pin",
+    "file": "packages/kernel/src/api/server.ts:262",
+    "tested": false,
+    "reason": "부작용 가능(GET 아님)"
+  },
+  {
+    "route": "GET /api/workspaces",
+    "file": "packages/kernel/src/api/server.ts:247",
+    "tested": true,
+    "hasParam": false,
+    "statusA": 200,
+    "statusB": 200,
+    "same": true,
+    "empty": false,
+    "constantSuspect": false,
+    "sample": "{\"recent\":[],\"cwd\":\"/tmp/hx-probe-BJjW8i\"}"
+  }
+]
