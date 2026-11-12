@@ -1,0 +1,56 @@
+{
+  "files": 1,
+  "errorEvents": 9,
+  "groups": [
+    {
+      "type": "plugin_rejected",
+      "code": null,
+      "engine": null,
+      "plugin": "agent-builder",
+      "message": "plugins.lock 불일치: 파일이 변조됨 (agent-builder@0.0.0)",
+      "count": 3,
+      "first": "2026-11-10T19:31:41.586Z",
+      "last": "2026-11-11T14:33:54.584Z"
+    },
+    {
+      "type": "plugin_rejected",
+      "code": null,
+      "engine": null,
+      "plugin": "checklist-ledger",
+      "message": "plugins.lock 불일치: 파일이 변조됨 (checklist-ledger@0.1.0)",
+      "count": 3,
+      "first": "2026-11-10T19:31:43.807Z",
+      "last": "2026-11-11T14:33:58.162Z"
+    },
+    {
+      "type": "plugin_rejected",
+      "code": null,
+      "engine": null,
+      "plugin": "forge",
+      "message": "plugins.lock 불일치: 파일이 변조됨 (forge@0.0.0)",
+      "count": 1,
+      "first": "2026-11-11T14:34:02.455Z",
+      "last": "2026-11-11T14:34:02.455Z"
+    },
+    {
+      "type": "plugin_rejected",
+      "code": null,
+      "engine": null,
+      "plugin": "mcp-host",
+      "message": "plugins.lock 불일치: 파일이 변조됨 (mcp-host@0.1.0)",
+      "count": 1,
+      "first": "2026-11-11T14:34:05.368Z",
+      "last": "2026-11-11T14:34:05.368Z"
+    },
+    {
+      "type": "plugin_rejected",
+      "code": null,
+      "engine": null,
+      "plugin": "permission-gate",
+      "message": "plugins.lock 불일치: 파일이 변조됨 (permission-gate@0.1.0)",
+      "count": 1,
+      "first": "2026-11-11T14:34:06.075Z",
+      "last": "2026-11-11T14:34:06.075Z"
+    }
+  ]
+}
