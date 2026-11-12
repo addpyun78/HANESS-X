@@ -231,6 +231,12 @@
   color: var(--hx-success);
 }
 
+.hx-srow__stage {
+  color: var(--hx-text-muted);
+  font-size: var(--hx-font-12);
+  white-space: nowrap;
+}
+
 .hx-srow__mode {
   padding: 0 var(--hx-space-1);
   border: 1px solid var(--hx-border);
