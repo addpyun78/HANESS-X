@@ -420,7 +420,8 @@
         "docs/audit/raw/settings-noeffect.json",
         "packages/plugins-core/tool-finder/src/settings.ts:24 (model 파싱만)",
         "packages/kernel/src/settings/registry.ts:481-504",
-        "docs/audit/raw/manifest-registered.json (verifier-local 로드 안 됨)"
+        "docs/audit/raw/manifest-registered.json (verifier-local 로드 안 됨)",
+        "docs/audit/raw/settings-doc-drift.json"
       ],
       "proposal": "껍데기 규칙: 작업량이 S가 아니고 원래 수용 기준이 분명치 않으면 숨김(설정 화면에서 비활성 + \"준비 중이에요\")",
       "risk": "low",
@@ -699,7 +700,7 @@
       "id": "C6-005"
     },
     {
-      "status": "open",
+      "status": "merged-into: C2-004",
       "features": [],
       "area": "docs",
       "severity": "low",
