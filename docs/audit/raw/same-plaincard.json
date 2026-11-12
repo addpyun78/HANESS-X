@@ -1,0 +1,91 @@
+{
+  "area": "쉬운 말 카드 문구 만들기",
+  "implementations": 14,
+  "files": 8,
+  "list": [
+    {
+      "name": "cardTexts",
+      "file": "apps/web/src/install/model.ts",
+      "line": 294,
+      "exported": true
+    },
+    {
+      "name": "enginePlainName",
+      "file": "packages/kernel/src/resume-check.ts",
+      "line": 113,
+      "exported": true
+    },
+    {
+      "name": "plainIssue",
+      "file": "packages/kernel/src/settings/registry.ts",
+      "line": 128,
+      "exported": true
+    },
+    {
+      "name": "isPlain",
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "name": "toPlain",
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "name": "draftPlainIssues",
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "line": 25,
+      "exported": true
+    },
+    {
+      "name": "enforcePlainDraft",
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "line": 52,
+      "exported": true
+    },
+    {
+      "name": "enforcePlainQuestions",
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "line": 69,
+      "exported": true
+    },
+    {
+      "name": "plainLine",
+      "file": "packages/plugins-core/agent-builder/src/runner/stages.ts",
+      "line": 72,
+      "exported": true
+    },
+    {
+      "name": "plainTermReplace",
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "line": 177,
+      "exported": true
+    },
+    {
+      "name": "checkPlainKorean",
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "line": 214,
+      "exported": true
+    },
+    {
+      "name": "checkPlainAll",
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "line": 247,
+      "exported": true
+    },
+    {
+      "name": "plainLicense",
+      "file": "packages/plugins-core/installer/src/plan.ts",
+      "line": 141,
+      "exported": true
+    },
+    {
+      "name": "isPlain",
+      "file": "packages/plugins-core/tool-finder/src/reasons.ts",
+      "line": 34,
+      "exported": true
+    }
+  ]
+}
