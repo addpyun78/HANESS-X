@@ -1,0 +1,29 @@
+{
+  "defaults": {
+    "result": {
+      "logs": 0,
+      "attachments": 0
+    },
+    "note": "기본값(0)은 아무것도 지우지 않음"
+  },
+  "withSettings": {
+    "values": {
+      "retentionDays": 30,
+      "attachmentsKeepDays": 7
+    },
+    "result": {
+      "logs": 1,
+      "attachments": 2
+    },
+    "removedLogs": [
+      "archived-old"
+    ],
+    "keptNewAttachment": true,
+    "removedOldSessionDir": true
+  },
+  "notCovered": [
+    "진행 중(보관 안 한) 작업의 기록은 기간이 지나도 남음(설계: 자동 삭제 금지 원칙)",
+    "커널 자체 기록(logs/sessions/kernel/events.jsonl)·logs/index.sqlite 는 정리 대상 아님",
+    "임시 작업 공간 정리 키 없음"
+  ]
+}
