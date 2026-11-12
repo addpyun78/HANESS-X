@@ -1,0 +1,514 @@
+[
+  {
+    "path": "apps/web/src/actions/registry.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/composer/run-mode.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/AutoLimitsCard.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/AutoSummaryCard.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/ModeBadge.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/notify-policy.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/PlanDoneCard.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/ResumeModeChoice.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "apps/web/src/run-mode/ReviewListSection.tsx",
+    "kind": "name-registry"
+  },
+  {
+    "path": "examples/agents/design-qa/agent.yaml",
+    "kind": "example"
+  },
+  {
+    "path": "examples/agents/design-qa/pipeline.yaml",
+    "kind": "example"
+  },
+  {
+    "path": "examples/plugins/hello/harness-plugin.json",
+    "kind": "example"
+  },
+  {
+    "path": "examples/plugins/hello/index.js",
+    "kind": "example"
+  },
+  {
+    "path": "packages/engines/acp-generic/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/engines/acp-generic/src/adapter.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/engines/antigravity/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/engines/antigravity/src/engine.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/engines/claude-code/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/engines/claude-code/src/engine.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/engines/codex/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/engines/codex/src/engine.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/engines/openai-compat/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/engines/openai-compat/src/adapter.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/index.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/limits.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/resolve.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/resume.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/review-list.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/run-mode/transition.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/kernel/src/settings/registry.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/inventory/comparators.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/agent-builder/src/registry.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/approvals/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/attachments/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/checklist-ledger/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/engine-scanner/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/forge/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/forge/test/fixtures/claude-plugin/skills/kotlin-style/SKILL.md",
+    "kind": "skill"
+  },
+  {
+    "path": "packages/plugins-core/installer/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/dev-tools.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/download.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/mcp.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/plugin.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/installer/src/adapters/windows-pkg.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/mcp-host/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/permission-gate/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/permission-gate/src/run-mode-gate.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/tool-finder/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/builtins.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/exact.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/exit-code.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/json.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/number.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/path.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/regex.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/text.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/comparators/version.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/compare.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/evidence.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/guards.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/index.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/infer.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/migrate.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/path-alias.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/path-normalize.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/registry.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/comparators/src/types.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/budget.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/cache.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/chain.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/confidence.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/engine.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/index.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/local.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/questions.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/sanitize.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/select.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/settings.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/judge/src/types.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/alias.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/candidates.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/cleanup.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/evidence.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/index.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/l4.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/ladder.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/normalize.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/pipeline.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/record.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/runtime.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins-core/verifiers/ladder/src/settings.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/plugins/stt-browser/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins/stt-local/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/plugins/verifier-local/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/protocol/src/run-mode.ts",
+    "kind": "name-registry"
+  },
+  {
+    "path": "packages/sdk/templates/hook/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/sdk/templates/hook/package.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/hook/src/index.ts",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/hook/template.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/hook/tsconfig.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/panel/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/sdk/templates/panel/package.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/panel/src/index.ts",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/panel/template.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/panel/tsconfig.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/agent.yaml",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/package.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/pipeline.yaml",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/src/index.ts",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/template.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/pipeline/tsconfig.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/skill/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/sdk/templates/skill/package.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/skill/SKILL.md",
+    "kind": "skill"
+  },
+  {
+    "path": "packages/sdk/templates/skill/src/index.ts",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/skill/template.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/skill/tsconfig.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/tool/harness-plugin.json",
+    "kind": "plugin-manifest"
+  },
+  {
+    "path": "packages/sdk/templates/tool/package.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/tool/src/index.ts",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/tool/template.json",
+    "kind": "sdk-template"
+  },
+  {
+    "path": "packages/sdk/templates/tool/tsconfig.json",
+    "kind": "sdk-template"
+  }
+]
