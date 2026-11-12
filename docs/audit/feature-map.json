@@ -189,7 +189,7 @@
       "entries": {
         "actions": [],
         "api": ["GET /api/plugins"],
-        "cli": [],
+        "cli": ["serve"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -1144,7 +1144,7 @@
       "entries": {
         "actions": [],
         "api": ["GET /api/recovery"],
-        "cli": [],
+        "cli": ["serve"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -1397,7 +1397,7 @@
       "entries": {
         "actions": [],
         "api": ["POST /api/approvals/:id", "POST /api/approvals/undo", "GET /api/approvals"],
-        "cli": [],
+        "cli": ["approvals"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -1573,7 +1573,7 @@
       "entries": {
         "actions": ["install.search"],
         "api": ["POST /api/gesture-tokens"],
-        "cli": [],
+        "cli": ["install", "tools list", "tools allow"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -1876,7 +1876,7 @@
           "GET /api/sessions",
           "POST /api/sessions"
         ],
-        "cli": [],
+        "cli": ["reindex"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -1961,7 +1961,7 @@
           "GET /api/projects",
           "POST /api/projects"
         ],
-        "cli": [],
+        "cli": ["run"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -2263,7 +2263,7 @@
       "entries": {
         "actions": [],
         "api": ["GET /api/resume"],
-        "cli": [],
+        "cli": ["resume"],
         "mcp": [],
         "hooks": [],
         "settings": []
@@ -3580,7 +3580,8 @@
   "generatedAt": "2026-11-12T10:13:19.534Z",
   "linkStats": {
     "actions": 184,
-    "api": 147
+    "api": 147,
+    "cli": 9
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
