@@ -129,7 +129,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "fixed",
       "features": [],
       "area": "bug",
       "severity": "low",
@@ -154,7 +154,9 @@
         "source": "C1.3",
         "codes": ["TS4114"],
         "count": 10,
-        "files": ["packages/plugins-core/installer/src/adapters/dev-tools.ts"]
+        "files": ["packages/plugins-core/installer/src/adapters/dev-tools.ts"],
+        "resolution": "dev-tools.ts 10곳 override",
+        "resolvedAt": "2026-11-12T15:50:00.361Z"
       },
       "id": "C1-002",
       "plain": "덮어쓰는 기능에 표시가 빠진 곳이 10곳 있어요.",
