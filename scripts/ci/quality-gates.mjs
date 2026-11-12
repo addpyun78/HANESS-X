@@ -13,6 +13,9 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+// 검사 결과는 점검 증거(docs/audit/raw)가 아니라 임시 폴더에 쓴다
+const raw = join(root, '.harness-x-dev', 'ci-raw');
+process.env.AUDIT_RAW_DIR = raw;
 const limits = JSON.parse(readFileSync(join(root, 'scripts', 'ci', 'quality-limits.json'), 'utf8'));
 const node = (script, ...args) =>
   spawnSync(process.execPath, ['--no-warnings', join(root, script), ...args], {
@@ -20,7 +23,7 @@ const node = (script, ...args) =>
     encoding: 'utf8',
     maxBuffer: 1 << 28,
   });
-const readRaw = (n) => JSON.parse(readFileSync(join(root, 'docs', 'audit', 'raw', n), 'utf8'));
+const readRaw = (n) => JSON.parse(readFileSync(join(raw, n), 'utf8'));
 const results = [];
 const gate = (name, ok, detail) => results.push({ name, ok, detail });
 
@@ -50,7 +53,7 @@ const checks = {
   },
   circular() {
     node('scripts/audit/deadcode.mjs', '--out-suffix', '.ci');
-    const t = readFileSync(join(root, 'docs', 'audit', 'raw', 'madge-circular.ci.txt'), 'utf8');
+    const t = readFileSync(join(raw, 'madge-circular.ci.txt'), 'utf8');
     const n = Number(t.match(/순환 묶음 (\d+)개/)?.[1] ?? 0);
     gate('circular', n <= limits.circular, `실행되는 순환 묶음 ${n} (상한 ${limits.circular})`);
   },

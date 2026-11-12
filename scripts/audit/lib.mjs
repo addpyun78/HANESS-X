@@ -14,7 +14,8 @@ import { execSync, spawnSync } from 'node:child_process';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const auditDir = join(root, 'docs', 'audit');
-export const rawDir = join(auditDir, 'raw');
+// AUDIT_RAW_DIR: CI·재발 방지 검사가 점검 증거(docs/audit/raw)를 덮어쓰지 않게 다른 폴더로 보낼 때
+export const rawDir = process.env.AUDIT_RAW_DIR ? resolve(process.env.AUDIT_RAW_DIR) : join(auditDir, 'raw');
 
 /** 결과 파일: 기본 docs/audit/baseline.json, AUDIT_OUT=final.json이면 그 파일 */
 export const outFile = join(auditDir, process.env.AUDIT_OUT || 'baseline.json');
