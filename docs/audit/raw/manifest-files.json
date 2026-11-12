@@ -1,0 +1,226 @@
+[
+  {
+    "plugin": "hello",
+    "manifest": "examples/plugins/hello/harness-plugin.json",
+    "kind": "main",
+    "path": "index.js",
+    "exists": true,
+    "srcExists": null
+  },
+  {
+    "plugin": "engine-acp-generic",
+    "manifest": "packages/engines/acp-generic/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "engine-antigravity",
+    "manifest": "packages/engines/antigravity/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "engine-claude-code",
+    "manifest": "packages/engines/claude-code/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "engine-codex",
+    "manifest": "packages/engines/codex/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "engine-openai-compat",
+    "manifest": "packages/engines/openai-compat/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "agent-builder",
+    "manifest": "packages/plugins-core/agent-builder/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "approvals",
+    "manifest": "packages/plugins-core/approvals/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "attachments",
+    "manifest": "packages/plugins-core/attachments/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "checklist-ledger",
+    "manifest": "packages/plugins-core/checklist-ledger/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "engine-scanner",
+    "manifest": "packages/plugins-core/engine-scanner/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "forge",
+    "manifest": "packages/plugins-core/forge/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "installer",
+    "manifest": "packages/plugins-core/installer/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "mcp-host",
+    "manifest": "packages/plugins-core/mcp-host/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "permission-gate",
+    "manifest": "packages/plugins-core/permission-gate/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "tool-finder",
+    "manifest": "packages/plugins-core/tool-finder/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "sample-comparator",
+    "manifest": "packages/plugins-core/verifiers/comparators/fixtures/sample-plugin/harness-plugin.json",
+    "kind": "main",
+    "path": "index.js",
+    "exists": true,
+    "srcExists": null
+  },
+  {
+    "plugin": "comparators",
+    "manifest": "packages/plugins-core/verifiers/comparators/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "judge",
+    "manifest": "packages/plugins-core/verifiers/judge/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "verifier-ladder",
+    "manifest": "packages/plugins-core/verifiers/ladder/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "stt-browser",
+    "manifest": "packages/plugins/stt-browser/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "stt-local",
+    "manifest": "packages/plugins/stt-local/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "verifier-local",
+    "manifest": "packages/plugins/verifier-local/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": true,
+    "srcExists": true
+  },
+  {
+    "plugin": "{{id}}",
+    "manifest": "packages/sdk/templates/hook/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": false,
+    "srcExists": true
+  },
+  {
+    "plugin": "{{id}}",
+    "manifest": "packages/sdk/templates/panel/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": false,
+    "srcExists": true
+  },
+  {
+    "plugin": "{{id}}",
+    "manifest": "packages/sdk/templates/pipeline/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": false,
+    "srcExists": true
+  },
+  {
+    "plugin": "{{id}}",
+    "manifest": "packages/sdk/templates/skill/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": false,
+    "srcExists": true
+  },
+  {
+    "plugin": "{{id}}",
+    "manifest": "packages/sdk/templates/tool/harness-plugin.json",
+    "kind": "main",
+    "path": "dist/index.js",
+    "exists": false,
+    "srcExists": true
+  }
+]
