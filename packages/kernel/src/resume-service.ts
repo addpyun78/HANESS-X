@@ -17,7 +17,8 @@ import { diffSinceSnapshot, revertToSnapshot, type RevertResult } from './resume
 import { changedSinceStart, readPinnedVersion } from './resume-pin.js';
 import { resumeSession, type ResumeRunDeps, type ResumeRunResult } from './resume-run.js';
 import type { RunMode } from '@harness-x/protocol';
-import { resumeRunMode } from './run-mode/resume.js';
+import type { AutoResumeContext, AutoResumeDecision } from './resume-policy.js';
+import { autoResumeFor, resumeRunMode } from './run-mode/resume.js';
 
 /**
  * T-101 2B 이어하기 서비스 — 모든 입구(사이드바·⏸ 세션 줄·빈 세션 화면·/resume·CLI)가 같은 길로 들어온다.
@@ -71,6 +72,11 @@ export class ResumeServiceError extends Error {
 export interface ResumeService {
   list(): ResumableSession[];
   get(sessionId: string): ResumableSession | undefined;
+  /** T-101 2B.11 자동 재개 판단에 실제 세션 모드(3번)를 넘긴다 */
+  autoResume(
+    sessionId: string,
+    ctx?: Omit<AutoResumeContext, 'mode' | 'now'>,
+  ): AutoResumeDecision | undefined;
   check(sessionId: string): ResumeCheckResult;
   start(
     sessionId: string,
@@ -132,6 +138,11 @@ export function createResumeService(o: ResumeServiceOptions): ResumeService {
   return {
     list: () => findResumableSessions(o.log).map(withStages),
     get,
+    autoResume(id, ctx = {}) {
+      const s = get(id);
+      if (!s) return undefined;
+      return autoResumeFor(s.paused, { mode: o.sessionMode?.(id) }, { ...ctx, now: o.now?.() ?? new Date() });
+    },
     check(id) {
       const s = get(id);
       if (!s) throw new ResumeServiceError('not_found', `이어할 세션이 없어요: ${id}`);

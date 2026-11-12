@@ -35,25 +35,20 @@ async function setup(name: string, initial: RunMode) {
     },
   });
   const modes = new Map<string, RunMode>();
-  const api = await bootApi({
-    routes: (app) =>
-      registerResumeRoutes(app, {
-        log,
-        service: createResumeService({
-          log,
-          dispatcher: d,
-          agentFor: () => agent,
-          sessionMode: (id) => modes.get(id),
-          setSessionMode: (id, m) => void modes.set(id, m),
-        }),
-      }),
+  const svc = createResumeService({
+    log,
+    dispatcher: d,
+    agentFor: () => agent,
+    sessionMode: (id) => modes.get(id),
+    setSessionMode: (id, m) => void modes.set(id, m),
   });
+  const api = await bootApi({ routes: (app) => registerResumeRoutes(app, { log, service: svc }) });
   const s = d.dispatch({ agent: 'qa', prompt: '헤더 고쳐 줘' });
   modes.set(s.sessionId, initial);
   await d.stopNow(s.sessionId);
   log.flush();
   const post = (b: unknown) => api.post(`/api/resume/${s.sessionId}`, b, api.auth);
-  return { api, d, modes, sessionId: s.sessionId, post };
+  return { api, d, modes, svc, sessionId: s.sessionId, post };
 }
 
 describe('3E.6 재개', () => {
@@ -85,6 +80,16 @@ describe('3E.6 재개', () => {
     const t = await setup('bad', 'plan');
     try {
       expect(await (await t.post({ runMode: 'turbo' })).json()).toMatchObject({ runMode: 'plan' });
+    } finally {
+      await t.api.close();
+    }
+  });
+
+  it('이어하기 서비스 autoResume: 실제 세션 모드로 2B.11 판단 (사용자 정지는 오토여도 사용자만)', async () => {
+    const t = await setup('auto-decision', 'auto');
+    try {
+      expect(t.svc.autoResume(t.sessionId)?.action).toBe('wait-user');
+      expect(t.svc.autoResume('nope')).toBeUndefined();
     } finally {
       await t.api.close();
     }

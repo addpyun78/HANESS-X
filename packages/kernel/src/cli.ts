@@ -167,6 +167,8 @@ interface AgentBuilderPluginModule {
     workspace: string;
     sessionId: string;
     agent: { name: string; pipeline: Pipeline };
+    /** T-101 3번 실제 세션 실행 모드 (4B.3 단계 확정·4D.4·4F.7) */
+    mode?: 'plan' | 'normal' | 'auto';
   }) => Record<string, unknown>;
   /** T-100 P4-A.12 GET /api/builder/inventory (+ engines.json 감시). 핫리로드는 attachHotReload로 연결 */
   registerBuilderInventory?: (
@@ -490,6 +492,11 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     }),
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
+  /** T-101 3번 실행 중 세션의 모드: 이번 실행 수식어 > 세션 기록 */
+  const sessionRunMode = (i: { sessionId: string; modifiers: { mode?: string } }) => {
+    const m = i.modifiers.mode ?? sessionRegistry.get(i.sessionId)?.mode;
+    return m === 'plan' || m === 'normal' || m === 'auto' ? m : undefined;
+  };
   const imported = sessionRegistry.importLegacy(log);
   if (projects.migrated !== undefined)
     process.stderr.write(`워크스페이스 ${projects.migrated}개를 프로젝트로 옮겼어요 (workspaces.json.bak)\n`);
@@ -569,6 +576,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
           workspace,
           sessionId: i.sessionId,
           agent: { name: i.agent.name, pipeline: i.pipeline },
+          // T-101 3E.3 세션에 정해진 실행 모드 (수식어 > 칩 > 에이전트 > 프로젝트 > 전체)
+          ...(sessionRunMode(i) ? { mode: sessionRunMode(i)! } : {}),
         }) ?? {}),
         // T-051 /forge: Forge 플러그인이 엔진 래퍼·gate 판정(검사·샌드박스)·scaffold 체크리스트를 준다
         ...(i.pipeline.name === 'forge'

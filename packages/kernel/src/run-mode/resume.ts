@@ -10,7 +10,7 @@ import { resolveRunMode, type ModeInputs, type ModeSource } from './resolve.js';
  *  - 2B.11 자동 재개 규칙은 이 결과(mode)를 받아 "오류 → 오토면 자동"을 판단한다.
  */
 
-export interface ResumeModeInput {
+export interface ResumeRunModeInput {
   /** 멈춘 세션에 저장된 모드 */
   session: { mode?: unknown };
   /** 이어하기 카드에서 고른 모드 (없으면 유지) */
@@ -26,7 +26,7 @@ export interface ResumeModeResult {
   changed: boolean;
 }
 
-export function resumeRunMode(i: ResumeModeInput): ResumeModeResult {
+export function resumeRunMode(i: ResumeRunModeInput): ResumeModeResult {
   const before = toRunMode(i.session.mode);
   const picked = toRunMode(i.choice);
   if (picked) return { mode: picked, from: 'card', changed: before !== undefined && picked !== before };
