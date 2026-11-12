@@ -1,0 +1,87 @@
+{
+  "files": 184,
+  "totalBytes": 368045,
+  "totalMB": 0.4,
+  "top20": [
+    {
+      "file": "apps/web/test/__snapshots__/install.card.test.tsx.snap",
+      "bytes": 21440
+    },
+    {
+      "file": "fixtures/attachments/files/bomb.zip",
+      "bytes": 20503
+    },
+    {
+      "file": "apps/web/test/__snapshots__/projects.sidebar.test.tsx.snap",
+      "bytes": 16160
+    },
+    {
+      "file": "apps/web/test/__snapshots__/builder.layout.test.tsx.snap",
+      "bytes": 13042
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.screen.ai.test.tsx.snap",
+      "bytes": 10424
+    },
+    {
+      "file": "fixtures/attachments/make-fixtures.mjs",
+      "bytes": 9401
+    },
+    {
+      "file": "apps/web/test/__snapshots__/approvals.panel.test.tsx.snap",
+      "bytes": 8924
+    },
+    {
+      "file": "packages/engines/codex/test/fixtures/app-server-turn.jsonl",
+      "bytes": 7518
+    },
+    {
+      "file": "apps/web/test/__snapshots__/install.manager.test.tsx.snap",
+      "bytes": 6466
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.engines.rescan.test.tsx.snap",
+      "bytes": 5791
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.screen.tools.test.tsx.snap",
+      "bytes": 5685
+    },
+    {
+      "file": "apps/web/test/__snapshots__/chat.render.test.tsx.snap",
+      "bytes": 5483
+    },
+    {
+      "file": "packages/plugins-core/approvals/test/__snapshots__/templates.test.ts.snap",
+      "bytes": 5416
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.screen.general.test.tsx.snap",
+      "bytes": 4829
+    },
+    {
+      "file": "packages/engines/claude-code/test/fixtures/hi.real.jsonl",
+      "bytes": 4665
+    },
+    {
+      "file": "packages/sdk/test/__snapshots__/templates.substitute.test.ts.snap",
+      "bytes": 4348
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.engines.grid.test.tsx.snap",
+      "bytes": 4262
+    },
+    {
+      "file": "apps/web/test/__snapshots__/engines.model-button.test.tsx.snap",
+      "bytes": 3963
+    },
+    {
+      "file": "packages/engines/codex/test/fixtures/fake-codex.mjs",
+      "bytes": 3909
+    },
+    {
+      "file": "apps/web/test/__snapshots__/settings.screen.approval.test.tsx.snap",
+      "bytes": 3828
+    }
+  ]
+}
