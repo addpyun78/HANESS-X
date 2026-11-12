@@ -719,13 +719,14 @@
       "features": ["F-006"],
       "area": "bug",
       "severity": "medium",
-      "title": "흔들리는 테스트 3개: serve 기동 테스트 2개가 CPU 부하가 크면 대기 시간을 넘기고, cli.test는 빌드 결과(dist)를 다시 만드는 중에 돌면 깨짐",
+      "title": "흔들리는 테스트 4개: serve 기동 테스트 2개가 CPU 부하가 크면 대기 시간을 넘기고, cli.test는 빌드 결과(dist)를 다시 만드는 중에 돌면 깨짐 · settings.screen.checklist.test.tsx는 커버리지 실행(느림)에서 경고 표시를 기본 1초 안에 못 찾음",
       "evidence": [
         "docs/audit/baseline.json flaky",
         "docs/audit/raw/test-run-1.json (실패 메시지 timeout·SyntaxError winToWslFallback)",
         "packages/kernel/test/cli.judge-wiring.test.ts",
         "packages/kernel/test/cli.sidecar.test.ts",
-        "packages/kernel/test/cli.test.ts"
+        "packages/kernel/test/cli.test.ts",
+        "apps/web/test/settings.screen.checklist.test.tsx > 6B.4 잘못된 값은 쉬운 말로 거부 (커버리지 실행에서만 실패: Unable to find role=alert)"
       ],
       "proposal": "serve 기동을 기다리는 시간을 부하에 맞게 늘리고(헬스 확인 반복), dist가 완성됐는지 먼저 확인 — 테스트 코드만 고침",
       "risk": "low",

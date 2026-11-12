@@ -162,7 +162,7 @@
       }
     }
   },
-  "updatedAt": "2026-11-12T12:27:26.278Z",
+  "updatedAt": "2026-11-12T13:47:26.207Z",
   "deps": {
     "installedPackages": 457,
     "uniqueDirectExternal": 43,
@@ -436,5 +436,12 @@
       "statuses": ["failed", "passed", "passed"],
       "durationsMs": [11511.181477000006, 36767.090102, 94079.778576]
     }
-  ]
+  ],
+  "coverage": {
+    "lines": 93.35,
+    "branches": 83.8,
+    "functions": 91.93,
+    "statements": 93.35,
+    "testExit": 1
+  }
 }
