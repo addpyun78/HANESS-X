@@ -602,6 +602,101 @@
         "source": "C5.14"
       },
       "id": "C5-004"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "update",
+      "severity": "low",
+      "title": "작은 버전 업데이트 2개(typescript-eslint 8.72.1→8.72.2, @agentclientprotocol/sdk 2.5.0→2.6.0) — 둘 다 공개 1~2일이라 14일 규칙에 걸림",
+      "evidence": ["docs/audit/raw/outdated-class.json"],
+      "proposal": "공개 14일 뒤 다시 확인(지금은 보류)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C6.10",
+        "tooNew": true,
+        "security": false
+      },
+      "id": "C6-001"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "update",
+      "severity": "low",
+      "title": "큰 버전 업데이트 10개(eslint 10·@eslint/js 10·vite 8·@vitejs/plugin-react 6·vitest 5·coverage-v8 5·typescript 7·chokidar 6·globals 17·@types/node 26)",
+      "evidence": ["docs/audit/raw/outdated-class.json"],
+      "proposal": "큰 버전은 변경 내역·영향 파일 검토가 필요해 별도 티켓(자동 승인 규칙: 보류)",
+      "risk": "high",
+      "effort": "L",
+      "meta": {
+        "source": "C6.10",
+        "major": true
+      },
+      "id": "C6-002"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "update",
+      "severity": "medium",
+      "title": "엔진 CLI 뒤처짐: codex 0.155.1(최신 0.167.2, 게다가 로그인 만료로 스모크 실패) · gemini 0.67.0(최신 0.68.0)",
+      "evidence": ["docs/audit/raw/engine-versions.json", "docs/audit/raw/smoke-codex.json (auth_required)"],
+      "proposal": "사용자가 직접 codex 다시 로그인·업데이트(점검은 설치하지 않음). 새 버전 녹화는 그 뒤 E.7 규칙으로",
+      "risk": "medium",
+      "effort": "S",
+      "meta": {
+        "source": "C6.10",
+        "userAction": true
+      },
+      "id": "C6-003"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "docs",
+      "severity": "low",
+      "title": "README에 하위 명령 tools·reindex·resume·install 설명과 바로가기 실행기(scripts/launcher) 안내가 없음",
+      "evidence": ["docs/audit/raw/readme-check.json", "docs/audit/snapshots/cli.json"],
+      "proposal": "README \"사용법\"에 하위 명령 표와 바로가기 실행 방법 추가",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C6.10"
+      },
+      "id": "C6-004"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "docs",
+      "severity": "low",
+      "title": "CLAUDE.md에 실제 작업 장치 5개가 빠짐(작업 게이트 ticket-gate, scripts/dev/env.sh, tick 도우미, 새 설정 키 registry 등록 규칙, pnpm lint)",
+      "evidence": ["docs/audit/raw/claude-md-drift.json"],
+      "proposal": "CLAUDE.md \"작업 규칙\"에 한 줄씩 추가",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C6.10"
+      },
+      "id": "C6-005"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "docs",
+      "severity": "low",
+      "title": "설정 설명 문구가 실제 동작과 다름: assist.model·verifier.local.* 4개는 바꿔도 효과 없음(C2-004와 같은 원인)",
+      "evidence": ["docs/audit/raw/settings-doc-drift.json"],
+      "proposal": "C2-004 처리(숨김)와 함께 설명 정리",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C6.10",
+        "relatedTo": "C2-004"
+      },
+      "id": "C6-006"
     }
   ]
 }
