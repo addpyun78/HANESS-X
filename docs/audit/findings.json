@@ -73,7 +73,11 @@
       "effort": "M",
       "meta": {
         "source": "C1.3",
-        "codes": ["TS2379", "TS2375", "TS2412"],
+        "codes": [
+          "TS2379",
+          "TS2375",
+          "TS2412"
+        ],
         "count": 81,
         "files": [
           "apps/web/src/App.tsx",
@@ -152,9 +156,13 @@
       "effort": "S",
       "meta": {
         "source": "C1.3",
-        "codes": ["TS4114"],
+        "codes": [
+          "TS4114"
+        ],
         "count": 10,
-        "files": ["packages/plugins-core/installer/src/adapters/dev-tools.ts"],
+        "files": [
+          "packages/plugins-core/installer/src/adapters/dev-tools.ts"
+        ],
         "resolution": "dev-tools.ts 10곳 override",
         "resolvedAt": "2026-11-12T15:50:00.361Z"
       },
@@ -211,7 +219,13 @@
       "effort": "M",
       "meta": {
         "source": "C1.3",
-        "codes": ["TS2322", "TS2345", "TS2698", "TS2339", "TS2769"],
+        "codes": [
+          "TS2322",
+          "TS2345",
+          "TS2698",
+          "TS2339",
+          "TS2769"
+        ],
         "count": 13,
         "files": [
           "apps/web/src/App.tsx",
@@ -233,11 +247,16 @@
     },
     {
       "status": "fixed",
-      "features": ["F-001"],
+      "features": [
+        "F-001"
+      ],
       "area": "docs",
       "severity": "low",
       "title": "scripts/ticket-gate.mjs 서식(prettier) 어긋남 — T-102 C.2에서 가드 연결을 넣으며 생김",
-      "evidence": ["docs/audit/raw/prettier-check.txt", "scripts/ticket-gate.mjs"],
+      "evidence": [
+        "docs/audit/raw/prettier-check.txt",
+        "scripts/ticket-gate.mjs"
+      ],
       "proposal": "prettier --write scripts/ticket-gate.mjs (동작 변화 없음)",
       "risk": "low",
       "effort": "S",
@@ -254,7 +273,9 @@
     },
     {
       "status": "fixed",
-      "features": ["F-007"],
+      "features": [
+        "F-007"
+      ],
       "area": "bug",
       "severity": "high",
       "title": "코드를 고친 뒤 serve로 켜면 기본 플러그인(agent-builder·checklist-ledger·forge·mcp-host·permission-gate)이 plugins.lock 지문 불일치(변조됨)로 거부됨",
@@ -391,7 +412,11 @@
     },
     {
       "status": "fixed",
-      "features": ["F-007", "F-019", "F-122"],
+      "features": [
+        "F-007",
+        "F-019",
+        "F-122"
+      ],
       "area": "shell",
       "severity": "critical",
       "title": "플러그인 로더가 activate 없는 플러그인 모듈을 빈 객체로 바꿈(loader.ts:302) → activate가 없는 checklist-ledger의 내보낸 함수가 실제 서버에서 사라져 체크리스트 화면 주소 2개(GET /api/checklist/:session · /status)와 계획 잠금 주소가 등록되지 않음(404) — 핵심 기능인 체크리스트 화면이 비어 보임",
@@ -423,7 +448,9 @@
     },
     {
       "status": "fixed",
-      "features": ["F-077"],
+      "features": [
+        "F-077"
+      ],
       "area": "shell",
       "severity": "high",
       "title": "PC 안 음성 입력(stt-local)의 GET /api/stt/status · POST /api/stt/transcribe 경로를 서버가 등록하지 않음(registerSttRoutes를 부르는 곳 없음) → 화면의 \"PC 안\" 음성 입력이 항상 실패, 브라우저 방식만 동작",
@@ -505,7 +532,9 @@
       "area": "shell",
       "severity": "low",
       "title": "의미 없는 단언 2개: apps/web/test/resume.entrances.test.tsx:69·118 expect(true).toBe(true) (다른 파일에서 검사한다는 자리표시 테스트)",
-      "evidence": ["docs/audit/raw/trivial-assert.json"],
+      "evidence": [
+        "docs/audit/raw/trivial-assert.json"
+      ],
       "proposal": "자리표시 대신 \"그 검사 파일이 있고 해당 테스트 이름이 있다\"를 확인하는 단언으로 바꾼다(테스트 수 유지)",
       "risk": "low",
       "effort": "S",
@@ -582,7 +611,10 @@
       "area": "size",
       "severity": "low",
       "title": "웹 번들에서 코드 편집기(monaco) 언어 작업자(ts 6.7MB·css 1.0MB·html 0.7MB·json 0.4MB)가 가장 큼",
-      "evidence": ["docs/audit/raw/bundle-top.json", "docs/audit/raw/heavy-deps.json monaco-editor 97MB"],
+      "evidence": [
+        "docs/audit/raw/bundle-top.json",
+        "docs/audit/raw/heavy-deps.json monaco-editor 97MB"
+      ],
       "proposal": "실제 쓰는 언어 작업자만 남기거나 필요할 때만 불러오기 — 화면 동작 영향 확인이 필요해 별도 티켓",
       "risk": "medium",
       "effort": "M",
@@ -626,7 +658,10 @@
       "area": "size",
       "severity": "low",
       "title": ".git 느슨한 객체 6374개(묶이지 않음) · 같은 라이브러리 여러 버전 16종(대부분 큰 버전이 달라 합칠 수 없음)",
-      "evidence": ["docs/audit/raw/size-git.json", "docs/audit/raw/dup-versions.json"],
+      "evidence": [
+        "docs/audit/raw/size-git.json",
+        "docs/audit/raw/dup-versions.json"
+      ],
       "proposal": "G.8에서 pnpm dedupe(같은 큰 버전만 합쳐짐) 시도. git gc는 기록을 바꾸지 않지만 점검 범위 밖이라 제안만",
       "risk": "low",
       "effort": "S",
@@ -641,7 +676,7 @@
       "bundle": "nice"
     },
     {
-      "status": "open",
+      "status": "merged",
       "features": [],
       "area": "consolidation",
       "severity": "low",
@@ -657,7 +692,9 @@
       "meta": {
         "source": "C5.15",
         "behaviorDiff": 0,
-        "area": "plain"
+        "area": "plain",
+        "resolution": "approvals isPlainKorean 대표, 3곳 이동",
+        "resolvedAt": "2026-11-12T19:35:37.559Z"
       },
       "id": "C5-001",
       "plain": "쉬운 말 검사 함수가 두 벌인데 결과가 똑같아요.",
@@ -697,7 +734,9 @@
       "area": "consolidation",
       "severity": "low",
       "title": "순환 의존 2묶음: web Checklist model.ts↔stages.ts, acp-generic adapter.ts↔permission.ts",
-      "evidence": ["docs/audit/raw/madge-circular.txt"],
+      "evidence": [
+        "docs/audit/raw/madge-circular.txt"
+      ],
       "proposal": "공통 타입을 작은 파일로 빼서 순환을 끊는다(동작 변화 없음)",
       "risk": "low",
       "effort": "S",
@@ -719,7 +758,9 @@
       "area": "structure",
       "severity": "low",
       "title": "폴더 구조 제안 3개(kernel resume-*.ts 11개 모으기, stt-* 라이브러리 위치, verifier-local 정리)",
-      "evidence": ["docs/audit/consolidation.md 폴더 구조 제안"],
+      "evidence": [
+        "docs/audit/consolidation.md 폴더 구조 제안"
+      ],
       "proposal": "제안만(자동 승인 규칙: 폴더 이동은 전부 보류)",
       "risk": "medium",
       "effort": "M",
@@ -738,7 +779,9 @@
       "area": "update",
       "severity": "low",
       "title": "작은 버전 업데이트 2개(typescript-eslint 8.72.1→8.72.2, @agentclientprotocol/sdk 2.5.0→2.6.0) — 둘 다 공개 1~2일이라 14일 규칙에 걸림",
-      "evidence": ["docs/audit/raw/outdated-class.json"],
+      "evidence": [
+        "docs/audit/raw/outdated-class.json"
+      ],
       "proposal": "공개 14일 뒤 다시 확인(지금은 보류)",
       "risk": "low",
       "effort": "S",
@@ -759,7 +802,9 @@
       "area": "update",
       "severity": "low",
       "title": "큰 버전 업데이트 10개(eslint 10·@eslint/js 10·vite 8·@vitejs/plugin-react 6·vitest 5·coverage-v8 5·typescript 7·chokidar 6·globals 17·@types/node 26)",
-      "evidence": ["docs/audit/raw/outdated-class.json"],
+      "evidence": [
+        "docs/audit/raw/outdated-class.json"
+      ],
       "proposal": "큰 버전은 변경 내역·영향 파일 검토가 필요해 별도 티켓(자동 승인 규칙: 보류)",
       "risk": "high",
       "effort": "L",
@@ -779,7 +824,10 @@
       "area": "update",
       "severity": "medium",
       "title": "엔진 CLI 뒤처짐: codex 0.155.1(최신 0.167.2, 게다가 로그인 만료로 스모크 실패) · gemini 0.67.0(최신 0.68.0)",
-      "evidence": ["docs/audit/raw/engine-versions.json", "docs/audit/raw/smoke-codex.json (auth_required)"],
+      "evidence": [
+        "docs/audit/raw/engine-versions.json",
+        "docs/audit/raw/smoke-codex.json (auth_required)"
+      ],
       "proposal": "사용자가 직접 codex 다시 로그인·업데이트(점검은 설치하지 않음). 새 버전 녹화는 그 뒤 E.7 규칙으로",
       "risk": "medium",
       "effort": "S",
@@ -799,7 +847,10 @@
       "area": "docs",
       "severity": "low",
       "title": "README에 하위 명령 tools·reindex·resume·install 설명과 바로가기 실행기(scripts/launcher) 안내가 없음",
-      "evidence": ["docs/audit/raw/readme-check.json", "docs/audit/snapshots/cli.json"],
+      "evidence": [
+        "docs/audit/raw/readme-check.json",
+        "docs/audit/snapshots/cli.json"
+      ],
       "proposal": "README \"사용법\"에 하위 명령 표와 바로가기 실행 방법 추가",
       "risk": "low",
       "effort": "S",
@@ -820,7 +871,9 @@
       "area": "docs",
       "severity": "low",
       "title": "CLAUDE.md에 실제 작업 장치 5개가 빠짐(작업 게이트 ticket-gate, scripts/dev/env.sh, tick 도우미, 새 설정 키 registry 등록 규칙, pnpm lint)",
-      "evidence": ["docs/audit/raw/claude-md-drift.json"],
+      "evidence": [
+        "docs/audit/raw/claude-md-drift.json"
+      ],
       "proposal": "CLAUDE.md \"작업 규칙\"에 한 줄씩 추가",
       "risk": "low",
       "effort": "S",
@@ -841,7 +894,9 @@
       "area": "docs",
       "severity": "low",
       "title": "설정 설명 문구가 실제 동작과 다름: assist.model·verifier.local.* 4개는 바꿔도 효과 없음(C2-004와 같은 원인)",
-      "evidence": ["docs/audit/raw/settings-doc-drift.json"],
+      "evidence": [
+        "docs/audit/raw/settings-doc-drift.json"
+      ],
       "proposal": "C2-004 처리(숨김)와 함께 설명 정리",
       "risk": "low",
       "effort": "S",
@@ -853,7 +908,9 @@
     },
     {
       "status": "fixed",
-      "features": ["F-006"],
+      "features": [
+        "F-006"
+      ],
       "area": "bug",
       "severity": "medium",
       "title": "흔들리는 테스트 4개: serve 기동 테스트 2개가 CPU 부하가 크면 대기 시간을 넘기고, cli.test는 빌드 결과(dist)를 다시 만드는 중에 돌면 깨짐 · settings.screen.checklist.test.tsx는 커버리지 실행(느림)에서 경고 표시를 기본 1초 안에 못 찾음",
@@ -910,7 +967,10 @@
       "area": "unused",
       "severity": "low",
       "title": "안 쓰는 export 145개(4근거 모두 해당, 대부분 apps/web·플러그인 안의 타입·상수 — 패키지 공개 부품은 제외)",
-      "evidence": ["docs/audit/raw/delete-candidates.json", "docs/audit/delete-candidates.md"],
+      "evidence": [
+        "docs/audit/raw/delete-candidates.json",
+        "docs/audit/delete-candidates.md"
+      ],
       "proposal": "G.5에서 export 표시만 떼고(파일 안에서 쓰면 그대로), 파일 안에서도 안 쓰면 선언을 지움 → 빌드·린트·테스트",
       "risk": "low",
       "effort": "M",
@@ -931,7 +991,10 @@
       "area": "unused",
       "severity": "low",
       "title": "안 쓰는 파일 0개(한 번도 실행 안 된 파일 9개는 실행 입구·SDK 템플릿이라 지우면 안 됨), 확인 필요 453개는 남김",
-      "evidence": ["docs/audit/raw/never-run-files.json", "docs/audit/raw/knip.json files"],
+      "evidence": [
+        "docs/audit/raw/never-run-files.json",
+        "docs/audit/raw/knip.json files"
+      ],
       "proposal": "조치 없음(기록만)",
       "risk": "low",
       "effort": "S",
