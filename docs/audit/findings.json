@@ -216,6 +216,21 @@
         ]
       },
       "id": "C1-003"
+    },
+    {
+      "status": "open",
+      "features": ["F-001"],
+      "area": "docs",
+      "severity": "low",
+      "title": "scripts/ticket-gate.mjs 서식(prettier) 어긋남 — T-102 C.2에서 가드 연결을 넣으며 생김",
+      "evidence": ["docs/audit/raw/prettier-check.txt", "scripts/ticket-gate.mjs"],
+      "proposal": "prettier --write scripts/ticket-gate.mjs (동작 변화 없음)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C1.5"
+      },
+      "id": "C1-004"
     }
   ]
 }
