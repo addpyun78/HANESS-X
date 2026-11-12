@@ -1,0 +1,75 @@
+{
+  "plugins": [
+    {
+      "id": "agent-builder",
+      "version": "0.0.0",
+      "slots": ["panel"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "approvals",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "attachments",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "checklist-ledger",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "engine-scanner",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "forge",
+      "version": "0.0.0",
+      "slots": ["pipeline"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "installer",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "mcp-host",
+      "version": "0.1.0",
+      "slots": ["tool"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "permission-gate",
+      "version": "0.1.0",
+      "slots": ["hook"],
+      "active": true,
+      "state": "active"
+    },
+    {
+      "id": "tool-finder",
+      "version": "0.1.0",
+      "slots": ["tool", "command"],
+      "active": true,
+      "state": "active"
+    }
+  ],
+  "rejected": []
+}

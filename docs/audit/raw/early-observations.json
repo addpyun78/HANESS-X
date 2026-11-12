@@ -1,0 +1,9 @@
+[
+  {"when":"A.30","what":"harness-x reindex --help 가 도움말 대신 실제 다시 읽기를 실행해 ~/.harness-x/sessions/index.json 을 씀(이번엔 폴더가 비어 있어 손실 없음, 19:05에 빈 색인 생성)","area":"bug","severity":"high"},
+  {"when":"A.30","what":"harness-x run --help 가 '--help'를 에이전트 이름으로 보고 켜진 서버에 세션 시작을 요청","area":"bug","severity":"medium"},
+  {"when":"A.30","what":"harness-x install --help 가 '--help'를 설치할 이름으로 찾음","area":"bug","severity":"low"},
+  {"when":"A.30","what":"harness-x tools --help 가 종료코드 1(도움말은 보여 줌)","area":"bug","severity":"low"},
+  {"when":"A.14","what":".claude/worktrees 에 지난 작업자 복사본 39개(각각 node_modules 포함, 어림 9.7GB)","area":"size","severity":"medium"},
+  {"when":"A.18","what":"전체 테스트 1회 43분(파일 671개, 타입 검사 포함) — 커밋마다 전체 검증 묶음은 현실적으로 어려움","area":"docs","severity":"low"},
+  {"when":"A.18","what":"시작부터 실패하는 테스트 3개: cli.judge-wiring·cli.sidecar·cli.test (serve 기동, 부하 중 시간 초과 의심)","area":"bug","severity":"medium"}
+]
