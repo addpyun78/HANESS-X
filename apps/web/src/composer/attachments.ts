@@ -92,7 +92,7 @@ export const STATUS_LABEL = {
 /** 지금 고른 AI가 첨부를 직접 못 받으면 쉬운 말 안내 (능력을 모르면 안내 없음) */
 export function attachmentHints(
   attachments: readonly Pick<Attachment, 'mime' | 'name'>[],
-  inputs: EngineInputs | undefined,
+  inputs: Pick<EngineInputs, 'image' | 'pdf' | 'audio'> | undefined,
 ): string[] {
   if (!inputs || attachments.length === 0) return [];
   const kinds = new Set(attachments.map(chipKind));

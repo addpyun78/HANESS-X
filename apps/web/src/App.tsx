@@ -46,6 +46,7 @@ import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
 import { settingsApi } from './settings/form/api.js';
 import { SettingsPage, type SettingsPageProps } from './settings/SettingsPage.js';
 import { isAutoRunning, notifyPolicy, quietToasts, SILENT_NOTIFIER } from './run-mode/notify-policy.js';
+import { mainAiInputs } from './engines/model.js';
 import { useEngines } from './engines/useEngines.js';
 import { useProjectAi } from './engines/useProjectAi.js';
 import { AppShell } from './shell/AppShell.js';
@@ -607,6 +608,7 @@ export function App() {
                     engines={engines}
                     modelPicker={eng.button}
                     ai={eng.main.current}
+                    aiInputs={mainAiInputs(eng.main.current, eng.main.models)}
                     plusMenu={
                       proj.enabled
                         ? { mobile, ...proj.plusMenu }

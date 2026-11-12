@@ -55,3 +55,51 @@ describe('1E.5 지금 고른 AI 기준 안내 (모델 바꾸면 문구 변경)',
       expect(checkPlainKorean(h).ok, h).toBe(true);
   });
 });
+
+describe('5D.7a 첨부 안내는 메인 AI(모델 단위) 능력 기준', () => {
+  it('메인 AI를 그림 못 보는 모델로 바꾸면 안내 문구가 바뀐다 (같은 엔진이라도 모델 능력을 따른다)', async () => {
+    const { mainAiInputs } = await import('../src/engines/model.js');
+    const models = [
+      {
+        engineId: 'ollama',
+        modelId: 'llava',
+        displayName: 'llava',
+        auth: 'local',
+        inputs: { image: true, pdf: false, audio: false },
+        status: 'ready',
+      },
+      {
+        engineId: 'ollama',
+        modelId: 'qwen3',
+        displayName: 'qwen3',
+        auth: 'local',
+        inputs: { image: false, pdf: false, audio: false },
+        status: 'ready',
+      },
+    ] as const;
+    const engines: EngineOption[] = [{ id: 'ollama', label: 'Ollama', available: true }];
+    const main1 = { engine: 'ollama', model: 'llava' };
+    const r = render(
+      <Composer
+        engines={engines}
+        onSend={() => {}}
+        ai={main1}
+        aiInputs={mainAiInputs(main1, models as never)}
+      />,
+    );
+    drop(file('화면.png', 'image/png'));
+    expect(document.querySelector('.hx-attachment-hint')).toBeNull();
+    const main2 = { engine: 'ollama', model: 'qwen3' };
+    r.rerender(
+      <Composer
+        engines={engines}
+        onSend={() => {}}
+        ai={main2}
+        aiInputs={mainAiInputs(main2, models as never)}
+      />,
+    );
+    expect(document.querySelector('.hx-attachment-hint')!.textContent).toContain(
+      '이 AI는 그림을 직접 못 봐요',
+    );
+  });
+});
