@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import { checkPlainKorean } from '@harness-x/approvals';
 import {
   ACTIVE_STAGE_STATUSES,
@@ -19,6 +20,7 @@ import {
   recheckStage,
   setStageStatus,
   startIteration,
+  StageTreeStore,
   syncStageItems,
   withSlice,
   type Acceptance,
@@ -30,7 +32,6 @@ import {
   type RunMode,
   type Stage,
   type StageTree,
-  type StageTreeStore,
   type TemplateFn,
 } from '@harness-x/checklist-ledger';
 import type { Pipeline, PipelineNode } from '@harness-x/protocol';
@@ -92,6 +93,14 @@ export class StageTracker {
 
   /** 실행 시작 순간에만 부른다 — 그 전에는 트리가 없다 */
   start(): StageTree {
+    // 이어하기: 같은 에이전트로 이미 만든 트리가 있으면 그대로 이어 쓴다
+    const prev = this.opts.store?.read();
+    if (prev && prev.agent === (this.opts.agent?.name ?? null)) {
+      this.tree = prev;
+      this.started = true;
+      this.locks = 1;
+      return this.tree;
+    }
     if (this.opts.store)
       this.tree = this.opts.store.start({ agent: this.opts.agent ?? null, ...this.tmpl() });
     else
@@ -113,7 +122,7 @@ export class StageTracker {
   hooks(prefix = ''): RunnerStageHooks {
     return {
       nodeStart: (i) => this.nodeStart(i.node, prefix, i.engineId, i.rerun),
-      nodeEnd: (i) => this.nodeEnd(i.node, prefix, i.status, i.output, i.items, i.reason),
+      nodeEnd: (i) => this.nodeEnd(i.node, prefix, i.status, i.output, i.items, i.reason, i.interrupted),
       gateFailed: (i) =>
         this.gateFailed(
           i.gate,
@@ -125,6 +134,7 @@ export class StageTracker {
       routeChosen: (i) => this.set(chooseRoute(this.tree, i.router.id, i.to, { prefix, ...this.nowOpt() })),
       subagent: (i) => this.subagent(i.node, prefix, i.agent, i.pipeline),
       prompt: (i) => this.prompt(i.node, prefix, i.prompt),
+      nodeItems: (i) => this.nodeItems(i.node, prefix, i.items),
     };
   }
 
@@ -235,30 +245,21 @@ export class StageTracker {
     output: unknown,
     items?: Stage['items'],
     reason?: string,
+    interrupted?: boolean,
   ): void {
     if (!this.started) return;
     const s = this.stageOf(node.id, prefix);
     if (!s || s.kind === 'loop') return;
     let t = this.tree;
-    if (items) {
-      // 실행기 원장이 하위 항목의 원본. 트리에만 있는 재작업 항목은 노드가 끝나면 함께 끝낸다
-      const extra = getStage(t, s.stageId).items.filter((i) => !items.some((x) => x.id === i.id));
-      const done = status === 'completed';
-      t = syncStageItems(
-        t,
-        s.stageId,
-        [...items, ...extra.map((i) => (done ? { ...i, status: 'done' as const } : i))],
-        this.opts.now,
-      );
-      const meta = getStage(t, s.stageId).itemMeta;
-      for (const i of extra) meta[i.id] = s.itemMeta[i.id] ?? { origin: 'rework' };
-    } else if (status === 'completed') {
+    if (items) t = this.mergeItems(t, s, items, status === 'completed');
+    else if (status === 'completed') {
       t = structuredClone(t);
       for (const i of getStage(t, s.stageId).items) i.status = 'done';
     }
     if (status !== 'completed') {
       const cur = getStage(t, s.stageId);
-      if (cur.status !== 'blocked' && node.type !== 'gate')
+      // 정지로 끝났으면 막힘이 아니다 — 이어하기에서 그 단계부터 계속
+      if (cur.status !== 'blocked' && node.type !== 'gate' && !interrupted)
         t = setStageStatus(t, s.stageId, 'blocked', { reason: reason ?? status, ...this.nowOpt() });
       this.set(t);
       return;
@@ -294,6 +295,28 @@ export class StageTracker {
       }
     }
     this.set(t);
+  }
+
+  /** 실행기 원장 항목을 단계에 맞춘다. 트리에만 있는 재작업 항목은 노드가 끝나면 함께 끝낸다 */
+  private mergeItems(t: StageTree, s: Stage, items: Stage['items'], done: boolean): StageTree {
+    const extra = getStage(t, s.stageId).items.filter((i) => !items.some((x) => x.id === i.id));
+    const next = syncStageItems(
+      t,
+      s.stageId,
+      [...items, ...extra.map((i) => (done ? { ...i, status: 'done' as const } : i))],
+      this.opts.now,
+    );
+    const meta = getStage(next, s.stageId).itemMeta;
+    for (const i of extra) meta[i.id] = s.itemMeta[i.id] ?? { origin: 'rework' };
+    for (const i of items) if (s.itemMeta[i.id]) meta[i.id] = s.itemMeta[i.id]!;
+    return next;
+  }
+
+  private nodeItems(node: PipelineNode, prefix: string, items: Stage['items']) {
+    if (!this.started) return;
+    const s = this.stageOf(node.id, prefix);
+    if (!s) return;
+    this.set(this.mergeItems(this.tree, s, items, false));
   }
 
   private gateFailed(
@@ -394,4 +417,28 @@ export function trackStages(opts: StageTrackerOptions): { tracker: StageTracker;
   const tracker = new StageTracker(opts);
   tracker.start();
   return { tracker, stages: tracker.hooks() };
+}
+
+/**
+ * 커널 디스패치용: 실행이 시작되는 순간 <workspace>/.harness-x/sessions/<id>/stages.json에 단계 뼈대를 만들고
+ * 실행기 옵션 { stages }를 돌려준다 (cli.ts가 PipelineRunner 옵션에 펼쳐 넣는다).
+ */
+export function stageRunnerOptions(o: {
+  workspace: string;
+  sessionId: string;
+  agent: AgentRef;
+  mode?: RunMode;
+}): { stages: RunnerStageHooks } {
+  const store = new StageTreeStore({
+    dir: join(o.workspace, '.harness-x', 'sessions', o.sessionId),
+    sessionId: o.sessionId,
+  });
+  const tracker = new StageTracker({
+    sessionId: o.sessionId,
+    agent: o.agent,
+    store,
+    ...(o.mode ? { mode: o.mode } : {}),
+  });
+  tracker.start();
+  return { stages: tracker.hooks() };
 }

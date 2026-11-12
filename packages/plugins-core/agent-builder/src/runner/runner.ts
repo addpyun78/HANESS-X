@@ -313,6 +313,7 @@ export class PipelineRunner {
       output: v.output,
       ...(v.reason ? { reason: v.reason } : {}),
       ...(items ? { items } : {}),
+      ...(this.opts.signal?.aborted ? { interrupted: true } : {}),
     });
     this.visits.push(v);
     this.outputs[v.nodeId] = v.output;
@@ -477,10 +478,15 @@ export class PipelineRunner {
         ...(this.opts.signal ? { signal: this.opts.signal } : {}),
       },
     });
-    for await (const e of stream) {
-      events.push(e);
-      visit.events.push(e);
-      this.emit(e as LogRecord);
+    try {
+      for await (const e of stream) {
+        events.push(e);
+        visit.events.push(e);
+        this.emit(e as LogRecord);
+      }
+    } finally {
+      // T-101 4번: 턴이 끝날 때마다(멈춰도) 단계 트리의 하위 항목 진행을 맞춘다
+      this.opts.stages?.nodeItems?.({ node: ctx.node, items: ctx.ledger.read()?.items ?? [] });
     }
     const sid = lastRun?.engineSessionId();
     // T-101 2B.9 엔진 자체 재개용: 노드의 엔진 세션 id를 기록해 둔다
@@ -535,6 +541,8 @@ export class PipelineRunner {
     const items = this.opts.checklists?.(node, node.checklistTemplate);
     // T-101 2C.2 이어하기: 같은 세션·같은 노드 원장이 이미 있으면 그대로 둔다 (체크리스트 유지)
     if (items?.length && !ledger.read()) ledger.create(items);
+    // T-101 4번: 원장이 정해지면 단계 트리 하위 항목도 맞춘다
+    if (ledger.read()) this.opts.stages?.nodeItems?.({ node, items: ledger.read()!.items });
     this.nodeStart(node, visitNo, engine.id);
     await this.stageStart(node, visitNo, engine.id);
     const visit: NodeVisit = {

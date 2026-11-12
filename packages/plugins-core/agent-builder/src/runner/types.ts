@@ -131,6 +131,8 @@ export interface RunnerStageHooks {
     reason?: string;
     /** role 노드 원장 항목 */
     items?: ChecklistItem[];
+    /** 정지(일시정지·지금 멈추기)로 끝남 — 단계는 막힘이 아니라 그대로 둔다 */
+    interrupted?: boolean;
   }): void;
   gateFailed?(i: {
     gate: GateNode;
@@ -150,6 +152,8 @@ export interface RunnerStageHooks {
   }): RunnerStageHooks | undefined;
   /** role 노드 프롬프트 다듬기 (단계 슬라이스 붙이기) */
   prompt?(i: { node: RoleNode; engineId: string; prompt: string }): string;
+  /** role 노드 원장 항목이 바뀌었을 수 있는 때(원장 생성 직후·턴이 끝날 때마다) — 진행률을 맞춘다 */
+  nodeItems?(i: { node: PipelineNode; items: ChecklistItem[] }): void;
 }
 
 /** 노드 출력 추출기 (T-042 contract가 기본) */
