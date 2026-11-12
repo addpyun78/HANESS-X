@@ -1,0 +1,20 @@
+{
+  "engine": "agy",
+  "prompt": "README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.",
+  "at": "2026-11-12T10:11:56.758Z",
+  "installed": true,
+  "version": "1.4.12",
+  "success": true,
+  "ms": 40789,
+  "eventKinds": [
+    "assistant_text",
+    "tool_call",
+    "tool_result",
+    "usage",
+    "turn_end"
+  ],
+  "eventCount": 43,
+  "textHead": "`[README.md](file:///mnt/c/agentCli/harness-x/README.md)` 파일의 첫 줄을 확인하여 요약 계획을 수립하겠습니다.먼저 파일을 읽어보겠습니다.`[README.md](file:///mnt/c/agentCli/harness-x/README.md)` 파일의 첫 줄을 확인하여 요약 계획을 수립하겠습니다.먼저 파일을 읽어보겠",
+  "error": null,
+  "aborted": false
+}
