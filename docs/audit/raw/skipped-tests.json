@@ -1,0 +1,68 @@
+[
+  {
+    "file": "apps/web/test/click-all.test.tsx",
+    "line": 66,
+    "kind": "it.runIf",
+    "text": "it.runIf(run)("
+  },
+  {
+    "file": "packages/engines/acp-generic/test/session-load.test.ts",
+    "line": 89,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(!realBin)('실제 claude-agent-acp 재개 (HX_REAL_ACP=1)', () => {"
+  },
+  {
+    "file": "packages/engines/claude-code/test/interrupt.test.ts",
+    "line": 65,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(process.platform === 'win32')('14.6 interrupt (프로세스 그룹 종료)', () => {"
+  },
+  {
+    "file": "packages/engines/claude-code/test/real.test.ts",
+    "line": 20,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(!REAL)('14.3 실제 2턴 실행 (--resume)', () => {"
+  },
+  {
+    "file": "packages/kernel/test/folder-picker.test.ts",
+    "line": 168,
+    "kind": "it.runIf",
+    "text": "it.runIf(detectPickerHost() === 'wsl')('실제 wslpath -u', async () => {"
+  },
+  {
+    "file": "packages/kernel/test/stop.kill-tree.test.ts",
+    "line": 43,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(process.platform === 'win32')('2A.4 지금 멈추기 — 리눅스 프로세스 그룹 (실제)', () => {"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/test/runner.resume-replay.test.ts",
+    "line": 115,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(process.platform === 'win32')("
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/test/runner.stop-parallel.test.ts",
+    "line": 58,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(process.platform === 'win32')('2A.7 파이프라인 정지 시 병렬 노드 전부 정지', () => {"
+  },
+  {
+    "file": "packages/plugins-core/engine-scanner/test/version.test.ts",
+    "line": 54,
+    "kind": "it.skipIf",
+    "text": "it.skipIf(process.platform === 'win32')('실제 실행: 멈추는 프로그램은 타임아웃으로 끊는다', async () => {"
+  },
+  {
+    "file": "tests/epic1-gate.test.ts",
+    "line": 57,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(process.env.HX_EPIC1_GATE !== '1')('EPIC 1 게이트: 4개 엔진 같은 프롬프트', () => {"
+  },
+  {
+    "file": "tests/real-claude-mcp.test.ts",
+    "line": 18,
+    "kind": "describe.skipIf",
+    "text": "describe.skipIf(!REAL)('14.4 실제 1회: --mcp-config로 하네스 MCP 연결', () => {"
+  }
+]
