@@ -1,0 +1,10 @@
+{
+  "area": "plain",
+  "implementations": [
+    "agent-builder/designer/plain.ts isPlain",
+    "tool-finder/reasons.ts isPlain"
+  ],
+  "inputs": 100,
+  "differing": 0,
+  "examples": []
+}
