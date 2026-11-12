@@ -234,21 +234,26 @@
     },
     {
       "status": "open",
-      "features": [],
+      "features": ["F-007"],
       "area": "bug",
       "severity": "high",
       "title": "코드를 고친 뒤 serve로 켜면 기본 플러그인(agent-builder·checklist-ledger·forge·mcp-host·permission-gate)이 plugins.lock 지문 불일치(변조됨)로 거부됨",
       "evidence": [
         "docs/audit/raw/runtime-errors.json (plugin_rejected 9건, 2026-11-10~11)",
         "scripts/launcher/start.sh 1-2) 바로가기 실행기만 지문을 새로 고침",
-        "packages/kernel/src/loader.ts"
+        "packages/kernel/src/loader.ts",
+        "packages/kernel/src/loader.ts:236-256 (origin과 관계없이 lock 대조)",
+        "packages/kernel/src/loader.ts:137 (core = repoRoot/packages/plugins-core)",
+        "사용자 지시(2026-11-12): 초보 사용자는 직접 고칠 수 없으니 반드시 수정"
       ],
-      "proposal": "바로가기 외 경로(harness-x serve 직접)에서도 저장소 기본 플러그인의 지문을 안전하게 새로 고치는 방법 설계 — 변조 검사를 약하게 만들 수 있어 보안 검토 필요",
-      "risk": "high",
+      "proposal": "출처 core(저장소 packages/plugins-core, 커널과 같이 설치되는 자기 코드)는 지문이 바뀌어도 거부하지 않고 lock을 새 지문으로 갱신 + 기록(plugin_updated). 사용자·작업 폴더·forge 플러그인의 변조·버전 검사는 그대로. 재현 테스트: 옛 지문이 든 lock + core 플러그인 → 지금은 거부, 고친 뒤 로드 / user 플러그인은 여전히 거부",
+      "risk": "medium",
       "effort": "M",
       "meta": {
         "source": "C1.9",
-        "top": 1
+        "top": 1,
+        "userApproved": true,
+        "research": "core 출처 코드를 바꿀 수 있으면 커널도 바꿀 수 있어 core 지문 검사는 보안 이득이 없고 사용만 막음. 외부 플러그인 검사는 유지하므로 위험 보통"
       },
       "id": "C1-005"
     },
@@ -342,21 +347,27 @@
     },
     {
       "status": "open",
-      "features": ["F-019", "F-122"],
+      "features": ["F-007", "F-019", "F-122"],
       "area": "shell",
-      "severity": "high",
-      "title": "체크리스트 화면이 부르는 GET /api/checklist/:session · /api/checklist/:session/status 가 실제 서버(harness-x serve)에 등록되지 않음 → 404 \"Route not found\"",
+      "severity": "critical",
+      "title": "플러그인 로더가 activate 없는 플러그인 모듈을 빈 객체로 바꿈(loader.ts:302) → activate가 없는 checklist-ledger의 내보낸 함수가 실제 서버에서 사라져 체크리스트 화면 주소 2개(GET /api/checklist/:session · /status)와 계획 잠금 주소가 등록되지 않음(404) — 핵심 기능인 체크리스트 화면이 비어 보임",
       "evidence": [
         "docs/audit/raw/api-constant.json (statusA 404, Fastify Route not found)",
         "임시 홈 serve --workspace <폴더>로 직접 확인: GET /api/checklist/s1 → 404",
         "packages/kernel/src/cli.ts:716-724 (ledger.registerChecklist*Route 연결)",
-        "apps/web/src/panels/Checklist/api.ts:18"
+        "apps/web/src/panels/Checklist/api.ts:18",
+        "packages/kernel/src/loader.ts:302 const m = mod.activate || mod.deactivate ? mod : (mod.default ?? {})",
+        "실험: PluginLoader.loadAll 뒤 checklist-ledger module 키 0개, 같은 파일을 직접 import하면 263개",
+        "dist 확인: 10개 기본 플러그인 중 activate 없는 것은 checklist-ledger 하나",
+        "커널 사용처: cli.ts:716-724"
       ],
-      "proposal": "왜 등록이 빠지는지(플러그인 모듈 객체·조건) 재현 테스트를 먼저 만들고, serve가 체크리스트 경로를 등록하도록 연결을 고친다",
+      "proposal": "loader가 activate·deactivate가 없으면 default가 있을 때만 default, 없으면 모듈 전체(namespace)를 쓰게 고침. 재현 테스트: activate 없는 플러그인을 loadAll한 뒤 내보낸 함수가 module에 있어야 함 + serve에서 GET /api/checklist/:session 200",
       "risk": "medium",
       "effort": "M",
       "meta": {
-        "source": "C2.19"
+        "source": "C2.19",
+        "wiring": true,
+        "rootCause": "loader-default-module"
       },
       "id": "C2-001"
     },
@@ -375,7 +386,8 @@
       "risk": "medium",
       "effort": "S",
       "meta": {
-        "source": "C2.19"
+        "source": "C2.19",
+        "wiring": true
       },
       "id": "C2-002"
     },
@@ -467,14 +479,17 @@
       "evidence": [
         "docs/audit/baseline.json size.worktrees",
         "git worktree list (39개 worktree-agent-* 브랜치)",
-        "docs/audit/size.md"
+        "docs/audit/size.md",
+        "사용자 지시(2026-11-12): 실행에 필요 없으면 복사본은 필요 없음"
       ],
-      "proposal": "끝난 작업자 복사본을 `git worktree remove`로 정리(사람 결정 — 자동 삭제 표에 없는 종류라 보류)",
-      "risk": "medium",
+      "proposal": "G 단계에서 사본마다 ①저장 안 된 변경 없음 ②그 브랜치가 master에 모두 들어 있음(merge-base --is-ancestor)을 확인한 것만 git worktree remove + git branch -d(안 합친 작업은 git이 거부). 하나라도 아니면 남기고 이유 기록. git stash는 건드리지 않음",
+      "risk": "low",
       "effort": "S",
       "meta": {
         "source": "C3.18",
-        "kind": "worktree"
+        "kind": "worktree",
+        "userApproved": true,
+        "research": "사본은 T-101 병렬 작업자용이고 실행에 쓰이지 않음. 합쳐진 것만 지우면 작업 손실 없음, node_modules는 다시 설치 가능"
       },
       "id": "C3-001"
     },
@@ -584,7 +599,8 @@
       "risk": "low",
       "effort": "S",
       "meta": {
-        "source": "C5.15/C4.4"
+        "source": "C5.15/C4.4",
+        "behaviorDiff": 0
       },
       "id": "C5-003"
     },
@@ -697,6 +713,27 @@
         "relatedTo": "C2-004"
       },
       "id": "C6-006"
+    },
+    {
+      "status": "open",
+      "features": ["F-006"],
+      "area": "bug",
+      "severity": "medium",
+      "title": "흔들리는 테스트 3개: serve 기동 테스트 2개가 CPU 부하가 크면 대기 시간을 넘기고, cli.test는 빌드 결과(dist)를 다시 만드는 중에 돌면 깨짐",
+      "evidence": [
+        "docs/audit/baseline.json flaky",
+        "docs/audit/raw/test-run-1.json (실패 메시지 timeout·SyntaxError winToWslFallback)",
+        "packages/kernel/test/cli.judge-wiring.test.ts",
+        "packages/kernel/test/cli.sidecar.test.ts",
+        "packages/kernel/test/cli.test.ts"
+      ],
+      "proposal": "serve 기동을 기다리는 시간을 부하에 맞게 늘리고(헬스 확인 반복), dist가 완성됐는지 먼저 확인 — 테스트 코드만 고침",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C1.7"
+      },
+      "id": "C1-010"
     }
   ]
 }
