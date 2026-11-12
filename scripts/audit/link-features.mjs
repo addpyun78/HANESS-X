@@ -73,7 +73,8 @@ function linkActions() {
   const usedIn = new Map(ids.map((id) => [id, []]));
   const webFiles = allSrc.filter((f) => f.startsWith('apps/web/src/'));
   for (const f of webFiles)
-    for (const m of read(f).matchAll(/act\(\s*['`]([^'`]+)['`]/g)) usedIn.get(m[1])?.push(f);
+    for (const m of read(f).matchAll(/(?:(?:act|actionAttr)\(\s*['`]|data-action=")([^'`"<]+)['`"]/g))
+      usedIn.get(m[1])?.push(f);
   let n = 0;
   for (const f of map.features) {
     const t = textOf.get(f.id);
@@ -175,7 +176,7 @@ function linkCode() {
     read(f)
       .split('\n')
       .forEach((l, i) => {
-        for (const m of l.matchAll(/act\(\s*['`]([^'`]+)['`]/g))
+        for (const m of l.matchAll(/(?:(?:act|actionAttr)\(\s*['`]|data-action=")([^'`"<]+)['`"]/g))
           if (!actUse.has(m[1])) actUse.set(m[1], `${f}:${i + 1}`);
       });
   const cliSrc = read('packages/kernel/src/cli.ts').split('\n');
@@ -236,7 +237,22 @@ function linkTests() {
   let n = 0;
   const testText = new Map(allTests.map((t) => [t, null]));
   const tt = (t) => {
-    if (testText.get(t) === null) testText.set(t, readFileSync(join(root, t), 'utf8'));
+    if (testText.get(t) === null) {
+      // 테스트가 불러오는 같은 폴더의 도우미 파일(*.helpers.ts 등) 내용도 한 단계 합친다
+      let s = readFileSync(join(root, t), 'utf8');
+      for (const m of s.matchAll(/from ['"](\.\/[^'"]+)['"]/g)) {
+        const base = join(root, t, '..', m[1]).replace(/\.js$/, '');
+        for (const ext of ['.ts', '.tsx']) {
+          try {
+            s += '\n' + readFileSync(base + ext, 'utf8');
+            break;
+          } catch {
+            /* 없음 */
+          }
+        }
+      }
+      testText.set(t, s);
+    }
     return testText.get(t);
   };
   for (const f of map.features) {
