@@ -4,3 +4,4 @@ export * from './project-store.js';
 export * from './session-registry.js';
 export * from './routes.js';
 export * from './cli-commands.js';
+export * from './project-settings-io.js';

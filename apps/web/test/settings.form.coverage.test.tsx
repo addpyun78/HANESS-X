@@ -90,10 +90,10 @@ describe('T-101 0A.10 레지스트리 키 전부 화면 노출 (고급 포함)',
   it('일부러: 화면 응답에서 키 하나가 빠지면 검사가 잡는다', async () => {
     const reg = settingsRegistry.clone();
     reg.register(
-      defineSetting('data.retentionDays', z.number().int().min(1).default(30), {
+      defineSetting('data.sampleKnob', z.number().int().min(1).default(30), {
         group: 'data',
-        title: '기록 보관 기간',
-        description: '작업 기록을 며칠 동안 둘지 정해요.',
+        title: '시험 항목',
+        description: '검사가 잡는지 보려고 넣은 항목이에요.',
         advanced: true,
         restartRequired: false,
         scope: 'both',
@@ -101,8 +101,8 @@ describe('T-101 0A.10 레지스트리 키 전부 화면 노출 (고급 포함)',
     );
     const full = registryResponse(reg);
     // 렌더러가 새 키를 못 그리는 상황을 흉내: 응답에서 빼 버린다
-    const dropped = { ...full, fields: full.fields.filter((f) => f.key !== 'data.retentionDays') };
-    expect(await unexposed(staticApi(dropped), reg.keys())).toEqual(['data.retentionDays']);
+    const dropped = { ...full, fields: full.fields.filter((f) => f.key !== 'data.sampleKnob') };
+    expect(await unexposed(staticApi(dropped), reg.keys())).toEqual(['data.sampleKnob']);
     // 제대로 넘기면 프로젝트 범위 키도 보인다
     expect(await unexposed(staticApi(full), reg.keys())).toEqual([]);
   });

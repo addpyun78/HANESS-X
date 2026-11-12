@@ -14,6 +14,15 @@ import { createResumeService } from './resume-service.js';
 import { fallbackTable } from './resume-engine.js';
 import { stageProgressLabels, stageTreeResolver } from './stage-progress.js';
 import { HumanGestureTokens } from './human-gesture-token.js';
+import { cleanupData } from './settings/data-cleanup.js';
+import {
+  checklistRunnerOptions,
+  installerConfig,
+  kernelVersion,
+  readSettingsFile,
+  scratchRootFrom,
+  sessionDefaultsFromSettings,
+} from './settings/runtime.js';
 import { Worker } from 'node:worker_threads';
 import type { HotReloader as HotReloaderType } from './hot-reload.js';
 import { SettingsStore, readSetting } from './settings/index.js';
@@ -436,6 +445,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     hooks,
     log,
     roots,
+    // T-101 6B.7 설치 도구 켜기 (설정 installer.chocoEnabled — 다시 시작하면 적용)
+    config: { installer: installerConfig(readSettingsFile(join(home, 'settings.json'))) },
     logger: (l) => process.stderr.write(l + '\n'),
   });
   const active = await loader.loadAll();
@@ -481,8 +492,13 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const { pinRunVersion } = await import('./resume-pin.js');
   // T-101 0-2 프로젝트·세션 등록부: workspaces.json → projects.json(처음 1회), 옛 세션 가져오기(0B.5),
   // 색인 불일치면 자동 복구(0B.9). 기본 엔진은 메인 AI(T-101 5C.3b), 없으면 첫 엔진
-  const { ProjectStore, SessionRegistry } = await import('./projects/index.js');
-  const projects = new ProjectStore({ home });
+  const { ProjectStore, SessionRegistry, projectSettingsIO } = await import('./projects/index.js');
+  const settingsFile = join(home, 'settings.json');
+  // T-101 6B.10 임시 작업 공간 위치 (설정 project.scratchDir, 만들 때마다 다시 읽음)
+  const projects = new ProjectStore({
+    home,
+    scratchRoot: () => scratchRootFrom(readSettingsFile(settingsFile)),
+  });
   const plainTitle = (
     loader.plugins.get('approvals')?.module as
       { checkPlainKorean?: (t: string, o?: { label?: boolean }) => { ok: boolean } } | undefined
@@ -491,15 +507,35 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     home,
     projects,
     log,
-    // T-101 5C.3b 전체 기본값 = 메인 AI (프로젝트 기본 AI가 있으면 그것이 먼저)
-    defaults: () =>
-      mainAiMod.mainAiSessionDefaults(
-        mainAiMod.readMainAi(join(home, 'settings.json')),
+    // T-101 5C.3b 전체 기본값 = 메인 AI (프로젝트 기본 AI가 있으면 그것이 먼저) + 6B.3 기본 허락 범위
+    defaults: () => ({
+      ...mainAiMod.mainAiSessionDefaults(
+        mainAiMod.readMainAi(settingsFile),
         adapters().map((a) => a.id),
       ),
+      ...sessionDefaultsFromSettings(readSettingsFile(settingsFile)),
+    }),
     ...(plainTitle ? { titleCheck: (t: string) => plainTitle(t, { label: true }).ok } : {}),
   });
   const imported = sessionRegistry.importLegacy(log);
+  // T-101 6B.11 기록 보관 기간·첨부 정리 (설정이 0이면 아무것도 안 함) — 시작 때 한 번 + [지금 정리하기]
+  const dataCleanup = () =>
+    cleanupData({
+      values: readSettingsFile(settingsFile),
+      sessions: () => sessionRegistry.list(),
+      removeLog: (id) => log.removeSession(id),
+      projectRoots: () =>
+        projects
+          .list()
+          .filter((p) => !p.missing)
+          .map((p) => p.rootPath),
+    });
+  try {
+    const c = dataCleanup();
+    if (c.logs || c.attachments) process.stderr.write(`정리: 기록 ${c.logs}개, 첨부 ${c.attachments}개\n`);
+  } catch {
+    /* 정리 실패는 시작을 막지 않는다 */
+  }
   if (projects.migrated !== undefined)
     process.stderr.write(`워크스페이스 ${projects.migrated}개를 프로젝트로 옮겼어요 (workspaces.json.bak)\n`);
   if (sessionRegistry.reindexed) process.stderr.write('세션 색인을 폴더에서 다시 만들었어요\n');
@@ -567,6 +603,8 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
         log,
         onEvent: i.onEvent,
         signal: i.signal,
+        // T-101 6B.4 체크리스트 설정(엄격하게 확인하기·정체 감지 기준·최대 횟수) — 실행마다 다시 읽음
+        ...checklistRunnerOptions(readSettingsFile(join(home, 'settings.json'))),
         // T-101 2B.9 엔진 자체 재개: 멈췄던 노드는 그 엔진 세션으로 (예: claude --resume)
         ...(i.resume?.resumeIds ? { resumeIds: i.resume.resumeIds } : {}),
         // #strict: 출력 계약 재요청 없이 첫 불충족에서 멈춘다
@@ -635,10 +673,20 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
       gestures,
       // T-101 0-1 설정 화면 API (/api/settings…): 키는 키체인에만, 플러그인 configSchema 자동 포함
       settings: {
-        file: join(home, 'settings.json'),
+        file: settingsFile,
         secrets,
         engines: () => loadEnginesSettings().engines,
         plugins: () => [...loader.plugins.values()].map((p) => p.manifest),
+        // T-101 6B.14 프로젝트 범위 값 = <프로젝트>/.harness-x/project.json 의 settings
+        project: projectSettingsIO(projects),
+        // T-101 6B.11 [지금 정리하기] · 6B.13 정보·진단 파일
+        cleanup: dataCleanup,
+        about: {
+          version: kernelVersion(),
+          plugins: () =>
+            [...loader.plugins.values()].map((p) => ({ id: p.manifest.id, version: p.manifest.version })),
+          engines: () => adapters().map((a) => a.id),
+        },
       },
       // T-100 H.10 쉬운 말 승인 카드 (GET /api/approvals, POST /api/approvals/:id {choice, remember})
       ...(() => {

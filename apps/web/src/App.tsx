@@ -43,8 +43,8 @@ import {
 import { toolPickerExtraCards } from './panels/ToolPicker/ToolPickerCard.js';
 import { toolPickerToast, TOOL_PICKER_KIND, type ToolPickerData } from './panels/ToolPicker/model.js';
 import { noticesApi, useNotices } from './panels/Approvals/useNotices.js';
-import { enginesApi } from './settings/Engines/api.js';
-import { EnginesSettings } from './settings/Engines/EnginesSettings.js';
+import { settingsApi } from './settings/form/api.js';
+import { SettingsPage, type SettingsPageProps } from './settings/SettingsPage.js';
 import { useEngines } from './engines/useEngines.js';
 import { useProjectAi } from './engines/useProjectAi.js';
 import { AppShell } from './shell/AppShell.js';
@@ -134,7 +134,6 @@ export function App() {
   const [view, setView] = useState<'chat' | NavTarget>('chat');
   const available = useMemo(() => engines.filter((e) => e.available), [engines]);
   const quotas = useQuota(client, events, available);
-  const engineSettings = useMemo(() => (client ? enginesApi(client) : undefined), [client]);
   // T-101 0-2 프로젝트·새 세션 (서버에 /api/projects가 있을 때만 켜진다 — 없으면 예전 사이드바)
   const pApi = useMemo(
     () => (client ? projectsApi(client, desktop ? (p) => pickFolderDesktop(p) : undefined) : undefined),
@@ -145,6 +144,8 @@ export function App() {
       agents.map((a) => ({ command: a.command, name: a.displayName, ...(a.icon ? { icon: a.icon } : {}) })),
     [agents],
   );
+  // T-101 6B.14 프로젝트 설정 화면의 "이 프로젝트에서만 바꿀 설정" (0-1 설정 API, 범위 project)
+  const projSettings = useMemo(() => (client ? { api: settingsApi(client) } : undefined), [client]);
   // T-101 2B.1 프로젝트를 열면 그 프로젝트의 미완료 세션 ("이어서 할 작업이 있어요")
   const [projectResume, setProjectResume] = useState<ResumableSessionData[]>([]);
   const [showProjectResume, setShowProjectResume] = useState(false);
@@ -154,6 +155,7 @@ export function App() {
     onWorkspace: setWorkspace,
     engines: available,
     agents: agentChoices,
+    ...(projSettings ? { settings: projSettings } : {}),
     // 0B.32 프로젝트 클릭·폴더 선택·최근 프로젝트 → 미완료 세션 목록
     onProjectOpen: (p) => {
       if (!client) return;
@@ -190,6 +192,16 @@ export function App() {
     projectReady: proj.enabled && !!proj.current && !!proj.activeId,
     askProject: proj.newSession,
   });
+  // T-101 6B.10 설정 > 프로젝트 탭 목록 — [프로젝트 설정]은 채팅 영역의 프로젝트 설정 화면(0B.41)을 연다
+  const settingsProjects: SettingsPageProps['projects'] = proj.enabled
+    ? {
+        list: proj.projects,
+        onAction: (p, a) => {
+          void proj.projectAction(p, a);
+          if (a.type === 'settings') setView('chat');
+        },
+      }
+    : undefined;
   // T-100 H.10~H.16 쉬운 말 승인 카드: 패널 맨 위 · 토스트 · 사이드바 배지 · 탭 제목 · 채팅 축소 카드
   const apApi = useMemo(() => (client ? approvalsApi(client) : undefined), [client]);
   // T-100 Part 2 설치 관리자: 계획 카드(화면·채팅 AI의 install.plan/resolve)도 같은 승인 카드 영역에 (D.8)
@@ -381,7 +393,7 @@ export function App() {
     else if (to === 'install') {
       setInstallNav({ tab: 'installed', query: '' });
       setView('install');
-    } else setView(to === 'engines' ? 'engines' : 'chat');
+    } else setView(to === 'engines' ? 'engines' : to === 'settings' ? 'settings' : 'chat');
   };
 
   const togglePin = async (p: RecentProject) => {
@@ -501,8 +513,16 @@ export function App() {
               )
             }
             main={
-              view === 'engines' && engineSettings ? (
-                <EnginesSettings api={engineSettings} />
+              (view === 'settings' || view === 'engines') && client ? (
+                // T-101 6번 설정 화면 (13개 탭 · 검색 · 고급 설정 보기). [엔진] 메뉴는 AI·엔진 탭(6B.2 — T-038 화면을 옮김)
+                <SettingsPage
+                  client={client}
+                  initialTab={view === 'engines' ? 'ai' : 'general'}
+                  engines={engines}
+                  {...(desktop ? { pickFolder: (p?: string) => pickFolderDesktop(p) } : {})}
+                  {...(proj.current ? { project: proj.current.id, projectName: proj.current.name } : {})}
+                  {...(settingsProjects ? { projects: settingsProjects } : {})}
+                />
               ) : view === 'install' && instApi ? (
                 <InstallManager
                   api={instApi}

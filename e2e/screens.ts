@@ -48,10 +48,20 @@ export const SCREENS: readonly ScreenSpec[] = [
   { id: 'settings-form', name: '설정 폼(0-1, 모든 묶음·고급 포함)', parts: ['설정 전 섹션'] },
   {
     id: 'settings-sections',
-    name: '설정 — 나머지 섹션',
+    name: '설정 화면 — 13개 탭·고급 설정 보기·프로젝트·데이터·정보',
     parts: ['설정 전 섹션'],
-    pending: '6번 설정 화면(메뉴 연결·섹션 채우기)',
   },
+  {
+    id: 'settings-sections-project',
+    name: '설정 — 프로젝트 탭(목록·고정·빼기·다시 연결)',
+    parts: ['설정 전 섹션'],
+  },
+  {
+    id: 'settings-sections-data',
+    name: '설정 — 데이터·보안 탭(저장된 키·정리·설정 파일)',
+    parts: ['설정 전 섹션'],
+  },
+  { id: 'settings-sections-about', name: '설정 — 정보 탭(업데이트 확인·진단 파일)', parts: ['설정 전 섹션'] },
   { id: 'install-installed', name: '설치 관리 — 설치됨', parts: ['설치 관리'] },
   { id: 'install-search', name: '설치 관리 — 찾기(결과 있음)', parts: ['설치 관리'] },
   { id: 'install-url', name: '설치 관리 — 주소로 설치(방법 있음)', parts: ['설치 관리'] },

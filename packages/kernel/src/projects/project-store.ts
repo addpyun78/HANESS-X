@@ -88,6 +88,11 @@ export function readProjectMarker(root: string): ProjectMarker | undefined {
 }
 
 export function writeProjectMarker(root: string, m: ProjectMarker): void {
+  // 같은 프로젝트의 표식을 다시 쓸 때 프로젝트 설정 값(6B.14)은 그대로 둔다
+  if (!('settings' in m)) {
+    const old = readProjectMarker(root);
+    if (old?.id === m.id && old.settings) m = { ...m, settings: old.settings };
+  }
   const dir = join(root, PROJECT_MARKER_DIR);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, PROJECT_MARKER_FILE), JSON.stringify(m, null, 2) + '\n');
@@ -101,6 +106,8 @@ export interface ProjectStoreOptions {
   now?: () => Date;
   idGen?: () => string;
   validate?: ValidateOptions;
+  /** T-101 6B.10 임시 작업 공간을 만들 곳 (설정 project.scratchDir — 빈 값이면 <home>/scratch) */
+  scratchRoot?: () => string | undefined;
 }
 
 export interface AddResult {
@@ -121,6 +128,7 @@ export class ProjectStore extends EventEmitter {
   private readonly now: () => Date;
   private readonly idGen: () => string;
   private readonly validateOpts: ValidateOptions;
+  private readonly scratchRoot?: () => string | undefined;
   private data: ProjectsFile;
   /** 0B.4 이번 기동에서 옮긴 워크스페이스 수 (없으면 undefined) */
   readonly migrated?: number;
@@ -132,6 +140,7 @@ export class ProjectStore extends EventEmitter {
     this.now = opts.now ?? (() => new Date());
     this.idGen = opts.idGen ?? randomUUID;
     this.validateOpts = opts.validate ?? {};
+    if (opts.scratchRoot) this.scratchRoot = opts.scratchRoot;
     if (!existsSync(this.file) && existsSync(join(this.home, 'workspaces.json'))) {
       this.data = { version: 1, projects: [] };
       this.migrated = this.migrateFromWorkspaces();
@@ -463,7 +472,8 @@ export class ProjectStore extends EventEmitter {
 
   // ── 0B.16 임시 작업 공간 ────────────────────────────────────
   scratchDir(): string {
-    return join(this.home, 'scratch');
+    const custom = this.scratchRoot?.()?.trim();
+    return custom ? resolve(custom) : join(this.home, 'scratch');
   }
 
   createScratch(): Project {

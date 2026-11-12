@@ -1,5 +1,8 @@
 import type { FastifyInstance } from 'fastify';
+import type { CleanupResult } from '../settings/data-cleanup.js';
+import { buildDiagnostics } from '../settings/diagnostics.js';
 import { settingFields, settingsJsonSchema } from '../settings/json-schema.js';
+import { exportSettingsYaml, importSettingsYaml } from '../settings/transfer.js';
 import { withPluginSettings, type PluginConfigSource } from '../settings/plugins.js';
 import { SETTING_GROUPS, SettingValueError, type SettingsRegistry } from '../settings/registry.js';
 import {
@@ -18,6 +21,13 @@ import {
  *  POST   /api/settings/reset          {key | group | all, scope?, project?} → 기본값으로
  *  PUT    /api/settings/secret         {key, value} → 키체인, 응답은 가린 값만
  *  DELETE /api/settings/secret?key=
+ *  ── T-101 6번 설정 화면
+ *  POST   /api/settings/data/cleanup   6B.11 [지금 정리하기] (보관 기간·첨부 정리)
+ *  GET    /api/settings/about          6B.13 버전·운영체제
+ *  POST   /api/settings/update-check   6B.13 업데이트 확인 (확인할 곳이 주입됐을 때만 네트워크)
+ *  GET    /api/settings/diagnostics    6B.13 진단 파일 {file, text} — 키·첨부 내용 제외, 키 모양 글자 가림
+ *  GET    /api/settings/export         6C.3 settings.yaml {file, text} — 키 제외
+ *  POST   /api/settings/import         6C.3 {text} → 전부 검사 후 저장 / 400 쉬운 말 오류 목록
  */
 
 export interface SettingsApiOptions extends Omit<SettingsStoreOptions, 'registry'> {
@@ -27,6 +37,16 @@ export interface SettingsApiOptions extends Omit<SettingsStoreOptions, 'registry
   registry?: () => SettingsRegistry;
   /** 저장 알림 (즉시 적용 연결용) */
   onChange?: (changes: SettingsChange[]) => void;
+  /** 6B.11 데이터 정리 (없으면 404) */
+  cleanup?: () => CleanupResult;
+  /** 6B.13 정보·진단 */
+  about?: {
+    version: string;
+    /** 최신 버전 알아보기 (없으면 "확인할 곳이 없어요") */
+    checkUpdate?: () => Promise<{ latest?: string; url?: string }>;
+    plugins?: () => readonly { id: string; version?: string; enabled?: boolean }[];
+    engines?: () => readonly string[];
+  };
 }
 
 export function createSettingsStore(o: SettingsApiOptions = {}): SettingsStore {
@@ -62,6 +82,68 @@ export function registerSettingsRoutes(app: FastifyInstance, o: SettingsRoutesOp
   });
 
   app.get('/api/settings/schema', async () => settingsJsonSchema(store.registry));
+
+  app.post('/api/settings/data/cleanup', async (_req, reply) => {
+    if (!o.cleanup)
+      return reply.code(404).send({ error: 'not_available', message: '정리 기능을 쓸 수 없어요.' });
+    return { ok: true, ...o.cleanup() };
+  });
+
+  const version = o.about?.version ?? '0.0.0';
+  app.get('/api/settings/about', async () => ({
+    version,
+    platform: process.platform,
+    node: process.version,
+    updateCheck: Boolean(o.about?.checkUpdate),
+  }));
+
+  app.post('/api/settings/update-check', async () => {
+    if (!o.about?.checkUpdate)
+      return {
+        current: version,
+        message: '업데이트를 확인할 곳이 아직 없어요. 지금 버전을 그대로 쓰면 돼요.',
+      };
+    try {
+      const r = await o.about.checkUpdate();
+      const newer = Boolean(r.latest && r.latest !== version);
+      return {
+        current: version,
+        ...r,
+        newer,
+        message: newer ? `새 버전 ${r.latest}이 있어요.` : '지금 최신 버전이에요.',
+      };
+    } catch {
+      return { current: version, message: '업데이트를 확인하지 못했어요. 잠시 뒤 다시 해 주세요.' };
+    }
+  });
+
+  app.get('/api/settings/diagnostics', async () => ({
+    file: 'harness-x-diagnostics.json',
+    text: buildDiagnostics({
+      version,
+      store,
+      ...(o.about?.plugins ? { plugins: o.about.plugins } : {}),
+      ...(o.about?.engines ? { engines: o.about.engines } : {}),
+    }),
+  }));
+
+  app.get('/api/settings/export', async () => ({ file: 'settings.yaml', text: exportSettingsYaml(store) }));
+
+  app.post('/api/settings/import', async (req, reply) => {
+    const b = (req.body ?? {}) as { text?: unknown };
+    if (typeof b.text !== 'string')
+      return reply
+        .code(400)
+        .send({ error: 'invalid_import', message: '가져올 파일 내용이 없어요.', issues: [] });
+    const r = importSettingsYaml(store, b.text);
+    if (!r.ok)
+      return reply.code(400).send({
+        error: 'invalid_import',
+        message: '가져오지 않았어요. 아래 값을 고쳐 주세요.',
+        issues: r.issues,
+      });
+    return { ok: true, imported: r.imported, values: store.snapshot() };
+  });
 
   app.put('/api/settings', async (req, reply) => {
     const b = (req.body ?? {}) as { key?: unknown; value?: unknown; scope?: unknown; project?: unknown };

@@ -1,0 +1,138 @@
+/* T-101 6번 설정 화면 — 색은 토큰 변수만 */
+
+.hx-settings-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-3);
+  max-width: 880px;
+  height: 100%;
+  margin: 0 auto;
+  padding: var(--hx-space-4);
+  overflow-y: auto;
+}
+
+.hx-settings-screen h2 {
+  margin: 0;
+  font-size: var(--hx-font-20);
+}
+
+.hx-settings-screen__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-3);
+}
+
+.hx-settings-screen__search {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: var(--hx-space-2);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+  color: var(--hx-text);
+  font: inherit;
+}
+
+.hx-settings-screen__advanced {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-1);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.hx-settings-screen__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hx-space-1);
+  padding-bottom: var(--hx-space-2);
+  border-bottom: 1px solid var(--hx-border);
+}
+
+.hx-settings-screen__tab {
+  padding: var(--hx-space-1) var(--hx-space-2);
+  border: 1px solid transparent;
+  border-radius: var(--hx-radius);
+  background: none;
+  cursor: pointer;
+}
+
+.hx-settings-screen__tab[aria-selected='true'] {
+  border-color: var(--hx-border-strong);
+  background: var(--hx-surface);
+  font-weight: 600;
+}
+
+.hx-settings-screen__panel,
+.hx-settings-screen__extra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-4);
+}
+
+.hx-settings-screen__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  padding: var(--hx-space-3);
+  border: 1px solid var(--hx-border);
+  border-radius: var(--hx-radius);
+  background: var(--hx-surface);
+}
+
+.hx-settings-screen__card h3,
+.hx-settings-screen__card h4 {
+  margin: 0;
+  font-size: var(--hx-font-14);
+}
+
+.hx-settings-screen__card p {
+  margin: 0;
+  color: var(--hx-text-muted);
+}
+
+.hx-settings-screen__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hx-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-settings-screen__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-settings-screen__row > :first-child {
+  flex: 1 1 160px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hx-settings-screen__about {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--hx-space-1) var(--hx-space-3);
+  margin: 0;
+}
+
+.hx-settings-screen__about dd {
+  margin: 0;
+}
+
+.hx-settings-screen__file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-space-2);
+}
+
+.hx-settings-screen__issues {
+  margin: 0;
+  padding-left: var(--hx-space-4);
+  color: var(--hx-danger);
+}

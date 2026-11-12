@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { PERMISSION_LABEL, type EngineOption, type PermissionMode } from '../../composer/types.js';
+import type { SettingsApi, SettingsWidgetContext } from '../../settings/form/api.js';
+import { SettingsForm } from '../../settings/form/SettingsForm.js';
 import type { ProjectDefaults, ProjectInfo, ProjectView } from './api.js';
 import { MODE_LABEL } from './model.js';
 import { act } from '../../actions/registry.js';
 
 /**
  * 0B.41 프로젝트 설정 ("프로젝트 범위" 화면)
- * 0-1 설정 틀(설정 렌더러)이 아직 없어서 간단한 폼으로 만든다. 값 모양(ProjectSettingsValue)과
- * 저장 콜백(onSave)만 바깥에 드러내므로, 0-1 렌더러가 생기면 이 컴포넌트만 바꿔 끼우면 된다.
+ *  - 위: 이름·폴더 다시 연결·새 세션 기본값(0B.40 projects.json defaults — 엔진·에이전트 목록이 필요한 고르기 칸)
+ *  - 아래(T-101 6B.14): 0-1 설정 틀 SettingsForm(scope=project) — 레지스트리의 project|both 키를 이 프로젝트 값으로.
+ *    다른 구역이 scope both 키(예: mode.default)를 등록하면 여기에 저절로 나타난다.
  */
 
 export interface ProjectSettingsValue {
@@ -23,6 +26,11 @@ export interface ProjectSettingsProps {
   onSave: (v: ProjectSettingsValue) => void | Promise<void>;
   onRelink: () => void;
   onClose: () => void;
+  /**
+   * T-101 6B.14 0-1 설정 틀의 프로젝트 범위(scope=project) — 레지스트리에서 scope가 project|both인 키를
+   * 이 프로젝트 값으로 저장한다(<프로젝트>/.harness-x/project.json). 없으면 이 부분을 그리지 않는다.
+   */
+  settings?: { api: SettingsApi; ctx?: SettingsWidgetContext };
 }
 
 const FOLLOW = '';
@@ -36,6 +44,7 @@ export function ProjectSettings({
   onSave,
   onRelink,
   onClose,
+  settings,
 }: ProjectSettingsProps) {
   const [name, setName] = useState(project.name);
   const [d, setD] = useState<ProjectDefaults>(project.defaults ?? {});
@@ -144,6 +153,23 @@ export function ProjectSettings({
           {saved && <span role="status">저장했어요</span>}
         </div>
       </form>
+      {settings && (
+        <section className="hx-project-settings__scoped" aria-label="이 프로젝트에서만 바꿀 설정">
+          <h3>이 프로젝트에서만 바꿀 설정</h3>
+          <p className="hx-project-settings__scope">
+            여기서 바꾼 값은 이 프로젝트에만 쓰이고, 전체 설정보다 먼저 쓰여요.
+          </p>
+          <SettingsForm
+            api={settings.api}
+            {...(settings.ctx ? { ctx: settings.ctx } : {})}
+            scope="project"
+            project={project.id}
+            showAdvanced
+            hideEmpty
+            emptyText="프로젝트마다 바꿀 수 있는 설정이 아직 없어요. 나머지는 전체 설정 화면에서 바꿔요."
+          />
+        </section>
+      )}
     </section>
   );
 }

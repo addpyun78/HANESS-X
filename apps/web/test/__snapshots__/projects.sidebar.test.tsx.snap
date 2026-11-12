@@ -639,9 +639,7 @@ exports[`0B.22 사이드바 구조 > [+ 새 세션 │▾] / 찾기 / 프로젝�
     <button
       class="hx-nav-item"
       data-action="nav.settings"
-      disabled=""
       role="menuitem"
-      title="준비 중이에요"
       type="button"
     >
       <span

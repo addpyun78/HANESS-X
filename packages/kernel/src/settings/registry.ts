@@ -325,6 +325,40 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     browserKey: 'hx-theme',
     options: { system: '컴퓨터 설정 따르기', light: '밝게', dark: '어둡게' },
   }),
+  // T-101 6B.1 일반: 글자 크기·움직임 줄이기·언어 (이 기기 화면에만 — apps/web/src/design/ui-prefs.ts)
+  defineSetting('ui.fontSize', z.enum(['small', 'medium', 'large']).default('medium'), {
+    group: 'general',
+    title: '글자 크기',
+    description: '화면 글자를 작게, 보통, 크게 중에서 골라요. 이 기기 화면에만 저장돼요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.font-size',
+    options: { small: '작게', medium: '보통', large: '크게' },
+  }),
+  defineSetting('ui.reduceMotion', z.enum(['system', 'on', 'off']).default('system'), {
+    group: 'general',
+    title: '움직임 줄이기',
+    description: '화면이 바뀔 때 움직이는 효과를 줄여요. 어지러우면 켜 두세요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.reduce-motion',
+    options: { system: '컴퓨터 설정 따르기', on: '줄이기', off: '그대로' },
+  }),
+  defineSetting('ui.language', z.enum(['ko']).default('ko'), {
+    group: 'general',
+    title: '화면 언어',
+    description: '화면에 보이는 말을 고르는 곳이에요. 지금은 한국어만 있어요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.ui.language',
+    options: { ko: '한국어' },
+  }),
 
   // ── AI·엔진
   defineSetting('engines', z.record(z.string(), EngineSettingSchema).default({}), {
@@ -573,6 +607,110 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     options: { local: '내 컴퓨터에서', browser: '브라우저 기능', off: '끄기' },
   }),
 
+  // ── 모드·권한 (T-101 6B.3 — 기본 모드·오토 상한은 3번 구역이 mode.* 로 등록)
+  defineSetting(
+    'permission.default',
+    z.enum(['read-only', 'workspace-write', 'full']).default('workspace-write'),
+    {
+      group: 'mode',
+      title: '기본 허락 범위',
+      description: '새 작업이 처음에 가질 허락 범위예요. 프로젝트 설정에서 프로젝트마다 바꿀 수도 있어요.',
+      advanced: false,
+      restartRequired: false,
+      scope: 'global',
+      options: { 'read-only': '읽기만', 'workspace-write': '작업 폴더 안에서 고치기', full: '모두 허락' },
+    },
+  ),
+
+  // ── 체크리스트 (T-101 6B.4 — 단계 확정 정책은 4번 구역이 checklist.* 로 등록)
+  defineSetting('checklist.strict', z.boolean().default(false), {
+    group: 'checklist',
+    title: '엄격하게 확인하기',
+    description: '단계 결과가 정해진 모양과 다르면 다시 묻지 않고 바로 멈춰요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+  }),
+  defineSetting('checklist.stallChangeTurns', z.number().int().min(1).max(10).default(2), {
+    group: 'checklist',
+    title: '방법을 바꾸라고 할 때',
+    description: '같은 항목이 이만큼 차례가 지나도 그대로면 다른 방법을 써 보라고 알려요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+  }),
+  defineSetting('checklist.stallBlockTurns', z.number().int().min(2).max(20).default(3), {
+    group: 'checklist',
+    title: '멈추고 확인을 부탁할 때',
+    description: '같은 항목이 이만큼 차례가 지나도 그대로면 멈추고 확인을 부탁해요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+  }),
+  defineSetting('checklist.maxAutoTurns', z.number().int().min(1).max(100).default(20), {
+    group: 'checklist',
+    title: '스스로 이어 가는 최대 횟수',
+    description: '할 일이 남았을 때 AI에게 스스로 다시 시키는 최대 횟수예요.',
+    advanced: true,
+    restartRequired: false,
+    scope: 'global',
+  }),
+
+  // ── 승인·알림 (T-101 6B.6 — 이 기기 화면에만, apps/web/src/panels/Approvals/alert-prefs.ts)
+  defineSetting('approval.osNotify', z.enum(['on', 'off']).default('on'), {
+    group: 'approval',
+    title: '컴퓨터 알림',
+    description: '화면을 보고 있지 않을 때 확인할 일이 생기면 컴퓨터 알림을 띄워요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.approvals.os-notify',
+    options: { on: '켜기', off: '끄기' },
+  }),
+  defineSetting('approval.remindMinutes', z.enum(['0', '5', '15', '30']).default('0'), {
+    group: 'approval',
+    title: '다시 알림 간격',
+    description: '확인할 일이 남아 있으면 이 간격마다 다시 알려요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.approvals.remind-minutes',
+    options: { '0': '다시 알리지 않기', '5': '5분마다', '15': '15분마다', '30': '30분마다' },
+  }),
+  defineSetting('approval.sound', z.enum(['on', 'off']).default('off'), {
+    group: 'approval',
+    title: '알림 소리',
+    description: '확인할 일이 생기면 짧은 소리를 내요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    storage: 'browser',
+    browserKey: 'hx.approvals.sound',
+    options: { on: '켜기', off: '끄기' },
+  }),
+
+  // ── 도구·설치 (T-101 6B.7)
+  defineSetting('installer.chocoEnabled', z.boolean().default(false), {
+    group: 'tools',
+    title: '초코로 설치하기',
+    description: '윈도우에서 초코(choco)로도 프로그램을 설치할 수 있게 해요. 설치는 늘 직접 눌러야 시작돼요.',
+    advanced: false,
+    restartRequired: true,
+    scope: 'global',
+  }),
+
+  // ── 프로젝트 (T-101 6B.10 — 목록·고정·빼기·다시 연결은 프로젝트 탭의 목록 화면)
+  defineSetting('project.scratchDir', S(), {
+    group: 'project',
+    title: '임시 작업 공간 위치',
+    description: '임시 작업 폴더를 만들 곳이에요. 비우면 하네스 폴더 안에 만들어요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+    widget: 'folder',
+  }),
   // ── 프로젝트 (0B.25/0B.26 사이드바 묶기·정렬, 이 기기에 저장)
   defineSetting('sidebar.group', z.enum(['project', 'status', 'date', 'none']).default('project'), {
     group: 'project',
@@ -597,7 +735,25 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
     options: { recent: '최근 쓴 순서', name: '이름 순서', manual: '직접 정한 순서' },
   }),
 
-  // (mode·checklist·approval·attachments·project·data·about 그룹은 각 구역 작업자가 채운다)
+  // ── 데이터·보안 (T-101 6B.11 — 저장된 키 목록은 데이터·보안 탭의 목록 화면, 정리는 settings/data-cleanup.ts)
+  defineSetting('data.retentionDays', z.number().int().min(0).max(3650).default(0), {
+    group: 'data',
+    title: '보관한 작업 기록을 둘 날수',
+    description: '보관한 작업의 대화 기록을 이 날수가 지나면 지워요. 0이면 지우지 않아요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+  }),
+  defineSetting('data.attachmentsKeepDays', z.number().int().min(0).max(3650).default(0), {
+    group: 'data',
+    title: '첨부 파일을 둘 날수',
+    description: '붙인 파일 사본을 이 날수가 지나면 지워요. 0이면 지우지 않아요.',
+    advanced: false,
+    restartRequired: false,
+    scope: 'global',
+  }),
+
+  // (attachments 그룹은 1번 구역, mode.* 는 3번, main.* 는 5번 구역 작업자가 채운다)
 ];
 
 /** 하네스 기본 레지스트리 */

@@ -28,6 +28,11 @@ import { ResumeFlow } from '../../src/recovery/ResumeFlow.js';
 import { ResumeCountLink } from '../../src/recovery/resume-entry.js';
 import { EnginesSettings } from '../../src/settings/Engines/EnginesSettings.js';
 import { SettingsForm } from '../../src/settings/form/SettingsForm.js';
+import { AboutSection } from '../../src/settings/sections/AboutSection.js';
+import { DataSection } from '../../src/settings/sections/DataSection.js';
+import { ProjectsSection } from '../../src/settings/sections/ProjectsSection.js';
+import { TransferSection } from '../../src/settings/sections/TransferSection.js';
+import { SettingsScreen } from '../../src/settings/SettingsScreen.js';
 import type { ProjectView, SessionRecordView } from '../../src/shell/projects/api.js';
 import { ConfirmCard } from '../../src/shell/projects/ConfirmCard.js';
 import { EmptySession } from '../../src/shell/projects/EmptySession.js';
@@ -307,6 +312,55 @@ function modelButton(h: Harness) {
     />,
   );
   fireEvent.click(screen.getByLabelText('AI: claude-code · sonnet (이 프로젝트 기본)'));
+}
+
+async function settingsScreen(h: Harness, tab: string) {
+  lastSettings?.dispose();
+  const m = memorySettings();
+  lastSettings = m;
+  m.store.setSecret('tools.braveKey', 'BSAabcdefghijklmnopqrstuv123456');
+  const api = h.api(m.api);
+  const extras = h.api({
+    cleanup: async () => ({ ok: true as const, logs: 0, attachments: 0 }),
+    about: async () => ({ version: '1.0.0', platform: 'linux', node: 'v22', updateCheck: false }),
+    updateCheck: async () => ({ current: '1.0.0', message: '지금 최신 버전이에요.' }),
+    diagnostics: async () => ({ file: 'harness-x-diagnostics.json', text: '{}' }),
+    exportYaml: async () => ({ file: 'settings.yaml', text: '{}' }),
+    importYaml: async () => ({ ok: true as const, imported: [] }),
+  });
+  const engineKeys = h.api({
+    list: async () => [{ id: 'codex', label: 'Codex', masked: '••••9xyz' }],
+    remove: async () => true,
+  });
+  render(
+    <SettingsScreen
+      api={api}
+      initialTab={tab}
+      storage={memStorage()}
+      onBrowserChange={h.cb()}
+      sections={{
+        project: (
+          <ProjectsSection projects={[PROJECTS[0]!, { ...PROJECTS[1]!, missing: true }]} onAction={h.cb()} />
+        ),
+        data: (
+          <>
+            <DataSection api={api} extras={extras} engineKeys={engineKeys} />
+            <TransferSection extras={extras} download={h.cb()} />
+          </>
+        ),
+        about: <AboutSection extras={extras} download={h.cb()} />,
+      }}
+    />,
+  );
+  await screen.findByRole('tablist', { name: '설정 묶음' });
+  await waitFor(() => {
+    // 탭의 설정을 다 불러올 때까지 (정보 탭은 레지스트리 항목이 없어 묶음 대신 덧붙임 화면만)
+    if (document.body.textContent?.includes('설정을 불러오는 중')) throw new Error('설정 대기');
+    if (!document.querySelector(`[data-setting-group="${tab}"], [data-settings-extra="${tab}"]`))
+      throw new Error('설정 묶음 대기');
+  });
+  if (tab === 'data') await screen.findAllByRole('button', { name: '지우기' });
+  if (tab === 'about') await screen.findByText('1.0.0');
 }
 
 export const RENDERERS: Record<string, Renderer> = {
@@ -684,6 +738,12 @@ export const RENDERERS: Record<string, Renderer> = {
     );
     await screen.findByText('모든 설정 기본값으로');
   },
+
+  // T-101 6번 설정 화면 (13개 탭·고급 설정 보기 + 프로젝트·데이터·정보 덧붙임 화면)
+  'settings-sections': (h) => settingsScreen(h, 'general'),
+  'settings-sections-project': (h) => settingsScreen(h, 'project'),
+  'settings-sections-data': (h) => settingsScreen(h, 'data'),
+  'settings-sections-about': (h) => settingsScreen(h, 'about'),
 
   'builder-start': (h) => builder(h),
 
