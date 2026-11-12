@@ -1,0 +1,4 @@
+# 순환 의존 (scripts/audit/deadcode.mjs, madge 대체 — 파일 단위 강한 연결 요소)
+# 순환 묶음 2개
+1) apps/web/src/panels/Checklist/model.ts > apps/web/src/panels/Checklist/stages.ts
+2) packages/engines/acp-generic/src/adapter.ts > packages/engines/acp-generic/src/permission.ts
