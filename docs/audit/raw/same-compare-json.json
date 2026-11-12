@@ -1,0 +1,76 @@
+{
+  "area": "json",
+  "implementations": [
+    "openai-compat/json-fallback.ts extractJson",
+    "judge/questions.ts extractJsonObject",
+    "protocol/verifier.ts extractJsonObject"
+  ],
+  "inputs": 100,
+  "differing": 63,
+  "examples": [
+    {
+      "input": "```\n{bad json}\n```",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 파싱 실패"
+      }
+    },
+    {
+      "input": "plain text\nplain text",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    },
+    {
+      "input": "\n",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    },
+    {
+      "input": "[1,2]",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "[1,2]",
+        "judge/questions.ts extractJsonObject": "[1,2]",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    },
+    {
+      "input": "{bad json}\n{bad json}",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 파싱 실패"
+      }
+    },
+    {
+      "input": "    ",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    },
+    {
+      "input": "```json\n[1,2]\n```",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "[1,2]",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    },
+    {
+      "input": "",
+      "outputs": {
+        "openai-compat/json-fallback.ts extractJson": "<undefined>",
+        "judge/questions.ts extractJsonObject": "<undefined>",
+        "protocol/verifier.ts extractJsonObject": "오류 JSON 객체가 없는 답"
+      }
+    }
+  ]
+}
