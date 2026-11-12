@@ -9,6 +9,11 @@ import type { ProjectView } from '../src/shell/projects/api.js';
 import { memorySettings } from './settings-form-fixtures.js';
 import { keysIn, openTab, registryWith, renderScreen, rowsOf } from './settings-screen-fixtures.js';
 
+/** 병합 뒤에는 3번 구역의 진짜 mode.default 등록이 쓰인다 → 이름·선택지 글은 등록에서 읽는다 */
+const REG = registryWith(MODE);
+const MODE_DEF = REG.get('mode.default')!;
+const PLAN_LABEL = (MODE_DEF.options as Record<string, string>).plan!;
+
 /**
  * T-101 6B.14 모든 항목에 "이 값이 어디에 적용되나요?"(전체 / 이 프로젝트 / 이 기기 화면에만) 표시,
  * 프로젝트 값이 전체 값을 덮으면 "이 프로젝트에서는 "○○" 값을 써요." 안내.
@@ -82,7 +87,7 @@ describe('6B.14 적용 범위 표시', () => {
     const mode = await screen.findByRole('region', { name: '모드·권한' });
     const row = rowsOf(mode, ['mode.default'])[0]!;
     expect(within(row).getByRole('note').textContent).toBe(
-      '이 프로젝트에서는 "계획" 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.',
+      `이 프로젝트에서는 "${PLAN_LABEL}" 값을 써요. 전체 값은 다른 프로젝트에 쓰여요.`,
     );
     expect(row).toMatchSnapshot();
     // 프로젝트를 고르지 않았으면 안내 없음
@@ -108,9 +113,15 @@ describe('6B.14 적용 범위 표시', () => {
       />,
     );
     const scoped = await screen.findByRole('region', { name: '이 프로젝트에서만 바꿀 설정' });
-    await waitFor(() => expect(keysIn(scoped)).toEqual(['mode.default']));
-    expect(scoped.querySelector('.hx-setting__scope')!.textContent).toBe('이 프로젝트에만');
-    fireEvent.change(within(scoped).getByLabelText('기본 모드'), { target: { value: 'plan' } });
+    // project|both 범위 키만 (3번 구역의 오토 상한 키 등도 함께 나온다)
+    await waitFor(() => expect(keysIn(scoped)).toContain('mode.default'));
+    for (const k of keysIn(scoped)) expect(['project', 'both']).toContain(REG.get(k)!.scope);
+    expect(rowsOf(scoped, ['mode.default'])[0]!.querySelector('.hx-setting__scope')!.textContent).toBe(
+      '이 프로젝트에만',
+    );
+    fireEvent.change(within(rowsOf(scoped, ['mode.default'])[0]!).getByLabelText(MODE_DEF.title), {
+      target: { value: 'plan' },
+    });
     await waitFor(() => expect(io.data.p1).toEqual({ mode: { default: 'plan' } }));
     expect(m.store.readGlobal()).toEqual({});
     m.dispose();

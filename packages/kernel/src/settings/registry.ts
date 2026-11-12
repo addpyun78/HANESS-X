@@ -747,7 +747,7 @@ export const CORE_SETTINGS: readonly SettingDef[] = [
   ),
   defineSetting('mode.auto.maxTokens', z.number().int().min(1000).default(2_000_000), {
     group: 'mode',
-    title: '오토 모드 최대 토큰',
+    title: '오토 모드 최대 사용량(글자 조각 수)',
     description: 'AI가 읽고 쓰는 양이 이만큼 되면 멈추고 기다려요.',
     advanced: true,
     restartRequired: false,
