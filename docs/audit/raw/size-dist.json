@@ -1,0 +1,108 @@
+{
+  "totalBytes": 23541700,
+  "totalMB": 22.5,
+  "packages": [
+    {
+      "package": "apps/web",
+      "bytes": 18710559
+    },
+    {
+      "package": "packages/kernel",
+      "bytes": 1254972
+    },
+    {
+      "package": "packages/plugins-core/checklist-ledger",
+      "bytes": 547722
+    },
+    {
+      "package": "packages/plugins-core/agent-builder",
+      "bytes": 526822
+    },
+    {
+      "package": "packages/plugins-core/installer",
+      "bytes": 402316
+    },
+    {
+      "package": "packages/plugins-core/attachments",
+      "bytes": 253921
+    },
+    {
+      "package": "packages/protocol",
+      "bytes": 242890
+    },
+    {
+      "package": "packages/plugins-core/forge",
+      "bytes": 235947
+    },
+    {
+      "package": "packages/plugins-core/tool-finder",
+      "bytes": 206028
+    },
+    {
+      "package": "packages/plugins-core/approvals",
+      "bytes": 152944
+    },
+    {
+      "package": "packages/plugins-core/verifiers/ladder",
+      "bytes": 134463
+    },
+    {
+      "package": "packages/plugins-core/verifiers/comparators",
+      "bytes": 123573
+    },
+    {
+      "package": "packages/plugins-core/permission-gate",
+      "bytes": 114410
+    },
+    {
+      "package": "packages/plugins-core/verifiers/judge",
+      "bytes": 101266
+    },
+    {
+      "package": "packages/plugins-core/engine-scanner",
+      "bytes": 97148
+    },
+    {
+      "package": "packages/engines/openai-compat",
+      "bytes": 83130
+    },
+    {
+      "package": "packages/engines/codex",
+      "bytes": 82265
+    },
+    {
+      "package": "packages/plugins-core/mcp-host",
+      "bytes": 80940
+    },
+    {
+      "package": "packages/engines/acp-generic",
+      "bytes": 59535
+    },
+    {
+      "package": "packages/engines/claude-code",
+      "bytes": 33494
+    },
+    {
+      "package": "packages/engines/antigravity",
+      "bytes": 30811
+    },
+    {
+      "package": "packages/plugins/stt-local",
+      "bytes": 22417
+    },
+    {
+      "package": "packages/sdk",
+      "bytes": 18403
+    },
+    {
+      "package": "packages/plugins/stt-browser",
+      "bytes": 13946
+    },
+    {
+      "package": "packages/plugins/verifier-local",
+      "bytes": 11778
+    }
+  ],
+  "tauriTargetBytes": 0,
+  "tauriTargetMB": 0
+}
