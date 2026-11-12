@@ -231,6 +231,26 @@
         "source": "C1.5"
       },
       "id": "C1-004"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "bug",
+      "severity": "high",
+      "title": "코드를 고친 뒤 serve로 켜면 기본 플러그인(agent-builder·checklist-ledger·forge·mcp-host·permission-gate)이 plugins.lock 지문 불일치(변조됨)로 거부됨",
+      "evidence": [
+        "docs/audit/raw/runtime-errors.json (plugin_rejected 9건, 2026-11-10~11)",
+        "scripts/launcher/start.sh 1-2) 바로가기 실행기만 지문을 새로 고침",
+        "packages/kernel/src/loader.ts"
+      ],
+      "proposal": "바로가기 외 경로(harness-x serve 직접)에서도 저장소 기본 플러그인의 지문을 안전하게 새로 고치는 방법 설계 — 변조 검사를 약하게 만들 수 있어 보안 검토 필요",
+      "risk": "high",
+      "effort": "M",
+      "meta": {
+        "source": "C1.9",
+        "top": 1
+      },
+      "id": "C1-005"
     }
   ]
 }
