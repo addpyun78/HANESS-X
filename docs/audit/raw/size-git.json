@@ -1,0 +1,14 @@
+{
+  "countObjects": {
+    "count": "6374",
+    "size": "27.67 MiB",
+    "in-pack": "6781",
+    "packs": "1",
+    "size-pack": "2.63 MiB",
+    "prune-packable": "0",
+    "garbage": "0",
+    "size-garbage": "0 bytes"
+  },
+  "gitDirBytes": 27610109,
+  "gitDirMB": 26.3
+}
