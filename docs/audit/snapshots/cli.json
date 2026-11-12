@@ -1,0 +1,40 @@
+{
+  "commands": ["serve", "approvals", "install", "tools list", "tools allow", "run", "reindex", "resume"],
+  "options": [
+    "--port",
+    "--host",
+    "--workspace",
+    "--plugins",
+    "--no-watch",
+    "--exit-with-stdin",
+    "--token-file",
+    "-h, --help"
+  ],
+  "sub": {
+    "approvals": {
+      "exit": 0,
+      "firstLine": "사용법: harness-x approvals [--workspace <폴더>] [--session <id>] [카드 번호 선택 번호 [자동]]"
+    },
+    "install": {
+      "exit": 1,
+      "firstLine": "\"--help\"을(를) 찾지 못했어요. 이름을 확인하거나 주소로 설치해 보세요."
+    },
+    "tools": {
+      "exit": 1,
+      "firstLine": "사용법:"
+    },
+    "run": {
+      "exit": 1,
+      "firstLine": "하네스 서버가 켜져 있지 않아요. 먼저 harness-x serve 를 실행해 주세요"
+    },
+    "reindex": {
+      "exit": 0,
+      "firstLine": "세션 0개를 다시 읽었어요 (/tmp/hx-cli-4BwO2n/.harness-x/sessions/index.json)"
+    },
+    "resume": {
+      "exit": 0,
+      "firstLine": "harness-x resume <세션 id> [옵션]"
+    }
+  },
+  "helpExit": 0
+}
