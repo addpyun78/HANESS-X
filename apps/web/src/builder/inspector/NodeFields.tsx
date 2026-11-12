@@ -4,6 +4,7 @@ import type { CatalogItem } from '../catalog.js';
 import { NODE_LABEL, type BuilderNode } from '../graph.js';
 import { skillsOf } from '../lego/model.js';
 import { editableFields, parseSchemaText, type InspectorAction, type NodePatch } from './model.js';
+import { act } from '../../actions/registry.js';
 
 const PERMISSIONS: { value: NodePermission; label: string }[] = [
   { value: 'read-only', label: '읽기 전용' },
@@ -106,19 +107,23 @@ export function NodeFields({ node, engines, dispatch }: NodeFieldsProps) {
                 <li key={s} data-skill={s}>
                   <span className="hx-mono">{s}</span>
                   <button
+                    {...act('inspector.skill-up')}
                     type="button"
                     className="hx-icon-btn"
                     aria-label={`${s} 위로`}
                     disabled={i === 0}
+                    title={i === 0 ? '이미 맨 위예요' : undefined}
                     onClick={() => dispatch({ type: 'reorderSkill', nodeId: node.id, from: i, to: i - 1 })}
                   >
                     ↑
                   </button>
                   <button
+                    {...act('inspector.skill-down')}
                     type="button"
                     className="hx-icon-btn"
                     aria-label={`${s} 아래로`}
                     disabled={i === skills.length - 1}
+                    title={i === skills.length - 1 ? '이미 맨 아래예요' : undefined}
                     onClick={() => dispatch({ type: 'reorderSkill', nodeId: node.id, from: i, to: i + 1 })}
                   >
                     ↓

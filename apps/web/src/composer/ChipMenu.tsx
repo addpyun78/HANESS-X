@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { act } from '../actions/registry.js';
 
 export interface ChipOption<T extends string> {
   value: T;
@@ -51,6 +52,7 @@ export function ChipMenu<T extends string>({
   return (
     <div className={`hx-chip-wrap ${className}`} ref={ref}>
       <button
+        {...act('composer.chip')}
         type="button"
         className="hx-chip"
         aria-label={`${name}: ${valueLabel}`}
@@ -70,11 +72,13 @@ export function ChipMenu<T extends string>({
           {options.length === 0 && <p className="hx-popover__empty">{emptyText}</p>}
           {options.map((o) => (
             <button
+              {...act('composer.chip-option')}
               key={o.value}
               type="button"
               role="menuitemradio"
               aria-checked={o.value === value}
               disabled={o.disabled}
+              title={o.disabled ? '지금은 고를 수 없어요' : undefined}
               className="hx-popover__item"
               onClick={() => {
                 onChange(o.value);

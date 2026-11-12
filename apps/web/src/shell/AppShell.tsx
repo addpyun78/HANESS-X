@@ -5,6 +5,7 @@ import { RightPanel } from './RightPanel.js';
 import { TopBar, type TopBarProps } from './TopBar.js';
 import { NARROW_QUERY, useMediaQuery } from './useMediaQuery.js';
 import './shell.css';
+import { act } from '../actions/registry.js';
 
 export interface AppShellProps {
   topBar: Omit<TopBarProps, 'leading' | 'trailing'>;
@@ -82,6 +83,7 @@ export function AppShell({
         leading={
           narrow && (
             <button
+              {...act('shell.open-sidebar')}
               type="button"
               className="hx-icon-btn"
               aria-label="사이드바 열기"
@@ -95,6 +97,7 @@ export function AppShell({
         trailing={
           narrow && (
             <button
+              {...act('shell.open-panel')}
               type="button"
               className="hx-icon-btn"
               aria-label="패널 열기"

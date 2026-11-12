@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { BuilderCatalog } from './catalog.js';
 import type { StartChoice as Choice } from './start.js';
+import { act } from '../actions/registry.js';
 
 export interface StartChoiceProps {
   catalog: BuilderCatalog;
@@ -16,11 +17,17 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
     <section className="hx-start" aria-label="시작 선택">
       <h2 className="hx-start__title">새 에이전트 — 어디서 시작할까요?</h2>
       <div className="hx-start__options" role="group" aria-label="시작 방법">
-        <button type="button" className="hx-start__option" onClick={() => onChoose({ kind: 'empty' })}>
+        <button
+          {...act('builder.start-empty')}
+          type="button"
+          className="hx-start__option"
+          onClick={() => onChoose({ kind: 'empty' })}
+        >
           <strong>빈 캔버스</strong>
           <span>노드를 하나씩 끌어다 놓습니다</span>
         </button>
         <button
+          {...act('builder.start-plugin-list')}
           type="button"
           className="hx-start__option"
           aria-pressed={mode === 'plugin'}
@@ -30,6 +37,7 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
           <span>플러그인 파이프라인을 펼쳐 고칩니다</span>
         </button>
         <button
+          {...act('builder.start-clone-list')}
           type="button"
           className="hx-start__option"
           aria-pressed={mode === 'clone'}
@@ -38,7 +46,12 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
           <strong>기존 에이전트 복제</strong>
           <span>등록된 에이전트를 복사해 고칩니다</span>
         </button>
-        <button type="button" className="hx-start__option" onClick={() => onChoose({ kind: 'chat' })}>
+        <button
+          {...act('builder.start-chat')}
+          type="button"
+          className="hx-start__option"
+          onClick={() => onChoose({ kind: 'chat' })}
+        >
           <strong>말이나 글로 설명해서 만들기</strong>
           <span>AI에게 원하는 에이전트를 설명하면 초안을 만들어 줘요</span>
         </button>
@@ -48,6 +61,7 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
           {catalog.plugins.map((p) => (
             <li key={p.id}>
               <button
+                {...act('builder.start-plugin')}
                 type="button"
                 disabled={!p.pipeline}
                 title={p.pipeline ? undefined : '파이프라인을 불러올 수 없습니다'}
@@ -68,6 +82,7 @@ export function StartChoice({ catalog, onChoose }: StartChoiceProps) {
           {catalog.agents.map((a) => (
             <li key={a.id}>
               <button
+                {...act('builder.start-clone')}
                 type="button"
                 disabled={!a.pipeline}
                 title={a.pipeline ? undefined : '파이프라인을 불러올 수 없습니다'}

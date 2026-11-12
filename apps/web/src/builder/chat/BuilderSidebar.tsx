@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { BuilderCatalog } from '../catalog.js';
 import { Drawer } from '../Drawer.js';
 import { BuilderChat, type BuilderChatProps } from './BuilderChat.js';
+import { act } from '../../actions/registry.js';
 
 export const SIDEBAR_MODES = ['blocks', 'chat'] as const;
 export type SidebarMode = (typeof SIDEBAR_MODES)[number];
@@ -21,6 +22,7 @@ export function BuilderSidebar({ catalog, initialMode = 'blocks', chat }: Builde
       <div className="hx-sidebar__tabs" role="tablist" aria-label="만들기 방식">
         {SIDEBAR_MODES.map((m) => (
           <button
+            {...act('builder.sidebar-tab')}
             key={m}
             type="button"
             role="tab"

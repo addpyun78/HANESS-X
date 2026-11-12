@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ApiError, type SaveAgentRequest, type SaveAgentResponse } from '../../api/client.js';
 import type { BuilderGraph } from '../graph.js';
 import { buildSaveRequest, suggestCommand, toAgentName, validateAgentName, type AgentMeta } from './save.js';
+import { act } from '../../actions/registry.js';
 
 export type SaveAgentFn = (
   name: string,
@@ -106,10 +107,22 @@ export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: Sa
         }}
       />
       <button
+        {...act('inspector.save')}
         type="submit"
         className="hx-insp-btn"
         disabled={
           !save || !gestureToken || !!nameError || graph.nodes.length === 0 || status.kind === 'saving'
+        }
+        title={
+          status.kind === 'saving'
+            ? '저장하는 중이에요'
+            : graph.nodes.length === 0
+              ? '블록을 하나 이상 놓아 주세요'
+              : nameError
+                ? '이름을 먼저 고쳐 주세요'
+                : !save || !gestureToken
+                  ? '저장할 곳에 연결되지 않았어요'
+                  : undefined
         }
       >
         저장
@@ -122,6 +135,7 @@ export function SaveBar({ graph, meta, onMeta, save, gestureToken, onSaved }: Sa
           <>
             이미 있는 이름입니다{' '}
             <button
+              {...act('inspector.overwrite')}
               type="button"
               className="hx-insp-btn hx-insp-btn--ghost"
               onClick={() => void doSave(true)}

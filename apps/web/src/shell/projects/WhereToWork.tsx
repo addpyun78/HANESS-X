@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ProjectView, RootSuggestion } from './api.js';
+import { act } from '../../actions/registry.js';
 
 /** 0B.16 임시 작업 공간 설명 (쉬운 말) */
 export const SCRATCH_HELP =
@@ -22,18 +23,25 @@ export function WhereToWork({ recent, onOpenFolder, onPickProject, onScratch, on
       <h2>어디서 작업할까요?</h2>
       <p className="hx-where__lead">작업할 폴더를 고르면 그 폴더 안에서만 파일을 읽고 고쳐요.</p>
       <div className="hx-where__actions">
-        <button type="button" className="hx-where__primary" onClick={onOpenFolder}>
+        <button
+          {...act('where.open-folder')}
+          type="button"
+          className="hx-where__primary"
+          onClick={onOpenFolder}
+        >
           폴더 열기
         </button>
         <button
+          {...act('where.recent')}
           type="button"
           aria-expanded={showRecent}
           disabled={usable.length === 0}
+          title={usable.length === 0 ? '최근 프로젝트가 없어요' : undefined}
           onClick={() => setShowRecent((x) => !x)}
         >
           최근 프로젝트 ▸
         </button>
-        <button type="button" onClick={onScratch}>
+        <button {...act('where.scratch')} type="button" onClick={onScratch}>
           임시 작업 공간에서 시작
         </button>
       </div>
@@ -41,7 +49,7 @@ export function WhereToWork({ recent, onOpenFolder, onPickProject, onScratch, on
         <ul className="hx-where__recent" aria-label="최근 프로젝트">
           {usable.map((p) => (
             <li key={p.id}>
-              <button type="button" onClick={() => onPickProject(p.id)}>
+              <button {...act('where.pick-project')} type="button" onClick={() => onPickProject(p.id)}>
                 {p.pinned ? '📌 ' : ''}📁 {p.name}
                 <span className="hx-where__path">{p.rootPath}</span>
               </button>
@@ -51,7 +59,7 @@ export function WhereToWork({ recent, onOpenFolder, onPickProject, onScratch, on
       )}
       <p className="hx-where__help">{SCRATCH_HELP}</p>
       {onCancel && (
-        <button type="button" className="hx-where__cancel" onClick={onCancel}>
+        <button {...act('where.cancel')} type="button" className="hx-where__cancel" onClick={onCancel}>
           닫기
         </button>
       )}
@@ -76,10 +84,10 @@ export function RootSuggestCard({
         고른 폴더({s.path})는 저장소의 일부예요. 맨 위 폴더로 하면 저장소 전체를 한 프로젝트로 다뤄요.
       </p>
       <div className="hx-where__actions">
-        <button type="button" className="hx-where__primary" onClick={onUseTop}>
+        <button {...act('where.use-top')} type="button" className="hx-where__primary" onClick={onUseTop}>
           맨 위 폴더로
         </button>
-        <button type="button" onClick={onKeep}>
+        <button {...act('where.keep')} type="button" onClick={onKeep}>
           고른 폴더 그대로
         </button>
       </div>

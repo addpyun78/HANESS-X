@@ -43,7 +43,7 @@ describe('P4-C.10 빈 칸: 쉬운 말 + 빨간 점선 노드 + [도구 찾기] [
     expect(layer.closest('.hx-canvas')).toBeTruthy();
     const gap = layer.querySelector('.hx-gap-node')!;
     expect(gap.outerHTML).toMatchInlineSnapshot(
-      `"<li class="hx-gap-node" data-gap-id="gap-1" data-node-id="critic"><span class="hx-gap-node__title">빈 칸: 화면 스크린샷 두 장을 비교하는 기능</span><span class="hx-gap-node__actions"><button type="button" class="hx-insp-btn">도구 찾기</button><button type="button" class="hx-insp-btn hx-insp-btn--ghost">Forge로 만들기</button><button type="button" class="hx-insp-btn hx-insp-btn--ghost">이 칸 빼기</button></span></li>"`,
+      `"<li class="hx-gap-node" data-gap-id="gap-1" data-node-id="critic"><span class="hx-gap-node__title">빈 칸: 화면 스크린샷 두 장을 비교하는 기능</span><span class="hx-gap-node__actions"><button data-action="draft.gap-find-tool" type="button" class="hx-insp-btn">도구 찾기</button><button data-action="draft.gap-forge" type="button" class="hx-insp-btn hx-insp-btn--ghost">Forge로 만들기</button><button data-action="draft.gap-remove" type="button" class="hx-insp-btn hx-insp-btn--ghost">이 칸 빼기</button></span></li>"`,
     );
     fireEvent.click(within(layer).getByText('도구 찾기'));
     expect(onFindTool).toHaveBeenCalledWith(

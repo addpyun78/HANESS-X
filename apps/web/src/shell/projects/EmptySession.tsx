@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { act } from '../../actions/registry.js';
 /** 0B.18 빈 세션(초안) 화면 */
 
 export const EXAMPLE_PROMPTS = [
@@ -48,7 +49,7 @@ export function EmptySession({
       <ul className="hx-empty-session__examples" aria-label="예시 지시">
         {EXAMPLE_PROMPTS.map((t) => (
           <li key={t}>
-            <button type="button" onClick={() => onExample(t)}>
+            <button {...act('empty.example')} type="button" onClick={() => onExample(t)}>
               {t}
             </button>
           </li>
@@ -58,7 +59,7 @@ export function EmptySession({
         <ul className="hx-empty-session__agents" aria-label="최근 쓴 에이전트">
           {agents.map((a) => (
             <li key={a.command}>
-              <button type="button" onClick={() => onAgent(a.command)}>
+              <button {...act('empty.agent')} type="button" onClick={() => onAgent(a.command)}>
                 <span aria-hidden="true">{a.icon ?? '✦'}</span> {a.name}
                 <span className="hx-mono"> {a.command}</span>
               </button>

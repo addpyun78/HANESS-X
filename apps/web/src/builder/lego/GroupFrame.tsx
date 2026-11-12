@@ -1,6 +1,7 @@
 import type { NodeProps } from '@xyflow/react';
 import type { HxFlowNode } from '../flow.js';
 import { useLegoDispatch } from './dnd.js';
+import { act } from '../../actions/registry.js';
 
 type Props = NodeProps<Extract<HxFlowNode, { type: 'hxGroup' }>>;
 
@@ -18,6 +19,7 @@ export function GroupFrame({ data, selected }: Props) {
       <div className="hx-group__head">
         <span className="hx-group__label">⧉ {group.label}</span>
         <button
+          {...act('lego.detach-plugin')}
           type="button"
           className="hx-group__detach nodrag"
           aria-label={`${group.label} 플러그인 떼어내기`}

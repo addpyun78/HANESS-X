@@ -1,4 +1,5 @@
 import { APPROVAL_BUTTONS, type ApprovalDecision, type PendingApproval } from './model.js';
+import { act } from '../../actions/registry.js';
 
 export interface ApprovalCardProps {
   approval: PendingApproval;
@@ -29,11 +30,13 @@ export function ApprovalCard({ approval: a, onDecide, busy, error }: ApprovalCar
       <div className="hx-ck-approval__buttons">
         {APPROVAL_BUTTONS.map((b) => (
           <button
+            {...act('checklist.decide')}
             key={b.id}
             type="button"
             className="hx-ck-btn"
             data-decision={b.id}
             disabled={busy || !onDecide}
+            title={busy ? '처리하는 중이에요' : !onDecide ? '지금은 답할 수 없어요' : undefined}
             onClick={() => onDecide?.(b.id)}
           >
             {b.label}
