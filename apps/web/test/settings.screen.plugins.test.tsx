@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { memorySettings } from './settings-form-fixtures.js';
 import { openTab, renderScreen } from './settings-screen-fixtures.js';
@@ -33,6 +33,11 @@ describe('6B.12 플러그인', () => {
     expect(within(sample).getByText('메모 켜기')).toBeTruthy();
     expect(within(sample).getByLabelText('메모 길이')).toBeTruthy();
     expect(sec).toMatchSnapshot();
+    // 동작: 끄면 plugins.<id>.<속성>으로 저장
+    fireEvent.click(within(sample).getByRole('switch'));
+    await waitFor(() =>
+      expect(m.store.readGlobal()).toEqual({ plugins: { 'sample-notes': { enabled: false } } }),
+    );
     m.dispose();
   });
 

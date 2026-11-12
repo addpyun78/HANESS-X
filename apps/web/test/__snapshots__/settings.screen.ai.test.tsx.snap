@@ -162,10 +162,16 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
           테스트 실행
         </button>
+        <span
+          class="hx-engine-card__note"
+        >
+          선택 · 상태는 자동으로 확인해요
+        </span>
       </div>
     </article>
     <article
@@ -304,10 +310,16 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
           테스트 실행
         </button>
+        <span
+          class="hx-engine-card__note"
+        >
+          선택 · 상태는 자동으로 확인해요
+        </span>
       </div>
     </article>
     <article
@@ -422,10 +434,16 @@ exports[`6B.2 AI·엔진 > 엔진 카드가 AI·엔진 탭 안에 있고 구독/
       >
         <button
           class="hx-icon-btn"
+          title="AI를 실제로 한 번 불러 봐요. 사용량이 조금 들어요."
           type="button"
         >
           테스트 실행
         </button>
+        <span
+          class="hx-engine-card__note"
+        >
+          선택 · 상태는 자동으로 확인해요
+        </span>
       </div>
     </article>
     <article
