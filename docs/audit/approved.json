@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-11-12T13:59:18.080Z",
+  "source": "docs/audit/report.md",
+  "approved": [
+    {
+      "id": "C1-002",
+      "choice": "fix"
+    },
+    {
+      "id": "C1-005",
+      "choice": "fix"
+    },
+    {
+      "id": "C2-003",
+      "choice": "fix"
+    },
+    {
+      "id": "C1-010",
+      "choice": "fix"
+    },
+    {
+      "id": "C2-001",
+      "choice": "fix"
+    },
+    {
+      "id": "C2-002",
+      "choice": "fix"
+    },
+    {
+      "id": "C2-004",
+      "choice": "hide"
+    },
+    {
+      "id": "C2-005",
+      "choice": "fix"
+    },
+    {
+      "id": "C1-008",
+      "choice": "fix"
+    },
+    {
+      "id": "C3-001",
+      "choice": "fix"
+    },
+    {
+      "id": "C3-004",
+      "choice": "fix"
+    },
+    {
+      "id": "C4-001",
+      "choice": "fix"
+    },
+    {
+      "id": "C4-002",
+      "choice": "fix"
+    },
+    {
+      "id": "C5-001",
+      "choice": "fix"
+    },
+    {
+      "id": "C5-003",
+      "choice": "fix"
+    },
+    {
+      "id": "C1-004",
+      "choice": "fix"
+    },
+    {
+      "id": "C6-004",
+      "choice": "fix"
+    },
+    {
+      "id": "C6-005",
+      "choice": "fix"
+    }
+  ]
+}
