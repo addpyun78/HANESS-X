@@ -457,6 +457,78 @@
         "noAction": true
       },
       "id": "C2-006"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "size",
+      "severity": "medium",
+      "title": "지난 작업자 복사본(.claude/worktrees) 39개가 남아 약 9.7GB를 차지(각각 node_modules 포함) — 저장소 본체(약 570MB)의 17배",
+      "evidence": [
+        "docs/audit/baseline.json size.worktrees",
+        "git worktree list (39개 worktree-agent-* 브랜치)",
+        "docs/audit/size.md"
+      ],
+      "proposal": "끝난 작업자 복사본을 `git worktree remove`로 정리(사람 결정 — 자동 삭제 표에 없는 종류라 보류)",
+      "risk": "medium",
+      "effort": "S",
+      "meta": {
+        "source": "C3.18",
+        "kind": "worktree"
+      },
+      "id": "C3-001"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "size",
+      "severity": "low",
+      "title": "웹 번들에서 코드 편집기(monaco) 언어 작업자(ts 6.7MB·css 1.0MB·html 0.7MB·json 0.4MB)가 가장 큼",
+      "evidence": ["docs/audit/raw/bundle-top.json", "docs/audit/raw/heavy-deps.json monaco-editor 97MB"],
+      "proposal": "실제 쓰는 언어 작업자만 남기거나 필요할 때만 불러오기 — 화면 동작 영향 확인이 필요해 별도 티켓",
+      "risk": "medium",
+      "effort": "M",
+      "meta": {
+        "source": "C3.18"
+      },
+      "id": "C3-002"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "size",
+      "severity": "low",
+      "title": "보관 정책: 기본값이 0(지우지 않음)이고, 진행 중 작업 기록·커널 자체 기록(logs/sessions/kernel·index.sqlite)·임시 작업 공간은 정리 대상이 아님",
+      "evidence": [
+        "docs/audit/raw/retention-keys.json",
+        "docs/audit/raw/retention-dryrun.json",
+        "packages/kernel/src/settings/data-cleanup.ts"
+      ],
+      "proposal": "다음 티켓 제안(docs/audit/next.md, H.13): 커널 기록 크기 상한·임시 작업 공간 정리 키",
+      "risk": "low",
+      "effort": "M",
+      "meta": {
+        "source": "C3.18",
+        "noAction": true,
+        "next": true
+      },
+      "id": "C3-003"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "size",
+      "severity": "low",
+      "title": ".git 느슨한 객체 6374개(묶이지 않음) · 같은 라이브러리 여러 버전 16종(대부분 큰 버전이 달라 합칠 수 없음)",
+      "evidence": ["docs/audit/raw/size-git.json", "docs/audit/raw/dup-versions.json"],
+      "proposal": "G.8에서 pnpm dedupe(같은 큰 버전만 합쳐짐) 시도. git gc는 기록을 바꾸지 않지만 점검 범위 밖이라 제안만",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C3.18",
+        "dedupe": true
+      },
+      "id": "C3-004"
     }
   ]
 }
