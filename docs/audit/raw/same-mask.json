@@ -1,0 +1,79 @@
+{
+  "area": "비밀 마스킹",
+  "implementations": 12,
+  "files": 9,
+  "list": [
+    {
+      "name": "sanitizeOrder",
+      "file": "apps/web/src/shell/layout-store.ts",
+      "line": 32,
+      "exported": true
+    },
+    {
+      "name": "maskApiKey",
+      "file": "packages/kernel/src/api/engines-routes.ts",
+      "line": 61,
+      "exported": true
+    },
+    {
+      "name": "maskSecrets",
+      "file": "packages/kernel/src/secrets-mask.ts",
+      "line": 27,
+      "exported": true
+    },
+    {
+      "name": "maskDeep",
+      "file": "packages/kernel/src/secrets-mask.ts",
+      "line": 36,
+      "exported": true
+    },
+    {
+      "name": "redactSecrets",
+      "file": "packages/kernel/src/settings/diagnostics.ts",
+      "line": 34,
+      "exported": true
+    },
+    {
+      "name": "maskSecret",
+      "file": "packages/kernel/src/settings/store.ts",
+      "line": 88,
+      "exported": true
+    },
+    {
+      "name": "sanitizeText",
+      "file": "packages/plugins-core/agent-builder/src/inventory/filter.ts",
+      "line": 19,
+      "exported": true
+    },
+    {
+      "name": "sanitizeDeep",
+      "file": "packages/plugins-core/agent-builder/src/inventory/filter.ts",
+      "line": 27,
+      "exported": true
+    },
+    {
+      "name": "maskSecretText",
+      "file": "packages/plugins-core/attachments/src/secrets.ts",
+      "line": 58,
+      "exported": true
+    },
+    {
+      "name": "sanitizeQuery",
+      "file": "packages/plugins-core/tool-finder/src/sanitize.ts",
+      "line": 42,
+      "exported": true
+    },
+    {
+      "name": "sanitizeValue",
+      "file": "packages/plugins-core/verifiers/judge/src/sanitize.ts",
+      "line": 49,
+      "exported": true
+    },
+    {
+      "name": "sanitizeJudgeInput",
+      "file": "packages/plugins-core/verifiers/judge/src/sanitize.ts",
+      "line": 58,
+      "exported": true
+    }
+  ]
+}
