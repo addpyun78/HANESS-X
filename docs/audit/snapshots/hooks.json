@@ -1,0 +1,97 @@
+{
+  "hookNames": [
+    "session.start",
+    "prompt.submit",
+    "tool.before",
+    "tool.after",
+    "turn.end",
+    "stop.before",
+    "context.compact",
+    "item.verify"
+  ],
+  "registrations": [
+    {
+      "hook": "context.compact",
+      "kind": "blocking",
+      "file": "packages/plugins-core/checklist-ledger/src/slice.ts",
+      "line": 158
+    },
+    {
+      "hook": "prompt.submit",
+      "kind": "blocking",
+      "file": "packages/plugins-core/installer/src/installed-tools-skill.ts",
+      "line": 136
+    },
+    {
+      "hook": "session.start",
+      "kind": "notify",
+      "file": "packages/plugins-core/installer/src/installed-tools-skill.ts",
+      "line": 133
+    },
+    {
+      "hook": "session.start",
+      "kind": "notify",
+      "file": "packages/sdk/templates/hook/src/index.ts",
+      "line": 38
+    },
+    {
+      "hook": "stop.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/checklist-ledger/src/stages/stop.ts",
+      "line": 99
+    },
+    {
+      "hook": "stop.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+      "line": 192
+    },
+    {
+      "hook": "tool.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/checklist-ledger/src/stages/scope.ts",
+      "line": 122
+    },
+    {
+      "hook": "tool.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/permission-gate/src/plan-gate.ts",
+      "line": 330
+    },
+    {
+      "hook": "tool.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/permission-gate/src/run-mode-gate.ts",
+      "line": 97
+    },
+    {
+      "hook": "tool.before",
+      "kind": "blocking",
+      "file": "packages/plugins-core/permission-gate/src/tool-first-run.ts",
+      "line": 145
+    },
+    {
+      "hook": "tool.before",
+      "kind": "blocking",
+      "file": "packages/sdk/templates/hook/src/index.ts",
+      "line": 39
+    }
+  ],
+  "native": [
+    {
+      "source": ".claude/settings.json",
+      "event": "Stop",
+      "command": "node scripts/ticket-gate.mjs"
+    },
+    {
+      "source": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+      "event": "Stop",
+      "line": 300
+    },
+    {
+      "source": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+      "event": "Stop",
+      "line": 315
+    }
+  ]
+}
