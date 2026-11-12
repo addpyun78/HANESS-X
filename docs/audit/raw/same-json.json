@@ -1,0 +1,25 @@
+{
+  "area": "AI 응답에서 JSON 뽑기",
+  "implementations": 3,
+  "files": 3,
+  "list": [
+    {
+      "name": "extractJson",
+      "file": "packages/engines/openai-compat/src/json-fallback.ts",
+      "line": 54,
+      "exported": false
+    },
+    {
+      "name": "extractJsonObject",
+      "file": "packages/plugins-core/verifiers/judge/src/questions.ts",
+      "line": 100,
+      "exported": true
+    },
+    {
+      "name": "extractJsonObject",
+      "file": "packages/protocol/src/verifier.ts",
+      "line": 257,
+      "exported": true
+    }
+  ]
+}
