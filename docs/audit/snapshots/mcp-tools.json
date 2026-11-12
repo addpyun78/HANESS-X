@@ -1,0 +1,62 @@
+[
+  {
+    "name": "attachments.list",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 267
+  },
+  {
+    "name": "attachments.read",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 277
+  },
+  {
+    "name": "checklist.current",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 193
+  },
+  {
+    "name": "checklist.propose",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 153
+  },
+  {
+    "name": "checklist.start",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 173
+  },
+  {
+    "name": "checklist.submit",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 183
+  },
+  {
+    "name": "install.plan",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 332
+  },
+  {
+    "name": "install.resolve",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 322
+  },
+  {
+    "name": "install.search",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 312
+  },
+  {
+    "name": "manifest.resolve",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 204
+  },
+  {
+    "name": "node.output",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 215
+  },
+  {
+    "name": "tools.request",
+    "file": "packages/plugins-core/mcp-host/src/server.ts",
+    "line": 230
+  }
+]
