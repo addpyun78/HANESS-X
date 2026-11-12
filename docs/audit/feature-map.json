@@ -38,7 +38,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -223,7 +223,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -267,7 +267,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -289,7 +289,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -311,7 +311,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -377,7 +377,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -827,7 +827,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -871,7 +871,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -981,7 +981,13 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1034,7 +1040,13 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1100,7 +1112,13 @@
         "cli": [],
         "mcp": [],
         "hooks": ["tool.before"],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1287,7 +1305,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines", "judge.engine", "judge.semantic"]
       },
       "code": [],
       "tests": [],
@@ -1375,7 +1393,15 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "judge.engine",
+          "judge.local.model",
+          "judge.local.timeoutMs",
+          "judge.maxCallsPerSession",
+          "judge.model",
+          "judge.samples",
+          "judge.semantic"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1441,7 +1467,16 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "engines",
+          "judge.engine",
+          "judge.semantic",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1507,7 +1542,13 @@
         "cli": [],
         "mcp": ["install.plan", "install.resolve", "tools.request"],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1595,7 +1636,13 @@
         "cli": ["install", "tools list", "tools allow"],
         "mcp": ["install.plan", "install.search"],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1617,7 +1664,7 @@
         "cli": [],
         "mcp": ["tools.request"],
         "hooks": [],
-        "settings": []
+        "settings": ["assist.engine", "judge.engine", "tools.budget"]
       },
       "code": [],
       "tests": [],
@@ -1705,7 +1752,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -1749,7 +1796,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["builder.engine", "builder.maxQuestions", "engines"]
       },
       "code": [],
       "tests": [],
@@ -1771,7 +1818,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["builder.animation"]
       },
       "code": [],
       "tests": [],
@@ -1820,7 +1867,13 @@
         "cli": [],
         "mcp": ["node.output"],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1864,7 +1917,58 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "approval.osNotify",
+          "approval.remindMinutes",
+          "approval.sound",
+          "assist.engine",
+          "assist.model",
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "builder.animation",
+          "builder.engine",
+          "builder.maxQuestions",
+          "checklist.maxAutoTurns",
+          "checklist.stallBlockTurns",
+          "checklist.stallChangeTurns",
+          "checklist.strict",
+          "data.attachmentsKeepDays",
+          "data.retentionDays",
+          "engines",
+          "installer.chocoEnabled",
+          "judge.engine",
+          "judge.local.model",
+          "judge.local.timeoutMs",
+          "judge.maxCallsPerSession",
+          "judge.model",
+          "judge.samples",
+          "judge.semantic",
+          "main.engine",
+          "main.model",
+          "mode.auto.maxCostUsd",
+          "mode.auto.maxIterations",
+          "mode.auto.maxMinutes",
+          "mode.auto.maxTokens",
+          "mode.default",
+          "permission.default",
+          "project.scratchDir",
+          "sidebar.group",
+          "sidebar.sort",
+          "tools.brave",
+          "tools.braveKey",
+          "tools.budget",
+          "tools.searxng",
+          "ui.fontSize",
+          "ui.language",
+          "ui.reduceMotion",
+          "ui.theme",
+          "verifier.local.baseUrl",
+          "verifier.local.model",
+          "verifier.local.timeoutMs",
+          "voice.provider"
+        ]
       },
       "code": [],
       "tests": [],
@@ -1898,7 +2002,14 @@
         "cli": ["reindex"],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "engines",
+          "mode.default"
+        ]
       },
       "code": [],
       "tests": [],
@@ -2131,7 +2242,58 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "approval.osNotify",
+          "approval.remindMinutes",
+          "approval.sound",
+          "assist.engine",
+          "assist.model",
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "builder.animation",
+          "builder.engine",
+          "builder.maxQuestions",
+          "checklist.maxAutoTurns",
+          "checklist.stallBlockTurns",
+          "checklist.stallChangeTurns",
+          "checklist.strict",
+          "data.attachmentsKeepDays",
+          "data.retentionDays",
+          "engines",
+          "installer.chocoEnabled",
+          "judge.engine",
+          "judge.local.model",
+          "judge.local.timeoutMs",
+          "judge.maxCallsPerSession",
+          "judge.model",
+          "judge.samples",
+          "judge.semantic",
+          "main.engine",
+          "main.model",
+          "mode.auto.maxCostUsd",
+          "mode.auto.maxIterations",
+          "mode.auto.maxMinutes",
+          "mode.auto.maxTokens",
+          "mode.default",
+          "permission.default",
+          "project.scratchDir",
+          "sidebar.group",
+          "sidebar.sort",
+          "tools.brave",
+          "tools.braveKey",
+          "tools.budget",
+          "tools.searxng",
+          "ui.fontSize",
+          "ui.language",
+          "ui.reduceMotion",
+          "ui.theme",
+          "verifier.local.baseUrl",
+          "verifier.local.model",
+          "verifier.local.timeoutMs",
+          "voice.provider"
+        ]
       },
       "code": [],
       "tests": [],
@@ -2197,7 +2359,7 @@
         "cli": [],
         "mcp": ["attachments.list", "attachments.read"],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2241,7 +2403,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2285,7 +2447,7 @@
         "cli": ["resume"],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2329,7 +2491,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["mode.default"]
       },
       "code": [],
       "tests": [],
@@ -2351,7 +2513,7 @@
         "cli": [],
         "mcp": ["checklist.propose", "manifest.resolve"],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2395,7 +2557,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines", "mode.auto.maxMinutes"]
       },
       "code": [],
       "tests": [],
@@ -2483,7 +2645,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2599,7 +2761,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2621,7 +2783,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -2656,7 +2818,58 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "approval.osNotify",
+          "approval.remindMinutes",
+          "approval.sound",
+          "assist.engine",
+          "assist.model",
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "builder.animation",
+          "builder.engine",
+          "builder.maxQuestions",
+          "checklist.maxAutoTurns",
+          "checklist.stallBlockTurns",
+          "checklist.stallChangeTurns",
+          "checklist.strict",
+          "data.attachmentsKeepDays",
+          "data.retentionDays",
+          "engines",
+          "installer.chocoEnabled",
+          "judge.engine",
+          "judge.local.model",
+          "judge.local.timeoutMs",
+          "judge.maxCallsPerSession",
+          "judge.model",
+          "judge.samples",
+          "judge.semantic",
+          "main.engine",
+          "main.model",
+          "mode.auto.maxCostUsd",
+          "mode.auto.maxIterations",
+          "mode.auto.maxMinutes",
+          "mode.auto.maxTokens",
+          "mode.default",
+          "permission.default",
+          "project.scratchDir",
+          "sidebar.group",
+          "sidebar.sort",
+          "tools.brave",
+          "tools.braveKey",
+          "tools.budget",
+          "tools.searxng",
+          "ui.fontSize",
+          "ui.language",
+          "ui.reduceMotion",
+          "ui.theme",
+          "verifier.local.baseUrl",
+          "verifier.local.model",
+          "verifier.local.timeoutMs",
+          "voice.provider"
+        ]
       },
       "code": [],
       "tests": [],
@@ -2678,7 +2891,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["builder.engine", "engines", "main.engine"]
       },
       "code": [],
       "tests": [],
@@ -2707,7 +2920,26 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": [
+          "attachments.concurrency",
+          "attachments.folderConfirmOver",
+          "attachments.maxBatchMB",
+          "attachments.maxFileMB",
+          "checklist.maxAutoTurns",
+          "checklist.stallBlockTurns",
+          "checklist.stallChangeTurns",
+          "checklist.strict",
+          "data.attachmentsKeepDays",
+          "data.retentionDays",
+          "engines",
+          "installer.chocoEnabled",
+          "judge.engine",
+          "main.engine",
+          "mode.default",
+          "permission.default",
+          "project.scratchDir",
+          "sidebar.group"
+        ]
       },
       "code": [],
       "tests": [],
@@ -2729,7 +2961,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["judge.samples", "ui.theme"]
       },
       "code": [],
       "tests": [],
@@ -2751,7 +2983,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["main.engine", "main.model"]
       },
       "code": [],
       "tests": [],
@@ -3023,7 +3255,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -3153,7 +3385,7 @@
         "cli": [],
         "mcp": [],
         "hooks": [],
-        "settings": []
+        "settings": ["engines"]
       },
       "code": [],
       "tests": [],
@@ -3602,7 +3834,8 @@
     "api": 147,
     "cli": 9,
     "mcp": 20,
-    "hooks": 22
+    "hooks": 22,
+    "settings": 257
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
