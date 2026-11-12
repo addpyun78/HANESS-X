@@ -1,0 +1,22 @@
+[
+  {
+    "file": "apps/web/src/actions/registry.ts",
+    "line": 273,
+    "text": "export const NOT_READY = '준비 중이에요';"
+  },
+  {
+    "file": "apps/web/src/actions/registry.ts",
+    "line": 291,
+    "text": "/** 등록된 처리 함수 실행. 없으면 false (부른 쪽이 \"아직 준비 중\" 처리) */"
+  },
+  {
+    "file": "apps/web/src/shell/Sidebar.tsx",
+    "line": 126,
+    "text": "? '준비 중'"
+  },
+  {
+    "file": "apps/web/src/shell/types.ts",
+    "line": 76,
+    "text": "/** `ready: false` = 아직 화면이 없음 → 비활성 + \"준비 중이에요\" (T-101 0C.8). 화면을 연결하면 지운다 */"
+  }
+]
