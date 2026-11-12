@@ -38,7 +38,7 @@ describe('기본 부품(core) 지문 갱신 (T-102 C1-005)', () => {
     expect(l2.rejections).toEqual([]);
     const lock = JSON.parse(readFileSync(env.lockFile, 'utf8'));
     expect(lock.plugins.find((p: { id: string }) => p.id === 'core-x').sha256).toBe(hashPluginDir(dir));
-    expect(env.lines.join('\n')).toMatch(/core-x.*(새로 고침|업데이트)/);
+    expect(env.lines.join('\n')).toMatch(/기본 부품 지문 새로 고침: core-x/);
   });
 
   it('workspace 플러그인: 변조되면 여전히 거부', async () => {

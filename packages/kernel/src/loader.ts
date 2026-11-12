@@ -236,7 +236,22 @@ export class PluginLoader {
     // 6.6 lock 대조
     const sha256 = hashPluginDir(dir);
     const locked = this.lock.get(manifest.id);
-    if (locked && !opts.acceptChanges) {
+    // T-102 C1-005: 저장소의 기본 부품(core = <저장소>/packages/plugins-core)은 커널과 같이 설치되는 자기 코드다.
+    // 그 파일을 바꿀 수 있으면 커널도 바꿀 수 있으므로 지문 검사의 보안 이득이 없고, 코드를 고쳐 다시 빌드할 때마다
+    // "변조됨"으로 막혀 쓸 수 없게 된다. → core는 지문·버전이 바뀌면 거부하지 않고 lock을 새로 고친 뒤 기록만 남긴다.
+    // 밖에서 들여온 플러그인(user·workspace·forge·extra)의 변조·버전 검사는 그대로다.
+    if (locked && origin === 'core' && (locked.sha256 !== sha256 || locked.version !== manifest.version)) {
+      const what =
+        locked.version !== manifest.version
+          ? `${locked.version} → ${manifest.version}`
+          : `${manifest.version} 코드 변경`;
+      this.logger(`기본 부품 지문 새로 고침: ${manifest.id} (${what})`);
+      this.emit(
+        'plugin_log',
+        manifest.id,
+        `기본 부품 업데이트됨: ${manifest.id} (${what}) — 지문을 새로 고쳤어요`,
+      );
+    } else if (locked && !opts.acceptChanges) {
       if (locked.version === manifest.version && locked.sha256 !== sha256) {
         this.reject({
           dir,
