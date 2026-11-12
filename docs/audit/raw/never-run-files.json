@@ -1,0 +1,42 @@
+{
+  "coverageFiles": 556,
+  "neverRun": 9,
+  "files": [
+    {
+      "file": "apps/web/src/design/fonts.ts",
+      "statements": 3
+    },
+    {
+      "file": "apps/web/src/main.tsx",
+      "statements": 17
+    },
+    {
+      "file": "packages/kernel/src/cli.ts",
+      "statements": 609
+    },
+    {
+      "file": "packages/plugins-core/mcp-host/src/bin.ts",
+      "statements": 53
+    },
+    {
+      "file": "packages/sdk/templates/hook/src/index.ts",
+      "statements": 6
+    },
+    {
+      "file": "packages/sdk/templates/panel/src/index.ts",
+      "statements": 16
+    },
+    {
+      "file": "packages/sdk/templates/pipeline/src/index.ts",
+      "statements": 6
+    },
+    {
+      "file": "packages/sdk/templates/skill/src/index.ts",
+      "statements": 6
+    },
+    {
+      "file": "packages/sdk/templates/tool/src/index.ts",
+      "statements": 16
+    }
+  ]
+}
