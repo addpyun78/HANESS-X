@@ -1,0 +1,156 @@
+{
+  "totalBytes": 2905491,
+  "totalMB": 2.8,
+  "packages": [
+    {
+      "package": "apps/web",
+      "files": 197,
+      "bytes": 855800
+    },
+    {
+      "package": "packages/kernel",
+      "files": 79,
+      "bytes": 571775
+    },
+    {
+      "package": "packages/plugins-core/checklist-ledger",
+      "files": 29,
+      "bytes": 220052
+    },
+    {
+      "package": "packages/plugins-core/agent-builder",
+      "files": 43,
+      "bytes": 213649
+    },
+    {
+      "package": "packages/plugins-core/installer",
+      "files": 18,
+      "bytes": 169267
+    },
+    {
+      "package": "packages/plugins-core/attachments",
+      "files": 23,
+      "bytes": 104774
+    },
+    {
+      "package": "packages/plugins-core/forge",
+      "files": 17,
+      "bytes": 102590
+    },
+    {
+      "package": "packages/protocol",
+      "files": 16,
+      "bytes": 84366
+    },
+    {
+      "package": "packages/plugins-core/tool-finder",
+      "files": 23,
+      "bytes": 83629
+    },
+    {
+      "package": "packages/plugins-core/approvals",
+      "files": 12,
+      "bytes": 62668
+    },
+    {
+      "package": "packages/plugins-core/verifiers/ladder",
+      "files": 12,
+      "bytes": 61342
+    },
+    {
+      "package": "packages/plugins-core/verifiers/comparators",
+      "files": 19,
+      "bytes": 52268
+    },
+    {
+      "package": "packages/plugins-core/permission-gate",
+      "files": 9,
+      "bytes": 49804
+    },
+    {
+      "package": "packages/plugins-core/verifiers/judge",
+      "files": 12,
+      "bytes": 43096
+    },
+    {
+      "package": "packages/plugins-core/mcp-host",
+      "files": 8,
+      "bytes": 38018
+    },
+    {
+      "package": "packages/plugins-core/engine-scanner",
+      "files": 17,
+      "bytes": 37347
+    },
+    {
+      "package": "packages/engines/openai-compat",
+      "files": 9,
+      "bytes": 35735
+    },
+    {
+      "package": "packages/engines/codex",
+      "files": 7,
+      "bytes": 35599
+    },
+    {
+      "package": "packages/engines/acp-generic",
+      "files": 6,
+      "bytes": 25790
+    },
+    {
+      "package": "packages/engines/claude-code",
+      "files": 5,
+      "bytes": 14372
+    },
+    {
+      "package": "packages/engines/antigravity",
+      "files": 5,
+      "bytes": 13114
+    },
+    {
+      "package": "packages/plugins/stt-local",
+      "files": 1,
+      "bytes": 8962
+    },
+    {
+      "package": "packages/sdk",
+      "files": 3,
+      "bytes": 7178
+    },
+    {
+      "package": "packages/plugins/stt-browser",
+      "files": 1,
+      "bytes": 5674
+    },
+    {
+      "package": "packages/plugins/verifier-local",
+      "files": 2,
+      "bytes": 4651
+    },
+    {
+      "package": "packages/sdk/templates/hook",
+      "files": 1,
+      "bytes": 1121
+    },
+    {
+      "package": "packages/sdk/templates/panel",
+      "files": 1,
+      "bytes": 928
+    },
+    {
+      "package": "packages/sdk/templates/tool",
+      "files": 1,
+      "bytes": 801
+    },
+    {
+      "package": "packages/sdk/templates/pipeline",
+      "files": 1,
+      "bytes": 601
+    },
+    {
+      "package": "packages/sdk/templates/skill",
+      "files": 1,
+      "bytes": 520
+    }
+  ]
+}
