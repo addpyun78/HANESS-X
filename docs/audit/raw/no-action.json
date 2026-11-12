@@ -1,0 +1,5 @@
+{
+  "rule": "hx/no-dead-button (eslint.config.js에서 apps/web/src에 적용)",
+  "files": 175,
+  "items": []
+}
