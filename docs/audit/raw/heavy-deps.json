@@ -1,0 +1,82 @@
+[
+  {
+    "entry": "monaco-editor@0.57.0",
+    "bytes": 101678287
+  },
+  {
+    "entry": "pretendard@1.3.9",
+    "bytes": 97653151
+  },
+  {
+    "entry": "@anthropic-ai+claude-agent-sdk@0.2.83_zod@4.6.7",
+    "bytes": 61232313
+  },
+  {
+    "entry": "typescript@5.8.3",
+    "bytes": 22874924
+  },
+  {
+    "entry": "@tauri-apps+cli-linux-x64-gnu@2.12.4",
+    "bytes": 19882694
+  },
+  {
+    "entry": "@img+sharp-libvips-linux-x64@1.2.4",
+    "bytes": 16656835
+  },
+  {
+    "entry": "esbuild@0.28.2",
+    "bytes": 11569093
+  },
+  {
+    "entry": "@esbuild+linux-x64@0.28.2",
+    "bytes": 11428465
+  },
+  {
+    "entry": "prettier@3.9.10",
+    "bytes": 9962689
+  },
+  {
+    "entry": "@agentclientprotocol+sdk@2.5.0_zod@4.6.7",
+    "bytes": 9058426
+  },
+  {
+    "entry": "react-dom@19.3.1_react@19.3.1",
+    "bytes": 8067714
+  },
+  {
+    "entry": "jsdom@31.0.0",
+    "bytes": 6889452
+  },
+  {
+    "entry": "zod@4.6.7",
+    "bytes": 6148944
+  },
+  {
+    "entry": "@xterm+xterm@6.0.0",
+    "bytes": 5921599
+  },
+  {
+    "entry": "@modelcontextprotocol+sdk@1.32.2_supports-color@7.2.0_zod@4.6.7",
+    "bytes": 4493132
+  },
+  {
+    "entry": "@napi-rs+keyring-linux-x64-gnu@2.1.2",
+    "bytes": 3438132
+  },
+  {
+    "entry": "lru-cache@11.5.3",
+    "bytes": 3334485
+  },
+  {
+    "entry": "fastify@5.12.8",
+    "bytes": 3025550
+  },
+  {
+    "entry": "eslint@9.39.5_supports-color@7.2.0",
+    "bytes": 3014519
+  },
+  {
+    "entry": "rollup@4.68.1",
+    "bytes": 2994218
+  }
+]
