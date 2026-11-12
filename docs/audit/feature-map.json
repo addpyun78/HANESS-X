@@ -24,7 +24,7 @@
           "at": "scripts/ticket-gate.mjs:1"
         }
       ],
-      "tests": [],
+      "tests": ["tests/audit/f001-ticket-gate.test.ts"],
       "status": "정상"
     },
     {
@@ -7804,7 +7804,7 @@
           "at": "apps/web/src/panels/Checklist/ChecklistTree.tsx:121"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/audit/f122-checklist-toggle.test.tsx"],
       "status": "정상"
     },
     {
@@ -8176,7 +8176,7 @@
           "at": "apps/web/src/builder/lego/LegoNode.tsx:142"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/builder.lego.dom.test.tsx"],
       "status": "정상"
     },
     {
@@ -8367,7 +8367,7 @@
           "at": "apps/web/src/composer/PlusMenu.tsx:122"
         }
       ],
-      "tests": [],
+      "tests": ["apps/web/test/audit/f134-plus-menu.test.tsx"],
       "status": "정상"
     },
     {
@@ -9094,8 +9094,8 @@
     "settings": 257,
     "noEntry": 42,
     "unlinkedEntries": 0,
-    "testLinks": 2188,
-    "noTest": 4
+    "testLinks": 2192,
+    "noTest": 0
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
@@ -9171,5 +9171,5 @@
     "F-109",
     "F-111"
   ],
-  "noTest": ["F-001", "F-122", "F-130", "F-134"]
+  "noTest": []
 }

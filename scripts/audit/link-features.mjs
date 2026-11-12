@@ -4,6 +4,7 @@
 //  1) 기능의 완료 항목 문장·결과 줄에 진입점 이름(id·경로·키·명령)이 그대로 나오면 연결
 //  2) 기능 문서가 언급한 소스 파일 안에 진입점이 정의(API·MCP·훅)되거나 쓰이면(act('id')·설정 키 문자열) 연결
 import { join, basename } from 'node:path';
+import { taggedFiles } from './feature-tags.mjs';
 import { auditDir, listFiles, readFileSync, readJson, rel, root, rawDir, writeJson } from './lib.mjs';
 
 const step = process.argv[2] ?? 'all';
@@ -235,6 +236,7 @@ function linkCode() {
 // B.13 기능마다 테스트 파일
 function linkTests() {
   let n = 0;
+  const tagged = taggedFiles();
   const testText = new Map(allTests.map((t) => [t, null]));
   const tt = (t) => {
     if (testText.get(t) === null) {
@@ -276,6 +278,8 @@ function linkTests() {
     ].filter((x) => x.length >= 6);
     if (needles.length)
       for (const t of allTests) if (needles.some((nd) => tt(t).includes(`'${nd}'`))) tests.add(t);
+    // 기능 태그(// @features F-xxx)가 붙은 파일은 그 기능의 테스트
+    for (const [file, ids] of tagged) if (ids.includes(f.id)) tests.add(file);
     f.tests = [...tests].sort();
     n += f.tests.length;
   }
