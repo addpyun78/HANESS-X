@@ -529,6 +529,79 @@
         "dedupe": true
       },
       "id": "C3-004"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "consolidation",
+      "severity": "low",
+      "title": "쉬운 말 판정 isPlain이 두 벌(agent-builder designer/plain.ts · tool-finder reasons.ts) — 같은 입력 100개에서 결과 차이 0",
+      "evidence": [
+        "docs/audit/raw/same-compare-plain.json",
+        "packages/plugins-core/agent-builder/src/designer/plain.ts:9",
+        "packages/plugins-core/tool-finder/src/reasons.ts:34"
+      ],
+      "proposal": "tool-finder의 isPlain을 지우고 approvals의 checkPlainKorean을 쓰는 한 곳(대표: agent-builder 쪽과 같은 식)으로 모은다 — 입력 300개 동일 테스트 먼저",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C5.15",
+        "behaviorDiff": 0,
+        "area": "plain"
+      },
+      "id": "C5-001"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "consolidation",
+      "severity": "low",
+      "title": "같은 이름·같은 목적이지만 동작이 다른 구현 4영역: 경로 정규화(3벌, 차이 77/100) · JSON 뽑기(3벌, 63) · 시간 제한(3벌, 64) · 비밀 마스킹(3벌, 90)",
+      "evidence": [
+        "docs/audit/raw/same-compare-path.json",
+        "docs/audit/raw/same-compare-json.json",
+        "docs/audit/raw/same-compare-retry.json",
+        "docs/audit/raw/same-compare-mask.json",
+        "docs/audit/consolidation.md"
+      ],
+      "proposal": "합치면 동작이 바뀌므로 보류. 비밀 마스킹은 \"패턴 목록 한 곳 공유\"를 다음 티켓으로",
+      "risk": "medium",
+      "effort": "M",
+      "meta": {
+        "source": "C5.15",
+        "behaviorDiff": 4
+      },
+      "id": "C5-002"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "consolidation",
+      "severity": "low",
+      "title": "순환 의존 2묶음: web Checklist model.ts↔stages.ts, acp-generic adapter.ts↔permission.ts",
+      "evidence": ["docs/audit/raw/madge-circular.txt"],
+      "proposal": "공통 타입을 작은 파일로 빼서 순환을 끊는다(동작 변화 없음)",
+      "risk": "low",
+      "effort": "S",
+      "meta": {
+        "source": "C5.15/C4.4"
+      },
+      "id": "C5-003"
+    },
+    {
+      "status": "open",
+      "features": [],
+      "area": "structure",
+      "severity": "low",
+      "title": "폴더 구조 제안 3개(kernel resume-*.ts 11개 모으기, stt-* 라이브러리 위치, verifier-local 정리)",
+      "evidence": ["docs/audit/consolidation.md 폴더 구조 제안"],
+      "proposal": "제안만(자동 승인 규칙: 폴더 이동은 전부 보류)",
+      "risk": "medium",
+      "effort": "M",
+      "meta": {
+        "source": "C5.14"
+      },
+      "id": "C5-004"
     }
   ]
 }
