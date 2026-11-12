@@ -1,0 +1,57 @@
+[
+  {
+    "command": "pnpm install && pnpm -r build",
+    "checks": [
+      {
+        "part": "pnpm install",
+        "mode": "형식 확인(실행 안 함: 설치·빌드·전체 테스트는 오래 걸림)",
+        "ok": true,
+        "why": "pnpm install 있음"
+      },
+      {
+        "part": "pnpm -r build",
+        "mode": "형식 확인(실행 안 함: 설치·빌드·전체 테스트는 오래 걸림)",
+        "ok": true,
+        "why": "pnpm build 있음"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "command": "node packages/kernel/dist/cli.js serve --workspace <프로젝트 폴더>",
+    "checks": [
+      {
+        "part": "node packages/kernel/dist/cli.js serve --workspace <프로젝트 폴더>",
+        "mode": "형식 확인(서버는 계속 켜져 있어 실행 안 함)",
+        "ok": true,
+        "why": "cli.js serve 있음"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "command": "node packages/kernel/dist/cli.js approvals --workspace <프로젝트 폴더>",
+    "checks": [
+      {
+        "part": "node packages/kernel/dist/cli.js approvals --workspace <프로젝트 폴더>",
+        "mode": "실제 실행(임시 홈)",
+        "ok": true,
+        "exit": 0,
+        "firstLine": "확인이 필요한 카드가 없어요."
+      }
+    ],
+    "ok": true
+  },
+  {
+    "command": "pnpm test",
+    "checks": [
+      {
+        "part": "pnpm test",
+        "mode": "형식 확인(실행 안 함: 설치·빌드·전체 테스트는 오래 걸림)",
+        "ok": true,
+        "why": "pnpm test 있음"
+      }
+    ],
+    "ok": true
+  }
+]
