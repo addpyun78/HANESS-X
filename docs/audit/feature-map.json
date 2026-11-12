@@ -476,7 +476,13 @@
         "actions": [],
         "api": [],
         "cli": [],
-        "mcp": [],
+        "mcp": [
+          "checklist.current",
+          "checklist.propose",
+          "checklist.start",
+          "checklist.submit",
+          "manifest.resolve"
+        ],
         "hooks": [],
         "settings": []
       },
@@ -872,7 +878,7 @@
         "actions": [],
         "api": [],
         "cli": [],
-        "mcp": [],
+        "mcp": ["node.output"],
         "hooks": [],
         "settings": []
       },
@@ -1442,7 +1448,7 @@
         "actions": ["install.search"],
         "api": ["POST /api/install/execute"],
         "cli": [],
-        "mcp": [],
+        "mcp": ["install.plan", "install.resolve", "install.search"],
         "hooks": [],
         "settings": []
       },
@@ -1486,7 +1492,7 @@
         "actions": [],
         "api": ["POST /api/install/resolve"],
         "cli": [],
-        "mcp": [],
+        "mcp": ["install.plan", "install.resolve", "tools.request"],
         "hooks": [],
         "settings": []
       },
@@ -1574,7 +1580,7 @@
         "actions": ["install.search"],
         "api": ["POST /api/gesture-tokens"],
         "cli": ["install", "tools list", "tools allow"],
-        "mcp": [],
+        "mcp": ["install.plan", "install.search"],
         "hooks": [],
         "settings": []
       },
@@ -1596,7 +1602,7 @@
         "actions": [],
         "api": [],
         "cli": [],
-        "mcp": [],
+        "mcp": ["tools.request"],
         "hooks": [],
         "settings": []
       },
@@ -1799,7 +1805,7 @@
           "POST /api/gesture-tokens"
         ],
         "cli": [],
-        "mcp": [],
+        "mcp": ["node.output"],
         "hooks": [],
         "settings": []
       },
@@ -2176,7 +2182,7 @@
         "actions": [],
         "api": [],
         "cli": [],
-        "mcp": [],
+        "mcp": ["attachments.list", "attachments.read"],
         "hooks": [],
         "settings": []
       },
@@ -2330,7 +2336,7 @@
         "actions": [],
         "api": [],
         "cli": [],
-        "mcp": [],
+        "mcp": ["checklist.propose", "manifest.resolve"],
         "hooks": [],
         "settings": []
       },
@@ -3581,7 +3587,8 @@
   "linkStats": {
     "actions": 184,
     "api": 147,
-    "cli": 9
+    "cli": 9,
+    "mcp": 20
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
