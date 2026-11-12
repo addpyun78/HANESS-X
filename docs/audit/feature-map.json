@@ -18,7 +18,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "scripts/ticket-gate.mjs:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -40,7 +45,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -137,7 +147,40 @@
         ],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:session.start",
+          "at": "packages/kernel/src/hooks.ts:13"
+        },
+        {
+          "entry": "hook:prompt.submit",
+          "at": "packages/kernel/src/hooks.ts:14"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        },
+        {
+          "entry": "hook:tool.after",
+          "at": "packages/kernel/src/hooks.ts:16"
+        },
+        {
+          "entry": "hook:turn.end",
+          "at": "packages/kernel/src/hooks.ts:17"
+        },
+        {
+          "entry": "hook:stop.before",
+          "at": "packages/kernel/src/hooks.ts:18"
+        },
+        {
+          "entry": "hook:context.compact",
+          "at": "packages/kernel/src/hooks.ts:19"
+        },
+        {
+          "entry": "hook:item.verify",
+          "at": "packages/kernel/src/hooks.ts:20"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -181,7 +224,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "scripts/smoke/hot-reload.mjs:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -203,7 +251,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/plugins",
+          "at": "packages/kernel/src/api/server.ts:176"
+        },
+        {
+          "entry": "cli:serve",
+          "at": "packages/kernel/src/cli.ts:330"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -225,7 +282,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -269,7 +331,20 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/engines/rescan",
+          "at": "packages/kernel/src/api/engines-routes.ts:176"
+        },
+        {
+          "entry": "api:GET /api/engines",
+          "at": "packages/kernel/src/api/engines-routes.ts:156"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -291,7 +366,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -313,7 +393,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -379,7 +464,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -401,7 +491,12 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -495,7 +590,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "mcp:checklist.current",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:193"
+        },
+        {
+          "entry": "mcp:checklist.propose",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:153"
+        },
+        {
+          "entry": "mcp:checklist.start",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:173"
+        },
+        {
+          "entry": "mcp:checklist.submit",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:183"
+        },
+        {
+          "entry": "mcp:manifest.resolve",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:204"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -517,7 +633,12 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -583,7 +704,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/approvals/:id",
+          "at": "packages/kernel/src/api/approvals-routes.ts:66"
+        },
+        {
+          "entry": "api:GET /api/approvals",
+          "at": "packages/kernel/src/api/approvals-routes.ts:50"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -609,7 +739,32 @@
         ],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/checklist/:session/status",
+          "at": "packages/plugins-core/checklist-ledger/src/stop-guard.ts:127"
+        },
+        {
+          "entry": "api:GET /api/checklist/:session",
+          "at": "packages/plugins-core/checklist-ledger/src/plan-routes.ts:152"
+        },
+        {
+          "entry": "hook:stop.before",
+          "at": "packages/kernel/src/hooks.ts:18"
+        },
+        {
+          "entry": "hook:stop.before@packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+          "at": "packages/plugins-core/checklist-ledger/src/stop-guard.ts:192"
+        },
+        {
+          "entry": "hook:native:Stop@packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+          "at": "packages/plugins-core/checklist-ledger/src/stop-guard.ts:300"
+        },
+        {
+          "entry": "doc",
+          "at": "scripts/hooks/stop-bridge.mjs:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -631,7 +786,16 @@
         "hooks": ["context.compact"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:context.compact",
+          "at": "packages/kernel/src/hooks.ts:19"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/checklist-ledger/src/export.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -697,7 +861,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:chat.mode",
+          "at": "apps/web/src/chat/ChatStream.tsx:24"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -719,7 +888,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/plugins",
+          "at": "packages/kernel/src/api/server.ts:176"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -741,7 +915,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/native/pick-folder",
+          "at": "packages/kernel/src/api/server.ts:226"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -763,7 +942,24 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/workspaces/open",
+          "at": "packages/kernel/src/api/server.ts:251"
+        },
+        {
+          "entry": "api:POST /api/workspaces/pin",
+          "at": "packages/kernel/src/api/server.ts:262"
+        },
+        {
+          "entry": "api:GET /api/workspaces",
+          "at": "packages/kernel/src/api/server.ts:247"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -785,7 +981,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/approvals/:id",
+          "at": "packages/kernel/src/api/approvals-routes.ts:66"
+        },
+        {
+          "entry": "api:GET /api/approvals",
+          "at": "packages/kernel/src/api/approvals-routes.ts:50"
+        },
+        {
+          "entry": "api:GET /api/checklist/:session",
+          "at": "packages/plugins-core/checklist-ledger/src/plan-routes.ts:152"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -829,7 +1038,28 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:engines.rescan",
+          "at": "apps/web/src/settings/Engines/EnginesSettings.tsx:64"
+        },
+        {
+          "entry": "api:GET /api/engines/:id/login",
+          "at": "packages/kernel/src/api/engines-routes.ts:179"
+        },
+        {
+          "entry": "api:POST /api/engines/rescan",
+          "at": "packages/kernel/src/api/engines-routes.ts:176"
+        },
+        {
+          "entry": "api:GET /api/engines",
+          "at": "packages/kernel/src/api/engines-routes.ts:156"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -873,7 +1103,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -895,7 +1130,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "mcp:node.output",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:215"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -917,7 +1157,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -989,7 +1234,48 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:PUT /api/agents/:name",
+          "at": "packages/kernel/src/api/agents-routes.ts:56"
+        },
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1011,7 +1297,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1048,7 +1339,72 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:PUT /api/agents/:name",
+          "at": "packages/kernel/src/api/agents-routes.ts:56"
+        },
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "api:POST /api/sessions/:id/subagents",
+          "at": "packages/kernel/src/api/sessions-routes.ts:83"
+        },
+        {
+          "entry": "api:DELETE /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:282"
+        },
+        {
+          "entry": "api:GET /api/sessions/:id",
+          "at": "packages/kernel/src/api/sessions-routes.ts:77"
+        },
+        {
+          "entry": "api:PATCH /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:268"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1092,7 +1448,16 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/forge/answers/:id",
+          "at": "packages/plugins-core/forge/src/routes.ts:30"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1120,7 +1485,60 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "api:GET /api/plugins",
+          "at": "packages/kernel/src/api/server.ts:176"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1142,7 +1560,16 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/plugins",
+          "at": "packages/kernel/src/api/server.ts:176"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1164,7 +1591,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/quota",
+          "at": "packages/kernel/src/api/quota-route.ts:12"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1186,7 +1618,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/recovery",
+          "at": "packages/kernel/src/recover.ts:297"
+        },
+        {
+          "entry": "cli:serve",
+          "at": "packages/kernel/src/cli.ts:330"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1208,7 +1649,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/plugins/:id/promote",
+          "at": "packages/kernel/src/api/server.ts:194"
+        },
+        {
+          "entry": "api:GET /api/plugins",
+          "at": "packages/kernel/src/api/server.ts:176"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1263,7 +1713,52 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "api:POST /api/approvals/:id",
+          "at": "packages/kernel/src/api/approvals-routes.ts:66"
+        },
+        {
+          "entry": "api:GET /api/approvals",
+          "at": "packages/kernel/src/api/approvals-routes.ts:50"
+        },
+        {
+          "entry": "api:POST /api/native/pick-folder",
+          "at": "packages/kernel/src/api/server.ts:226"
+        },
+        {
+          "entry": "api:POST /api/recovery/:session/resume",
+          "at": "packages/kernel/src/recover.ts:300"
+        },
+        {
+          "entry": "api:GET /api/recovery",
+          "at": "packages/kernel/src/recover.ts:297"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "api:POST /api/workspaces/open",
+          "at": "packages/kernel/src/api/server.ts:251"
+        },
+        {
+          "entry": "api:GET /api/workspaces",
+          "at": "packages/kernel/src/api/server.ts:247"
+        },
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1285,7 +1780,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/checklist-ledger/src/schema.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/evidence.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/evidence.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/ladder.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/l4.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1307,7 +1823,36 @@
         "hooks": [],
         "settings": ["engines", "judge.engine", "judge.semantic"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/loader.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/settings.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/cleanup.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/protocol/src/verifier.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1351,7 +1896,32 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/tool-finder/src/normalize.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/normalize.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/alias.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/path-normalize.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/path-alias.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/ladder.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1373,7 +1943,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/evidence.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/evidence.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1403,7 +1982,40 @@
           "judge.semantic"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:465"
+        },
+        {
+          "entry": "setting:judge.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:473"
+        },
+        {
+          "entry": "setting:judge.maxCallsPerSession",
+          "at": "packages/kernel/src/settings/registry.ts:448"
+        },
+        {
+          "entry": "setting:judge.model",
+          "at": "packages/kernel/src/settings/registry.ts:430"
+        },
+        {
+          "entry": "setting:judge.samples",
+          "at": "packages/kernel/src/settings/registry.ts:440"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/l4.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1425,7 +2037,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/checklist-ledger/src/export.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1447,7 +2064,24 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/approvals/:id",
+          "at": "packages/kernel/src/api/approvals-routes.ts:66"
+        },
+        {
+          "entry": "api:POST /api/approvals/undo",
+          "at": "packages/kernel/src/api/approvals-routes.ts:57"
+        },
+        {
+          "entry": "api:GET /api/approvals",
+          "at": "packages/kernel/src/api/approvals-routes.ts:50"
+        },
+        {
+          "entry": "cli:approvals",
+          "at": "packages/kernel/src/cli.ts:104"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1478,7 +2112,88 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/approvals",
+          "at": "packages/kernel/src/api/approvals-routes.ts:50"
+        },
+        {
+          "entry": "api:POST /api/compare",
+          "at": "packages/plugins-core/verifiers/ladder/src/runtime.ts:277"
+        },
+        {
+          "entry": "api:GET /api/notices",
+          "at": "packages/plugins-core/verifiers/ladder/src/runtime.ts:276"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/guards.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/pipeline.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/comparators/src/evidence.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/verifiers/ladder/src/evidence.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/templates.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/sdk/src/templates.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1500,7 +2215,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:install.search",
+          "at": "apps/web/src/install/InstallManager.tsx:345"
+        },
+        {
+          "entry": "api:POST /api/install/execute",
+          "at": "packages/kernel/src/api/install-routes.ts:136"
+        },
+        {
+          "entry": "mcp:install.plan",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:332"
+        },
+        {
+          "entry": "mcp:install.resolve",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:322"
+        },
+        {
+          "entry": "mcp:install.search",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:312"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1550,7 +2286,56 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/install/resolve",
+          "at": "packages/kernel/src/api/install-routes.ts:121"
+        },
+        {
+          "entry": "mcp:install.plan",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:332"
+        },
+        {
+          "entry": "mcp:install.resolve",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:322"
+        },
+        {
+          "entry": "mcp:tools.request",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:230"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1616,7 +2401,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/install/first-run/:id",
+          "at": "packages/kernel/src/api/install-routes.ts:171"
+        },
+        {
+          "entry": "api:GET /api/install/first-run",
+          "at": "packages/kernel/src/api/install-routes.ts:170"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1644,7 +2438,64 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:install.search",
+          "at": "apps/web/src/install/InstallManager.tsx:345"
+        },
+        {
+          "entry": "api:POST /api/gesture-tokens",
+          "at": "packages/kernel/src/api/install-routes.ts:91"
+        },
+        {
+          "entry": "cli:install",
+          "at": "packages/kernel/src/cli.ts:293"
+        },
+        {
+          "entry": "cli:tools list",
+          "at": "packages/kernel/src/cli.ts:293"
+        },
+        {
+          "entry": "cli:tools allow",
+          "at": "packages/kernel/src/cli.ts:293"
+        },
+        {
+          "entry": "mcp:install.plan",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:332"
+        },
+        {
+          "entry": "mcp:install.search",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:312"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1666,7 +2517,28 @@
         "hooks": [],
         "settings": ["assist.engine", "judge.engine", "tools.budget"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "mcp:tools.request",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:230"
+        },
+        {
+          "entry": "setting:assist.engine",
+          "at": "packages/kernel/src/settings/registry.ts:543"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:tools.budget",
+          "at": "packages/kernel/src/settings/registry.ts:507"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/tool-finder/src/settings.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1710,7 +2582,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/tools/continue",
+          "at": "packages/kernel/src/api/tool-routes.ts:37"
+        },
+        {
+          "entry": "api:POST /api/tools/find",
+          "at": "packages/kernel/src/api/tool-routes.ts:31"
+        },
+        {
+          "entry": "api:POST /api/tools/plan-selected",
+          "at": "packages/kernel/src/api/tool-routes.ts:34"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1754,7 +2639,20 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "api:GET /api/builder/inventory",
+          "at": "packages/plugins-core/agent-builder/src/inventory/route.ts:34"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1798,7 +2696,20 @@
         "hooks": [],
         "settings": ["builder.engine", "builder.maxQuestions", "engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:builder.engine",
+          "at": "packages/kernel/src/settings/registry.ts:394"
+        },
+        {
+          "entry": "setting:builder.maxQuestions",
+          "at": "packages/kernel/src/settings/registry.ts:403"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1820,7 +2731,12 @@
         "hooks": [],
         "settings": ["builder.animation"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:builder.animation",
+          "at": "packages/kernel/src/settings/registry.ts:411"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1875,7 +2791,64 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:PUT /api/agents/:name",
+          "at": "packages/kernel/src/api/agents-routes.ts:56"
+        },
+        {
+          "entry": "api:POST /api/agents/save",
+          "at": "packages/plugins-core/agent-builder/src/designer/route.ts:175"
+        },
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        },
+        {
+          "entry": "api:POST /api/gesture-tokens",
+          "at": "packages/kernel/src/api/install-routes.ts:91"
+        },
+        {
+          "entry": "mcp:node.output",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:215"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/human-gesture-token.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1897,7 +2870,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:PUT /api/agents/:name",
+          "at": "packages/kernel/src/api/agents-routes.ts:56"
+        },
+        {
+          "entry": "api:POST /api/agents/save",
+          "at": "packages/plugins-core/agent-builder/src/designer/route.ts:175"
+        },
+        {
+          "entry": "api:GET /api/agents",
+          "at": "packages/kernel/src/api/server.ts:209"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -1970,7 +2956,232 @@
           "voice.provider"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/settings/reset",
+          "at": "packages/kernel/src/api/settings-routes.ts:163"
+        },
+        {
+          "entry": "api:GET /api/settings",
+          "at": "packages/kernel/src/api/settings-routes.ts:73"
+        },
+        {
+          "entry": "api:PUT /api/settings",
+          "at": "packages/kernel/src/api/settings-routes.ts:148"
+        },
+        {
+          "entry": "setting:approval.osNotify",
+          "at": "packages/kernel/src/settings/registry.ts:660"
+        },
+        {
+          "entry": "setting:approval.remindMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:671"
+        },
+        {
+          "entry": "setting:approval.sound",
+          "at": "packages/kernel/src/settings/registry.ts:682"
+        },
+        {
+          "entry": "setting:assist.engine",
+          "at": "packages/kernel/src/settings/registry.ts:543"
+        },
+        {
+          "entry": "setting:assist.model",
+          "at": "packages/kernel/src/settings/registry.ts:552"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:builder.animation",
+          "at": "packages/kernel/src/settings/registry.ts:411"
+        },
+        {
+          "entry": "setting:builder.engine",
+          "at": "packages/kernel/src/settings/registry.ts:394"
+        },
+        {
+          "entry": "setting:builder.maxQuestions",
+          "at": "packages/kernel/src/settings/registry.ts:403"
+        },
+        {
+          "entry": "setting:checklist.maxAutoTurns",
+          "at": "packages/kernel/src/settings/registry.ts:650"
+        },
+        {
+          "entry": "setting:checklist.stallBlockTurns",
+          "at": "packages/kernel/src/settings/registry.ts:642"
+        },
+        {
+          "entry": "setting:checklist.stallChangeTurns",
+          "at": "packages/kernel/src/settings/registry.ts:634"
+        },
+        {
+          "entry": "setting:checklist.strict",
+          "at": "packages/kernel/src/settings/registry.ts:626"
+        },
+        {
+          "entry": "setting:data.attachmentsKeepDays",
+          "at": "packages/kernel/src/settings/registry.ts:805"
+        },
+        {
+          "entry": "setting:data.retentionDays",
+          "at": "packages/kernel/src/settings/registry.ts:797"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:installer.chocoEnabled",
+          "at": "packages/kernel/src/settings/registry.ts:695"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:465"
+        },
+        {
+          "entry": "setting:judge.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:473"
+        },
+        {
+          "entry": "setting:judge.maxCallsPerSession",
+          "at": "packages/kernel/src/settings/registry.ts:448"
+        },
+        {
+          "entry": "setting:judge.model",
+          "at": "packages/kernel/src/settings/registry.ts:430"
+        },
+        {
+          "entry": "setting:judge.samples",
+          "at": "packages/kernel/src/settings/registry.ts:440"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        },
+        {
+          "entry": "setting:main.model",
+          "at": "packages/kernel/src/settings/registry.ts:384"
+        },
+        {
+          "entry": "setting:mode.auto.maxCostUsd",
+          "at": "packages/kernel/src/settings/registry.ts:756"
+        },
+        {
+          "entry": "setting:mode.auto.maxIterations",
+          "at": "packages/kernel/src/settings/registry.ts:764"
+        },
+        {
+          "entry": "setting:mode.auto.maxMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:732"
+        },
+        {
+          "entry": "setting:mode.auto.maxTokens",
+          "at": "packages/kernel/src/settings/registry.ts:748"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "setting:permission.default",
+          "at": "packages/kernel/src/settings/registry.ts:612"
+        },
+        {
+          "entry": "setting:project.scratchDir",
+          "at": "packages/kernel/src/settings/registry.ts:705"
+        },
+        {
+          "entry": "setting:sidebar.group",
+          "at": "packages/kernel/src/settings/registry.ts:773"
+        },
+        {
+          "entry": "setting:sidebar.sort",
+          "at": "packages/kernel/src/settings/registry.ts:784"
+        },
+        {
+          "entry": "setting:tools.brave",
+          "at": "packages/kernel/src/settings/registry.ts:524"
+        },
+        {
+          "entry": "setting:tools.braveKey",
+          "at": "packages/kernel/src/settings/registry.ts:532"
+        },
+        {
+          "entry": "setting:tools.budget",
+          "at": "packages/kernel/src/settings/registry.ts:507"
+        },
+        {
+          "entry": "setting:tools.searxng",
+          "at": "packages/kernel/src/settings/registry.ts:516"
+        },
+        {
+          "entry": "setting:ui.fontSize",
+          "at": "packages/kernel/src/settings/registry.ts:329"
+        },
+        {
+          "entry": "setting:ui.language",
+          "at": "packages/kernel/src/settings/registry.ts:351"
+        },
+        {
+          "entry": "setting:ui.reduceMotion",
+          "at": "packages/kernel/src/settings/registry.ts:340"
+        },
+        {
+          "entry": "setting:ui.theme",
+          "at": "packages/kernel/src/settings/registry.ts:317"
+        },
+        {
+          "entry": "setting:verifier.local.baseUrl",
+          "at": "packages/kernel/src/settings/registry.ts:481"
+        },
+        {
+          "entry": "setting:verifier.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:489"
+        },
+        {
+          "entry": "setting:verifier.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:497"
+        },
+        {
+          "entry": "setting:voice.provider",
+          "at": "packages/kernel/src/settings/registry.ts:598"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2011,7 +3222,108 @@
           "mode.default"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:sidebar.new-session",
+          "at": "apps/web/src/shell/Sidebar.tsx:33"
+        },
+        {
+          "entry": "action:sidebar.select-session",
+          "at": "apps/web/src/shell/Sidebar.tsx:54"
+        },
+        {
+          "entry": "api:POST /api/projects/:id/relink",
+          "at": "packages/kernel/src/projects/routes.ts:203"
+        },
+        {
+          "entry": "api:GET /api/projects/:id/sessions",
+          "at": "packages/kernel/src/projects/routes.ts:188"
+        },
+        {
+          "entry": "api:DELETE /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:178"
+        },
+        {
+          "entry": "api:PATCH /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:156"
+        },
+        {
+          "entry": "api:POST /api/projects/suggest-root",
+          "at": "packages/kernel/src/projects/routes.ts:119"
+        },
+        {
+          "entry": "api:GET /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:99"
+        },
+        {
+          "entry": "api:POST /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:109"
+        },
+        {
+          "entry": "api:POST /api/sessions/:id/subagents",
+          "at": "packages/kernel/src/api/sessions-routes.ts:83"
+        },
+        {
+          "entry": "api:GET /api/sessions/:id",
+          "at": "packages/kernel/src/api/sessions-routes.ts:77"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "cli:reindex",
+          "at": "packages/kernel/src/cli.ts:307"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "doc",
+          "at": "apps/web/src/App.tsx:1"
+        },
+        {
+          "entry": "doc",
+          "at": "apps/web/src/shell/filter.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/agent-builder/src/inventory/filter.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2041,7 +3353,36 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/sessions/:id/commit",
+          "at": "packages/kernel/src/projects/routes.ts:236"
+        },
+        {
+          "entry": "api:POST /api/sessions/:id/project",
+          "at": "packages/kernel/src/projects/routes.ts:250"
+        },
+        {
+          "entry": "api:DELETE /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:282"
+        },
+        {
+          "entry": "api:GET /api/sessions/:id",
+          "at": "packages/kernel/src/api/sessions-routes.ts:77"
+        },
+        {
+          "entry": "api:PATCH /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:268"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2069,7 +3410,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:DELETE /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:178"
+        },
+        {
+          "entry": "api:PATCH /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:156"
+        },
+        {
+          "entry": "api:POST /api/projects/order",
+          "at": "packages/kernel/src/projects/routes.ts:135"
+        },
+        {
+          "entry": "api:GET /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:99"
+        },
+        {
+          "entry": "api:POST /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:109"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2096,7 +3458,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:DELETE /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:178"
+        },
+        {
+          "entry": "api:PATCH /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:156"
+        },
+        {
+          "entry": "api:GET /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:99"
+        },
+        {
+          "entry": "api:POST /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:109"
+        },
+        {
+          "entry": "cli:run",
+          "at": "packages/kernel/src/cli.ts:307"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2140,7 +3523,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "doc",
+          "at": "apps/web/src/main.tsx:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2214,7 +3602,212 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:approvals.choose",
+          "at": "apps/web/src/panels/Approvals/ActionCard.tsx:95"
+        },
+        {
+          "entry": "action:approvals.more",
+          "at": "apps/web/src/panels/Approvals/ActionCard.tsx:130"
+        },
+        {
+          "entry": "action:builder.back",
+          "at": "apps/web/src/builder/BuilderPage.tsx:188"
+        },
+        {
+          "entry": "action:builder.mic",
+          "at": "apps/web/src/builder/chat/MicButton.tsx:69"
+        },
+        {
+          "entry": "action:builder.mic-consent-no",
+          "at": "apps/web/src/builder/chat/MicButton.tsx:120"
+        },
+        {
+          "entry": "action:builder.mic-consent-yes",
+          "at": "apps/web/src/builder/chat/MicButton.tsx:110"
+        },
+        {
+          "entry": "action:builder.redo",
+          "at": "apps/web/src/builder/BuilderPage.tsx:211"
+        },
+        {
+          "entry": "action:builder.save-open",
+          "at": "apps/web/src/builder/BuilderPage.tsx:233"
+        },
+        {
+          "entry": "action:builder.undo",
+          "at": "apps/web/src/builder/BuilderPage.tsx:200"
+        },
+        {
+          "entry": "action:chat.tool-toggle",
+          "at": "apps/web/src/chat/ToolCard.tsx:47"
+        },
+        {
+          "entry": "action:checklist.approve-plan",
+          "at": "apps/web/src/panels/Checklist/PlanReview.tsx:48"
+        },
+        {
+          "entry": "action:checklist.decide",
+          "at": "apps/web/src/panels/Checklist/ApprovalCard.tsx:33"
+        },
+        {
+          "entry": "action:composer.attach-pick",
+          "at": "apps/web/src/composer/Composer.tsx:335"
+        },
+        {
+          "entry": "action:composer.chip",
+          "at": "apps/web/src/composer/ChipMenu.tsx:58"
+        },
+        {
+          "entry": "action:composer.chip-option",
+          "at": "apps/web/src/composer/ChipMenu.tsx:81"
+        },
+        {
+          "entry": "action:composer.mode-keep",
+          "at": "apps/web/src/composer/Composer.tsx:380"
+        },
+        {
+          "entry": "action:composer.mode-upgrade",
+          "at": "apps/web/src/composer/Composer.tsx:369"
+        },
+        {
+          "entry": "action:composer.plus",
+          "at": "apps/web/src/composer/Composer.tsx:290"
+        },
+        {
+          "entry": "action:composer.send",
+          "at": "apps/web/src/composer/Composer.tsx:351"
+        },
+        {
+          "entry": "action:draft.gap-find-tool",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:212"
+        },
+        {
+          "entry": "action:draft.gap-forge",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:220"
+        },
+        {
+          "entry": "action:draft.gap-remove",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:228"
+        },
+        {
+          "entry": "action:draft.list-delete",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:377"
+        },
+        {
+          "entry": "action:draft.list-resume",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:369"
+        },
+        {
+          "entry": "action:draft.patch-apply",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:288"
+        },
+        {
+          "entry": "action:draft.patch-cancel",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:292"
+        },
+        {
+          "entry": "action:draft.peek-close",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:72"
+        },
+        {
+          "entry": "action:draft.question-choice",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:157"
+        },
+        {
+          "entry": "action:draft.questions-skip",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:181"
+        },
+        {
+          "entry": "action:draft.questions-submit",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:171"
+        },
+        {
+          "entry": "action:draft.resume",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:323"
+        },
+        {
+          "entry": "action:draft.start-new",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:327"
+        },
+        {
+          "entry": "action:draft.version-peek",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:47"
+        },
+        {
+          "entry": "action:draft.version-revert",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:56"
+        },
+        {
+          "entry": "action:draft.versions-toggle",
+          "at": "apps/web/src/builder/draft/DraftCards.tsx:30"
+        },
+        {
+          "entry": "action:forge.choice",
+          "at": "apps/web/src/forge/ForgeCards.tsx:87"
+        },
+        {
+          "entry": "action:forge.option",
+          "at": "apps/web/src/forge/ForgeCards.tsx:175"
+        },
+        {
+          "entry": "action:forge.submit",
+          "at": "apps/web/src/forge/ForgeCards.tsx:120"
+        },
+        {
+          "entry": "action:install.add-plan",
+          "at": "apps/web/src/install/InstallManager.tsx:376"
+        },
+        {
+          "entry": "action:install.pick-method",
+          "at": "apps/web/src/install/InstallManager.tsx:472"
+        },
+        {
+          "entry": "action:install.remove",
+          "at": "apps/web/src/install/InstallManager.tsx:191"
+        },
+        {
+          "entry": "action:install.search",
+          "at": "apps/web/src/install/InstallManager.tsx:345"
+        },
+        {
+          "entry": "action:install.tab",
+          "at": "apps/web/src/install/InstallManager.tsx:90"
+        },
+        {
+          "entry": "action:install.update",
+          "at": "apps/web/src/install/InstallManager.tsx:183"
+        },
+        {
+          "entry": "action:install.url-check",
+          "at": "apps/web/src/install/InstallManager.tsx:442"
+        },
+        {
+          "entry": "action:recovery.resume",
+          "at": "apps/web/src/recovery/ResumeCard.tsx:55"
+        },
+        {
+          "entry": "action:save.close",
+          "at": "apps/web/src/builder/draft/SaveDialog.tsx:159"
+        },
+        {
+          "entry": "action:save.fill-gaps",
+          "at": "apps/web/src/builder/draft/SaveDialog.tsx:132"
+        },
+        {
+          "entry": "action:save.save",
+          "at": "apps/web/src/builder/draft/SaveDialog.tsx:148"
+        },
+        {
+          "entry": "action:save.save-incomplete",
+          "at": "apps/web/src/builder/draft/SaveDialog.tsx:136"
+        },
+        {
+          "entry": "action:save.use-suggestion",
+          "at": "apps/web/src/builder/draft/SaveDialog.tsx:112"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2295,7 +3888,252 @@
           "voice.provider"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/sessions/:id/attachments",
+          "at": "packages/plugins-core/attachments/src/routes.ts:56"
+        },
+        {
+          "entry": "api:POST /api/sessions/:id/attachments",
+          "at": "packages/plugins-core/attachments/src/routes.ts:64"
+        },
+        {
+          "entry": "api:DELETE /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:282"
+        },
+        {
+          "entry": "api:GET /api/sessions/:id",
+          "at": "packages/kernel/src/api/sessions-routes.ts:77"
+        },
+        {
+          "entry": "api:PATCH /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:268"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "setting:approval.osNotify",
+          "at": "packages/kernel/src/settings/registry.ts:660"
+        },
+        {
+          "entry": "setting:approval.remindMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:671"
+        },
+        {
+          "entry": "setting:approval.sound",
+          "at": "packages/kernel/src/settings/registry.ts:682"
+        },
+        {
+          "entry": "setting:assist.engine",
+          "at": "packages/kernel/src/settings/registry.ts:543"
+        },
+        {
+          "entry": "setting:assist.model",
+          "at": "packages/kernel/src/settings/registry.ts:552"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:builder.animation",
+          "at": "packages/kernel/src/settings/registry.ts:411"
+        },
+        {
+          "entry": "setting:builder.engine",
+          "at": "packages/kernel/src/settings/registry.ts:394"
+        },
+        {
+          "entry": "setting:builder.maxQuestions",
+          "at": "packages/kernel/src/settings/registry.ts:403"
+        },
+        {
+          "entry": "setting:checklist.maxAutoTurns",
+          "at": "packages/kernel/src/settings/registry.ts:650"
+        },
+        {
+          "entry": "setting:checklist.stallBlockTurns",
+          "at": "packages/kernel/src/settings/registry.ts:642"
+        },
+        {
+          "entry": "setting:checklist.stallChangeTurns",
+          "at": "packages/kernel/src/settings/registry.ts:634"
+        },
+        {
+          "entry": "setting:checklist.strict",
+          "at": "packages/kernel/src/settings/registry.ts:626"
+        },
+        {
+          "entry": "setting:data.attachmentsKeepDays",
+          "at": "packages/kernel/src/settings/registry.ts:805"
+        },
+        {
+          "entry": "setting:data.retentionDays",
+          "at": "packages/kernel/src/settings/registry.ts:797"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:installer.chocoEnabled",
+          "at": "packages/kernel/src/settings/registry.ts:695"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:465"
+        },
+        {
+          "entry": "setting:judge.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:473"
+        },
+        {
+          "entry": "setting:judge.maxCallsPerSession",
+          "at": "packages/kernel/src/settings/registry.ts:448"
+        },
+        {
+          "entry": "setting:judge.model",
+          "at": "packages/kernel/src/settings/registry.ts:430"
+        },
+        {
+          "entry": "setting:judge.samples",
+          "at": "packages/kernel/src/settings/registry.ts:440"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        },
+        {
+          "entry": "setting:main.model",
+          "at": "packages/kernel/src/settings/registry.ts:384"
+        },
+        {
+          "entry": "setting:mode.auto.maxCostUsd",
+          "at": "packages/kernel/src/settings/registry.ts:756"
+        },
+        {
+          "entry": "setting:mode.auto.maxIterations",
+          "at": "packages/kernel/src/settings/registry.ts:764"
+        },
+        {
+          "entry": "setting:mode.auto.maxMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:732"
+        },
+        {
+          "entry": "setting:mode.auto.maxTokens",
+          "at": "packages/kernel/src/settings/registry.ts:748"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "setting:permission.default",
+          "at": "packages/kernel/src/settings/registry.ts:612"
+        },
+        {
+          "entry": "setting:project.scratchDir",
+          "at": "packages/kernel/src/settings/registry.ts:705"
+        },
+        {
+          "entry": "setting:sidebar.group",
+          "at": "packages/kernel/src/settings/registry.ts:773"
+        },
+        {
+          "entry": "setting:sidebar.sort",
+          "at": "packages/kernel/src/settings/registry.ts:784"
+        },
+        {
+          "entry": "setting:tools.brave",
+          "at": "packages/kernel/src/settings/registry.ts:524"
+        },
+        {
+          "entry": "setting:tools.braveKey",
+          "at": "packages/kernel/src/settings/registry.ts:532"
+        },
+        {
+          "entry": "setting:tools.budget",
+          "at": "packages/kernel/src/settings/registry.ts:507"
+        },
+        {
+          "entry": "setting:tools.searxng",
+          "at": "packages/kernel/src/settings/registry.ts:516"
+        },
+        {
+          "entry": "setting:ui.fontSize",
+          "at": "packages/kernel/src/settings/registry.ts:329"
+        },
+        {
+          "entry": "setting:ui.language",
+          "at": "packages/kernel/src/settings/registry.ts:351"
+        },
+        {
+          "entry": "setting:ui.reduceMotion",
+          "at": "packages/kernel/src/settings/registry.ts:340"
+        },
+        {
+          "entry": "setting:ui.theme",
+          "at": "packages/kernel/src/settings/registry.ts:317"
+        },
+        {
+          "entry": "setting:verifier.local.baseUrl",
+          "at": "packages/kernel/src/settings/registry.ts:481"
+        },
+        {
+          "entry": "setting:verifier.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:489"
+        },
+        {
+          "entry": "setting:verifier.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:497"
+        },
+        {
+          "entry": "setting:voice.provider",
+          "at": "packages/kernel/src/settings/registry.ts:598"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "apps/web/src/composer/attach-flow.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2361,7 +4199,20 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "mcp:attachments.list",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:267"
+        },
+        {
+          "entry": "mcp:attachments.read",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:277"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2383,7 +4234,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:composer.chip",
+          "at": "apps/web/src/composer/ChipMenu.tsx:58"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2405,7 +4261,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2427,7 +4288,20 @@
         "hooks": ["stop.before@packages/plugins-core/checklist-ledger/src/stages/stop.ts"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:stop.before@packages/plugins-core/checklist-ledger/src/stages/stop.ts",
+          "at": "packages/plugins-core/checklist-ledger/src/stages/stop.ts:99"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/stop.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/dispatch.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2449,7 +4323,20 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/resume",
+          "at": "packages/kernel/src/api/resume-routes.ts:24"
+        },
+        {
+          "entry": "cli:resume",
+          "at": "packages/kernel/src/cli.ts:302"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2471,7 +4358,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/resume/:id/check",
+          "at": "packages/kernel/src/api/resume-routes.ts:40"
+        },
+        {
+          "entry": "api:POST /api/resume/:id",
+          "at": "packages/kernel/src/api/resume-routes.ts:48"
+        },
+        {
+          "entry": "api:GET /api/resume",
+          "at": "packages/kernel/src/api/resume-routes.ts:24"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2493,7 +4393,12 @@
         "hooks": [],
         "settings": ["mode.default"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2515,7 +4420,20 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "mcp:checklist.propose",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:153"
+        },
+        {
+          "entry": "mcp:manifest.resolve",
+          "at": "packages/plugins-core/mcp-host/src/server.ts:204"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2559,7 +4477,24 @@
         "hooks": [],
         "settings": ["engines", "mode.auto.maxMinutes"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:mode.auto.maxMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:732"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/permission-gate/src/auto-policy.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "apps/web/src/App.tsx:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2581,7 +4516,24 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/resume/:id",
+          "at": "packages/kernel/src/api/resume-routes.ts:48"
+        },
+        {
+          "entry": "api:GET /api/resume",
+          "at": "packages/kernel/src/api/resume-routes.ts:24"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2603,7 +4555,12 @@
         "hooks": ["stop.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:stop.before",
+          "at": "packages/kernel/src/hooks.ts:18"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2625,7 +4582,12 @@
         "hooks": ["tool.before"],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "hook:tool.before",
+          "at": "packages/kernel/src/hooks.ts:15"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2647,7 +4609,12 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2719,7 +4686,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/projects/:id/sessions",
+          "at": "packages/kernel/src/projects/routes.ts:188"
+        },
+        {
+          "entry": "api:DELETE /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:178"
+        },
+        {
+          "entry": "api:PATCH /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:156"
+        },
+        {
+          "entry": "api:GET /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:99"
+        },
+        {
+          "entry": "api:POST /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:109"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2763,7 +4751,24 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:POST /api/engines/:id/ping",
+          "at": "packages/kernel/src/api/engines-routes.ts:240"
+        },
+        {
+          "entry": "api:GET /api/engines",
+          "at": "packages/kernel/src/api/engines-routes.ts:156"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "doc",
+          "at": "apps/web/src/App.tsx:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2785,7 +4790,24 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/main-ai",
+          "at": "packages/kernel/src/api/models-routes.ts:45"
+        },
+        {
+          "entry": "api:PUT /api/main-ai",
+          "at": "packages/kernel/src/api/models-routes.ts:47"
+        },
+        {
+          "entry": "api:GET /api/models",
+          "at": "packages/kernel/src/api/models-routes.ts:33"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2871,7 +4893,268 @@
           "voice.provider"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/main-ai",
+          "at": "packages/kernel/src/api/models-routes.ts:45"
+        },
+        {
+          "entry": "api:PUT /api/main-ai",
+          "at": "packages/kernel/src/api/models-routes.ts:47"
+        },
+        {
+          "entry": "api:DELETE /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:178"
+        },
+        {
+          "entry": "api:PATCH /api/projects/:id",
+          "at": "packages/kernel/src/projects/routes.ts:156"
+        },
+        {
+          "entry": "api:GET /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:99"
+        },
+        {
+          "entry": "api:POST /api/projects",
+          "at": "packages/kernel/src/projects/routes.ts:109"
+        },
+        {
+          "entry": "api:PUT /api/sessions/:id/ai",
+          "at": "packages/kernel/src/api/models-routes.ts:53"
+        },
+        {
+          "entry": "api:DELETE /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:282"
+        },
+        {
+          "entry": "api:GET /api/sessions/:id",
+          "at": "packages/kernel/src/api/sessions-routes.ts:77"
+        },
+        {
+          "entry": "api:PATCH /api/sessions/:id",
+          "at": "packages/kernel/src/projects/routes.ts:268"
+        },
+        {
+          "entry": "api:GET /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:75"
+        },
+        {
+          "entry": "api:POST /api/sessions",
+          "at": "packages/kernel/src/api/sessions-routes.ts:40"
+        },
+        {
+          "entry": "setting:approval.osNotify",
+          "at": "packages/kernel/src/settings/registry.ts:660"
+        },
+        {
+          "entry": "setting:approval.remindMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:671"
+        },
+        {
+          "entry": "setting:approval.sound",
+          "at": "packages/kernel/src/settings/registry.ts:682"
+        },
+        {
+          "entry": "setting:assist.engine",
+          "at": "packages/kernel/src/settings/registry.ts:543"
+        },
+        {
+          "entry": "setting:assist.model",
+          "at": "packages/kernel/src/settings/registry.ts:552"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:builder.animation",
+          "at": "packages/kernel/src/settings/registry.ts:411"
+        },
+        {
+          "entry": "setting:builder.engine",
+          "at": "packages/kernel/src/settings/registry.ts:394"
+        },
+        {
+          "entry": "setting:builder.maxQuestions",
+          "at": "packages/kernel/src/settings/registry.ts:403"
+        },
+        {
+          "entry": "setting:checklist.maxAutoTurns",
+          "at": "packages/kernel/src/settings/registry.ts:650"
+        },
+        {
+          "entry": "setting:checklist.stallBlockTurns",
+          "at": "packages/kernel/src/settings/registry.ts:642"
+        },
+        {
+          "entry": "setting:checklist.stallChangeTurns",
+          "at": "packages/kernel/src/settings/registry.ts:634"
+        },
+        {
+          "entry": "setting:checklist.strict",
+          "at": "packages/kernel/src/settings/registry.ts:626"
+        },
+        {
+          "entry": "setting:data.attachmentsKeepDays",
+          "at": "packages/kernel/src/settings/registry.ts:805"
+        },
+        {
+          "entry": "setting:data.retentionDays",
+          "at": "packages/kernel/src/settings/registry.ts:797"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:installer.chocoEnabled",
+          "at": "packages/kernel/src/settings/registry.ts:695"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:judge.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:465"
+        },
+        {
+          "entry": "setting:judge.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:473"
+        },
+        {
+          "entry": "setting:judge.maxCallsPerSession",
+          "at": "packages/kernel/src/settings/registry.ts:448"
+        },
+        {
+          "entry": "setting:judge.model",
+          "at": "packages/kernel/src/settings/registry.ts:430"
+        },
+        {
+          "entry": "setting:judge.samples",
+          "at": "packages/kernel/src/settings/registry.ts:440"
+        },
+        {
+          "entry": "setting:judge.semantic",
+          "at": "packages/kernel/src/settings/registry.ts:456"
+        },
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        },
+        {
+          "entry": "setting:main.model",
+          "at": "packages/kernel/src/settings/registry.ts:384"
+        },
+        {
+          "entry": "setting:mode.auto.maxCostUsd",
+          "at": "packages/kernel/src/settings/registry.ts:756"
+        },
+        {
+          "entry": "setting:mode.auto.maxIterations",
+          "at": "packages/kernel/src/settings/registry.ts:764"
+        },
+        {
+          "entry": "setting:mode.auto.maxMinutes",
+          "at": "packages/kernel/src/settings/registry.ts:732"
+        },
+        {
+          "entry": "setting:mode.auto.maxTokens",
+          "at": "packages/kernel/src/settings/registry.ts:748"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "setting:permission.default",
+          "at": "packages/kernel/src/settings/registry.ts:612"
+        },
+        {
+          "entry": "setting:project.scratchDir",
+          "at": "packages/kernel/src/settings/registry.ts:705"
+        },
+        {
+          "entry": "setting:sidebar.group",
+          "at": "packages/kernel/src/settings/registry.ts:773"
+        },
+        {
+          "entry": "setting:sidebar.sort",
+          "at": "packages/kernel/src/settings/registry.ts:784"
+        },
+        {
+          "entry": "setting:tools.brave",
+          "at": "packages/kernel/src/settings/registry.ts:524"
+        },
+        {
+          "entry": "setting:tools.braveKey",
+          "at": "packages/kernel/src/settings/registry.ts:532"
+        },
+        {
+          "entry": "setting:tools.budget",
+          "at": "packages/kernel/src/settings/registry.ts:507"
+        },
+        {
+          "entry": "setting:tools.searxng",
+          "at": "packages/kernel/src/settings/registry.ts:516"
+        },
+        {
+          "entry": "setting:ui.fontSize",
+          "at": "packages/kernel/src/settings/registry.ts:329"
+        },
+        {
+          "entry": "setting:ui.language",
+          "at": "packages/kernel/src/settings/registry.ts:351"
+        },
+        {
+          "entry": "setting:ui.reduceMotion",
+          "at": "packages/kernel/src/settings/registry.ts:340"
+        },
+        {
+          "entry": "setting:ui.theme",
+          "at": "packages/kernel/src/settings/registry.ts:317"
+        },
+        {
+          "entry": "setting:verifier.local.baseUrl",
+          "at": "packages/kernel/src/settings/registry.ts:481"
+        },
+        {
+          "entry": "setting:verifier.local.model",
+          "at": "packages/kernel/src/settings/registry.ts:489"
+        },
+        {
+          "entry": "setting:verifier.local.timeoutMs",
+          "at": "packages/kernel/src/settings/registry.ts:497"
+        },
+        {
+          "entry": "setting:voice.provider",
+          "at": "packages/kernel/src/settings/registry.ts:598"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2893,7 +5176,24 @@
         "hooks": [],
         "settings": ["builder.engine", "engines", "main.engine"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "api:GET /api/models",
+          "at": "packages/kernel/src/api/models-routes.ts:33"
+        },
+        {
+          "entry": "setting:builder.engine",
+          "at": "packages/kernel/src/settings/registry.ts:394"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2941,7 +5241,132 @@
           "sidebar.group"
         ]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:engines.rescan",
+          "at": "apps/web/src/settings/Engines/EnginesSettings.tsx:64"
+        },
+        {
+          "entry": "action:settings.data-cleanup",
+          "at": "apps/web/src/settings/sections/DataSection.tsx:102"
+        },
+        {
+          "entry": "action:settings.diagnostics",
+          "at": "apps/web/src/settings/sections/AboutSection.tsx:63"
+        },
+        {
+          "entry": "api:POST /api/compare",
+          "at": "packages/plugins-core/verifiers/ladder/src/runtime.ts:277"
+        },
+        {
+          "entry": "api:GET /api/notices",
+          "at": "packages/plugins-core/verifiers/ladder/src/runtime.ts:276"
+        },
+        {
+          "entry": "api:POST /api/settings/data/cleanup",
+          "at": "packages/kernel/src/api/settings-routes.ts:86"
+        },
+        {
+          "entry": "api:GET /api/settings/diagnostics",
+          "at": "packages/kernel/src/api/settings-routes.ts:120"
+        },
+        {
+          "entry": "api:GET /api/settings",
+          "at": "packages/kernel/src/api/settings-routes.ts:73"
+        },
+        {
+          "entry": "api:PUT /api/settings",
+          "at": "packages/kernel/src/api/settings-routes.ts:148"
+        },
+        {
+          "entry": "setting:attachments.concurrency",
+          "at": "packages/kernel/src/settings/registry.ts:580"
+        },
+        {
+          "entry": "setting:attachments.folderConfirmOver",
+          "at": "packages/kernel/src/settings/registry.ts:588"
+        },
+        {
+          "entry": "setting:attachments.maxBatchMB",
+          "at": "packages/kernel/src/settings/registry.ts:572"
+        },
+        {
+          "entry": "setting:attachments.maxFileMB",
+          "at": "packages/kernel/src/settings/registry.ts:564"
+        },
+        {
+          "entry": "setting:checklist.maxAutoTurns",
+          "at": "packages/kernel/src/settings/registry.ts:650"
+        },
+        {
+          "entry": "setting:checklist.stallBlockTurns",
+          "at": "packages/kernel/src/settings/registry.ts:642"
+        },
+        {
+          "entry": "setting:checklist.stallChangeTurns",
+          "at": "packages/kernel/src/settings/registry.ts:634"
+        },
+        {
+          "entry": "setting:checklist.strict",
+          "at": "packages/kernel/src/settings/registry.ts:626"
+        },
+        {
+          "entry": "setting:data.attachmentsKeepDays",
+          "at": "packages/kernel/src/settings/registry.ts:805"
+        },
+        {
+          "entry": "setting:data.retentionDays",
+          "at": "packages/kernel/src/settings/registry.ts:797"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        },
+        {
+          "entry": "setting:installer.chocoEnabled",
+          "at": "packages/kernel/src/settings/registry.ts:695"
+        },
+        {
+          "entry": "setting:judge.engine",
+          "at": "packages/kernel/src/settings/registry.ts:421"
+        },
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        },
+        {
+          "entry": "setting:mode.default",
+          "at": "packages/kernel/src/settings/registry.ts:716"
+        },
+        {
+          "entry": "setting:permission.default",
+          "at": "packages/kernel/src/settings/registry.ts:612"
+        },
+        {
+          "entry": "setting:project.scratchDir",
+          "at": "packages/kernel/src/settings/registry.ts:705"
+        },
+        {
+          "entry": "setting:sidebar.group",
+          "at": "packages/kernel/src/settings/registry.ts:773"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/settings/runtime.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/kernel/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/approvals/src/cli.ts:1"
+        },
+        {
+          "entry": "doc",
+          "at": "packages/plugins-core/installer/src/cli.ts:1"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2963,7 +5388,16 @@
         "hooks": [],
         "settings": ["judge.samples", "ui.theme"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:judge.samples",
+          "at": "packages/kernel/src/settings/registry.ts:440"
+        },
+        {
+          "entry": "setting:ui.theme",
+          "at": "packages/kernel/src/settings/registry.ts:317"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -2985,7 +5419,16 @@
         "hooks": [],
         "settings": ["main.engine", "main.model"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "setting:main.engine",
+          "at": "packages/kernel/src/settings/registry.ts:375"
+        },
+        {
+          "entry": "setting:main.model",
+          "at": "packages/kernel/src/settings/registry.ts:384"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3009,7 +5452,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:approvals.mini-open",
+          "at": "apps/web/src/panels/Approvals/MiniApprovalCard.tsx:12"
+        },
+        {
+          "entry": "action:approvals.toast",
+          "at": "apps/web/src/panels/Approvals/Toasts.tsx:26"
+        },
+        {
+          "entry": "action:approvals.undo",
+          "at": "apps/web/src/panels/Approvals/ApprovalsArea.tsx:136"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3051,7 +5507,40 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:builder.drawer-tab",
+          "at": "apps/web/src/builder/Drawer.tsx:30"
+        },
+        {
+          "entry": "action:builder.sidebar-tab",
+          "at": "apps/web/src/builder/chat/BuilderSidebar.tsx:25"
+        },
+        {
+          "entry": "action:builder.start-chat",
+          "at": "apps/web/src/builder/StartChoice.tsx:50"
+        },
+        {
+          "entry": "action:builder.start-clone",
+          "at": "apps/web/src/builder/StartChoice.tsx:85"
+        },
+        {
+          "entry": "action:builder.start-clone-list",
+          "at": "apps/web/src/builder/StartChoice.tsx:40"
+        },
+        {
+          "entry": "action:builder.start-empty",
+          "at": "apps/web/src/builder/StartChoice.tsx:21"
+        },
+        {
+          "entry": "action:builder.start-plugin",
+          "at": "apps/web/src/builder/StartChoice.tsx:64"
+        },
+        {
+          "entry": "action:builder.start-plugin-list",
+          "at": "apps/web/src/builder/StartChoice.tsx:30"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3075,7 +5564,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:chat.approval-option",
+          "at": "apps/web/src/chat/BlockView.tsx:97"
+        },
+        {
+          "entry": "action:chat.open-diff",
+          "at": "apps/web/src/chat/BlockView.tsx:146"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3099,7 +5597,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:checklist.toggle",
+          "at": "apps/web/src/panels/Checklist/ChecklistTree.tsx:121"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3137,7 +5640,32 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:composer.attachment-preview",
+          "at": "apps/web/src/composer/AttachmentChips.tsx:78"
+        },
+        {
+          "entry": "action:composer.clear-agent",
+          "at": "apps/web/src/composer/SlashPalette.tsx:247"
+        },
+        {
+          "entry": "action:composer.remove-attachment",
+          "at": "apps/web/src/composer/AttachmentChips.tsx:99"
+        },
+        {
+          "entry": "action:composer.stop",
+          "at": "apps/web/src/composer/StopButton.tsx:55"
+        },
+        {
+          "entry": "action:composer.stop-now",
+          "at": "apps/web/src/composer/StopButton.tsx:78"
+        },
+        {
+          "entry": "action:composer.stop-pause",
+          "at": "apps/web/src/composer/StopButton.tsx:66"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3161,7 +5689,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:confirm.cancel",
+          "at": "apps/web/src/shell/projects/ConfirmCard.tsx:29"
+        },
+        {
+          "entry": "action:confirm.ok",
+          "at": "apps/web/src/shell/projects/ConfirmCard.tsx:26"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3185,7 +5722,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:conversation.menu",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:720"
+        },
+        {
+          "entry": "action:conversation.menu-item",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:660"
+        },
+        {
+          "entry": "action:conversation.select",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:689"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3209,7 +5759,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:dev.dismiss-banner",
+          "at": "apps/web/src/actions/DevActionGuard.tsx:54"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3233,7 +5788,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:empty.agent",
+          "at": "apps/web/src/shell/projects/EmptySession.tsx:62"
+        },
+        {
+          "entry": "action:empty.example",
+          "at": "apps/web/src/shell/projects/EmptySession.tsx:52"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3257,7 +5821,28 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:engines.install-guide",
+          "at": "apps/web/src/settings/Engines/EngineCard.tsx:32"
+        },
+        {
+          "entry": "action:engines.ping",
+          "at": "apps/web/src/settings/Engines/EngineCard.tsx:225"
+        },
+        {
+          "entry": "action:engines.save-key",
+          "at": "apps/web/src/settings/Engines/EngineCard.tsx:167"
+        },
+        {
+          "entry": "action:engines.save-settings",
+          "at": "apps/web/src/settings/Engines/EngineCard.tsx:207"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3301,7 +5886,44 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:inspector.clear-overlay",
+          "at": "apps/web/src/builder/inspector/DryRunTab.tsx:103"
+        },
+        {
+          "entry": "action:inspector.dry-run",
+          "at": "apps/web/src/builder/inspector/DryRunTab.tsx:92"
+        },
+        {
+          "entry": "action:inspector.overwrite",
+          "at": "apps/web/src/builder/inspector/SaveBar.tsx:138"
+        },
+        {
+          "entry": "action:inspector.save",
+          "at": "apps/web/src/builder/inspector/SaveBar.tsx:110"
+        },
+        {
+          "entry": "action:inspector.skill-down",
+          "at": "apps/web/src/builder/inspector/NodeFields.tsx:121"
+        },
+        {
+          "entry": "action:inspector.skill-up",
+          "at": "apps/web/src/builder/inspector/NodeFields.tsx:110"
+        },
+        {
+          "entry": "action:inspector.tab",
+          "at": "apps/web/src/builder/inspector/InspectorPanel.tsx:45"
+        },
+        {
+          "entry": "action:inspector.yaml-apply",
+          "at": "apps/web/src/builder/inspector/YamlTab.tsx:48"
+        },
+        {
+          "entry": "action:inspector.yaml-reset",
+          "at": "apps/web/src/builder/inspector/YamlTab.tsx:58"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3325,7 +5947,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:lego.detach-plugin",
+          "at": "apps/web/src/builder/lego/GroupFrame.tsx:22"
+        },
+        {
+          "entry": "action:lego.remove-skill",
+          "at": "apps/web/src/builder/lego/LegoNode.tsx:142"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3349,7 +5980,24 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:model.choose",
+          "at": "apps/web/src/engines/ModelButton.tsx:109"
+        },
+        {
+          "entry": "action:model.login",
+          "at": "apps/web/src/engines/ModelButton.tsx:135"
+        },
+        {
+          "entry": "action:model.open",
+          "at": "apps/web/src/engines/ModelButton.tsx:78"
+        },
+        {
+          "entry": "action:model.scope",
+          "at": "apps/web/src/engines/ModelButton.tsx:153"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3387,7 +6035,36 @@
         "hooks": [],
         "settings": ["engines"]
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:nav.agent-builder",
+          "at": "apps/web/src/actions/registry.ts:36"
+        },
+        {
+          "entry": "action:nav.engines",
+          "at": "apps/web/src/actions/registry.ts:40"
+        },
+        {
+          "entry": "action:nav.install",
+          "at": "apps/web/src/actions/registry.ts:39"
+        },
+        {
+          "entry": "action:nav.plugins",
+          "at": "apps/web/src/actions/registry.ts:37"
+        },
+        {
+          "entry": "action:nav.settings",
+          "at": "apps/web/src/actions/registry.ts:41"
+        },
+        {
+          "entry": "action:nav.skills",
+          "at": "apps/web/src/actions/registry.ts:38"
+        },
+        {
+          "entry": "setting:engines",
+          "at": "packages/kernel/src/settings/registry.ts:364"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3411,7 +6088,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:panel.tab",
+          "at": "apps/web/src/shell/RightPanel.tsx:52"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3435,7 +6117,28 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:plus.attach",
+          "at": "apps/web/src/actions/registry.ts:65"
+        },
+        {
+          "entry": "action:plus.open-folder",
+          "at": "apps/web/src/actions/registry.ts:61"
+        },
+        {
+          "entry": "action:plus.pick-recent",
+          "at": "apps/web/src/actions/registry.ts:63"
+        },
+        {
+          "entry": "action:plus.pin",
+          "at": "apps/web/src/actions/registry.ts:64"
+        },
+        {
+          "entry": "action:plus.recent",
+          "at": "apps/web/src/actions/registry.ts:62"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3459,7 +6162,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:project-settings.close",
+          "at": "apps/web/src/shell/projects/ProjectSettings.tsx:150"
+        },
+        {
+          "entry": "action:project-settings.relink",
+          "at": "apps/web/src/shell/projects/ProjectSettings.tsx:83"
+        },
+        {
+          "entry": "action:project-settings.save",
+          "at": "apps/web/src/shell/projects/ProjectSettings.tsx:147"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3507,7 +6223,52 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:projects.archive-stale",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:312"
+        },
+        {
+          "entry": "action:projects.done-toggle",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:576"
+        },
+        {
+          "entry": "action:projects.group-toggle",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:478"
+        },
+        {
+          "entry": "action:projects.menu",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:536"
+        },
+        {
+          "entry": "action:projects.menu-item",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:608"
+        },
+        {
+          "entry": "action:projects.new-in-project",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:197"
+        },
+        {
+          "entry": "action:projects.new-session",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:172"
+        },
+        {
+          "entry": "action:projects.open-folder",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:213"
+        },
+        {
+          "entry": "action:projects.pick-new",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:181"
+        },
+        {
+          "entry": "action:projects.relink",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:552"
+        },
+        {
+          "entry": "action:projects.select",
+          "at": "apps/web/src/shell/projects/ProjectSidebar.tsx:498"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3531,7 +6292,24 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:resume.check-choice",
+          "at": "apps/web/src/recovery/ResumeCheckCard.tsx:43"
+        },
+        {
+          "entry": "action:resume.open-list",
+          "at": "apps/web/src/recovery/resume-entry.tsx:38"
+        },
+        {
+          "entry": "action:resume.session",
+          "at": "apps/web/src/recovery/ProjectResumeCard.tsx:56"
+        },
+        {
+          "entry": "action:resume.start",
+          "at": "apps/web/src/recovery/ResumeFlow.tsx:124"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3569,7 +6347,32 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:run-mode.auto-cancel",
+          "at": "apps/web/src/run-mode/AutoLimitsCard.tsx:74"
+        },
+        {
+          "entry": "action:run-mode.auto-edit-limits",
+          "at": "apps/web/src/run-mode/AutoLimitsCard.tsx:67"
+        },
+        {
+          "entry": "action:run-mode.auto-start",
+          "at": "apps/web/src/run-mode/AutoLimitsCard.tsx:58"
+        },
+        {
+          "entry": "action:run-mode.open-review",
+          "at": "apps/web/src/run-mode/AutoSummaryCard.tsx:67"
+        },
+        {
+          "entry": "action:run-mode.plan-choose",
+          "at": "apps/web/src/run-mode/PlanDoneCard.tsx:54"
+        },
+        {
+          "entry": "action:run-mode.review-action",
+          "at": "apps/web/src/run-mode/ReviewListSection.tsx:74"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3593,7 +6396,16 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:scan.dismiss",
+          "at": "apps/web/src/engines/ScanBubble.tsx:62"
+        },
+        {
+          "entry": "action:scan.open-install",
+          "at": "apps/web/src/engines/ScanBubble.tsx:56"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3663,7 +6475,96 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:settings.export",
+          "at": "apps/web/src/settings/sections/TransferSection.tsx:52"
+        },
+        {
+          "entry": "action:settings.import",
+          "at": "apps/web/src/settings/sections/TransferSection.tsx:71"
+        },
+        {
+          "entry": "action:settings.list-add",
+          "at": "apps/web/src/actions/registry.ts:191"
+        },
+        {
+          "entry": "action:settings.list-remove",
+          "at": "apps/web/src/actions/registry.ts:192"
+        },
+        {
+          "entry": "action:settings.pick-folder",
+          "at": "apps/web/src/actions/registry.ts:193"
+        },
+        {
+          "entry": "action:settings.project-pin",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:47"
+        },
+        {
+          "entry": "action:settings.project-relink",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:39"
+        },
+        {
+          "entry": "action:settings.project-remove",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:81"
+        },
+        {
+          "entry": "action:settings.project-remove-cancel",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:74"
+        },
+        {
+          "entry": "action:settings.project-remove-confirm",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:64"
+        },
+        {
+          "entry": "action:settings.project-settings",
+          "at": "apps/web/src/settings/sections/ProjectsSection.tsx:54"
+        },
+        {
+          "entry": "action:settings.reset-all",
+          "at": "apps/web/src/settings/form/SettingsForm.tsx:374"
+        },
+        {
+          "entry": "action:settings.reset-all-cancel",
+          "at": "apps/web/src/settings/form/SettingsForm.tsx:366"
+        },
+        {
+          "entry": "action:settings.reset-all-confirm",
+          "at": "apps/web/src/settings/form/SettingsForm.tsx:359"
+        },
+        {
+          "entry": "action:settings.reset-field",
+          "at": "apps/web/src/settings/form/SettingsForm.tsx:259"
+        },
+        {
+          "entry": "action:settings.reset-group",
+          "at": "apps/web/src/settings/form/SettingsForm.tsx:326"
+        },
+        {
+          "entry": "action:settings.secret-delete",
+          "at": "apps/web/src/settings/sections/DataSection.tsx:81"
+        },
+        {
+          "entry": "action:settings.secret-save",
+          "at": "apps/web/src/actions/registry.ts:194"
+        },
+        {
+          "entry": "action:settings.show-advanced",
+          "at": "apps/web/src/settings/SettingsScreen.tsx:103"
+        },
+        {
+          "entry": "action:settings.tab",
+          "at": "apps/web/src/settings/SettingsScreen.tsx:118"
+        },
+        {
+          "entry": "action:settings.toggle",
+          "at": "apps/web/src/actions/registry.ts:190"
+        },
+        {
+          "entry": "action:settings.update-check",
+          "at": "apps/web/src/settings/sections/AboutSection.tsx:48"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3687,7 +6588,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:shell.open-panel",
+          "at": "apps/web/src/shell/AppShell.tsx:100"
+        },
+        {
+          "entry": "action:shell.open-sidebar",
+          "at": "apps/web/src/shell/AppShell.tsx:86"
+        },
+        {
+          "entry": "action:shell.stop-all",
+          "at": "apps/web/src/shell/StopAllButton.tsx:14"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3711,7 +6625,20 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:subagent.add",
+          "at": "apps/web/src/composer/SubagentConfirm.tsx:52"
+        },
+        {
+          "entry": "action:subagent.cancel",
+          "at": "apps/web/src/composer/SubagentConfirm.tsx:62"
+        },
+        {
+          "entry": "action:subagent.new-session",
+          "at": "apps/web/src/composer/SubagentConfirm.tsx:59"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3735,7 +6662,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:terminal.login",
+          "at": "apps/web/src/panels/TerminalPanel.tsx:115"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3759,7 +6691,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:toolpicker.source-link",
+          "at": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx:84"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3783,7 +6720,12 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:topbar.theme",
+          "at": "apps/web/src/design/ThemeToggle.tsx:12"
+        }
+      ],
       "tests": [],
       "status": "정상"
     },
@@ -3823,7 +6765,36 @@
         "hooks": [],
         "settings": []
       },
-      "code": [],
+      "code": [
+        {
+          "entry": "action:where.cancel",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:62"
+        },
+        {
+          "entry": "action:where.keep",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:90"
+        },
+        {
+          "entry": "action:where.open-folder",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:27"
+        },
+        {
+          "entry": "action:where.pick-project",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:52"
+        },
+        {
+          "entry": "action:where.recent",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:35"
+        },
+        {
+          "entry": "action:where.scratch",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:44"
+        },
+        {
+          "entry": "action:where.use-top",
+          "at": "apps/web/src/shell/projects/WhereToWork.tsx:87"
+        }
+      ],
       "tests": [],
       "status": "정상"
     }
@@ -3836,7 +6807,8 @@
     "mcp": 20,
     "hooks": 22,
     "settings": 257,
-    "noEntry": 42
+    "noEntry": 42,
+    "unlinkedEntries": 0
   },
   "screenAdded": [
     "F-119 화면: approvals (3)",
