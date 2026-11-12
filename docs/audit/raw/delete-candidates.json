@@ -1,0 +1,6594 @@
+[
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#DEFAULT_API_URL",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#TOKEN_STORAGE_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#BackoffOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#PluginInfo",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#WorkspacesResponse",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#CreateSessionRequest",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#ApiClientOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#EventStreamOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/api/client.ts#EventStream",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/Canvas.tsx#CanvasProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/Drawer.tsx#DrawerProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/StartChoice.tsx#StartChoiceProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/ai-choice.ts#followsMain",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/catalog.ts#CatalogPlugin",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/catalog.ts#CatalogAgent",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/catalog.ts#NODE_DESC",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/BuilderSidebar.tsx#SIDEBAR_MODES",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/BuilderSidebar.tsx#SidebarMode",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/BuilderSidebar.tsx#SIDEBAR_MODE_LABEL",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/BuilderSidebar.tsx#BuilderSidebarProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/MicButton.tsx#MicButtonProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/mic.ts#MicPhase",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/mic.ts#MicEvent",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#STT_SETTING_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#readSttSetting",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#writeSttSetting",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#LocalHttpSpeechToText",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#browserStt",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/chat/stt.ts#sttAvailability",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/DraftCards.tsx#SKIP_QUESTIONS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/SaveDialog.tsx#SaveDialogProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/api.ts#DesignNotice",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/api.ts#SaveDraftRequest",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/api.ts#SaveDraftError",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/forge-handoff.ts#forgePrefillText",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/model.ts#MANUAL_REASON",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/model.ts#PERMISSION_PLAIN",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/draft/model.ts#ChecklistContext",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#NODE_W",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#NODE_H",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#HxNodeData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#HxGroupData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#groupSize",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/flow.ts#HxEdgeData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/graph.ts#snap",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/graph.ts#defaultSpec",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/AiChoiceField.tsx#AiChoiceFieldProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/DryRunTab.tsx#DryRunTabProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/InspectorPanel.tsx#InspectorTab",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/InspectorPanel.tsx#InspectorPanelProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/NodeFields.tsx#NodeFieldsProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/SaveBar.tsx#SaveBarProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/YamlTab.tsx#YamlTabProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/dryrun-stages.ts#StageRow",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/dryrun-stages.ts#StageRunView",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/dryrun.ts#NodeOverlay",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/dryrun.ts#PRICE_PER_MTOK",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/model.ts#moveItem",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/inspector/yaml.ts#YamlResult",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/lego/dnd.ts#ChipDrag",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/lego/history.ts#History",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/lego/history.ts#HistoryAction",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/builder/lego/model.ts#EdgeCompat",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/BlockView.tsx#APPROVAL_OPTION_NOT_READY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/ChatStream.tsx#ChatStreamProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/ChatStream.tsx#ViewModeSwitch",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/SentMessage.tsx#SentAttachment",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/StopBlockCard.tsx#StopBlockCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/ToolCard.tsx#CollapsibleCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/ToolCard.tsx#toolSummary",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/ToolCard.tsx#ToolCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/blocks.ts#ChatBlockKind",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/blocks.ts#StopBlockExtra",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/chat/blocks.ts#MODE_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/AttachmentChips.tsx#PREVIEW_TEXT_CHARS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/AttachmentChips.tsx#AttachmentPreview",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/ChipMenu.tsx#ChipMenuProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#PaletteGroup",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#PALETTE_GROUPS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#PALETTE_GROUP_LABEL",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#PaletteItem",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#BUILTIN_COMMANDS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#pinsChip",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#SlashPaletteProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#SlashPalette",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SlashPalette.tsx#UseSlashPaletteOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/StopButton.tsx#ESC_TWICE_MS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/StopButton.tsx#useEscTwice",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/SubagentConfirm.tsx#SubagentConfirmProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/attach-flow.ts#AttachFlowDeps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/attach-flow.ts#UiAttachResult",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/attachments.ts#imagesFromClipboard",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/attachments.ts#ChipKind",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/fuzzy.ts#bestScore",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/types.ts#AuthMode",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/types.ts#AUTH_LABEL",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/composer/useAttachUpload.ts#fileToBase64",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/css.ts#LIGHT",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/css.ts#DARK",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/theme.ts#THEME_ORDER",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/tokens.ts#StatusName",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/ui-prefs.ts#FONT_SIZE_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/ui-prefs.ts#REDUCE_MOTION_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/design/ui-prefs.ts#LANGUAGE_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/ModelButton.tsx#ModelButtonProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/ScanBubble.tsx#useReducedMotion",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/ScanBubble.tsx#ScanBubbleProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useEngineScan.ts#DONE_VISIBLE_MS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useEngineScan.ts#POLL_MS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useEngineScan.ts#INSTALL_DONE_EVENT",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useEngines.tsx#UseEnginesOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useEngines.tsx#EnginesUi",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/engines/useProjectAi.ts#ProjectLike",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#FORGE_CARD_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#ForgeCardBlock",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#ForgeQuestionCard",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#ForgeSpecCard",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#permissionSummary",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/forge/ForgeCards.tsx#ForgeInstallCard",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/FirstRunCard.tsx#FirstRunChoice",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/FirstRunCard.tsx#FirstRunCardData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/FirstRunCard.tsx#FirstRunCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallManager.tsx#InstallCardSink",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallManager.tsx#InstallManagerProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallManager.tsx#KIND_FILTERS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallManager.tsx#PRICE_FILTERS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallPlanCard.tsx#InstallPlanCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallPlanCard.tsx#openExternal",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/InstallPlanCard.tsx#ResolveFailureCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/api.ts#GestureKind",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/api.ts#PlanResponse",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#PRICING_TIERS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#PricingView",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#BadgeTone",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#isPricingTier",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#KIND_SOURCE",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#ACTION_BUTTON",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#ACTION_GESTURE",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#SUDO_TEXT",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#InstallCardButtonId",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/model.ts#PlanCardOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/useInstallCards.ts#InstallCardEntry",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/useInstallCards.ts#ExtraPending",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/useInstallCards.ts#ChatInstallCall",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/useInstallCards.ts#UseInstallCardsOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/install/useInstallCards.ts#InstallCardsState",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/ApprovalsArea.tsx#ExtraAreaCard",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/ApprovalsArea.tsx#ApprovalsAreaProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/Toasts.tsx#ToastsProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/alert-prefs.ts#OS_NOTIFY_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/alert-prefs.ts#REMIND_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/alert-prefs.ts#SOUND_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/alert-prefs.ts#DEFAULT_ALERT_PREFS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#APPROVAL_RESOLVED",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#CHOICE_LABELS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#ActionCardSection",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#ActionCardButton",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#REMEMBER_LABEL",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/model.ts#cardOfEvent",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useApprovals.ts#ExtraPending",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useApprovals.ts#UseApprovalsOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useApprovals.ts#ApprovalsState",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useNotices.ts#NoticeData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useNotices.ts#noticesFromEvents",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Approvals/useNotices.ts#noticeToastId",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/ApprovalCard.tsx#ApprovalCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/ChecklistTree.tsx#ItemDetail",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/ChecklistTree.tsx#ChecklistTreeProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/PlanReview.tsx#PlanReviewProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/model.ts#ItemStatus",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/model.ts#Acceptance",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/model.ts#Evidence",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/model.ts#Verdict",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/model.ts#LadderStep",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/stages.ts#StageStatus",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/stages.ts#StageItemMeta",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/Checklist/stages.ts#isFinishedStage",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/DiffPanel.tsx#DiffPanelProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/TerminalPanel.tsx#xtermView",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/TerminalPanel.tsx#TerminalPanelProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx#ToolPickerCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx#PricingBadge",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/api.ts#FindResultData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/api.ts#toPickerData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/api.ts#AgentGapData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/model.ts#PricingTier",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/ToolPicker/model.ts#InstallMethodData",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/diff.ts#ChangeKind",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/terminal-session.ts#TerminalSessionHandlers",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/trajectory.ts#TrajectoryEntry",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/trajectory.ts#TrajectoryStep",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/trajectory.ts#Trajectory",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/panels/usePanels.tsx#UsePanelsOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/ProjectResumeCard.tsx#ProjectResumeCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/ResumeCard.tsx#ResumeCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/ResumeCheckCard.tsx#ResumeCheckCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/ResumeFlow.tsx#ResumeStartChoices",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/ResumeFlow.tsx#ResumeFlowProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/resume-entry.tsx#ResumeCountLinkProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/recovery/resume-list.ts#resumeLine",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/EngineCard.tsx#EngineCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/EnginesSettings.tsx#EnginesSettingsProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/model.ts#ScanEngine",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/model.ts#SupportedEngine",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/model.ts#SUPPORTED_ENGINES",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/Engines/model.ts#EngineLocationView",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/SettingsForm.tsx#scopeLabel",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/SettingsForm.tsx#displayValue",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/custom-widgets.tsx#CustomWidgetProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/types.ts#SettingGroupId",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/types.ts#SettingScope",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/types.ts#SettingWidget",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/types.ts#SettingStorage",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/types.ts#JsonSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/form/widgets.tsx#rangeText",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/sections/AboutSection.tsx#AboutSectionProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/sections/DataSection.tsx#DataSectionProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/sections/ProjectsSection.tsx#ProjectsSectionProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/settings/sections/TransferSection.tsx#TransferSectionProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/AppShell.tsx#AppShellProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/Resizer.tsx#ResizerProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/RightPanel.tsx#RightPanelProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/SessionNav.tsx#SessionNavProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/StopAllButton.tsx#StopAllButtonProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/TopBar.tsx#QUOTA_WARNING_RATIO",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/TopBar.tsx#QUOTA_DANGER_RATIO",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/layout-store.ts#DEFAULT_LAYOUT",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/layout-store.ts#clamp",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/paused-label.ts#PausedReason",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/paused-label.ts#isPausedReason",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/ConfirmCard.tsx#ConfirmCardProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/EmptySession.tsx#EXAMPLE_PROMPTS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/EmptySession.tsx#EmptySessionProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/ProjectSettings.tsx#ProjectSettingsValue",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/WhereToWork.tsx#SCRATCH_HELP",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/WhereToWork.tsx#WhereToWorkProps",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/api.ts#ProjectsResponse",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/api.ts#ChangeProjectResult",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/model.ts#NO_PROJECT",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/model.ts#ARCHIVE_SUGGEST_DAYS",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/prefs.ts#SIDEBAR_COLLAPSED_KEY",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/projects/useProjectShell.tsx#UseProjectShellOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "apps/web/src/shell/types.ts#SessionAgent",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/events.ts#contentText",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/permission.ts#HookPermissionGateOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/permission.ts#toolNameOf",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#EngineFamily",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#EngineRoute",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#AcpCandidate",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#FamilyCandidates",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#ENGINE_CANDIDATES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#ResolveEngineInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#SkipReason",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/acp-generic/src/resolver.ts#EngineSelection",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/antigravity/src/args.ts#AgyArgsInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/antigravity/src/errors.ts#AgyStructuredError",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/codex/src/jsonrpc.ts#RpcId",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/codex/src/jsonrpc.ts#RpcServerRequest",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/codex/src/jsonrpc.ts#ClientInfo",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/anthropic.ts#AnthropicClientOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/anthropic.ts#ANTHROPIC_BASE_URL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/anthropic.ts#toAnthropicMessages",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/attachments.ts#VISION_MODEL_RE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/attachments.ts#ApiProviderKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/attachments.ts#INLINE_TEXT_MAX",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/attachments.ts#ApiAttachmentInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/gemini.ts#GeminiClientOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/gemini.ts#GEMINI_BASE_URL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/json-fallback.ts#jsonProtocolPrompt",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/json-fallback.ts#isToolsUnsupported",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/openai.ts#OpenAIChatClientOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/engines/openai-compat/src/openai.ts#toOpenAIMessages",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/data-cleanup.ts#DataCleanupOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/diagnostics.ts#DiagnosticsInput",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/diagnostics.ts#REDACTED",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/transfer.ts#EXPORT_HEADER",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/transfer.ts#ImportIssue",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/kernel/src/settings/transfer.ts#ImportResult",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#NODE_OUTPUT_TOOL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#OutputSource",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#ExtractedOutput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#pickSchemaFields",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#OutputValidation",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/contract.ts#ConnectionIssue",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/assets.ts#AssetKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/assets.ts#UnknownRef",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#DesignOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#DesignNotice",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#DesignResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#EditResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#DesignerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/designer.ts#SKIP_QUESTIONS_LABEL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/engines.ts#engineById",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/parse.ts#DesignerReply",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/patch.ts#PATCH_PATH_RE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/patch.ts#PatchOpSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/patch.ts#DraftPatchSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/patch.ts#PatchParse",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/patch.ts#PatchCheck",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#isPlain",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#toPlain",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#PlainIssue",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#FALLBACK_REASON",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#FALLBACK_NEED",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#FALLBACK_COST",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/plain.ts#fallbackSummary",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/prompt.ts#DESIGNER_SYSTEM_PROMPT",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/prompt.ts#DRAFT_FORMAT_GUIDE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/prompt.ts#QUESTIONS_FORMAT_GUIDE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/prompt.ts#inventoryForPrompt",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/prompt.ts#DesignPromptInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/route.ts#BuilderDesignerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/route.ts#DESIGN_ROUTE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/route.ts#EDIT_ROUTE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/route.ts#DRAFTS_ROUTE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/route.ts#SAVE_AGENT_ROUTE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/session.ts#DesignerSessionOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/session.ts#DesignerSession",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/settings.ts#BUILDER_DEFAULT_MAX_QUESTIONS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/settings.ts#BuilderSettingsInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/settings.ts#DesignerEngineChoice",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/structure.ts#StructureResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/structure.ts#draftPipeline",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/wire.ts#BuilderDesignerWireOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/designer/wire.ts#registerBuilderDesignerRoutes",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/save.ts#SaveDraftInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/save.ts#SaveDraftResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/save.ts#suggestAgentName",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/save.ts#designNotes",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#DRAFT_STALE_DAYS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#DraftVersion",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#ChatLine",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#DraftRecordSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#DraftListItem",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/drafts/store.ts#DraftStoreOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/agents.ts#summarizeNodes",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/engines.ts#ENGINE_ID_BY_BINARY",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/engines.ts#engineIdOf",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/engines.ts#hostOf",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/filter.ts#MAX_TEXT",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/health.ts#EngineHealthInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/relevance.ts#RankedKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/relevance.ts#RANKED_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/relevance.ts#ScoredAsset",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/relevance.ts#PickResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/route.ts#InventoryResponse",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/route.ts#InventoryProvider",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/route.ts#inventoryResponse",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/service.ts#PLUGIN_CHANGE_EVENTS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/service.ts#InventoryServiceOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/service.ts#EventSource",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/skills.ts#SKILL_FILE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/skills.ts#SkillFrontmatter",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/skills.ts#CollectSkillsOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/wire.ts#BuilderInventoryOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/inventory/workspace.ts#WorkspaceScanOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/condition.ts#ConditionError",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/condition.ts#lookupPath",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/condition.ts#evaluateExpression",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/missing-engine.ts#MISSING_ENGINE_KIND",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/runner.ts#MAX_FANOUT_CONCURRENCY",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/runner.ts#stableHash",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/runner.ts#lastAssistantText",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/runner.ts#runPipeline",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/stages.ts#plainLine",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/agent-builder/src/runner/stages.ts#trackStages",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/ai-accepts.ts#PROPOSE_AFTER",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/ai-accepts.ts#AiAcceptInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/ai-accepts.ts#AiAcceptResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/ai-accepts.ts#AiAcceptTrackerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/ai-accepts.ts#AiAcceptTracker",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/auto-mode.ts#AUTO_SAFE_CHOICES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/auto-mode.ts#AutoCardDecision",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/auto-mode.ts#AUTO_CARD_BLOCK_REASON",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/auto-mode.ts#AUTO_CARD_NO_SAFE_REASON",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/auto-mode.ts#AutoCardHandlerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#DifferenceKindSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CARD_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CardKindSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CHOICE_IDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CardOptionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CardOption",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CardTechnicalSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#CardTechnical",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/card.ts#ApprovalCardInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#EquivalencePairSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#EquivalencePair",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#EquivalencesSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#Equivalences",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#normalizeValue",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#loadEquivalences",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#hasEquivalence",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#addEquivalence",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#DictionaryMatch",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#canonicalPathKey",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#FileSnapshot",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/dictionary.ts#snapshotFile",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#APPROVAL_CARD_EVIDENCE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#ACCEPT_MESSAGE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#REDO_MESSAGE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#MOVE_MESSAGE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#REGISTER_MESSAGE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#SKIP_MESSAGE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#driveTo",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#redoInstruction",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#dependentsOf",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/handlers.ts#LedgerHandlerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#PlainRule",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#PlainViolation",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#PlainCheckResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#PlainCheckOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#MAX_SENTENCE_CHARS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#MAX_ENGLISH_RATIO",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#PLAIN_TERMS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/plain-korean.ts#splitSentences",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/session.ts#sessionDir",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#APPROVAL_CARD_KIND",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#BATCH_THRESHOLD",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#DecisionRecord",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#UndoRecord",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#EventSinkLike",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#TimerApi",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#BatchSuggestion",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/store.ts#ResolveResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/templates.ts#shortValue",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/templates.ts#optionsFor",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/templates.ts#differenceText",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/approvals/src/templates.ts#ProposalInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/cache.ts#EngineLocationSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/cache.ts#EngineEntrySchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/cache.ts#LocalLlmEntrySchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/exec.ts#ExecOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/min-versions.ts#VersionStatus",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/plugin.ts#officialLoginState",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/probes/all.ts#ProbeAllOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/probes/probe.ts#PROBE_HOST",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/probes/probe.ts#LocalLlmApi",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#RESCAN_REASONS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#EngineProgressState",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#EngineProgressItem",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#PROGRESS_TARGETS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#engineLabel",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#engineNames",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/progress.ts#entryState",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/scan.ts#hostLocation",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/scanner.ts#EngineScannerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/scanner.ts#STARTUP_RETRY_MS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/scanner.ts#RouteHost",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/scanner.ts#ScannerLike",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/version.ts#VersionResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/which.ts#LocateOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/wsl.ts#WSL_EXE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/wsl.ts#WSL_TARGETS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/engine-scanner/src/wsl.ts#WslOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/broker.ts#ForgeCardKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/broker.ts#ForgeBrokerOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#CheckKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#CheckIssue",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#PermissionUsage",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#CheckReport",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#MANIFEST",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#checkManifest",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#typecheckPlugin",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#checkSkillMd",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#analyzePermissionUsage",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/check.ts#lintPermissions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#FORGE_PIPELINE",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#SCAFFOLD_ITEM",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#ForgeInstaller",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#ForgeOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#lastJson",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#specPrompt",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/engine.ts#scaffoldPrompt",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#SessionMaterial",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#ExtractedStep",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#ExtractedCommand",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#ExtractedSkill",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#generalizeSteps",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#repeatedCommands",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/extract.ts#verificationsOf",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/forge.ts#CreateForgeOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/import/common.ts#IMPORT_MAIN",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/import/skill-folder.ts#skillPluginMain",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#TRUST_LABELS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#forgePluginsRoot",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#InstallFileChange",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#InstallWarning",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#listFiles",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#permissionLines",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/install.ts#permissionWarnings",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#QUESTION_IDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#QuestionId",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#ForgeChoice",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#ForgeQuestion",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#Inferred",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/interview.ts#suggestedAnswer",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/sandbox.ts#ExampleResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/sandbox.ts#SandboxReport",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/scaffold.ts#PROTECTED_FILES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/scaffold.ts#FileWrite",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/scaffold.ts#templateVars",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/spec.ts#FORGE_HOOK_NAMES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/spec.ts#ForgeExampleSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/spec.ts#SpecValidation",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins-core/forge/src/spec.ts#parseForgeSpec",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#OLLAMA_DEFAULT_BASE_URL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#LOCAL_DEFAULT_MODEL",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#LOCAL_DEFAULT_TIMEOUT_MS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#FetchLike",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#LocalVerifierSettings",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#LocalVerifierOptions",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/plugins/verifier-local/src/ollama.ts#ollamaRequestBody",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DRAFT_DUTIES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftDutySchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftDuty",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftNodeInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftEdgeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#GAP_ORIGINS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftGapSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent-draft.ts#DraftQuestionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#PipelineRefSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#PipelineRef",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#parseAgent",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#isPluginPipelineRef",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#AGENT_SOURCES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/agent.ts#AgentSourceSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#EngineInputsSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#DeliveryMode",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#AttachmentDelivery",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#renderAttachmentList",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#CliDelivery",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment-delivery.ts#AttachmentRef",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#ATTACHMENT_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#AttachmentKindSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#REPRESENTATION_FORMS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#RepresentationFormSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#RepresentationSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#AttachmentWarningSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#ATTACHMENT_STATUSES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/attachment.ts#AttachmentInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/auto-limits.ts#LimitKey",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#AssistantTextEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#ToolCallEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#ToolResultEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#FileChangeEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#UsageEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#ErrorEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#ApprovalResolvedEventSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/events.ts#ApprovalResolvedEvent",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#FsPermissionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#FsPermission",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#NetDomainSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#PLUGIN_API_VERSION",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#ProvidesSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/manifest.ts#Provides",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#MODEL_AUTHS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#MODEL_STATUSES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#MODEL_SOURCES",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#ModelInputsSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#ModelAuth",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#ModelStatus",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/models.ts#ENGINE_ID_BY_BIN",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#EngineRef",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#Condition",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#GateNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#FanoutNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#JoinNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#LoopNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#RouterNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/pipeline.ts#SubagentNodeSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/schema-compat.ts#SchemaCompatResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/stt.ts#STT_PROVIDERS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/stt.ts#SttSettings",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JUDGE_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JudgeKind",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#NoulQuestionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#ChoiceQuestionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#ScoreQuestionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JudgeQuestionSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#SymbolNameSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JudgeStateInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#NoulAnswerSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#ChoiceAnswerSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#ScoreAnswerSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JudgeAnswer",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#DataMinimizationError",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#stripCodeBlocks",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JUDGE_SYSTEM_PROMPT",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#JudgeMessages",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/protocol/src/verifier.ts#DEVIATION_KINDS",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/skill-md.ts#SkillFrontmatterSchema",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/skill-md.ts#SkillFrontmatter",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/skill-md.ts#SkillMdResult",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/templates.ts#TemplateInfo",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/templates.ts#TemplateVars",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/templates.ts#TemplateVarsInput",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": true,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "export",
+    "target": "packages/sdk/src/templates.ts#templatesDir",
+    "evidence": {
+      "static": true,
+      "dynamic": false,
+      "notRun": false,
+      "noFeature": false
+    },
+    "verdict": "확인 필요"
+  },
+  {
+    "kind": "dependency",
+    "target": "packages/plugins-core/mcp-host → @harness-x/protocol",
+    "package": "@harness-x/mcp-host",
+    "dir": "packages/plugins-core/mcp-host",
+    "dependency": "@harness-x/protocol",
+    "evidence": {
+      "static": true,
+      "dynamic": true,
+      "notRun": true,
+      "noFeature": true
+    },
+    "verdict": "삭제 후보"
+  }
+]
