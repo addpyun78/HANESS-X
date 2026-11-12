@@ -1,0 +1,119 @@
+{
+  "nodeModulesBytes": 539242549,
+  "nodeModulesMB": 514.3,
+  "dirs": [
+    {
+      "dir": "node_modules",
+      "bytes": 503381419
+    },
+    {
+      "dir": "apps/web/node_modules",
+      "bytes": 35744452
+    },
+    {
+      "dir": "packages/plugins-core/forge/node_modules",
+      "bytes": 12875
+    },
+    {
+      "dir": "packages/plugins-core/agent-builder/node_modules",
+      "bytes": 11933
+    },
+    {
+      "dir": "packages/kernel/node_modules",
+      "bytes": 9328
+    },
+    {
+      "dir": "packages/plugins-core/engine-scanner/node_modules",
+      "bytes": 8318
+    },
+    {
+      "dir": "packages/plugins-core/installer/node_modules",
+      "bytes": 7662
+    },
+    {
+      "dir": "packages/plugins-core/tool-finder/node_modules",
+      "bytes": 7618
+    },
+    {
+      "dir": "apps/desktop/node_modules",
+      "bytes": 4555
+    },
+    {
+      "dir": "packages/sdk/node_modules",
+      "bytes": 4362
+    },
+    {
+      "dir": "packages/protocol/node_modules",
+      "bytes": 4345
+    },
+    {
+      "dir": "packages/plugins-core/mcp-host/node_modules",
+      "bytes": 3934
+    },
+    {
+      "dir": "packages/plugins-core/verifiers/ladder/node_modules",
+      "bytes": 3909
+    },
+    {
+      "dir": "packages/plugins-core/verifiers/judge/node_modules",
+      "bytes": 3898
+    },
+    {
+      "dir": "packages/plugins-core/attachments/node_modules",
+      "bytes": 3871
+    },
+    {
+      "dir": "packages/plugins-core/verifiers/comparators/node_modules",
+      "bytes": 3817
+    },
+    {
+      "dir": "packages/engines/acp-generic/node_modules",
+      "bytes": 3808
+    },
+    {
+      "dir": "packages/plugins-core/checklist-ledger/node_modules",
+      "bytes": 3753
+    },
+    {
+      "dir": "packages/plugins-core/permission-gate/node_modules",
+      "bytes": 3746
+    },
+    {
+      "dir": "packages/engines/antigravity/node_modules",
+      "bytes": 3696
+    },
+    {
+      "dir": "packages/engines/claude-code/node_modules",
+      "bytes": 3696
+    },
+    {
+      "dir": "packages/engines/codex/node_modules",
+      "bytes": 3696
+    },
+    {
+      "dir": "packages/engines/openai-compat/node_modules",
+      "bytes": 3696
+    },
+    {
+      "dir": "packages/plugins-core/approvals/node_modules",
+      "bytes": 102
+    },
+    {
+      "dir": "packages/plugins/stt-browser/node_modules",
+      "bytes": 20
+    },
+    {
+      "dir": "packages/plugins/stt-local/node_modules",
+      "bytes": 20
+    },
+    {
+      "dir": "packages/plugins/verifier-local/node_modules",
+      "bytes": 20
+    }
+  ],
+  "dirCount": 27,
+  "note": "du -sb는 심볼릭 링크를 따라가지 않음(pnpm 링크 기준)",
+  "pnpmStore": "/mnt/c/.pnpm-store/v11",
+  "pnpmStoreBytes": 542350510,
+  "pnpmStoreMB": 517.2
+}
