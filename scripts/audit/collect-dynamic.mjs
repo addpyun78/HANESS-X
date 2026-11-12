@@ -10,7 +10,8 @@
 import { join } from 'node:path';
 import { auditDir, existsSync, rawDir, readFileSync, readJson, root, sh, writeJson } from './lib.mjs';
 
-const tracked = sh('git ls-files').split('\n').filter(Boolean);
+// 추적 중 + 아직 커밋 안 한 새 파일(무시 목록 제외)까지 — 플러그인·훅·도구가 늘면 같이 늘어나게(H.12)
+const tracked = sh('git ls-files --cached --others --exclude-standard').split('\n').filter(Boolean);
 const srcOf = (p) => tracked.filter((f) => f.startsWith(p));
 const read = (f) => readFileSync(join(root, f), 'utf8');
 const isSrc = (f) => /\/src\/.*\.(ts|tsx|mjs)$/.test(f) && !/\.test\./.test(f) && !f.endsWith('.d.ts');
