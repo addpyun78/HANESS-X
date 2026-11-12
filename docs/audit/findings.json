@@ -692,7 +692,7 @@
       "bundle": "hold"
     },
     {
-      "status": "open",
+      "status": "보류: 두 순환 모두 import type(형식만)이라 실행할 때는 사라짐 — 실행 영향 없음",
       "features": [],
       "area": "consolidation",
       "severity": "low",
@@ -703,7 +703,9 @@
       "effort": "S",
       "meta": {
         "source": "C5.15/C4.4",
-        "behaviorDiff": 0
+        "behaviorDiff": 0,
+        "resolution": "web Checklist model↔stages, acp adapter↔permission 모두 type-only",
+        "resolvedAt": "2026-11-12T18:53:22.603Z"
       },
       "id": "C5-003",
       "plain": "서로를 부르는 파일 짝이 2쌍 있어요.",
