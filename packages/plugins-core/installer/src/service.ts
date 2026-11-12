@@ -143,6 +143,8 @@ export class InstallService implements InstallApi {
   private table: DetectionTable | undefined;
   private readonly plans = new Map<string, InstallPlan>();
   private readonly jobs = new Map<string, InstallJob>();
+  /** T-101 2A.5 전체 정지가 기다릴 작업 끝 */
+  private readonly jobDone = new Map<string, Promise<InstallJob>>();
   private readonly importCandidates = new Map<string, ImportCandidate>();
   private readonly adapters: Partial<Record<InstallKind, InstallerAdapter>> = {};
   /** 실패한 작업 → 정리 계획 (같은 승인 범위) */
@@ -390,6 +392,8 @@ export class InstallService implements InstallApi {
         return job;
       },
     );
+    this.jobDone.set(job.id, done);
+    void done.finally(() => this.jobDone.delete(job.id));
     return Object.assign({ ...job }, { done }) as InstallJob & { done: Promise<InstallJob> };
   }
 
@@ -563,6 +567,21 @@ export class InstallService implements InstallApi {
     if (plan.action === 'uninstall') await this.finishUninstall(job, plan, { ...done, status: 'removed' });
     else await this.finishInstall(job, plan, done);
     return job;
+  }
+
+  /**
+   * T-101 2A.5 전체 정지: 설치를 중단 가능한 지점에서 멈추고 정리한다.
+   * - 대기 중인 작업은 시작하지 않는다(cancelled)
+   * - 실행 중인 작업은 실행기에 abort → 프로세스 종료 + 임시 파일 정리(runJob)
+   * - 설치 명령이 이미 끝나 확인·등록 중이면 끝까지 마친다(반쯤 등록된 도구를 남기지 않음)
+   * 모든 작업이 끝난 뒤 그 작업들을 돌려준다.
+   */
+  async stopAll(): Promise<InstallJob[]> {
+    const ids = [...this.queue.pending, ...(this.queue.running ? [this.queue.running] : [])];
+    const waits = ids.map((id) => this.jobDone.get(id)).filter((d): d is Promise<InstallJob> => !!d);
+    for (const id of ids) this.cancel(id);
+    const jobs = await Promise.all(waits);
+    return jobs.map((j) => ({ ...j }));
   }
 
   cancel(jobId: string): boolean {

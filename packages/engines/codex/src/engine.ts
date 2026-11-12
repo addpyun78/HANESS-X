@@ -5,6 +5,7 @@ import {
   readLines,
   runLineProcess,
   spawnGroup,
+  STOP_NOW_GRACE_MS,
   type EventBody,
   type LineRun,
 } from '@harness-x/kernel';
@@ -53,7 +54,26 @@ export type CodexEngine = Omit<EngineAdapter, 'run'> & {
   run(opts: EngineRunOptions): CodexRun;
   /** 15.3 account/rateLimits/read로 쿼터 조회 (모델 호출 없음) → usage 이벤트 */
   quota(opts: QuotaOptions): Promise<UsageEvent>;
+  /** T-101 5B.2 app-server `model/list`로 모델 목록 조회 (모델 호출 없음) */
+  listModels(opts: { cwd: string; env?: Record<string, string | undefined> }): Promise<string[]>;
 };
+
+/** `model/list` 응답 → 모델 id 목록 ({data|models: [{model|id}]}, 숨김 항목 제외) */
+export function parseCodexModelList(res: unknown): string[] {
+  const r = (res ?? {}) as { data?: unknown; models?: unknown };
+  const list = Array.isArray(r.data) ? r.data : Array.isArray(r.models) ? r.models : [];
+  const out: string[] = [];
+  for (const m of list) {
+    if (typeof m === 'string') out.push(m);
+    else if (m && typeof m === 'object') {
+      const o = m as { model?: unknown; id?: unknown; hidden?: unknown };
+      if (o.hidden === true) continue;
+      const id = typeof o.model === 'string' ? o.model : typeof o.id === 'string' ? o.id : undefined;
+      if (id) out.push(id);
+    }
+  }
+  return [...new Set(out)];
+}
 
 function errorBody(err: unknown): EventBody {
   const message = err instanceof Error ? err.message : String(err);
@@ -218,7 +238,7 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
           .catch(() => {});
       }
       s.client.close(new Error('interrupted'));
-      await killGroup(s.child, o.killGraceMs ?? 1000);
+      await killGroup(s.child, o.killGraceMs ?? STOP_NOW_GRACE_MS);
     };
     if (opts.signal) {
       if (opts.signal.aborted) void interrupt();
@@ -246,12 +266,26 @@ export function createCodexEngine(o: CodexEngineOptions = {}): CodexEngine {
     }
   }
 
+  async function listModels(lo: {
+    cwd: string;
+    env?: Record<string, string | undefined>;
+  }): Promise<string[]> {
+    const { child, client } = await openAppServer(lo.cwd, lo.env);
+    try {
+      return parseCodexModelList(await client.request('model/list', {}, timeout));
+    } finally {
+      client.close();
+      await killGroup(child, 200);
+    }
+  }
+
   return {
     id: CODEX_ENGINE_ID,
     displayName: 'Codex',
     capabilities: { nativeStopHook: false, resume: true, mcp: true, interrupt: true },
     run,
     quota,
+    listModels,
   };
 }
 

@@ -36,6 +36,7 @@ import type { InstallPlanView } from '../install/model.js';
 import { animationEnabled, useDraftSession } from './draft/useDraftSession.js';
 import { StartChoice } from './StartChoice.js';
 import './builder.css';
+import { MainEngineContext } from './main-engine-context.js';
 
 export interface BuilderPageProps {
   /** 현재 라우트 (/builder/new) */
@@ -268,38 +269,40 @@ export function BuilderPage({
             chat={{ loadStt, ...draft.chat }}
           />
           <RunOverlayContext.Provider value={overlay}>
-            <DraftDecorContext.Provider value={draft.decor}>
-              <Canvas graph={draft.canvasGraph} catalog={catalog} dispatch={editDispatch}>
-                <GapLayer gaps={draft.gaps} {...draft.gapActions} />
-                {(pickerCards.length > 0 || pickerNote || planCards.length > 0) && (
-                  <div className="hx-gap-picker" aria-label="도구 고르기">
-                    {pickerNote && <p role="status">{pickerNote}</p>}
-                    {pickerCards.map((c) => (
-                      <ToolPickerCard
-                        key={c.id}
-                        data={c}
-                        {...(finder?.planSelected
-                          ? {
-                              onInstallSelected: (chosen: ToolPickerData['candidates']) =>
-                                installSelected(c, chosen),
-                            }
-                          : {})}
-                        onOpenUrlInstall={() => openUrlInstall()}
-                        onContinueWithout={() => setPickerCards((cs) => cs.filter((x) => x.id !== c.id))}
-                      />
-                    ))}
-                    {planCards.map((p) => (
-                      <InstallPlanCard
-                        key={p.id}
-                        plan={p}
-                        {...(installer ? { api: installer } : {})}
-                        onClose={() => setPlanCards((ps) => ps.filter((x) => x.id !== p.id))}
-                      />
-                    ))}
-                  </div>
-                )}
-              </Canvas>
-            </DraftDecorContext.Provider>
+            <MainEngineContext.Provider value={catalog.mainEngine}>
+              <DraftDecorContext.Provider value={draft.decor}>
+                <Canvas graph={draft.canvasGraph} catalog={catalog} dispatch={editDispatch}>
+                  <GapLayer gaps={draft.gaps} {...draft.gapActions} />
+                  {(pickerCards.length > 0 || pickerNote || planCards.length > 0) && (
+                    <div className="hx-gap-picker" aria-label="도구 고르기">
+                      {pickerNote && <p role="status">{pickerNote}</p>}
+                      {pickerCards.map((c) => (
+                        <ToolPickerCard
+                          key={c.id}
+                          data={c}
+                          {...(finder?.planSelected
+                            ? {
+                                onInstallSelected: (chosen: ToolPickerData['candidates']) =>
+                                  installSelected(c, chosen),
+                              }
+                            : {})}
+                          onOpenUrlInstall={() => openUrlInstall()}
+                          onContinueWithout={() => setPickerCards((cs) => cs.filter((x) => x.id !== c.id))}
+                        />
+                      ))}
+                      {planCards.map((p) => (
+                        <InstallPlanCard
+                          key={p.id}
+                          plan={p}
+                          {...(installer ? { api: installer } : {})}
+                          onClose={() => setPlanCards((ps) => ps.filter((x) => x.id !== p.id))}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </Canvas>
+              </DraftDecorContext.Provider>
+            </MainEngineContext.Provider>
           </RunOverlayContext.Provider>
           <InspectorPanel
             graph={graph}

@@ -103,6 +103,14 @@ export const BlockView = memo(function BlockView({ block: b }: { block: ChatBloc
           ☑ 항목 <span className="hx-mono">{b.changedItemId}</span>: {b.from ?? '없음'} → {b.to}
         </div>
       );
+    case 'pause_mark':
+      // T-101 2B.12 세션 타임라인 "멈춤 → 이어감"
+      return (
+        <div className={`hx-pause-mark hx-pause-mark--${b.state}`} role="separator" aria-label={b.text}>
+          <span>{b.text}</span>
+          {b.ts && <time dateTime={b.ts} />}
+        </div>
+      );
   }
 });
 

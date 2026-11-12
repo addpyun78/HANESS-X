@@ -33,10 +33,11 @@ export interface QuotaMeter {
   costEstimated?: boolean;
 }
 
-export type SessionStatus = 'running' | 'idle' | 'done' | 'blocked' | 'error';
+export type SessionStatus = 'running' | 'paused' | 'idle' | 'done' | 'blocked' | 'error';
 
 export const SESSION_STATUS_LABEL: Record<SessionStatus, string> = {
   running: '실행 중',
+  paused: '멈춤',
   idle: '대기',
   done: '완료',
   blocked: '차단됨',
@@ -60,6 +61,8 @@ export interface SessionSummary {
   progress?: number;
   /** T-100 H.12 대기 중인 승인 카드 수 ("확인 필요" 배지) */
   needsApproval?: number;
+  /** T-101 2A.9 멈춘 이유 (status 'paused'일 때: user|quota|crash|approval|budget) */
+  pausedReason?: string;
 }
 
 export interface SessionAgent {

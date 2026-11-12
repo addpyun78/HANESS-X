@@ -24,6 +24,8 @@ export const EngineEntrySchema = z
     minVersion: z.string().optional(),
     status: z.enum(['ok', 'outdated', 'unknown']),
     error: z.string().optional(),
+    /** T-101 5A.6 공식 로그인 상태 명령 결과 (모델 호출 없음). 확인하지 않았으면 생략 */
+    login: z.enum(['loggedIn', 'loggedOut', 'unknown']).optional(),
   })
   .strict();
 export type EngineEntry = z.infer<typeof EngineEntrySchema>;

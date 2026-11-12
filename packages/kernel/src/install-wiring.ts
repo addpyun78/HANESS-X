@@ -19,6 +19,8 @@ export interface InstallServiceLike extends InstallApi {
   home: string;
   detect?(): Promise<unknown>;
   registry: { list(): { id: string; name: string; command?: string; origin?: string }[] };
+  /** T-101 2A.5 전체 정지 때 설치를 중단 가능한 지점에서 멈추고 정리 */
+  stopAll?(): Promise<unknown>;
 }
 
 interface InstallerModule {

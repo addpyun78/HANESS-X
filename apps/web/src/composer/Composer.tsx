@@ -21,14 +21,13 @@ import {
 } from './run-mode.js';
 import { PlusMenu, type PlusMenuProps } from './PlusMenu.js';
 import { useSlashPalette, type PaletteSkill } from './SlashPalette.js';
+import { StopButton, type StopControls } from './StopButton.js';
 import {
-  AUTH_LABEL,
   PERMISSION_DESC,
   PERMISSION_LABEL,
   RUNG_LABEL,
   type AttachEvent,
   type Attachment,
-  type AuthMode,
   type ComposerSettings,
   type EngineOption,
   type PermissionMode,
@@ -71,6 +70,12 @@ export interface ComposerProps {
   focusSeq?: number;
   /** 도구줄 오른쪽(전송 버튼 앞)에 붙일 것 (예: 🎤 버튼) */
   toolbarExtra?: ReactNode;
+  /** T-101 5C.1 아래 줄 오른쪽(전송 버튼 왼쪽) `[엔진 · 모델 ▾]` — 예전 왼쪽 엔진 칩·인증 칩을 대신한다 */
+  modelPicker?: ReactNode;
+  /** 지금 고른 AI (메인 AI 등) — 보내는 지시의 엔진 */
+  ai?: { engine: string; model?: string } | undefined;
+  /** T-101 2A.8 실행 중이면 전송 버튼 자리가 [■ 정지] (일시정지·지금 멈추기, Esc 두 번) */
+  stop?: StopControls;
 }
 
 const isEnter = (e: KeyboardEvent) => e.key === 'Enter';
@@ -82,7 +87,7 @@ function pickEngine(engines: EngineOption[], wanted?: string): string {
 
 /**
  * 지시 입력창.
- * 아래 도구줄 순서 고정(컨셉 A): + → 엔진 칩 → 인증 칩(구독/API) → 권한 칩 → 모드 칩(T-101 3A.3) → (오른쪽 끝) 전송.
+ * 아래 도구줄 순서 고정: + → 권한 칩 → 모드 칩(T-101 3A.3) → … (오른쪽) [엔진 · 모델 ▾] → 전송 (T-101 5C.1).
  * 그 아래 오른쪽에 판정 줄.
  */
 export function Composer({
@@ -104,6 +109,9 @@ export function Composer({
   pinAgent,
   focusSeq,
   toolbarExtra,
+  modelPicker,
+  ai,
+  stop,
 }: ComposerProps) {
   const [text, setText] = useState('');
   // 바깥 채우기: 같은 seq는 한 번만 반영
@@ -142,10 +150,10 @@ export function Composer({
   // 엔진 목록이 늦게 도착하면(API) 사용 가능한 첫 엔진으로
   useEffect(() => {
     setSettings((s) => {
-      const engineId = pickEngine(engines, s.engineId);
+      const engineId = ai?.engine ?? pickEngine(engines, s.engineId);
       return engineId === s.engineId ? s : { ...s, engineId };
     });
-  }, [engines]);
+  }, [engines, ai?.engine]);
 
   // T-101 3A.4 모드-권한 연동: 계획이면 권한 칩을 읽기 전용으로 잠근다, 오토 + 읽기 전용이면 먼저 묻는다
   const [modeAsk, setModeAsk] = useState<Extract<ModeChange, { kind: 'confirm-write' }>>();
@@ -197,13 +205,6 @@ export function Composer({
     setDragOver(false);
     addFiles(Array.from(e.dataTransfer?.files ?? []), 'drop');
   };
-
-  const engine = engines.find((x) => x.id === settings.engineId);
-  const authOptions = (Object.keys(AUTH_LABEL) as AuthMode[]).map((v) => ({
-    value: v,
-    label: AUTH_LABEL[v],
-    disabled: engine?.auth ? !engine.auth.includes(v) : false,
-  }));
 
   return (
     <div
@@ -290,29 +291,6 @@ export function Composer({
         {!compact && (
           <>
             <ChipMenu
-              name="엔진"
-              className="hx-chip--engine"
-              icon="◆"
-              value={settings.engineId}
-              valueLabel={engine?.label ?? '엔진 없음'}
-              options={engines.map((x) => ({
-                value: x.id,
-                label: x.label,
-                disabled: !x.available,
-                ...(x.available ? {} : { description: '감지 안 됨' }),
-              }))}
-              emptyText="감지된 엔진이 없습니다"
-              onChange={(engineId) => update({ engineId })}
-            />
-            <ChipMenu
-              name="인증"
-              className="hx-chip--auth"
-              value={settings.auth}
-              valueLabel={AUTH_LABEL[settings.auth]}
-              options={authOptions}
-              onChange={(auth) => update({ auth })}
-            />
-            <ChipMenu
               name="권한"
               className="hx-chip--permission"
               icon="◎"
@@ -337,10 +315,15 @@ export function Composer({
           </>
         )}
         <span className="hx-composer__spacer" />
+        {!compact && modelPicker}
         {toolbarExtra}
-        <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
-          ↑
-        </button>
+        {stop?.running ? (
+          <StopButton onPause={stop.onPause} onStopNow={stop.onStopNow} />
+        ) : (
+          <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
+            ↑
+          </button>
+        )}
       </div>
       {modeAsk && (
         <div className="hx-mode-confirm" role="alertdialog" aria-label="모드 바꾸기 확인">

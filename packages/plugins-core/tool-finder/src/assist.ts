@@ -1,5 +1,5 @@
 /**
- * P3-A.5 필요 도구 판단 AI 선택: `assist.engine` → (빈 값·못 씀) `judge.engine` → 세션 엔진.
+ * P3-A.5 필요 도구 판단 AI 선택: `assist.engine` → (빈 값·못 씀) `judge.engine` → 메인 AI(T-101 5C.3) → 세션 엔진.
  * 판정기(@harness-x/judge selectJudge)와 같은 방식: 감지·로그인된 엔진만, 도구 없는 읽기 전용 짧은 세션으로 묻는다.
  * 실제 호출은 주입한 ask(engineId, 질문)로 한다 (예: judge의 createEngineJudge와 같은 CLI 플래그 — 도구 사용 금지).
  */
@@ -13,12 +13,14 @@ export interface AssistEngineInfo {
 export interface AssistSelectInput {
   assistEngine?: string;
   judgeEngine?: string;
+  /** T-101 5C.3 메인 AI 엔진 (assist·judge가 "자동"일 때) */
+  mainEngine?: string;
   /** 지금 세션을 돌리는 엔진 */
   sessionEngine?: string;
 }
 
 export type AssistSelection =
-  { engineId: string; from: 'assist' | 'judge' | 'session' } | { engineId: null; from: 'none' };
+  { engineId: string; from: 'assist' | 'judge' | 'main' | 'session' } | { engineId: null; from: 'none' };
 
 const ALIASES: Record<string, string> = { claude: 'claude-code', agy: 'antigravity' };
 const norm = (id: string | undefined) => {
@@ -31,9 +33,10 @@ export function selectAssistEngine(
   engines: readonly AssistEngineInfo[],
 ): AssistSelection {
   const usable = (id: string) => engines.some((e) => norm(e.id) === id && e.detected && e.loggedIn);
-  const order: ['assist' | 'judge' | 'session', string | undefined][] = [
+  const order: ['assist' | 'judge' | 'main' | 'session', string | undefined][] = [
     ['assist', input.assistEngine],
     ['judge', input.judgeEngine],
+    ['main', input.mainEngine],
     ['session', input.sessionEngine],
   ];
   for (const [from, raw] of order) {
