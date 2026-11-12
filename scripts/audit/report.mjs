@@ -134,7 +134,7 @@ function decide(f) {
         : ['fix', '같은 큰 판 안에서 고칠 수 있어 진행해요.'];
     case 'shell':
       if (f.effort === 'S' && m.criteria) return ['implement', '작고 원래 할 일이 분명해 구현해요.'];
-      if (f.severity === 'high' && f.risk !== 'high' && m.wiring)
+      if (['critical', 'high'].includes(f.severity) && f.risk !== 'high' && m.wiring)
         return ['fix', '만들어 둔 기능을 연결만 하면 되는 버그라 고쳐요.'];
       if (/단언/.test(f.title))
         return f.risk === 'low' ? ['fix', '고칠 위험이 낮아 진행해요.'] : ['hold', '보류해요.'];
