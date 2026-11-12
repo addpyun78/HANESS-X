@@ -9,6 +9,8 @@ import { useRunOverlay } from '../inspector/overlay-context.js';
 import { useDraftDecor } from '../draft/decor.js';
 import { CHIP_MIME, hasType, readChip, useLegoDispatch } from './dnd.js';
 import { acceptsEngine, acceptsSkills, skillsOf } from './model.js';
+import { engineChipLabel } from '../ai-choice.js';
+import { useMainEngine } from '../main-engine-context.js';
 
 type Props = NodeProps<Extract<HxFlowNode, { type: 'hxNode' }>>;
 type Highlight = 'skill' | 'engine';
@@ -38,6 +40,8 @@ export function LegoNode({ data, selected }: Props) {
   const run = useRunOverlay()?.[node.id];
   // T-100 P4-D.1/D.2/E.4 초안 점선·조립 애니메이션·바뀐 곳 노란색
   const decor = useDraftDecor();
+  // T-101 5D.3 따라가기면 `메인(claude-code)`, 직접이면 고정 이름
+  const mainEngine = useMainEngine();
 
   const accepts = (dt: DataTransfer | null): Highlight | undefined => {
     if (acceptsSkills(spec) && (hasType(dt, blockKindMime('skill')) || hasType(dt, CHIP_MIME)))
@@ -109,7 +113,7 @@ export function LegoNode({ data, selected }: Props) {
           data-changed={decor.chips.has(`${node.id}:@engine`) || undefined}
           aria-label={`${name} 엔진 ${engine}`}
         >
-          {engine}
+          {engineChipLabel(engine, mainEngine)}
         </span>
       )}
       {acceptsSkills(spec) && (

@@ -37,6 +37,7 @@ import {
   selectInputValues,
   validateOutput,
 } from '../contract.js';
+import { MAIN_ENGINE_REF, missingEngineCard } from './missing-engine.js';
 import { evaluateCondition } from './condition.js';
 import type {
   GateFailure,
@@ -337,14 +338,36 @@ export class PipelineRunner {
   }
 
   // ── role ───────────────────────────────────────────────────
-  private engineFor(ref: string | undefined): EngineAdapter {
+  private async engineFor(ref: string | undefined, nodeId: string): Promise<EngineAdapter> {
     const e = this.opts.engines;
     const lookup = (id: string) => (typeof e === 'function' ? e(id) : e[id]);
-    let id = ref && ref !== 'auto' ? ref : this.opts.defaultEngine;
+    const main = this.opts.mainEngine ?? this.opts.defaultEngine;
+    const fixed = !!ref && ref !== 'auto' && ref !== MAIN_ENGINE_REF;
+    let id = fixed ? ref : ref === MAIN_ENGINE_REF ? main : this.opts.defaultEngine;
     if (!id && typeof e !== 'function') id = Object.keys(e)[0];
     const engine = id ? lookup(id) : undefined;
-    if (!engine) throw new Error(`엔진을 찾을 수 없습니다: ${id ?? '(auto)'}`);
-    return engine;
+    if (engine) return engine;
+    // T-101 5D.6 고정 엔진이 없어졌으면 카드로 묻는다 (메인 AI로 대신할까요?)
+    if (fixed && id) {
+      const alt = main && main !== id ? lookup(main) : undefined;
+      const card = missingEngineCard(nodeId, id, alt ? main : undefined);
+      const approvalId = `${this.sessionId}.${nodeId}.engine-missing`;
+      this.emit({
+        id: this.opts.idGen?.() ?? randomUUID(),
+        ts: (this.opts.now?.() ?? new Date()).toISOString(),
+        sessionId: this.sessionId,
+        type: 'approval_request',
+        approvalId,
+        kind: card.kind,
+        title: card.title,
+        detail: { nodeId, engineId: id, ...(card.mainEngine ? { mainEngine: card.mainEngine } : {}) },
+        options: card.options.map((o) => o.label),
+      });
+      const choice = alt && this.opts.onMissingEngine ? await this.opts.onMissingEngine(card) : 'stop';
+      if (choice === 'use-main' && alt) return alt;
+      throw new Halt('error', nodeId, card.title);
+    }
+    throw new Error(`엔진을 찾을 수 없습니다: ${id ?? '(auto)'}`);
   }
 
   private ledgerDir(nodeId: string, visit: number): string {
@@ -439,6 +462,17 @@ export class PipelineRunner {
       this.emit(e as LogRecord);
     }
     const sid = lastRun?.engineSessionId();
+    // T-101 2B.9 엔진 자체 재개용: 노드의 엔진 세션 id를 기록해 둔다
+    if (sid)
+      this.emit({
+        id: this.idGen(),
+        ts: this.now().toISOString(),
+        sessionId: this.sessionId,
+        engineId: base.id,
+        type: 'engine_session',
+        nodeId: ctx.node.id,
+        engineSessionId: sid,
+      });
     return { events, ...(sid ? { engineSessionId: sid } : {}) };
   }
 
@@ -467,7 +501,7 @@ export class PipelineRunner {
   }
 
   private async runRole(node: RoleNode, input: unknown): Promise<unknown> {
-    const engine = this.engineFor(node.engine);
+    const engine = await this.engineFor(node.engine, node.id);
     const visitNo = this.nextVisit(node.id);
     const t = Date.now();
     const dir = this.ledgerDir(node.id, visitNo);
@@ -478,7 +512,8 @@ export class PipelineRunner {
       ...(this.opts.log ? { log: this.opts.log } : {}),
     });
     const items = this.opts.checklists?.(node, node.checklistTemplate);
-    if (items?.length) ledger.create(items);
+    // T-101 2C.2 이어하기: 같은 세션·같은 노드 원장이 이미 있으면 그대로 둔다 (체크리스트 유지)
+    if (items?.length && !ledger.read()) ledger.create(items);
     this.nodeStart(node, visitNo, engine.id);
     const visit: NodeVisit = {
       nodeId: node.id,
@@ -533,7 +568,9 @@ export class PipelineRunner {
         throw new Halt('error', node.id, visit.reason);
       }
     };
-    const res = await turn(prompt, undefined);
+    // T-101 2B.9 이어하기(엔진 자체 재개): 멈췄던 노드는 그 엔진 세션으로 첫 턴을 이어 간다
+    const resumeFrom = ctx.engine.capabilities.resume ? this.opts.resumeIds?.[node.id] : undefined;
+    const res = await turn(prompt, resumeFrom);
     const done = this.completion(ctx.ledger, res.events);
     if (!done.ok) {
       visit.status = 'incomplete';
@@ -833,7 +870,9 @@ export class PipelineRunner {
     const child = new PipelineRunner({
       ...this.opts,
       sessionId: `${this.sessionId}.${node.id}.${visitNo}`,
-      ...(node.engine && node.engine !== 'auto' ? { defaultEngine: node.engine } : {}),
+      ...(node.engine && node.engine !== 'auto' && node.engine !== MAIN_ENGINE_REF
+        ? { defaultEngine: node.engine }
+        : {}),
     });
     const r = await child.run(pipeline, value);
     visit.output = r.result;

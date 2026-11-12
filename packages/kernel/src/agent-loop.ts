@@ -215,6 +215,11 @@ export interface AgentLoopOptions {
   /** 모델 호출 최대 횟수 (기본 30) */
   maxIterations?: number;
   signal?: AbortSignal;
+  /**
+   * T-101 2A.3 일시정지: 도구 실행이 끝난 뒤 다음 AI 턴 전에 atSafePoint()를 묻는다.
+   * true면 turn_end interrupted로 멈춘다 (kernel stop.ts PauseGate)
+   */
+  pauseGate?: { atSafePoint(): boolean };
 }
 
 type Distribute<E> = E extends HarnessEvent
@@ -279,7 +284,7 @@ export async function* runAgentLoop(opts: AgentLoopOptions): AsyncGenerator<Harn
   const aborted = () => opts.signal?.aborted === true;
 
   for (let iter = 0; iter < maxIter; iter++) {
-    if (aborted()) {
+    if (aborted() || (iter > 0 && opts.pauseGate?.atSafePoint())) {
       yield ev({ type: 'turn_end', reason: 'interrupted' });
       return;
     }

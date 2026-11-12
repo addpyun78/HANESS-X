@@ -26,7 +26,8 @@ export function enginesApi(c: Requester): EnginesApi {
   });
   return {
     list: () => c.request('/api/engines'),
-    rescan: () => c.request('/api/engines/rescan', json('POST')),
+    // T-101 5A.9 설정 [다시 찾기] = 재스캔 시점 manual
+    rescan: () => c.request('/api/engines/rescan', json('POST', { reason: 'manual' })),
     login: (id) => c.request(`/api/engines/${enc(id)}/login`),
     saveSettings: (id, patch) => c.request(`/api/engines/${enc(id)}/settings`, json('PUT', patch)),
     saveKey: (id, key) => c.request(`/api/engines/${enc(id)}/key`, json('PUT', { key })),

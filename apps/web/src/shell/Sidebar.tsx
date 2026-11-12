@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { pausedLabel } from './paused-label.js';
 import { NAV_ITEMS, SESSION_STATUS_LABEL, type NavTarget, type SessionSummary } from './types.js';
 
 export interface SessionGroup {
@@ -47,7 +48,12 @@ export function Sidebar({
                       aria-current={s.id === activeSessionId ? 'true' : undefined}
                       onClick={() => onSelectSession?.(s.id)}
                     >
-                      <span className="hx-dot" aria-label={SESSION_STATUS_LABEL[s.status]} />
+                      <span
+                        className="hx-dot"
+                        aria-label={
+                          s.status === 'paused' ? pausedLabel(s.pausedReason) : SESSION_STATUS_LABEL[s.status]
+                        }
+                      />
                       {s.agent && (
                         <span className="hx-session__agent" title={s.agent.command} aria-hidden="true">
                           {s.agent.icon ?? '✦'}
@@ -55,6 +61,11 @@ export function Sidebar({
                       )}
                       <span className="hx-session__title">{s.title}</span>
                       <span className="hx-session__engine">{s.engineId}</span>
+                      {s.status === 'paused' && (
+                        <span className="hx-session__paused" data-testid="session-paused">
+                          ⏸ {pausedLabel(s.pausedReason)}
+                        </span>
+                      )}
                       {s.needsApproval ? (
                         <span
                           className="hx-session__approval"
@@ -101,7 +112,9 @@ function AgentProgress({ s }: { s: SessionSummary }) {
           ? `▸ ${s.currentNode}`
           : s.status === 'running'
             ? '준비 중'
-            : SESSION_STATUS_LABEL[s.status]}
+            : s.status === 'paused'
+              ? pausedLabel(s.pausedReason)
+              : SESSION_STATUS_LABEL[s.status]}
       </span>
       <span
         className="hx-session__progress"

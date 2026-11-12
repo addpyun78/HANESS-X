@@ -49,6 +49,18 @@ if (process.argv.includes('exec')) {
           : { result: {} };
         return send({ id: m.id, ...r });
       }
+      case 'model/list':
+        return send({
+          id: m.id,
+          result: {
+            data: [
+              { id: 'gpt-5.5-codex', model: 'gpt-5.5-codex', displayName: 'GPT-5.5 Codex' },
+              { id: 'gpt-5.5', model: 'gpt-5.5', displayName: 'GPT-5.5' },
+              { id: 'old', model: 'old-model', hidden: true },
+            ],
+            nextCursor: null,
+          },
+        });
       case 'thread/start':
       case 'thread/resume': {
         const id = m.params?.threadId ?? THREAD;

@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import { checkPlainKorean } from './plain-check.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { attachmentHints } from '../src/composer/attachments.js';
 import type { EngineOption } from '../src/composer/types.js';
-import { renderComposer } from './composer.helpers.js';
+import { Composer } from '../src/composer/Composer.js';
 
 afterEach(cleanup);
 beforeEach(() => {
@@ -33,17 +33,17 @@ describe('1E.5 지금 고른 AI 기준 안내 (모델 바꾸면 문구 변경)',
     },
   ];
   it('그림을 못 보는 AI로 바꾸면 "글로 바꿔서 보낼게요"', () => {
-    renderComposer({ engines: WITH_INPUTS });
+    // 5C.1 이후 엔진은 오른쪽 아래 모델 버튼(메인 AI)이 고른다 → ai prop으로 바꾼다
+    const props = { engines: WITH_INPUTS, onSend: () => {} };
+    const r = render(<Composer {...props} ai={{ engine: 'claude-code' }} />);
     drop(file('화면.png', 'image/png'), file('기획.pdf', 'application/pdf'));
-    expect(screen.queryByRole('status')).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: /엔진/ }));
-    fireEvent.click(screen.getByRole('menuitemradio', { name: /Ollama qwen3/ }));
-    const hint = screen.getByRole('status').textContent!;
+    expect(document.querySelector('.hx-attachment-hint')).toBeNull();
+    r.rerender(<Composer {...props} ai={{ engine: 'ollama-qwen3', model: 'qwen3' }} />);
+    const hint = document.querySelector('.hx-attachment-hint')!.textContent!;
     expect(hint).toContain('이 AI는 그림을 직접 못 봐요 → 글로 바꿔서 보낼게요.');
     expect(hint).toContain('이 AI는 PDF를 직접 못 읽어요 → 글로 바꿔서 보낼게요.');
-    fireEvent.click(screen.getByRole('button', { name: /엔진/ }));
-    fireEvent.click(screen.getByRole('menuitemradio', { name: /Claude Code/ }));
-    expect(screen.queryByRole('status')).toBeNull();
+    r.rerender(<Composer {...props} ai={{ engine: 'claude-code' }} />);
+    expect(document.querySelector('.hx-attachment-hint')).toBeNull();
     for (const h of attachmentHints(
       [
         { name: 'a.png', mime: 'image/png' },

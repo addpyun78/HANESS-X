@@ -30,8 +30,10 @@ export interface UseProjectShellOptions {
   onProjectOpen?: ProjectOpenHook;
   engines?: EngineOption[];
   agents?: { command: string; name: string; icon?: string }[];
-  /** 0B.29 [이어하기] — 2번이 연결하면 넘긴다 (없으면 메뉴에서 숨김) */
+  /** 0B.29 [이어하기] — 2번이 연결하면 넘긴다 (없으면 메뉴에서 숨김). ⏸ 멈춘 세션 줄 클릭도 여기로 */
   onResume?: (s: SessionRecordView) => void;
+  /** T-101 2B.2 빈 세션 화면에 덧붙일 것 ("이어서 할 작업 N개") */
+  emptyExtra?: ReactNode;
   /** 키보드 단축키를 받을 곳 (기본 window) */
   keyTarget?: Pick<Window, 'addEventListener' | 'removeEventListener'>;
 }
@@ -301,8 +303,11 @@ export function useProjectShell(o: UseProjectShellOptions) {
       setActiveId(id);
       setOverlay(undefined);
       setNotice(undefined);
+      // T-101 2B.2 입구: ⏸ 멈춘 세션 줄 클릭 → 이어하기
+      const s = sessions.find((x) => x.id === id);
+      if (s?.status === 'paused') optsRef.current.onResume?.(s);
     },
-    [leaveDraft],
+    [leaveDraft, sessions],
   );
 
   /** 입력창 전송을 먼저 본다. 처리했으면 true (App은 더 하지 않는다) */
@@ -559,6 +564,7 @@ export function useProjectShell(o: UseProjectShellOptions) {
           setFocusSeq((x) => x + 1);
         }}
         {...(notice ? { notice } : {})}
+        {...(o.emptyExtra ? { extra: o.emptyExtra } : {})}
       />
     );
 

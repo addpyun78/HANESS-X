@@ -10,3 +10,4 @@ export * from './schema-compat.js';
 export * from './stt.js';
 export * from './attachment.js';
 export * from './attachment-delivery.js';
+export * from './models.js';
