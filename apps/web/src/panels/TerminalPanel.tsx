@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { loginCommand } from './login-commands.js';
 import { TerminalSession, type TerminalSocket, type TerminalStatus } from './terminal-session.js';
 import './panels.css';
+import { act } from '../actions/registry.js';
 
 /** 화면 출력 장치 — 기본은 xterm.js, 테스트에서는 가짜로 바꾼다 */
 export interface TerminalView {
@@ -111,6 +112,7 @@ export function TerminalPanel({ connect, loginEngines = [], createView = xtermVi
         )}
         {loginable.length > 0 && (
           <button
+            {...act('terminal.login')}
             type="button"
             className="hx-icon-btn"
             onClick={login}

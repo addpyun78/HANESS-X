@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ApiError } from '../../api/client.js';
 import { suggestCommand, validateAgentName } from '../inspector/save.js';
 import type { DesignerApi, SaveDraftResponse } from './api.js';
+import { act } from '../../actions/registry.js';
 
 /**
  * P4-F.3 저장 확인 창: 요약(쉬운 말) + 이름·명령 최종 수정 + 빈 칸이 있으면
@@ -108,6 +109,7 @@ export function SaveDialog({ draftId, draft, api, onClose, onFillGaps, onSaved }
               {' '}
               "{suggestion.name}"는 어떨까요?{' '}
               <button
+                {...act('save.use-suggestion')}
                 type="button"
                 className="hx-insp-btn hx-insp-btn--ghost"
                 onClick={() => {
@@ -127,13 +129,15 @@ export function SaveDialog({ draftId, draft, api, onClose, onFillGaps, onSaved }
       <div className="hx-draft-card__actions">
         {gaps > 0 ? (
           <>
-            <button type="button" className="hx-insp-btn" onClick={onFillGaps}>
+            <button {...act('save.fill-gaps')} type="button" className="hx-insp-btn" onClick={onFillGaps}>
               {FILL_GAPS_LABEL}
             </button>
             <button
+              {...act('save.save-incomplete')}
               type="button"
               className="hx-insp-btn hx-insp-btn--ghost"
               disabled={busy || !!nameError}
+              title={busy ? '저장하는 중이에요' : nameError ? '이름을 먼저 고쳐 주세요' : undefined}
               onClick={() => void save(true)}
             >
               {SAVE_INCOMPLETE_LABEL}
@@ -141,15 +145,22 @@ export function SaveDialog({ draftId, draft, api, onClose, onFillGaps, onSaved }
           </>
         ) : (
           <button
+            {...act('save.save')}
             type="button"
             className="hx-insp-btn"
             disabled={busy || !!nameError}
+            title={busy ? '저장하는 중이에요' : nameError ? '이름을 먼저 고쳐 주세요' : undefined}
             onClick={() => void save(false)}
           >
             저장
           </button>
         )}
-        <button type="button" className="hx-insp-btn hx-insp-btn--ghost" onClick={onClose}>
+        <button
+          {...act('save.close')}
+          type="button"
+          className="hx-insp-btn hx-insp-btn--ghost"
+          onClick={onClose}
+        >
           닫기
         </button>
       </div>

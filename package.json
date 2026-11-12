@@ -12,6 +12,7 @@
     "test": "vitest run",
     "lint": "eslint . && prettier --check .",
     "lint:css": "pnpm --filter web lint:css",
+    "check:dead-buttons": "eslint apps/web/src --max-warnings 0 && vitest run --typecheck.enabled=false apps/web/test/click-all.self.test.tsx apps/web/test/click-all.test.tsx",
     "format": "prettier --write ."
   },
   "devDependencies": {

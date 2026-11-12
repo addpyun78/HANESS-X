@@ -27,6 +27,7 @@ import {
   type Verdict,
 } from './types.js';
 import './composer.css';
+import { act, NOT_READY } from '../actions/registry.js';
 
 export interface ComposerProps {
   engines: EngineOption[];
@@ -263,11 +264,15 @@ export function Composer({
       )}
       <div className="hx-composer__bar" role="toolbar" aria-label="입력 도구">
         <button
+          {...act('composer.plus')}
           type="button"
           className="hx-plus"
           aria-label="추가"
           data-slot="plus"
           {...(plusMenu ? { 'aria-haspopup': 'menu' as const, 'aria-expanded': plusOpen } : {})}
+          // T-101 0C.F6 + 메뉴도 처리 함수도 없으면(빌더 대화 탭) 눌러도 아무 일 없으므로 비활성 + 이유
+          disabled={!plusMenu && !onPlus}
+          title={!plusMenu && !onPlus ? NOT_READY : undefined}
           onClick={() => {
             if (plusMenu) setPlusOpen((v) => !v);
             onPlus?.();
@@ -295,6 +300,7 @@ export function Composer({
         {mobile && (
           // 1E.7 모바일: 끌어 놓기 대신 파일 선택 버튼
           <button
+            {...act('composer.attach-pick')}
             type="button"
             className="hx-attach-pick"
             aria-label="파일 선택"
@@ -309,7 +315,15 @@ export function Composer({
         {stop?.running ? (
           <StopButton onPause={stop.onPause} onStopNow={stop.onStopNow} />
         ) : (
-          <button type="button" className="hx-send" aria-label="전송" disabled={!canSend} onClick={send}>
+          <button
+            {...act('composer.send')}
+            type="button"
+            className="hx-send"
+            aria-label="전송"
+            disabled={!canSend}
+            title={canSend ? undefined : disabled ? '지금은 보낼 수 없어요' : '보낼 내용을 먼저 적어 주세요'}
+            onClick={send}
+          >
             ↑
           </button>
         )}

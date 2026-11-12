@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { act } from '../actions/registry.js';
 import { KIND_ICON, STATUS_LABEL, chipKind, formatSize } from './attachments.js';
 import type { Attachment } from './types.js';
 
@@ -74,6 +75,7 @@ export function AttachmentChips({
           return (
             <li key={a.id} className="hx-attachment" data-kind={kind} data-status={a.status}>
               <button
+                {...act('composer.attachment-preview')}
                 type="button"
                 className="hx-attachment__open"
                 aria-label={`${a.name} 미리보기`}
@@ -94,6 +96,7 @@ export function AttachmentChips({
                 </span>
               )}
               <button
+                {...act('composer.remove-attachment')}
                 type="button"
                 className="hx-attachment__remove"
                 aria-label={`${a.name} 첨부 빼기`}

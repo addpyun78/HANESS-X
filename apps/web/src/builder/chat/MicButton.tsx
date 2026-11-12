@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { CONSENT_NOTICE } from '@harness-x/stt-browser';
 import { formatElapsed, initialMic, micReducer, WAVE_BARS } from './mic.js';
 import type { SttHandle } from './stt.js';
+import { act } from '../../actions/registry.js';
 
 export interface MicButtonProps {
   stt: SttHandle;
@@ -65,11 +66,15 @@ export function MicButton({ stt, onText, now = Date.now }: MicButtonProps) {
   return (
     <span className="hx-mic" data-phase={s.phase}>
       <button
+        {...act('builder.mic')}
         type="button"
         className="hx-mic__btn"
         aria-label={recording ? '녹음 끝내기' : '말로 입력'}
         aria-pressed={recording}
         disabled={busy || s.phase === 'consent'}
+        title={
+          busy ? '처리하는 중이에요' : s.phase === 'consent' ? '먼저 마이크 사용을 허락해 주세요' : undefined
+        }
         onClick={() => dispatch({ type: 'press', needsConsent: stt.needsConsent })}
       >
         🎤
@@ -102,6 +107,7 @@ export function MicButton({ stt, onText, now = Date.now }: MicButtonProps) {
           <p>{CONSENT_NOTICE}</p>
           <div className="hx-mic__consent-actions">
             <button
+              {...act('builder.mic-consent-yes')}
               type="button"
               onClick={() => {
                 stt.grantConsent();
@@ -110,7 +116,11 @@ export function MicButton({ stt, onText, now = Date.now }: MicButtonProps) {
             >
               동의하고 녹음
             </button>
-            <button type="button" onClick={() => dispatch({ type: 'consent', granted: false })}>
+            <button
+              {...act('builder.mic-consent-no')}
+              type="button"
+              onClick={() => dispatch({ type: 'consent', granted: false })}
+            >
               취소
             </button>
           </div>

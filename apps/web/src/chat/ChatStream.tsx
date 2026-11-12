@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { BlockView } from './BlockView.js';
 import { eventsToBlocks, VIEW_MODE_LABEL, visibleBlocks, type ViewMode } from './blocks.js';
 import './chat.css';
+import { act } from '../actions/registry.js';
 
 export interface ChatStreamProps {
   events: readonly HarnessEvent[];
@@ -20,6 +21,7 @@ export function ViewModeSwitch({ mode, onChange }: { mode: ViewMode; onChange?: 
     <div className="hx-modes" role="radiogroup" aria-label="보기 모드">
       {(Object.keys(VIEW_MODE_LABEL) as ViewMode[]).map((m) => (
         <button
+          {...act('chat.mode')}
           key={m}
           type="button"
           role="radio"

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { act as actionAttr } from '../actions/registry.js';
 
 /** 최근 프로젝트 한 줄 (커널 GET /api/workspaces 응답) */
 export interface RecentProject {
@@ -63,6 +64,7 @@ export function PlusMenu({
       {recent.map((p) => (
         <div key={p.path} className="hx-plus-menu__project">
           <button
+            {...actionAttr('plus.pick-recent')}
             type="button"
             role="menuitem"
             className="hx-popover__item"
@@ -77,6 +79,7 @@ export function PlusMenu({
           </button>
           {onTogglePin && (
             <button
+              {...actionAttr('plus.pin')}
               type="button"
               className="hx-plus-menu__pin"
               aria-pressed={!!p.pinned}
@@ -103,13 +106,20 @@ export function PlusMenu({
         recentList
       ) : (
         <>
-          <button type="button" role="menuitem" className="hx-popover__item" onClick={act(onOpenFolder)}>
+          <button
+            {...actionAttr('plus.open-folder')}
+            type="button"
+            role="menuitem"
+            className="hx-popover__item"
+            onClick={act(onOpenFolder)}
+          >
             <span className="hx-popover__check" aria-hidden="true">
               📁
             </span>
             <span className="hx-popover__label">프로젝트 폴더 열기…</span>
           </button>
           <button
+            {...actionAttr('plus.recent')}
             type="button"
             role="menuitem"
             className="hx-popover__item"
@@ -123,7 +133,13 @@ export function PlusMenu({
             <span className="hx-popover__label">최근 프로젝트</span>
           </button>
           {showRecent && recentList}
-          <button type="button" role="menuitem" className="hx-popover__item" onClick={act(onAttachFiles)}>
+          <button
+            {...actionAttr('plus.attach')}
+            type="button"
+            role="menuitem"
+            className="hx-popover__item"
+            onClick={act(onAttachFiles)}
+          >
             <span className="hx-popover__check" aria-hidden="true">
               📎
             </span>

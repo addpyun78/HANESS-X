@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import type { Toast } from './useApprovals.js';
 import './approvals.css';
+import { act } from '../../actions/registry.js';
 
 export interface ToastsProps {
   toasts: readonly Toast[];
@@ -22,6 +23,7 @@ export function Toasts({ toasts, onOpen, onDismiss, timeoutMs = 8000 }: ToastsPr
     <div className="hx-toasts" role="status" aria-live="polite" aria-label="알림">
       {toasts.map((t) => (
         <button
+          {...act('approvals.toast')}
           key={t.id}
           type="button"
           className="hx-toast"

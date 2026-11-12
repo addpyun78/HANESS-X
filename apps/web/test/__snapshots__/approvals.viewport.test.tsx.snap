@@ -79,6 +79,7 @@ exports[`H.15 모바일(768px 미만) 하단 시트, 버튼 높이 48px 이상 >
       <button
         aria-keyshortcuts="1"
         class="hx-action-card__btn hx-action-card__btn--primary"
+        data-action="approvals.choose"
         data-choice="accept"
         type="button"
       >
@@ -94,6 +95,7 @@ exports[`H.15 모바일(768px 미만) 하단 시트, 버튼 높이 48px 이상 >
       <button
         aria-keyshortcuts="2"
         class="hx-action-card__btn"
+        data-action="approvals.choose"
         data-choice="redo"
         type="button"
       >
@@ -109,6 +111,7 @@ exports[`H.15 모바일(768px 미만) 하단 시트, 버튼 높이 48px 이상 >
       <button
         aria-keyshortcuts="3"
         class="hx-action-card__btn"
+        data-action="approvals.choose"
         data-choice="stop"
         type="button"
       >
@@ -124,6 +127,7 @@ exports[`H.15 모바일(768px 미만) 하단 시트, 버튼 높이 48px 이상 >
       <button
         aria-keyshortcuts="4"
         class="hx-action-card__btn"
+        data-action="approvals.choose"
         data-choice="allow-move"
         type="button"
       >
@@ -152,6 +156,7 @@ exports[`H.15 모바일(768px 미만) 하단 시트, 버튼 높이 48px 이상 >
       <button
         aria-expanded="false"
         class="hx-action-card__more"
+        data-action="approvals.more"
         type="button"
       >
         ▸

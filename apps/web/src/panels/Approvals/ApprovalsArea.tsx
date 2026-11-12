@@ -10,6 +10,7 @@ import {
   type ChoiceId,
 } from './model.js';
 import './approvals.css';
+import { act } from '../../actions/registry.js';
 
 /** 같은 영역에 함께 뜨는 다른 카드 (Part 2 설치 계획 카드·Part 3 도구 고르기 카드 — 모두 ActionCard로 그린다) */
 export interface ExtraAreaCard {
@@ -132,7 +133,7 @@ export function ApprovalsArea({
         <p className="hx-approvals__last" role="status">
           {last.message ?? '선택을 반영했어요.'}{' '}
           {onUndo && (
-            <button type="button" className="hx-approvals__undo" onClick={onUndo}>
+            <button {...act('approvals.undo')} type="button" className="hx-approvals__undo" onClick={onUndo}>
               방금 선택 취소
             </button>
           )}

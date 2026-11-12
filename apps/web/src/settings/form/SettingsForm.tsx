@@ -227,6 +227,7 @@ export function SettingsForm(props: SettingsFormProps) {
               className="hx-setting__link hx-setting__reset"
               data-action="settings.reset-field"
               disabled={busy}
+              title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ key: f.key })}
             >
               기본값으로
@@ -287,6 +288,7 @@ export function SettingsForm(props: SettingsFormProps) {
               className="hx-setting__link"
               data-action="settings.reset-group"
               disabled={busy}
+              title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ group: g.id })}
             >
               이 묶음 기본값으로
@@ -319,6 +321,7 @@ export function SettingsForm(props: SettingsFormProps) {
               type="button"
               data-action="settings.reset-all-confirm"
               disabled={busy}
+              title={busy ? '저장하는 중이에요' : undefined}
               onClick={() => void reset({ all: true })}
             >
               되돌리기
