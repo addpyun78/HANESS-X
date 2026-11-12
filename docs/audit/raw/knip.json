@@ -1,0 +1,2407 @@
+{
+  "tool": "scripts/audit/deadcode.mjs (knip 대체, TypeScript 컴파일러 기반)",
+  "entries": 836,
+  "filesScanned": 1282,
+  "files": [],
+  "exports": [
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "DEFAULT_API_URL"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "TOKEN_STORAGE_KEY"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "BackoffOptions"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "PluginInfo"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "WorkspacesResponse"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "CreateSessionRequest"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "ApiClientOptions"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "EventStreamOptions"
+    },
+    {
+      "file": "apps/web/src/api/client.ts",
+      "name": "EventStream"
+    },
+    {
+      "file": "apps/web/src/builder/Canvas.tsx",
+      "name": "CanvasProps"
+    },
+    {
+      "file": "apps/web/src/builder/Drawer.tsx",
+      "name": "DrawerProps"
+    },
+    {
+      "file": "apps/web/src/builder/StartChoice.tsx",
+      "name": "StartChoiceProps"
+    },
+    {
+      "file": "apps/web/src/builder/ai-choice.ts",
+      "name": "followsMain"
+    },
+    {
+      "file": "apps/web/src/builder/catalog.ts",
+      "name": "CatalogPlugin"
+    },
+    {
+      "file": "apps/web/src/builder/catalog.ts",
+      "name": "CatalogAgent"
+    },
+    {
+      "file": "apps/web/src/builder/catalog.ts",
+      "name": "NODE_DESC"
+    },
+    {
+      "file": "apps/web/src/builder/chat/BuilderSidebar.tsx",
+      "name": "SIDEBAR_MODES"
+    },
+    {
+      "file": "apps/web/src/builder/chat/BuilderSidebar.tsx",
+      "name": "SidebarMode"
+    },
+    {
+      "file": "apps/web/src/builder/chat/BuilderSidebar.tsx",
+      "name": "SIDEBAR_MODE_LABEL"
+    },
+    {
+      "file": "apps/web/src/builder/chat/BuilderSidebar.tsx",
+      "name": "BuilderSidebarProps"
+    },
+    {
+      "file": "apps/web/src/builder/chat/MicButton.tsx",
+      "name": "MicButtonProps"
+    },
+    {
+      "file": "apps/web/src/builder/chat/mic.ts",
+      "name": "MicPhase"
+    },
+    {
+      "file": "apps/web/src/builder/chat/mic.ts",
+      "name": "MicEvent"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "STT_SETTING_KEY"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "readSttSetting"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "writeSttSetting"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "LocalHttpSpeechToText"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "browserStt"
+    },
+    {
+      "file": "apps/web/src/builder/chat/stt.ts",
+      "name": "sttAvailability"
+    },
+    {
+      "file": "apps/web/src/builder/draft/DraftCards.tsx",
+      "name": "SKIP_QUESTIONS"
+    },
+    {
+      "file": "apps/web/src/builder/draft/SaveDialog.tsx",
+      "name": "SaveDialogProps"
+    },
+    {
+      "file": "apps/web/src/builder/draft/api.ts",
+      "name": "DesignNotice"
+    },
+    {
+      "file": "apps/web/src/builder/draft/api.ts",
+      "name": "SaveDraftRequest"
+    },
+    {
+      "file": "apps/web/src/builder/draft/api.ts",
+      "name": "SaveDraftError"
+    },
+    {
+      "file": "apps/web/src/builder/draft/forge-handoff.ts",
+      "name": "forgePrefillText"
+    },
+    {
+      "file": "apps/web/src/builder/draft/model.ts",
+      "name": "MANUAL_REASON"
+    },
+    {
+      "file": "apps/web/src/builder/draft/model.ts",
+      "name": "PERMISSION_PLAIN"
+    },
+    {
+      "file": "apps/web/src/builder/draft/model.ts",
+      "name": "ChecklistContext"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "NODE_W"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "NODE_H"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "HxNodeData"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "HxGroupData"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "groupSize"
+    },
+    {
+      "file": "apps/web/src/builder/flow.ts",
+      "name": "HxEdgeData"
+    },
+    {
+      "file": "apps/web/src/builder/graph.ts",
+      "name": "snap"
+    },
+    {
+      "file": "apps/web/src/builder/graph.ts",
+      "name": "defaultSpec"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/AiChoiceField.tsx",
+      "name": "AiChoiceFieldProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/DryRunTab.tsx",
+      "name": "DryRunTabProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/InspectorPanel.tsx",
+      "name": "InspectorTab"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/InspectorPanel.tsx",
+      "name": "InspectorPanelProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/NodeFields.tsx",
+      "name": "NodeFieldsProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/SaveBar.tsx",
+      "name": "SaveBarProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/YamlTab.tsx",
+      "name": "YamlTabProps"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/dryrun-stages.ts",
+      "name": "StageRow"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/dryrun-stages.ts",
+      "name": "StageRunView"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/dryrun.ts",
+      "name": "NodeOverlay"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/dryrun.ts",
+      "name": "PRICE_PER_MTOK"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/model.ts",
+      "name": "moveItem"
+    },
+    {
+      "file": "apps/web/src/builder/inspector/yaml.ts",
+      "name": "YamlResult"
+    },
+    {
+      "file": "apps/web/src/builder/lego/dnd.ts",
+      "name": "ChipDrag"
+    },
+    {
+      "file": "apps/web/src/builder/lego/history.ts",
+      "name": "History"
+    },
+    {
+      "file": "apps/web/src/builder/lego/history.ts",
+      "name": "HistoryAction"
+    },
+    {
+      "file": "apps/web/src/builder/lego/model.ts",
+      "name": "EdgeCompat"
+    },
+    {
+      "file": "apps/web/src/chat/BlockView.tsx",
+      "name": "APPROVAL_OPTION_NOT_READY"
+    },
+    {
+      "file": "apps/web/src/chat/ChatStream.tsx",
+      "name": "ChatStreamProps"
+    },
+    {
+      "file": "apps/web/src/chat/ChatStream.tsx",
+      "name": "ViewModeSwitch"
+    },
+    {
+      "file": "apps/web/src/chat/SentMessage.tsx",
+      "name": "SentAttachment"
+    },
+    {
+      "file": "apps/web/src/chat/StopBlockCard.tsx",
+      "name": "StopBlockCardProps"
+    },
+    {
+      "file": "apps/web/src/chat/ToolCard.tsx",
+      "name": "CollapsibleCardProps"
+    },
+    {
+      "file": "apps/web/src/chat/ToolCard.tsx",
+      "name": "toolSummary"
+    },
+    {
+      "file": "apps/web/src/chat/ToolCard.tsx",
+      "name": "ToolCardProps"
+    },
+    {
+      "file": "apps/web/src/chat/blocks.ts",
+      "name": "ChatBlockKind"
+    },
+    {
+      "file": "apps/web/src/chat/blocks.ts",
+      "name": "StopBlockExtra"
+    },
+    {
+      "file": "apps/web/src/chat/blocks.ts",
+      "name": "MODE_KINDS"
+    },
+    {
+      "file": "apps/web/src/composer/AttachmentChips.tsx",
+      "name": "PREVIEW_TEXT_CHARS"
+    },
+    {
+      "file": "apps/web/src/composer/AttachmentChips.tsx",
+      "name": "AttachmentPreview"
+    },
+    {
+      "file": "apps/web/src/composer/ChipMenu.tsx",
+      "name": "ChipMenuProps"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "PaletteGroup"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "PALETTE_GROUPS"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "PALETTE_GROUP_LABEL"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "PaletteItem"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "BUILTIN_COMMANDS"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "pinsChip"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "SlashPaletteProps"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "SlashPalette"
+    },
+    {
+      "file": "apps/web/src/composer/SlashPalette.tsx",
+      "name": "UseSlashPaletteOptions"
+    },
+    {
+      "file": "apps/web/src/composer/StopButton.tsx",
+      "name": "ESC_TWICE_MS"
+    },
+    {
+      "file": "apps/web/src/composer/StopButton.tsx",
+      "name": "useEscTwice"
+    },
+    {
+      "file": "apps/web/src/composer/SubagentConfirm.tsx",
+      "name": "SubagentConfirmProps"
+    },
+    {
+      "file": "apps/web/src/composer/attach-flow.ts",
+      "name": "AttachFlowDeps"
+    },
+    {
+      "file": "apps/web/src/composer/attach-flow.ts",
+      "name": "UiAttachResult"
+    },
+    {
+      "file": "apps/web/src/composer/attachments.ts",
+      "name": "imagesFromClipboard"
+    },
+    {
+      "file": "apps/web/src/composer/attachments.ts",
+      "name": "ChipKind"
+    },
+    {
+      "file": "apps/web/src/composer/fuzzy.ts",
+      "name": "bestScore"
+    },
+    {
+      "file": "apps/web/src/composer/types.ts",
+      "name": "AuthMode"
+    },
+    {
+      "file": "apps/web/src/composer/types.ts",
+      "name": "AUTH_LABEL"
+    },
+    {
+      "file": "apps/web/src/composer/useAttachUpload.ts",
+      "name": "fileToBase64"
+    },
+    {
+      "file": "apps/web/src/design/css.ts",
+      "name": "LIGHT"
+    },
+    {
+      "file": "apps/web/src/design/css.ts",
+      "name": "DARK"
+    },
+    {
+      "file": "apps/web/src/design/theme.ts",
+      "name": "THEME_ORDER"
+    },
+    {
+      "file": "apps/web/src/design/tokens.ts",
+      "name": "StatusName"
+    },
+    {
+      "file": "apps/web/src/design/ui-prefs.ts",
+      "name": "FONT_SIZE_KEY"
+    },
+    {
+      "file": "apps/web/src/design/ui-prefs.ts",
+      "name": "REDUCE_MOTION_KEY"
+    },
+    {
+      "file": "apps/web/src/design/ui-prefs.ts",
+      "name": "LANGUAGE_KEY"
+    },
+    {
+      "file": "apps/web/src/engines/ModelButton.tsx",
+      "name": "ModelButtonProps"
+    },
+    {
+      "file": "apps/web/src/engines/ScanBubble.tsx",
+      "name": "useReducedMotion"
+    },
+    {
+      "file": "apps/web/src/engines/ScanBubble.tsx",
+      "name": "ScanBubbleProps"
+    },
+    {
+      "file": "apps/web/src/engines/useEngineScan.ts",
+      "name": "DONE_VISIBLE_MS"
+    },
+    {
+      "file": "apps/web/src/engines/useEngineScan.ts",
+      "name": "POLL_MS"
+    },
+    {
+      "file": "apps/web/src/engines/useEngineScan.ts",
+      "name": "INSTALL_DONE_EVENT"
+    },
+    {
+      "file": "apps/web/src/engines/useEngines.tsx",
+      "name": "UseEnginesOptions"
+    },
+    {
+      "file": "apps/web/src/engines/useEngines.tsx",
+      "name": "EnginesUi"
+    },
+    {
+      "file": "apps/web/src/engines/useProjectAi.ts",
+      "name": "ProjectLike"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "FORGE_CARD_KINDS"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "ForgeCardBlock"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "ForgeQuestionCard"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "ForgeSpecCard"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "permissionSummary"
+    },
+    {
+      "file": "apps/web/src/forge/ForgeCards.tsx",
+      "name": "ForgeInstallCard"
+    },
+    {
+      "file": "apps/web/src/install/FirstRunCard.tsx",
+      "name": "FirstRunChoice"
+    },
+    {
+      "file": "apps/web/src/install/FirstRunCard.tsx",
+      "name": "FirstRunCardData"
+    },
+    {
+      "file": "apps/web/src/install/FirstRunCard.tsx",
+      "name": "FirstRunCardProps"
+    },
+    {
+      "file": "apps/web/src/install/InstallManager.tsx",
+      "name": "InstallCardSink"
+    },
+    {
+      "file": "apps/web/src/install/InstallManager.tsx",
+      "name": "InstallManagerProps"
+    },
+    {
+      "file": "apps/web/src/install/InstallManager.tsx",
+      "name": "KIND_FILTERS"
+    },
+    {
+      "file": "apps/web/src/install/InstallManager.tsx",
+      "name": "PRICE_FILTERS"
+    },
+    {
+      "file": "apps/web/src/install/InstallPlanCard.tsx",
+      "name": "InstallPlanCardProps"
+    },
+    {
+      "file": "apps/web/src/install/InstallPlanCard.tsx",
+      "name": "openExternal"
+    },
+    {
+      "file": "apps/web/src/install/InstallPlanCard.tsx",
+      "name": "ResolveFailureCardProps"
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "GestureKind"
+    },
+    {
+      "file": "apps/web/src/install/api.ts",
+      "name": "PlanResponse"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "PRICING_TIERS"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "PricingView"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "BadgeTone"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "isPricingTier"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "KIND_SOURCE"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "ACTION_BUTTON"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "ACTION_GESTURE"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "SUDO_TEXT"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "InstallCardButtonId"
+    },
+    {
+      "file": "apps/web/src/install/model.ts",
+      "name": "PlanCardOptions"
+    },
+    {
+      "file": "apps/web/src/install/useInstallCards.ts",
+      "name": "InstallCardEntry"
+    },
+    {
+      "file": "apps/web/src/install/useInstallCards.ts",
+      "name": "ExtraPending"
+    },
+    {
+      "file": "apps/web/src/install/useInstallCards.ts",
+      "name": "ChatInstallCall"
+    },
+    {
+      "file": "apps/web/src/install/useInstallCards.ts",
+      "name": "UseInstallCardsOptions"
+    },
+    {
+      "file": "apps/web/src/install/useInstallCards.ts",
+      "name": "InstallCardsState"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/ApprovalsArea.tsx",
+      "name": "ExtraAreaCard"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/ApprovalsArea.tsx",
+      "name": "ApprovalsAreaProps"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/Toasts.tsx",
+      "name": "ToastsProps"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+      "name": "OS_NOTIFY_KEY"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+      "name": "REMIND_KEY"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+      "name": "SOUND_KEY"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/alert-prefs.ts",
+      "name": "DEFAULT_ALERT_PREFS"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "APPROVAL_RESOLVED"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "CHOICE_LABELS"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "ActionCardSection"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "ActionCardButton"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "REMEMBER_LABEL"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/model.ts",
+      "name": "cardOfEvent"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "ExtraPending"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "UseApprovalsOptions"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useApprovals.ts",
+      "name": "ApprovalsState"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useNotices.ts",
+      "name": "NoticeData"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useNotices.ts",
+      "name": "noticesFromEvents"
+    },
+    {
+      "file": "apps/web/src/panels/Approvals/useNotices.ts",
+      "name": "noticeToastId"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/ApprovalCard.tsx",
+      "name": "ApprovalCardProps"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/ChecklistTree.tsx",
+      "name": "ItemDetail"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/ChecklistTree.tsx",
+      "name": "ChecklistTreeProps"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/PlanReview.tsx",
+      "name": "PlanReviewProps"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/model.ts",
+      "name": "ItemStatus"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/model.ts",
+      "name": "Acceptance"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/model.ts",
+      "name": "Evidence"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/model.ts",
+      "name": "Verdict"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/model.ts",
+      "name": "LadderStep"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/stages.ts",
+      "name": "StageStatus"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/stages.ts",
+      "name": "StageItemMeta"
+    },
+    {
+      "file": "apps/web/src/panels/Checklist/stages.ts",
+      "name": "isFinishedStage"
+    },
+    {
+      "file": "apps/web/src/panels/DiffPanel.tsx",
+      "name": "DiffPanelProps"
+    },
+    {
+      "file": "apps/web/src/panels/TerminalPanel.tsx",
+      "name": "xtermView"
+    },
+    {
+      "file": "apps/web/src/panels/TerminalPanel.tsx",
+      "name": "TerminalPanelProps"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx",
+      "name": "ToolPickerCardProps"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/ToolPickerCard.tsx",
+      "name": "PricingBadge"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/api.ts",
+      "name": "FindResultData"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/api.ts",
+      "name": "toPickerData"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/api.ts",
+      "name": "AgentGapData"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/model.ts",
+      "name": "PricingTier"
+    },
+    {
+      "file": "apps/web/src/panels/ToolPicker/model.ts",
+      "name": "InstallMethodData"
+    },
+    {
+      "file": "apps/web/src/panels/diff.ts",
+      "name": "ChangeKind"
+    },
+    {
+      "file": "apps/web/src/panels/terminal-session.ts",
+      "name": "TerminalSessionHandlers"
+    },
+    {
+      "file": "apps/web/src/panels/trajectory.ts",
+      "name": "TrajectoryEntry"
+    },
+    {
+      "file": "apps/web/src/panels/trajectory.ts",
+      "name": "TrajectoryStep"
+    },
+    {
+      "file": "apps/web/src/panels/trajectory.ts",
+      "name": "Trajectory"
+    },
+    {
+      "file": "apps/web/src/panels/usePanels.tsx",
+      "name": "UsePanelsOptions"
+    },
+    {
+      "file": "apps/web/src/recovery/ProjectResumeCard.tsx",
+      "name": "ProjectResumeCardProps"
+    },
+    {
+      "file": "apps/web/src/recovery/ResumeCard.tsx",
+      "name": "ResumeCardProps"
+    },
+    {
+      "file": "apps/web/src/recovery/ResumeCheckCard.tsx",
+      "name": "ResumeCheckCardProps"
+    },
+    {
+      "file": "apps/web/src/recovery/ResumeFlow.tsx",
+      "name": "ResumeStartChoices"
+    },
+    {
+      "file": "apps/web/src/recovery/ResumeFlow.tsx",
+      "name": "ResumeFlowProps"
+    },
+    {
+      "file": "apps/web/src/recovery/resume-entry.tsx",
+      "name": "ResumeCountLinkProps"
+    },
+    {
+      "file": "apps/web/src/recovery/resume-list.ts",
+      "name": "resumeLine"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/EngineCard.tsx",
+      "name": "EngineCardProps"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/EnginesSettings.tsx",
+      "name": "EnginesSettingsProps"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/model.ts",
+      "name": "ScanEngine"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/model.ts",
+      "name": "SupportedEngine"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/model.ts",
+      "name": "SUPPORTED_ENGINES"
+    },
+    {
+      "file": "apps/web/src/settings/Engines/model.ts",
+      "name": "EngineLocationView"
+    },
+    {
+      "file": "apps/web/src/settings/form/SettingsForm.tsx",
+      "name": "scopeLabel"
+    },
+    {
+      "file": "apps/web/src/settings/form/SettingsForm.tsx",
+      "name": "displayValue"
+    },
+    {
+      "file": "apps/web/src/settings/form/custom-widgets.tsx",
+      "name": "CustomWidgetProps"
+    },
+    {
+      "file": "apps/web/src/settings/form/types.ts",
+      "name": "SettingGroupId"
+    },
+    {
+      "file": "apps/web/src/settings/form/types.ts",
+      "name": "SettingScope"
+    },
+    {
+      "file": "apps/web/src/settings/form/types.ts",
+      "name": "SettingWidget"
+    },
+    {
+      "file": "apps/web/src/settings/form/types.ts",
+      "name": "SettingStorage"
+    },
+    {
+      "file": "apps/web/src/settings/form/types.ts",
+      "name": "JsonSchema"
+    },
+    {
+      "file": "apps/web/src/settings/form/widgets.tsx",
+      "name": "rangeText"
+    },
+    {
+      "file": "apps/web/src/settings/sections/AboutSection.tsx",
+      "name": "AboutSectionProps"
+    },
+    {
+      "file": "apps/web/src/settings/sections/DataSection.tsx",
+      "name": "DataSectionProps"
+    },
+    {
+      "file": "apps/web/src/settings/sections/ProjectsSection.tsx",
+      "name": "ProjectsSectionProps"
+    },
+    {
+      "file": "apps/web/src/settings/sections/TransferSection.tsx",
+      "name": "TransferSectionProps"
+    },
+    {
+      "file": "apps/web/src/shell/AppShell.tsx",
+      "name": "AppShellProps"
+    },
+    {
+      "file": "apps/web/src/shell/Resizer.tsx",
+      "name": "ResizerProps"
+    },
+    {
+      "file": "apps/web/src/shell/RightPanel.tsx",
+      "name": "RightPanelProps"
+    },
+    {
+      "file": "apps/web/src/shell/SessionNav.tsx",
+      "name": "SessionNavProps"
+    },
+    {
+      "file": "apps/web/src/shell/StopAllButton.tsx",
+      "name": "StopAllButtonProps"
+    },
+    {
+      "file": "apps/web/src/shell/TopBar.tsx",
+      "name": "QUOTA_WARNING_RATIO"
+    },
+    {
+      "file": "apps/web/src/shell/TopBar.tsx",
+      "name": "QUOTA_DANGER_RATIO"
+    },
+    {
+      "file": "apps/web/src/shell/layout-store.ts",
+      "name": "DEFAULT_LAYOUT"
+    },
+    {
+      "file": "apps/web/src/shell/layout-store.ts",
+      "name": "clamp"
+    },
+    {
+      "file": "apps/web/src/shell/paused-label.ts",
+      "name": "PausedReason"
+    },
+    {
+      "file": "apps/web/src/shell/paused-label.ts",
+      "name": "isPausedReason"
+    },
+    {
+      "file": "apps/web/src/shell/projects/ConfirmCard.tsx",
+      "name": "ConfirmCardProps"
+    },
+    {
+      "file": "apps/web/src/shell/projects/EmptySession.tsx",
+      "name": "EXAMPLE_PROMPTS"
+    },
+    {
+      "file": "apps/web/src/shell/projects/EmptySession.tsx",
+      "name": "EmptySessionProps"
+    },
+    {
+      "file": "apps/web/src/shell/projects/ProjectSettings.tsx",
+      "name": "ProjectSettingsValue"
+    },
+    {
+      "file": "apps/web/src/shell/projects/WhereToWork.tsx",
+      "name": "SCRATCH_HELP"
+    },
+    {
+      "file": "apps/web/src/shell/projects/WhereToWork.tsx",
+      "name": "WhereToWorkProps"
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "ProjectsResponse"
+    },
+    {
+      "file": "apps/web/src/shell/projects/api.ts",
+      "name": "ChangeProjectResult"
+    },
+    {
+      "file": "apps/web/src/shell/projects/model.ts",
+      "name": "NO_PROJECT"
+    },
+    {
+      "file": "apps/web/src/shell/projects/model.ts",
+      "name": "ARCHIVE_SUGGEST_DAYS"
+    },
+    {
+      "file": "apps/web/src/shell/projects/prefs.ts",
+      "name": "SIDEBAR_COLLAPSED_KEY"
+    },
+    {
+      "file": "apps/web/src/shell/projects/useProjectShell.tsx",
+      "name": "UseProjectShellOptions"
+    },
+    {
+      "file": "apps/web/src/shell/types.ts",
+      "name": "SessionAgent"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/events.ts",
+      "name": "contentText"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/permission.ts",
+      "name": "HookPermissionGateOptions"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/permission.ts",
+      "name": "toolNameOf"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "EngineFamily"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "EngineRoute"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "AcpCandidate"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "FamilyCandidates"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "ENGINE_CANDIDATES"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "ResolveEngineInput"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "SkipReason"
+    },
+    {
+      "file": "packages/engines/acp-generic/src/resolver.ts",
+      "name": "EngineSelection"
+    },
+    {
+      "file": "packages/engines/antigravity/src/args.ts",
+      "name": "AgyArgsInput"
+    },
+    {
+      "file": "packages/engines/antigravity/src/errors.ts",
+      "name": "AgyStructuredError"
+    },
+    {
+      "file": "packages/engines/codex/src/jsonrpc.ts",
+      "name": "RpcId"
+    },
+    {
+      "file": "packages/engines/codex/src/jsonrpc.ts",
+      "name": "RpcServerRequest"
+    },
+    {
+      "file": "packages/engines/codex/src/jsonrpc.ts",
+      "name": "ClientInfo"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/anthropic.ts",
+      "name": "AnthropicClientOptions"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/anthropic.ts",
+      "name": "ANTHROPIC_BASE_URL"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/anthropic.ts",
+      "name": "toAnthropicMessages"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/attachments.ts",
+      "name": "VISION_MODEL_RE"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/attachments.ts",
+      "name": "ApiProviderKind"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/attachments.ts",
+      "name": "INLINE_TEXT_MAX"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/attachments.ts",
+      "name": "ApiAttachmentInput"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/gemini.ts",
+      "name": "GeminiClientOptions"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/gemini.ts",
+      "name": "GEMINI_BASE_URL"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/json-fallback.ts",
+      "name": "jsonProtocolPrompt"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/json-fallback.ts",
+      "name": "isToolsUnsupported"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/openai.ts",
+      "name": "OpenAIChatClientOptions"
+    },
+    {
+      "file": "packages/engines/openai-compat/src/openai.ts",
+      "name": "toOpenAIMessages"
+    },
+    {
+      "file": "packages/kernel/src/settings/data-cleanup.ts",
+      "name": "DataCleanupOptions"
+    },
+    {
+      "file": "packages/kernel/src/settings/diagnostics.ts",
+      "name": "DiagnosticsInput"
+    },
+    {
+      "file": "packages/kernel/src/settings/diagnostics.ts",
+      "name": "REDACTED"
+    },
+    {
+      "file": "packages/kernel/src/settings/transfer.ts",
+      "name": "EXPORT_HEADER"
+    },
+    {
+      "file": "packages/kernel/src/settings/transfer.ts",
+      "name": "ImportIssue"
+    },
+    {
+      "file": "packages/kernel/src/settings/transfer.ts",
+      "name": "ImportResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "NODE_OUTPUT_TOOL"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "OutputSource"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "ExtractedOutput"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "pickSchemaFields"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "OutputValidation"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/contract.ts",
+      "name": "ConnectionIssue"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/assets.ts",
+      "name": "AssetKind"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/assets.ts",
+      "name": "UnknownRef"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "DesignOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "DesignNotice"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "DesignResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "EditResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "DesignerOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/designer.ts",
+      "name": "SKIP_QUESTIONS_LABEL"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/engines.ts",
+      "name": "engineById"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/parse.ts",
+      "name": "DesignerReply"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+      "name": "PATCH_PATH_RE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+      "name": "PatchOpSchema"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+      "name": "DraftPatchSchema"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+      "name": "PatchParse"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/patch.ts",
+      "name": "PatchCheck"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "isPlain"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "toPlain"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "PlainIssue"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "FALLBACK_REASON"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "FALLBACK_NEED"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "FALLBACK_COST"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/plain.ts",
+      "name": "fallbackSummary"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/prompt.ts",
+      "name": "DESIGNER_SYSTEM_PROMPT"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/prompt.ts",
+      "name": "DRAFT_FORMAT_GUIDE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/prompt.ts",
+      "name": "QUESTIONS_FORMAT_GUIDE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/prompt.ts",
+      "name": "inventoryForPrompt"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/prompt.ts",
+      "name": "DesignPromptInput"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "BuilderDesignerOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "DESIGN_ROUTE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "EDIT_ROUTE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "DRAFTS_ROUTE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+      "name": "SAVE_AGENT_ROUTE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/session.ts",
+      "name": "DesignerSessionOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/session.ts",
+      "name": "DesignerSession"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/settings.ts",
+      "name": "BUILDER_DEFAULT_MAX_QUESTIONS"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/settings.ts",
+      "name": "BuilderSettingsInput"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/settings.ts",
+      "name": "DesignerEngineChoice"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/structure.ts",
+      "name": "StructureResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/structure.ts",
+      "name": "draftPipeline"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/wire.ts",
+      "name": "BuilderDesignerWireOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/designer/wire.ts",
+      "name": "registerBuilderDesignerRoutes"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/save.ts",
+      "name": "SaveDraftInput"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/save.ts",
+      "name": "SaveDraftResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/save.ts",
+      "name": "suggestAgentName"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/save.ts",
+      "name": "designNotes"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "DRAFT_STALE_DAYS"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "DraftVersion"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "ChatLine"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "DraftRecordSchema"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "DraftListItem"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/drafts/store.ts",
+      "name": "DraftStoreOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/agents.ts",
+      "name": "summarizeNodes"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/engines.ts",
+      "name": "ENGINE_ID_BY_BINARY"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/engines.ts",
+      "name": "engineIdOf"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/engines.ts",
+      "name": "hostOf"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/filter.ts",
+      "name": "MAX_TEXT"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/health.ts",
+      "name": "EngineHealthInput"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/relevance.ts",
+      "name": "RankedKind"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/relevance.ts",
+      "name": "RANKED_KINDS"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/relevance.ts",
+      "name": "ScoredAsset"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/relevance.ts",
+      "name": "PickResult"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/route.ts",
+      "name": "InventoryResponse"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/route.ts",
+      "name": "InventoryProvider"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/route.ts",
+      "name": "inventoryResponse"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/service.ts",
+      "name": "PLUGIN_CHANGE_EVENTS"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/service.ts",
+      "name": "InventoryServiceOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/service.ts",
+      "name": "EventSource"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/skills.ts",
+      "name": "SKILL_FILE"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/skills.ts",
+      "name": "SkillFrontmatter"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/skills.ts",
+      "name": "CollectSkillsOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/wire.ts",
+      "name": "BuilderInventoryOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/inventory/workspace.ts",
+      "name": "WorkspaceScanOptions"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/condition.ts",
+      "name": "ConditionError"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/condition.ts",
+      "name": "lookupPath"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/condition.ts",
+      "name": "evaluateExpression"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/missing-engine.ts",
+      "name": "MISSING_ENGINE_KIND"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "name": "MAX_FANOUT_CONCURRENCY"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "name": "stableHash"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "name": "lastAssistantText"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/runner.ts",
+      "name": "runPipeline"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/stages.ts",
+      "name": "plainLine"
+    },
+    {
+      "file": "packages/plugins-core/agent-builder/src/runner/stages.ts",
+      "name": "trackStages"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "PROPOSE_AFTER"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "AiAcceptInput"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "AiAcceptResult"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "AiAcceptTrackerOptions"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/ai-accepts.ts",
+      "name": "AiAcceptTracker"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/auto-mode.ts",
+      "name": "AUTO_SAFE_CHOICES"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/auto-mode.ts",
+      "name": "AutoCardDecision"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/auto-mode.ts",
+      "name": "AUTO_CARD_BLOCK_REASON"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/auto-mode.ts",
+      "name": "AUTO_CARD_NO_SAFE_REASON"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/auto-mode.ts",
+      "name": "AutoCardHandlerOptions"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "DifferenceKindSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CARD_KINDS"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CardKindSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CHOICE_IDS"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CardOptionSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CardOption"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CardTechnicalSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "CardTechnical"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/card.ts",
+      "name": "ApprovalCardInput"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "EquivalencePairSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "EquivalencePair"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "EquivalencesSchema"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "Equivalences"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "normalizeValue"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "loadEquivalences"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "hasEquivalence"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "addEquivalence"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "DictionaryMatch"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "canonicalPathKey"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "FileSnapshot"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/dictionary.ts",
+      "name": "snapshotFile"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "APPROVAL_CARD_EVIDENCE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "ACCEPT_MESSAGE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "REDO_MESSAGE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "MOVE_MESSAGE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "REGISTER_MESSAGE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "SKIP_MESSAGE"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "driveTo"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "redoInstruction"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "dependentsOf"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/handlers.ts",
+      "name": "LedgerHandlerOptions"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "PlainRule"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "PlainViolation"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "PlainCheckResult"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "PlainCheckOptions"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "MAX_SENTENCE_CHARS"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "MAX_ENGLISH_RATIO"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "PLAIN_TERMS"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/plain-korean.ts",
+      "name": "splitSentences"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/session.ts",
+      "name": "sessionDir"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "APPROVAL_CARD_KIND"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "BATCH_THRESHOLD"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "DecisionRecord"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "UndoRecord"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "EventSinkLike"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "TimerApi"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "BatchSuggestion"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/store.ts",
+      "name": "ResolveResult"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/templates.ts",
+      "name": "shortValue"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/templates.ts",
+      "name": "optionsFor"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/templates.ts",
+      "name": "differenceText"
+    },
+    {
+      "file": "packages/plugins-core/approvals/src/templates.ts",
+      "name": "ProposalInput"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/cache.ts",
+      "name": "EngineLocationSchema"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/cache.ts",
+      "name": "EngineEntrySchema"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/cache.ts",
+      "name": "LocalLlmEntrySchema"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/exec.ts",
+      "name": "ExecOptions"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/min-versions.ts",
+      "name": "VersionStatus"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/plugin.ts",
+      "name": "officialLoginState"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/probes/all.ts",
+      "name": "ProbeAllOptions"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/probes/probe.ts",
+      "name": "PROBE_HOST"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/probes/probe.ts",
+      "name": "LocalLlmApi"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "RESCAN_REASONS"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "EngineProgressState"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "EngineProgressItem"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "PROGRESS_TARGETS"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "engineLabel"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "engineNames"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/progress.ts",
+      "name": "entryState"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/scan.ts",
+      "name": "hostLocation"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/scanner.ts",
+      "name": "EngineScannerOptions"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/scanner.ts",
+      "name": "STARTUP_RETRY_MS"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/scanner.ts",
+      "name": "RouteHost"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/scanner.ts",
+      "name": "ScannerLike"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/version.ts",
+      "name": "VersionResult"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/which.ts",
+      "name": "LocateOptions"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/wsl.ts",
+      "name": "WSL_EXE"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/wsl.ts",
+      "name": "WSL_TARGETS"
+    },
+    {
+      "file": "packages/plugins-core/engine-scanner/src/wsl.ts",
+      "name": "WslOptions"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/broker.ts",
+      "name": "ForgeCardKind"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/broker.ts",
+      "name": "ForgeBrokerOptions"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "CheckKind"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "CheckIssue"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "PermissionUsage"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "CheckReport"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "MANIFEST"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "checkManifest"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "typecheckPlugin"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "checkSkillMd"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "analyzePermissionUsage"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/check.ts",
+      "name": "lintPermissions"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "FORGE_PIPELINE"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "SCAFFOLD_ITEM"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "ForgeInstaller"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "ForgeOptions"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "lastJson"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "specPrompt"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/engine.ts",
+      "name": "scaffoldPrompt"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "SessionMaterial"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "ExtractedStep"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "ExtractedCommand"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "ExtractedSkill"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "generalizeSteps"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "repeatedCommands"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/extract.ts",
+      "name": "verificationsOf"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/forge.ts",
+      "name": "CreateForgeOptions"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/import/common.ts",
+      "name": "IMPORT_MAIN"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/import/skill-folder.ts",
+      "name": "skillPluginMain"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "TRUST_LABELS"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "forgePluginsRoot"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "InstallFileChange"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "InstallWarning"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "listFiles"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "permissionLines"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/install.ts",
+      "name": "permissionWarnings"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "QUESTION_IDS"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "QuestionId"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "ForgeChoice"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "ForgeQuestion"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "Inferred"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/interview.ts",
+      "name": "suggestedAnswer"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/sandbox.ts",
+      "name": "ExampleResult"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/sandbox.ts",
+      "name": "SandboxReport"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/scaffold.ts",
+      "name": "PROTECTED_FILES"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/scaffold.ts",
+      "name": "FileWrite"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/scaffold.ts",
+      "name": "templateVars"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/spec.ts",
+      "name": "FORGE_HOOK_NAMES"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/spec.ts",
+      "name": "ForgeExampleSchema"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/spec.ts",
+      "name": "SpecValidation"
+    },
+    {
+      "file": "packages/plugins-core/forge/src/spec.ts",
+      "name": "parseForgeSpec"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "OLLAMA_DEFAULT_BASE_URL"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "LOCAL_DEFAULT_MODEL"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "LOCAL_DEFAULT_TIMEOUT_MS"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "FetchLike"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "LocalVerifierSettings"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "LocalVerifierOptions"
+    },
+    {
+      "file": "packages/plugins/verifier-local/src/ollama.ts",
+      "name": "ollamaRequestBody"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DRAFT_DUTIES"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftDutySchema"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftDuty"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftNodeInput"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftEdgeSchema"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "GAP_ORIGINS"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftGapSchema"
+    },
+    {
+      "file": "packages/protocol/src/agent-draft.ts",
+      "name": "DraftQuestionSchema"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "PipelineRefSchema"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "PipelineRef"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "parseAgent"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "isPluginPipelineRef"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "AGENT_SOURCES"
+    },
+    {
+      "file": "packages/protocol/src/agent.ts",
+      "name": "AgentSourceSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "EngineInputsSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "DeliveryMode"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "AttachmentDelivery"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "renderAttachmentList"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "CliDelivery"
+    },
+    {
+      "file": "packages/protocol/src/attachment-delivery.ts",
+      "name": "AttachmentRef"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "ATTACHMENT_KINDS"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "AttachmentKindSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "REPRESENTATION_FORMS"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "RepresentationFormSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "RepresentationSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "AttachmentWarningSchema"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "ATTACHMENT_STATUSES"
+    },
+    {
+      "file": "packages/protocol/src/attachment.ts",
+      "name": "AttachmentInput"
+    },
+    {
+      "file": "packages/protocol/src/auto-limits.ts",
+      "name": "LimitKey"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "AssistantTextEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "ToolCallEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "ToolResultEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "FileChangeEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "UsageEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "ErrorEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "ApprovalResolvedEventSchema"
+    },
+    {
+      "file": "packages/protocol/src/events.ts",
+      "name": "ApprovalResolvedEvent"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "FsPermissionSchema"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "FsPermission"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "NetDomainSchema"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "PLUGIN_API_VERSION"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "ProvidesSchema"
+    },
+    {
+      "file": "packages/protocol/src/manifest.ts",
+      "name": "Provides"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "MODEL_AUTHS"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "MODEL_STATUSES"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "MODEL_SOURCES"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "ModelInputsSchema"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "ModelAuth"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "ModelStatus"
+    },
+    {
+      "file": "packages/protocol/src/models.ts",
+      "name": "ENGINE_ID_BY_BIN"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "EngineRef"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "Condition"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "GateNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "FanoutNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "JoinNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "LoopNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "RouterNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/pipeline.ts",
+      "name": "SubagentNodeSchema"
+    },
+    {
+      "file": "packages/protocol/src/schema-compat.ts",
+      "name": "SchemaCompatResult"
+    },
+    {
+      "file": "packages/protocol/src/stt.ts",
+      "name": "STT_PROVIDERS"
+    },
+    {
+      "file": "packages/protocol/src/stt.ts",
+      "name": "SttSettings"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JUDGE_KINDS"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JudgeKind"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "NoulQuestionSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "ChoiceQuestionSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "ScoreQuestionSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JudgeQuestionSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "SymbolNameSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JudgeStateInput"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "NoulAnswerSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "ChoiceAnswerSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "ScoreAnswerSchema"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JudgeAnswer"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "DataMinimizationError"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "stripCodeBlocks"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JUDGE_SYSTEM_PROMPT"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "JudgeMessages"
+    },
+    {
+      "file": "packages/protocol/src/verifier.ts",
+      "name": "DEVIATION_KINDS"
+    },
+    {
+      "file": "packages/sdk/src/skill-md.ts",
+      "name": "SkillFrontmatterSchema"
+    },
+    {
+      "file": "packages/sdk/src/skill-md.ts",
+      "name": "SkillFrontmatter"
+    },
+    {
+      "file": "packages/sdk/src/skill-md.ts",
+      "name": "SkillMdResult"
+    },
+    {
+      "file": "packages/sdk/src/templates.ts",
+      "name": "TemplateInfo"
+    },
+    {
+      "file": "packages/sdk/src/templates.ts",
+      "name": "TemplateVars"
+    },
+    {
+      "file": "packages/sdk/src/templates.ts",
+      "name": "TemplateVarsInput"
+    },
+    {
+      "file": "packages/sdk/src/templates.ts",
+      "name": "templatesDir"
+    }
+  ],
+  "dependencies": [
+    {
+      "package": "@harness-x/mcp-host",
+      "dir": "packages/plugins-core/mcp-host",
+      "dependency": "@harness-x/protocol"
+    }
+  ]
+}
