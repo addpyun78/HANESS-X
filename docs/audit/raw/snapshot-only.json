@@ -1,0 +1,58 @@
+[
+  {
+    "file": "apps/web/test/approvals.panel.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/chat.render.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/chat.sent-message.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/chat.stopblock.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/panels.checklist.stages.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/panels.checklist.tree.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/resume.timeline.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/run-mode.badges.test.tsx",
+    "snapshots": 2
+  },
+  {
+    "file": "apps/web/test/settings.engines.grid.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/settings.screen.attachments.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/shell.agent-sessions.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/shell.topbar.test.tsx",
+    "snapshots": 2
+  },
+  {
+    "file": "apps/web/test/stages.session-row.test.tsx",
+    "snapshots": 1
+  },
+  {
+    "file": "apps/web/test/stop.sidebar.test.tsx",
+    "snapshots": 1
+  }
+]
