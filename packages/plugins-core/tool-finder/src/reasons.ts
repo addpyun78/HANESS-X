@@ -1,4 +1,4 @@
-import { checkPlainKorean } from '@harness-x/approvals';
+import { isPlainKorean } from '@harness-x/approvals';
 import type { InstallKind } from '@harness-x/installer';
 import type { ToolCandidate } from './candidate.js';
 
@@ -31,9 +31,8 @@ export function installLabel(c: Pick<ToolCandidate, 'installMethods'>): string {
   return m ? (INSTALL_LABEL[m.kind] ?? m.label) : '공식 사이트에서 직접 받기';
 }
 
-export function isPlain(s: string): boolean {
-  return checkPlainKorean(s).ok;
-}
+/** 쉬운 말이면 true — 대표 구현 isPlainKorean(approvals)을 그대로 쓴다(T-102 C5-001). 바깥 이름은 그대로 둠 */
+export const isPlain = (s: string): boolean => isPlainKorean(s);
 
 function reasonParts(c: ToolCandidate): string[] {
   const parts: string[] = [];
@@ -71,16 +70,17 @@ export interface CandidateReasons {
 }
 
 export function reasonsFor(c: ToolCandidate): CandidateReasons {
-  const pros = c.pros.filter(isPlain).slice(0, 2);
+  const pros = c.pros.filter((s) => isPlainKorean(s)).slice(0, 2);
   // AI가 준 문장이 검사에서 떨어지면 대체한 것으로 표시
-  let replaced = pros.length < Math.min(2, c.pros.length) || (c.cons.length > 0 && !c.cons.some(isPlain));
+  let replaced =
+    pros.length < Math.min(2, c.pros.length) || (c.cons.length > 0 && !c.cons.some((s) => isPlainKorean(s)));
   let reason = (pros.length ? pros : reasonParts(c)).join(' ');
-  if (!reason || !isPlain(reason)) {
+  if (!reason || !isPlainKorean(reason)) {
     reason = REASON_TEMPLATE;
     replaced = true;
   }
-  let con = c.cons.find(isPlain) ?? conPart(c);
-  if (!isPlain(con)) {
+  let con = c.cons.find((s) => isPlainKorean(s)) ?? conPart(c);
+  if (!isPlainKorean(con)) {
     con = CON_TEMPLATE;
     replaced = true;
   }
