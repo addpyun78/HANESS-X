@@ -1,0 +1,120 @@
+[
+  {
+    "tool": "checklist.propose",
+    "input": {
+      "items": [
+        {
+          "id": "1",
+          "title": "시험 항목 만들기",
+          "acceptance": [
+            {
+              "type": "file_exists"
+            }
+          ],
+          "artifactId": "art.probe"
+        }
+      ]
+    },
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"ok\": true,\n  \"revision\": 1,\n  \"version\": 1,\n  \"itemCount\": 1,\n  \"manifest\": {\n    \"status\": \"skipped\"\n  }\n}"
+  },
+  {
+    "tool": "checklist.start",
+    "input": {
+      "id": "1"
+    },
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"id\": \"1\",\n  \"title\": \"시험 항목 만들기\",\n  \"status\": \"doing\",\n  \"attempts\": 1,\n  \"artifactId\": \"art.probe\",\n  \"canonicalPath\": null\n}"
+  },
+  {
+    "tool": "checklist.submit",
+    "input": {
+      "id": "1",
+      "evidence": []
+    },
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"id\": \"1\",\n  \"title\": \"시험 항목 만들기\",\n  \"status\": \"verifying\",\n  \"attempts\": 1,\n  \"artifactId\": \"art.probe\",\n  \"canonicalPath\": null\n}"
+  },
+  {
+    "tool": "checklist.current",
+    "input": {},
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"item\": {\n    \"id\": \"1\",\n    \"title\": \"시험 항목 만들기\",\n    \"status\": \"verifying\",\n    \"attempts\": 1,\n    \"artifactId\": \"art.probe\",\n    \"canonicalPath\": null,\n    \"acceptance\": [\n      {\n        \"type\": \"file_exists\"\n      }\n    ],\n    \"dep"
+  },
+  {
+    "tool": "manifest.resolve",
+    "input": {
+      "artifactId": "art.probe"
+    },
+    "isError": true,
+    "handledError": true,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\"error\":\"UNKNOWN_ARTIFACT\",\"message\":\"manifest에 없는 산출물: art.probe\"}"
+  },
+  {
+    "tool": "node.output",
+    "input": {
+      "json": {
+        "ok": true
+      }
+    },
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"accepted\": true,\n  \"json\": {\n    \"ok\": true\n  }\n}"
+  },
+  {
+    "tool": "attachments.list",
+    "input": {},
+    "isError": false,
+    "handledError": false,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\n  \"attachments\": []\n}"
+  },
+  {
+    "tool": "attachments.read",
+    "input": {
+      "id": "att_probe"
+    },
+    "isError": true,
+    "handledError": true,
+    "notImplemented": false,
+    "empty": false,
+    "result": "{\"error\":\"ERROR\",\"message\":\"첨부를 찾지 못했어요: att_probe\"}"
+  },
+  {
+    "tool": "install.plan",
+    "tested": false,
+    "reason": "커널 serve가 설치·도구 찾기 서비스를 연결해야 생기는 도구(install-tools.test.ts 등이 덮음)"
+  },
+  {
+    "tool": "install.resolve",
+    "tested": false,
+    "reason": "커널 serve가 설치·도구 찾기 서비스를 연결해야 생기는 도구(install-tools.test.ts 등이 덮음)"
+  },
+  {
+    "tool": "install.search",
+    "tested": false,
+    "reason": "커널 serve가 설치·도구 찾기 서비스를 연결해야 생기는 도구(install-tools.test.ts 등이 덮음)"
+  },
+  {
+    "tool": "tools.request",
+    "tested": false,
+    "reason": "커널 serve가 설치·도구 찾기 서비스를 연결해야 생기는 도구(install-tools.test.ts 등이 덮음)"
+  }
+]
