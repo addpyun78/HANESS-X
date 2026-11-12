@@ -1,0 +1,177 @@
+[
+  {
+    "file": "apps/web/test/builder.draft.display.test.tsx",
+    "line": 4,
+    "import": "../../../packages/plugins-core/approvals/src/plain-korean.js",
+    "from": "apps/web",
+    "into": "packages/plugins-core/approvals"
+  },
+  {
+    "file": "apps/web/test/builder.draft.save.test.tsx",
+    "line": 9,
+    "import": "../../../packages/plugins-core/approvals/src/plain-korean.js",
+    "from": "apps/web",
+    "into": "packages/plugins-core/approvals"
+  },
+  {
+    "file": "apps/web/test/install.first-run.test.tsx",
+    "line": 4,
+    "import": "../../../packages/plugins-core/approvals/src/plain-korean.js",
+    "from": "apps/web",
+    "into": "packages/plugins-core/approvals"
+  },
+  {
+    "file": "apps/web/test/resume.stale-card.test.tsx",
+    "line": 4,
+    "import": "../../../packages/kernel/src/resume-check.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.form.coverage.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.advanced.test.tsx",
+    "line": 4,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.ai.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.attachments.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.checklist.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.mode.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.scope.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/settings/registry.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/settings.screen.scope.test.tsx",
+    "line": 6,
+    "import": "../../../packages/kernel/src/settings/store.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "apps/web/test/stop.sidebar.test.tsx",
+    "line": 5,
+    "import": "../../../packages/kernel/src/stop.js",
+    "from": "apps/web",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/kernel/test/run-mode.limits.test.ts",
+    "line": 3,
+    "import": "../../plugins-core/approvals/src/plain-korean.js",
+    "from": "packages/kernel",
+    "into": "packages/plugins-core/approvals"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/test/designer.e2e.test.ts",
+    "line": 4,
+    "import": "../../../kernel/src/dispatch.js",
+    "from": "packages/plugins-core/agent-builder",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/test/designer.route.test.ts",
+    "line": 6,
+    "import": "../../../kernel/src/dispatch.js",
+    "from": "packages/plugins-core/agent-builder",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/plugins-core/agent-builder/test/e2e.pause-resume.test.ts",
+    "line": 18,
+    "import": "../../../kernel/test/api-fixtures.js",
+    "from": "packages/plugins-core/agent-builder",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/plugins-core/attachments/test/four-engines.test.ts",
+    "line": 9,
+    "import": "../../../engines/openai-compat/test/mock-server.js",
+    "from": "packages/plugins-core/attachments",
+    "into": "packages/engines/openai-compat"
+  },
+  {
+    "file": "packages/plugins-core/attachments/test/routes.test.ts",
+    "line": 5,
+    "import": "../../../kernel/test/api-fixtures.js",
+    "from": "packages/plugins-core/attachments",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/plugins-core/forge/test/forge.sandbox.test.ts",
+    "line": 4,
+    "import": "../../agent-builder/test/runner-helpers.js",
+    "from": "packages/plugins-core/forge",
+    "into": "packages/plugins-core/agent-builder"
+  },
+  {
+    "file": "packages/plugins-core/forge/test/forge.scaffold.test.ts",
+    "line": 6,
+    "import": "../../agent-builder/test/runner-helpers.js",
+    "from": "packages/plugins-core/forge",
+    "into": "packages/plugins-core/agent-builder"
+  },
+  {
+    "file": "packages/plugins-core/forge/test/forge.spec.test.ts",
+    "line": 4,
+    "import": "../../agent-builder/test/runner-helpers.js",
+    "from": "packages/plugins-core/forge",
+    "into": "packages/plugins-core/agent-builder"
+  },
+  {
+    "file": "packages/plugins-core/installer/test/wiring.test.ts",
+    "line": 12,
+    "import": "../../approvals/src/plain-korean.js",
+    "from": "packages/plugins-core/installer",
+    "into": "packages/plugins-core/approvals"
+  },
+  {
+    "file": "packages/plugins-core/installer/test/wiring.test.ts",
+    "line": 16,
+    "import": "../../../kernel/test/api-fixtures.js",
+    "from": "packages/plugins-core/installer",
+    "into": "packages/kernel"
+  },
+  {
+    "file": "packages/plugins-core/permission-gate/test/run-mode.human-only.test.ts",
+    "line": 11,
+    "import": "../../approvals/src/plain-korean.js",
+    "from": "packages/plugins-core/permission-gate",
+    "into": "packages/plugins-core/approvals"
+  }
+]
