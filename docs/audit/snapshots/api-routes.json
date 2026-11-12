@@ -1,0 +1,620 @@
+[
+  {
+    "method": "PUT",
+    "path": "/api/agents/:name",
+    "file": "packages/kernel/src/api/agents-routes.ts",
+    "line": 56
+  },
+  {
+    "method": "POST",
+    "path": "/api/agents/save",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+    "line": 175
+  },
+  {
+    "method": "GET",
+    "path": "/api/agents",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 209
+  },
+  {
+    "method": "POST",
+    "path": "/api/approvals/:id",
+    "file": "packages/kernel/src/api/approvals-routes.ts",
+    "line": 66
+  },
+  {
+    "method": "POST",
+    "path": "/api/approvals/undo",
+    "file": "packages/kernel/src/api/approvals-routes.ts",
+    "line": 57
+  },
+  {
+    "method": "GET",
+    "path": "/api/approvals",
+    "file": "packages/kernel/src/api/approvals-routes.ts",
+    "line": 50
+  },
+  {
+    "method": "POST",
+    "path": "/api/builder/design",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+    "line": 75
+  },
+  {
+    "method": "GET",
+    "path": "/api/builder/drafts",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+    "line": 124
+  },
+  {
+    "method": "POST",
+    "path": "/api/builder/edit",
+    "file": "packages/plugins-core/agent-builder/src/designer/route.ts",
+    "line": 114
+  },
+  {
+    "method": "GET",
+    "path": "/api/builder/inventory",
+    "file": "packages/plugins-core/agent-builder/src/inventory/route.ts",
+    "line": 34
+  },
+  {
+    "method": "POST",
+    "path": "/api/checklist/:session/lock",
+    "file": "packages/plugins-core/checklist-ledger/src/plan-routes.ts",
+    "line": 160
+  },
+  {
+    "method": "GET",
+    "path": "/api/checklist/:session/status",
+    "file": "packages/plugins-core/checklist-ledger/src/stop-guard.ts",
+    "line": 127
+  },
+  {
+    "method": "GET",
+    "path": "/api/checklist/:session",
+    "file": "packages/plugins-core/checklist-ledger/src/plan-routes.ts",
+    "line": 152
+  },
+  {
+    "method": "POST",
+    "path": "/api/compare",
+    "file": "packages/plugins-core/verifiers/ladder/src/runtime.ts",
+    "line": 277
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/engines/:id/key",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 234
+  },
+  {
+    "method": "PUT",
+    "path": "/api/engines/:id/key",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 225
+  },
+  {
+    "method": "GET",
+    "path": "/api/engines/:id/login",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 179
+  },
+  {
+    "method": "POST",
+    "path": "/api/engines/:id/ping",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 240
+  },
+  {
+    "method": "PUT",
+    "path": "/api/engines/:id/settings",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 186
+  },
+  {
+    "method": "POST",
+    "path": "/api/engines/rescan",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 176
+  },
+  {
+    "method": "POST",
+    "path": "/api/engines/rescan",
+    "file": "packages/plugins-core/engine-scanner/src/scanner.ts",
+    "line": 195
+  },
+  {
+    "method": "GET",
+    "path": "/api/engines",
+    "file": "packages/kernel/src/api/engines-routes.ts",
+    "line": 156
+  },
+  {
+    "method": "POST",
+    "path": "/api/forge/answers/:id",
+    "file": "packages/plugins-core/forge/src/routes.ts",
+    "line": 30
+  },
+  {
+    "method": "GET",
+    "path": "/api/forge/pending",
+    "file": "packages/plugins-core/forge/src/routes.ts",
+    "line": 26
+  },
+  {
+    "method": "POST",
+    "path": "/api/gesture-tokens",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 91
+  },
+  {
+    "method": "GET",
+    "path": "/api/health",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 173
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/cancel",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 146
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/execute",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 136
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/first-run/:id",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 171
+  },
+  {
+    "method": "GET",
+    "path": "/api/install/first-run",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 170
+  },
+  {
+    "method": "GET",
+    "path": "/api/install/history",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 167
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/import/scan",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 156
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/import",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 157
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/plan",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 127
+  },
+  {
+    "method": "GET",
+    "path": "/api/install/plans/:id",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 131
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/resolve",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 121
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/search",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 115
+  },
+  {
+    "method": "GET",
+    "path": "/api/install/tools",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 166
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/uninstall-plan",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 151
+  },
+  {
+    "method": "POST",
+    "path": "/api/install/updates",
+    "file": "packages/kernel/src/api/install-routes.ts",
+    "line": 155
+  },
+  {
+    "method": "GET",
+    "path": "/api/main-ai",
+    "file": "packages/kernel/src/api/models-routes.ts",
+    "line": 45
+  },
+  {
+    "method": "PUT",
+    "path": "/api/main-ai",
+    "file": "packages/kernel/src/api/models-routes.ts",
+    "line": 47
+  },
+  {
+    "method": "GET",
+    "path": "/api/models",
+    "file": "packages/kernel/src/api/models-routes.ts",
+    "line": 33
+  },
+  {
+    "method": "POST",
+    "path": "/api/native/pick-folder",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 226
+  },
+  {
+    "method": "GET",
+    "path": "/api/notices",
+    "file": "packages/plugins-core/verifiers/ladder/src/runtime.ts",
+    "line": 276
+  },
+  {
+    "method": "POST",
+    "path": "/api/plugins/:id/promote",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 194
+  },
+  {
+    "method": "GET",
+    "path": "/api/plugins",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 176
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/:id/info",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 194
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/:id/move",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 213
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/:id/relink",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 203
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/:id/reveal",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 222
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/:id/sessions",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 188
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/projects/:id",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 178
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/projects/:id",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 156
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/current",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 146
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/order",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 135
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/scratch",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 127
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/suggest-root",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 119
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 99
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 109
+  },
+  {
+    "method": "GET",
+    "path": "/api/quota",
+    "file": "packages/kernel/src/api/quota-route.ts",
+    "line": 12
+  },
+  {
+    "method": "POST",
+    "path": "/api/recovery/:session/resume",
+    "file": "packages/kernel/src/recover.ts",
+    "line": 300
+  },
+  {
+    "method": "GET",
+    "path": "/api/recovery",
+    "file": "packages/kernel/src/recover.ts",
+    "line": 297
+  },
+  {
+    "method": "POST",
+    "path": "/api/resume/:id/check",
+    "file": "packages/kernel/src/api/resume-routes.ts",
+    "line": 40
+  },
+  {
+    "method": "POST",
+    "path": "/api/resume/:id",
+    "file": "packages/kernel/src/api/resume-routes.ts",
+    "line": 48
+  },
+  {
+    "method": "GET",
+    "path": "/api/resume",
+    "file": "packages/kernel/src/api/resume-routes.ts",
+    "line": 24
+  },
+  {
+    "method": "GET",
+    "path": "/api/session-records",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 234
+  },
+  {
+    "method": "PUT",
+    "path": "/api/sessions/:id/ai",
+    "file": "packages/kernel/src/api/models-routes.ts",
+    "line": 53
+  },
+  {
+    "method": "GET",
+    "path": "/api/sessions/:id/attachments",
+    "file": "packages/plugins-core/attachments/src/routes.ts",
+    "line": 56
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/attachments",
+    "file": "packages/plugins-core/attachments/src/routes.ts",
+    "line": 64
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/commit",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 236
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/leave",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 245
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/pause",
+    "file": "packages/kernel/src/api/stop-routes.ts",
+    "line": 18
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/project",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 250
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/stop",
+    "file": "packages/kernel/src/api/stop-routes.ts",
+    "line": 27
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/subagents",
+    "file": "packages/kernel/src/api/sessions-routes.ts",
+    "line": 83
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/:id/title-suggestion",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 259
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/sessions/:id",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 282
+  },
+  {
+    "method": "GET",
+    "path": "/api/sessions/:id",
+    "file": "packages/kernel/src/api/sessions-routes.ts",
+    "line": 77
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/sessions/:id",
+    "file": "packages/kernel/src/projects/routes.ts",
+    "line": 268
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions/stop-all",
+    "file": "packages/kernel/src/api/stop-routes.ts",
+    "line": 17
+  },
+  {
+    "method": "GET",
+    "path": "/api/sessions",
+    "file": "packages/kernel/src/api/sessions-routes.ts",
+    "line": 75
+  },
+  {
+    "method": "POST",
+    "path": "/api/sessions",
+    "file": "packages/kernel/src/api/sessions-routes.ts",
+    "line": 40
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/about",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 93
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/data/cleanup",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 86
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/diagnostics",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 120
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/export",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 130
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/import",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 132
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/reset",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 163
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/schema",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 84
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/settings/secret",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 201
+  },
+  {
+    "method": "PUT",
+    "path": "/api/settings/secret",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 190
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/update-check",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 100
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 73
+  },
+  {
+    "method": "PUT",
+    "path": "/api/settings",
+    "file": "packages/kernel/src/api/settings-routes.ts",
+    "line": 148
+  },
+  {
+    "method": "GET",
+    "path": "/api/stt/status",
+    "file": "packages/plugins/stt-local/src/index.ts",
+    "line": 209
+  },
+  {
+    "method": "POST",
+    "path": "/api/stt/transcribe",
+    "file": "packages/plugins/stt-local/src/index.ts",
+    "line": 218
+  },
+  {
+    "method": "POST",
+    "path": "/api/tools/continue",
+    "file": "packages/kernel/src/api/tool-routes.ts",
+    "line": 37
+  },
+  {
+    "method": "POST",
+    "path": "/api/tools/find",
+    "file": "packages/kernel/src/api/tool-routes.ts",
+    "line": 31
+  },
+  {
+    "method": "POST",
+    "path": "/api/tools/plan-selected",
+    "file": "packages/kernel/src/api/tool-routes.ts",
+    "line": 34
+  },
+  {
+    "method": "POST",
+    "path": "/api/workspaces/open",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 251
+  },
+  {
+    "method": "POST",
+    "path": "/api/workspaces/pin",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 262
+  },
+  {
+    "method": "GET",
+    "path": "/api/workspaces",
+    "file": "packages/kernel/src/api/server.ts",
+    "line": 247
+  }
+]
