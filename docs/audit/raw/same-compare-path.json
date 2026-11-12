@@ -1,0 +1,76 @@
+{
+  "area": "path",
+  "implementations": [
+    "kernel/path-normalize.ts toPosixForm",
+    "checklist-ledger/stages/scope.ts normPath",
+    "kernel/pause-snapshot.ts toPosix"
+  ],
+  "inputs": 100,
+  "differing": 77,
+  "examples": [
+    {
+      "input": "\\\\wsl$\\Ubuntu\\a b\\src\\a b",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"/a b/src/a b\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"/wsl$/Ubuntu/a b/src/a b\"",
+        "kernel/pause-snapshot.ts toPosix": "\"\\\\\\\\wsl$\\\\Ubuntu\\\\a b\\\\src\\\\a b\""
+      }
+    },
+    {
+      "input": "\\\\wsl$\\Ubuntu\\./한글/한글",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"/./한글/한글\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"/wsl$/Ubuntu/./한글/한글\"",
+        "kernel/pause-snapshot.ts toPosix": "\"\\\\\\\\wsl$\\\\Ubuntu\\\\./한글/한글\""
+      }
+    },
+    {
+      "input": "./Mobile/src/한글/.",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"./Mobile/src/한글/.\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"Mobile/src/한글/.\"",
+        "kernel/pause-snapshot.ts toPosix": "\"./Mobile/src/한글/.\""
+      }
+    },
+    {
+      "input": "C:/Mobile/한글/..",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"/mnt/c/Mobile/한글/..\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"C:/Mobile/한글/..\"",
+        "kernel/pause-snapshot.ts toPosix": "\"C:/Mobile/한글/..\""
+      }
+    },
+    {
+      "input": "./././Mobile",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"./././Mobile\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"././Mobile\"",
+        "kernel/pause-snapshot.ts toPosix": "\"./././Mobile\""
+      }
+    },
+    {
+      "input": "x.ts\\node_modules\\a b\\Mobile",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"x.ts/node_modules/a b/Mobile\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"x.ts/node_modules/a b/Mobile\"",
+        "kernel/pause-snapshot.ts toPosix": "\"x.ts\\\\node_modules\\\\a b\\\\Mobile\""
+      }
+    },
+    {
+      "input": "./src/a b",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"./src/a b\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"src/a b\"",
+        "kernel/pause-snapshot.ts toPosix": "\"./src/a b\""
+      }
+    },
+    {
+      "input": "/mnt/c/..//.",
+      "outputs": {
+        "kernel/path-normalize.ts toPosixForm": "\"/mnt/c/..//.\"",
+        "checklist-ledger/stages/scope.ts normPath": "\"/mnt/c/../.\"",
+        "kernel/pause-snapshot.ts toPosix": "\"/mnt/c/..//.\""
+      }
+    }
+  ]
+}
