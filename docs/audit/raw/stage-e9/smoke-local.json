@@ -1,0 +1,8 @@
+{
+  "engine": "local",
+  "prompt": "README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.",
+  "at": "2026-11-12T18:52:50.255Z",
+  "installed": false,
+  "result": "없음",
+  "success": false
+}

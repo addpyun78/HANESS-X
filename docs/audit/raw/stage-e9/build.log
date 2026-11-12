@@ -1,0 +1,287 @@
+packages/protocol build$ tsc -p tsconfig.json
+packages/protocol build: Done
+packages/kernel build$ tsc -p tsconfig.json
+packages/plugins/stt-browser build$ tsc -p tsconfig.json
+packages/plugins/stt-browser build: Done
+packages/plugins/stt-local build$ tsc -p tsconfig.json
+packages/plugins/stt-local build: Done
+packages/plugins/verifier-local build$ tsc -p tsconfig.json
+packages/kernel build: Done
+packages/sdk build$ tsc -p tsconfig.json
+packages/plugins/verifier-local build: Done
+apps/web build$ tsc -p tsconfig.json && vite build
+packages/sdk build: Done
+packages/engines/acp-generic build$ tsc -p tsconfig.json
+packages/engines/acp-generic build: Done
+packages/engines/antigravity build$ tsc -p tsconfig.json
+apps/web build: vite v7.3.8 building client environment for production...
+apps/web build: transforming...
+packages/engines/antigravity build: Done
+packages/engines/claude-code build$ tsc -p tsconfig.json
+packages/engines/claude-code build: Done
+packages/engines/codex build$ tsc -p tsconfig.json
+packages/engines/codex build: Done
+packages/engines/openai-compat build$ tsc -p tsconfig.json
+apps/web build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/web build: 
+apps/web build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/web build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/web build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/web build: 
+apps/web build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/web build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/web build: 
+apps/web build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/web build: 
+apps/web build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+packages/engines/openai-compat build: Done
+packages/plugins-core/checklist-ledger build$ tsc -p tsconfig.json
+packages/plugins-core/checklist-ledger build: Done
+packages/plugins-core/engine-scanner build$ tsc -p tsconfig.json
+packages/plugins-core/engine-scanner build: Done
+packages/plugins-core/verifiers/judge build$ tsc -p tsconfig.json
+packages/plugins-core/verifiers/judge build: Done
+packages/plugins-core/approvals build$ tsc -p tsconfig.json
+packages/plugins-core/approvals build: Done
+.../plugins-core/verifiers/comparators build$ tsc -p tsconfig.json
+.../plugins-core/verifiers/comparators build: Done
+packages/plugins-core/attachments build$ tsc -p tsconfig.json
+apps/web build: ✓ 1682 modules transformed.
+apps/web build: rendering chunks...
+apps/web build: computing gzip size...
+apps/web build: dist/index.html                                                     0.39 kB │ gzip:     0.27 kB
+apps/web build: dist/assets/jetbrains-mono-greek-400-normal-C190GLew.woff2          4.23 kB
+apps/web build: dist/assets/jetbrains-mono-greek-700-normal-C6CZE3T8.woff2          4.30 kB
+apps/web build: dist/assets/jetbrains-mono-cyrillic-400-normal-BEIGL1Tu.woff2       5.33 kB
+apps/web build: dist/assets/jetbrains-mono-cyrillic-700-normal-BWTpRfYl.woff2       5.34 kB
+apps/web build: dist/assets/jetbrains-mono-vietnamese-400-normal-CqNFfHCs.woff      5.37 kB
+apps/web build: dist/assets/jetbrains-mono-vietnamese-700-normal-BDLVIk2r.woff      5.45 kB
+apps/web build: dist/assets/jetbrains-mono-greek-400-normal-B9oWc5Lo.woff           5.66 kB
+apps/web build: dist/assets/jetbrains-mono-greek-700-normal-DEigVDxa.woff           5.70 kB
+apps/web build: dist/assets/jetbrains-mono-cyrillic-400-normal-ugxPyKxw.woff        6.98 kB
+apps/web build: dist/assets/jetbrains-mono-cyrillic-700-normal-CEoEElIJ.woff        7.02 kB
+apps/web build: dist/assets/jetbrains-mono-latin-ext-400-normal-Bc8Ftmh3.woff2      7.34 kB
+apps/web build: dist/assets/jetbrains-mono-latin-ext-700-normal-CZipNAKV.woff2      7.47 kB
+apps/web build: dist/assets/PretendardVariable.subset.66-C3HqaDeY.woff2             8.25 kB
+apps/web build: dist/assets/PretendardVariable.subset.64-CTbrgYF9.woff2             8.26 kB
+apps/web build: dist/assets/jetbrains-mono-latin-ext-400-normal-fXTG6kC5.woff      10.13 kB
+apps/web build: dist/assets/jetbrains-mono-latin-ext-700-normal-CxPITLHs.woff      10.30 kB
+apps/web build: dist/assets/PretendardVariable.subset.65-B66rjuyf.woff2            11.11 kB
+apps/web build: dist/assets/PretendardVariable.subset.68-DS9B48d0.woff2            16.34 kB
+apps/web build: dist/assets/PretendardVariable.subset.73-DMrK970F.woff2            18.34 kB
+apps/web build: dist/assets/PretendardVariable.subset.72-pYYGrEQR.woff2            19.51 kB
+apps/web build: dist/assets/PretendardVariable.subset.75-CxKdrRNf.woff2            20.00 kB
+apps/web build: dist/assets/PretendardVariable.subset.90-BF7RiZjm.woff2            20.85 kB
+apps/web build: dist/assets/jetbrains-mono-latin-400-normal-V6pRDFza.woff2         21.17 kB
+apps/web build: dist/assets/PretendardVariable.subset.67-BmuXdlDy.woff2            21.84 kB
+apps/web build: dist/assets/PretendardVariable.subset.89-DOzqWPpX.woff2            21.86 kB
+apps/web build: dist/assets/jetbrains-mono-latin-700-normal-BYuf6tUa.woff2         21.91 kB
+apps/web build: dist/assets/PretendardVariable.subset.74-D4tQnymK.woff2            22.39 kB
+apps/web build: dist/assets/PretendardVariable.subset.84-Brb8EsYQ.woff2            24.49 kB
+apps/web build: dist/assets/PretendardVariable.subset.87-Lzui2vbK.woff2            24.66 kB
+apps/web build: dist/assets/PretendardVariable.subset.76-DhPm2b_q.woff2            24.92 kB
+apps/web build: dist/assets/PretendardVariable.subset.85-Byo_x2hf.woff2            25.10 kB
+apps/web build: dist/assets/PretendardVariable.subset.88-CqX6JSgh.woff2            25.64 kB
+apps/web build: dist/assets/PretendardVariable.subset.86-XG7lTN_6.woff2            25.72 kB
+apps/web build: dist/assets/PretendardVariable.subset.77-DwaxqOC8.woff2            26.04 kB
+apps/web build: dist/assets/PretendardVariable.subset.79-XpoyPP38.woff2            26.22 kB
+apps/web build: dist/assets/PretendardVariable.subset.81-BZzF9Hb3.woff2            26.30 kB
+apps/web build: dist/assets/PretendardVariable.subset.82-BgAHe30u.woff2            26.50 kB
+apps/web build: dist/assets/PretendardVariable.subset.78-DhqRbBzT.woff2            26.55 kB
+apps/web build: dist/assets/PretendardVariable.subset.83-DF-zBLLe.woff2            26.96 kB
+apps/web build: dist/assets/jetbrains-mono-latin-400-normal-6-qcROiO.woff          27.50 kB
+apps/web build: dist/assets/PretendardVariable.subset.70-BUXiAGMT.woff2            27.55 kB
+apps/web build: dist/assets/PretendardVariable.subset.37-BD6FyOtY.woff2            27.92 kB
+apps/web build: dist/assets/jetbrains-mono-latin-700-normal-D3wTyLJW.woff          28.21 kB
+apps/web build: dist/assets/PretendardVariable.subset.71-DuPZj8us.woff2            28.32 kB
+apps/web build: dist/assets/PretendardVariable.subset.80-DsV9Qp_h.woff2            28.80 kB
+apps/web build: dist/assets/PretendardVariable.subset.63-B35xsm4O.woff2            28.82 kB
+apps/web build: dist/assets/PretendardVariable.subset.40-BDaOfdUe.woff2            29.84 kB
+apps/web build: dist/assets/PretendardVariable.subset.43-DHdpry7N.woff2            30.38 kB
+apps/web build: dist/assets/PretendardVariable.subset.7-E2HaA55t.woff2             31.91 kB
+apps/web build: dist/assets/PretendardVariable.subset.1-C-__qv6_.woff2             32.04 kB
+apps/web build: dist/assets/PretendardVariable.subset.44-qHopVhdd.woff2            32.14 kB
+apps/web build: dist/assets/PretendardVariable.subset.24-CmkE8Q8D.woff2            32.30 kB
+apps/web build: dist/assets/PretendardVariable.subset.10-DzSWztS8.woff2            33.03 kB
+apps/web build: dist/assets/PretendardVariable.subset.41-BUACvzZC.woff2            33.19 kB
+apps/web build: dist/assets/PretendardVariable.subset.50-C8IyFH7L.woff2            33.23 kB
+apps/web build: dist/assets/PretendardVariable.subset.54-Dt2-cQkx.woff2            33.34 kB
+apps/web build: dist/assets/PretendardVariable.subset.5-K_MNGNCe.woff2             33.62 kB
+apps/web build: dist/assets/PretendardVariable.subset.6-Bxhohlcm.woff2             33.97 kB
+apps/web build: dist/assets/PretendardVariable.subset.9-Btb3bmS6.woff2             34.01 kB
+apps/web build: dist/assets/PretendardVariable.subset.55-jFgflYjX.woff2            34.18 kB
+apps/web build: dist/assets/PretendardVariable.subset.39-B_7wfth9.woff2            34.26 kB
+apps/web build: dist/assets/PretendardVariable.subset.52-CNgqKOOJ.woff2            34.36 kB
+apps/web build: dist/assets/PretendardVariable.subset.0-BHUkWNFR.woff2             34.57 kB
+apps/web build: dist/assets/PretendardVariable.subset.53-BSRnyb-u.woff2            34.57 kB
+apps/web build: dist/assets/PretendardVariable.subset.42-Dp-5mnyL.woff2            34.61 kB
+apps/web build: dist/assets/PretendardVariable.subset.45-BniyRFfm.woff2            34.66 kB
+apps/web build: dist/assets/PretendardVariable.subset.36-Dn5IBRQB.woff2            34.69 kB
+apps/web build: dist/assets/PretendardVariable.subset.34-CaCS33Md.woff2            34.72 kB
+apps/web build: dist/assets/PretendardVariable.subset.69-YT16ymcp.woff2            34.78 kB
+apps/web build: dist/assets/PretendardVariable.subset.38-D4hu443z.woff2            34.81 kB
+apps/web build: dist/assets/PretendardVariable.subset.62-DGSAWCfb.woff2            34.88 kB
+apps/web build: dist/assets/PretendardVariable.subset.33--0OT__YQ.woff2            34.92 kB
+apps/web build: dist/assets/PretendardVariable.subset.17-BfZSA-Xc.woff2            34.94 kB
+apps/web build: dist/assets/PretendardVariable.subset.4-Bvh2YGoc.woff2             35.16 kB
+apps/web build: dist/assets/PretendardVariable.subset.56-BwZdvJZQ.woff2            35.18 kB
+apps/web build: dist/assets/PretendardVariable.subset.35-DWFYRGLp.woff2            35.35 kB
+apps/web build: dist/assets/PretendardVariable.subset.27-CT6nuW9L.woff2            35.42 kB
+apps/web build: dist/assets/PretendardVariable.subset.61-PUuTnod4.woff2            35.64 kB
+apps/web build: dist/assets/PretendardVariable.subset.15-D04iXIE3.woff2            35.67 kB
+apps/web build: dist/assets/PretendardVariable.subset.13-C42mj_j2.woff2            35.71 kB
+apps/web build: dist/assets/PretendardVariable.subset.47-B-cWO2pw.woff2            35.72 kB
+apps/web build: dist/assets/PretendardVariable.subset.57-BwFDg-Fs.woff2            35.96 kB
+apps/web build: dist/assets/PretendardVariable.subset.51-Bxd0gTAs.woff2            36.02 kB
+apps/web build: dist/assets/PretendardVariable.subset.49-BblQVys9.woff2            36.05 kB
+apps/web build: dist/assets/PretendardVariable.subset.20-Ig1-z3n5.woff2            36.13 kB
+apps/web build: dist/assets/PretendardVariable.subset.14-Bl512uUX.woff2            36.51 kB
+apps/web build: dist/assets/PretendardVariable.subset.46-BMRq7xC-.woff2            36.54 kB
+apps/web build: dist/assets/PretendardVariable.subset.8-CRbJhhyA.woff2             36.70 kB
+apps/web build: dist/assets/PretendardVariable.subset.21-yKPEdLXC.woff2            37.27 kB
+apps/web build: dist/assets/PretendardVariable.subset.11-CqVmlKJn.woff2            37.40 kB
+apps/web build: dist/assets/PretendardVariable.subset.48-Ct-fWrPO.woff2            37.78 kB
+apps/web build: dist/assets/PretendardVariable.subset.60-CeHezjjf.woff2            37.78 kB
+apps/web build: dist/assets/PretendardVariable.subset.16-BQUnS2GX.woff2            37.92 kB
+apps/web build: dist/assets/PretendardVariable.subset.12-BHuZSgT0.woff2            37.94 kB
+apps/web build: dist/assets/PretendardVariable.subset.91-Csm0YNoH.woff2            38.00 kB
+apps/web build: dist/assets/PretendardVariable.subset.30-CWDM1c0J.woff2            38.45 kB
+apps/web build: dist/assets/PretendardVariable.subset.28-CpO0Y96p.woff2            38.47 kB
+apps/web build: dist/assets/PretendardVariable.subset.22-CSqxKoOs.woff2            38.68 kB
+apps/web build: dist/assets/PretendardVariable.subset.59-CMkWjhdo.woff2            38.97 kB
+apps/web build: dist/assets/PretendardVariable.subset.29-D6hjrUWm.woff2            39.29 kB
+apps/web build: dist/assets/PretendardVariable.subset.32-CGnFWD2i.woff2            40.22 kB
+apps/web build: dist/assets/PretendardVariable.subset.23-DK80wi0t.woff2            40.28 kB
+apps/web build: dist/assets/PretendardVariable.subset.26-Sozl8dw8.woff2            40.32 kB
+apps/web build: dist/assets/PretendardVariable.subset.3-Dqw33sf4.woff2             40.65 kB
+apps/web build: dist/assets/PretendardVariable.subset.58-DlucQts_.woff2            41.56 kB
+apps/web build: dist/assets/PretendardVariable.subset.18-CwAxMC3C.woff2            41.60 kB
+apps/web build: dist/assets/PretendardVariable.subset.31-CdmyZ5mm.woff2            41.89 kB
+apps/web build: dist/assets/PretendardVariable.subset.25-CsoWBIZB.woff2            42.03 kB
+apps/web build: dist/assets/PretendardVariable.subset.19-CJu4Zcdo.woff2            42.33 kB
+apps/web build: dist/assets/PretendardVariable.subset.2-dCZkyKLw.woff2             43.92 kB
+apps/web build: dist/assets/codicon-DF1abBS2.ttf                                  153.23 kB
+apps/web build: dist/assets/json.worker-BggoxaER.js                               406.91 kB
+apps/web build: dist/assets/html.worker-CLyYFd_g.js                               716.96 kB
+apps/web build: dist/assets/css.worker-C_6RgliQ.js                              1,054.22 kB
+apps/web build: dist/assets/ts.worker-BrLZGe_E.js                               7,034.76 kB
+apps/web build: dist/assets/xterm-DDGTF8rc.css                                      3.62 kB │ gzip:     0.99 kB
+apps/web build: dist/assets/BuilderPage-CSDYF8yL.css                               31.27 kB │ gzip:     5.16 kB
+apps/web build: dist/assets/index-qPzRbnxM.css                                    130.55 kB │ gzip:    38.10 kB
+apps/web build: dist/assets/index-Ced-qlZg.css                                    186.53 kB │ gzip:    27.76 kB
+apps/web build: dist/assets/azcli-Y6nb8tq_.js                                       0.71 kB │ gzip:     0.28 kB
+apps/web build: dist/assets/javascript-CYBVT3dz.js                                  0.83 kB │ gzip:     0.46 kB
+apps/web build: dist/assets/ini-Kd9XrMLS.js                                         0.96 kB │ gzip:     0.50 kB
+apps/web build: dist/assets/addon-fit-DX4qG4td.js                                   1.21 kB │ gzip:     0.51 kB
+apps/web build: dist/assets/workers-O5esAmuJ.js                                     1.23 kB │ gzip:     0.57 kB
+apps/web build: dist/assets/dist-js-BFlLM7fI.js                                     1.26 kB │ gzip:     0.48 kB
+apps/web build: dist/assets/csp-D-4FJmMZ.js                                         1.28 kB │ gzip:     0.49 kB
+apps/web build: dist/assets/pla-DSh2-awV.js                                         1.55 kB │ gzip:     0.61 kB
+apps/web build: dist/assets/scheme-BPhDTwHR.js                                      1.63 kB │ gzip:     0.78 kB
+apps/web build: dist/assets/flow9-BeJ5waoc.js                                       1.67 kB │ gzip:     0.81 kB
+apps/web build: dist/assets/sb-BBc9UKZt.js                                          1.69 kB │ gzip:     0.79 kB
+apps/web build: dist/assets/bat-BwHxbl9M.js                                         1.71 kB │ gzip:     0.83 kB
+apps/web build: dist/assets/dockerfile-BG73LgW2.js                                  1.73 kB │ gzip:     0.63 kB
+apps/web build: dist/assets/pascaligo-DtZ0uQbO.js                                   1.86 kB │ gzip:     0.87 kB
+apps/web build: dist/assets/xml-t653GACv.js                                         1.96 kB │ gzip:     0.75 kB
+apps/web build: dist/assets/lua-Cyyb5UIc.js                                         1.99 kB │ gzip:     0.89 kB
+apps/web build: dist/assets/cameligo-Bf6VGUru.js                                    2.05 kB │ gzip:     0.92 kB
+apps/web build: dist/assets/graphql-BxJiqAUM.js                                     2.12 kB │ gzip:     0.99 kB
+apps/web build: dist/assets/objective-c-BDtDVThU.js                                 2.26 kB │ gzip:     1.02 kB
+apps/web build: dist/assets/lexon-OrD6JF1K.js                                       2.30 kB │ gzip:     0.89 kB
+apps/web build: dist/assets/bicep-CFznDFnq.js                                       2.40 kB │ gzip:     0.93 kB
+apps/web build: dist/assets/sparql-CJmd_6j2.js                                      2.41 kB │ gzip:     1.12 kB
+apps/web build: dist/assets/mips-CiqrrVzr.js                                        2.44 kB │ gzip:     1.03 kB
+apps/web build: dist/assets/go-acbASCJo.js                                          2.52 kB │ gzip:     1.11 kB
+apps/web build: dist/assets/sophia-CnS9iZB_.js                                      2.63 kB │ gzip:     1.17 kB
+apps/web build: dist/assets/typespec-Btyra-wh.js                                    2.66 kB │ gzip:     1.05 kB
+apps/web build: dist/assets/m3-B8OfTtLu.js                                          2.68 kB │ gzip:     1.28 kB
+apps/web build: dist/assets/core-BUhCcD2K.js                                        2.70 kB │ gzip:     1.11 kB
+apps/web build: dist/assets/fsharp-PahG7c26.js                                      2.85 kB │ gzip:     1.28 kB
+apps/web build: dist/assets/pascal-vHIfCaH5.js                                      2.86 kB │ gzip:     1.36 kB
+apps/web build: dist/assets/shell-DiJ1NA_G.js                                       2.94 kB │ gzip:     1.16 kB
+apps/web build: dist/assets/r-j7ic8hl3.js                                           2.99 kB │ gzip:     1.24 kB
+apps/web build: dist/assets/qsharp-Bw9ernYp.js                                      3.05 kB │ gzip:     1.37 kB
+apps/web build: dist/assets/cssMode-DcZ0mApo.js                                     3.07 kB │ gzip:     1.16 kB
+apps/web build: dist/assets/java-CXBNlu9o.js                                        3.08 kB │ gzip:     1.36 kB
+apps/web build: dist/assets/powershell-COWaemsV.js                                  3.13 kB │ gzip:     1.34 kB
+apps/web build: dist/assets/cypher-cTPe9QuQ.js                                      3.25 kB │ gzip:     1.40 kB
+apps/web build: dist/assets/kotlin-s7OhZKlX.js                                      3.26 kB │ gzip:     1.43 kB
+apps/web build: dist/assets/redis-Bu5POkcn.js                                       3.42 kB │ gzip:     1.44 kB
+apps/web build: dist/assets/tcl-Dm6ycUr_.js                                         3.43 kB │ gzip:     1.33 kB
+apps/web build: dist/assets/coffee-Bd8akH9Z.js                                      3.45 kB │ gzip:     1.26 kB
+apps/web build: dist/assets/hcl-DtV1sZF8.js                                         3.45 kB │ gzip:     1.45 kB
+apps/web build: dist/assets/liquid-C83IhvOS.js                                      3.50 kB │ gzip:     1.44 kB
+apps/web build: dist/assets/htmlMode-BfgyO1MR.js                                    3.53 kB │ gzip:     1.28 kB
+apps/web build: dist/assets/yaml-QDlEYG_B.js                                        3.57 kB │ gzip:     1.30 kB
+apps/web build: dist/assets/markdown-BFxVWTOG.js                                    3.65 kB │ gzip:     1.35 kB
+apps/web build: dist/assets/python-CNHNA6nE.js                                      3.75 kB │ gzip:     1.47 kB
+apps/web build: dist/assets/restructuredtext-CqXO7rUv.js                            3.76 kB │ gzip:     1.33 kB
+apps/web build: dist/assets/less-9HpZscsL.js                                        3.76 kB │ gzip:     1.38 kB
+apps/web build: dist/assets/apex-DNDY2TF8.js                                        3.82 kB │ gzip:     1.73 kB
+apps/web build: dist/assets/rust-BzKRNQWT.js                                        4.02 kB │ gzip:     1.79 kB
+apps/web build: dist/assets/dart-BOtBlQCF.js                                        4.11 kB │ gzip:     1.61 kB
+apps/web build: dist/assets/mdx-DYuJo7DJ.js                                         4.35 kB │ gzip:     1.23 kB
+apps/web build: dist/assets/css-DdJfP1eB.js                                         4.37 kB │ gzip:     1.34 kB
+apps/web build: dist/assets/csharp-Co3qMtFm.js                                      4.39 kB │ gzip:     1.69 kB
+apps/web build: dist/assets/html-CWFn5xEl.js                                        4.56 kB │ gzip:     1.18 kB
+apps/web build: dist/assets/pug-8SOpv6rk.js                                         4.69 kB │ gzip:     1.61 kB
+apps/web build: dist/assets/msdax-DmeGPVcC.js                                       4.77 kB │ gzip:     1.91 kB
+apps/web build: dist/assets/swift-CnmFD0ga.js                                       4.77 kB │ gzip:     2.00 kB
+apps/web build: dist/assets/typescript-DqJ0sWiK.js                                  4.93 kB │ gzip:     1.96 kB
+apps/web build: dist/assets/cpp-BbWJElDN.js                                         5.16 kB │ gzip:     2.06 kB
+apps/web build: dist/assets/ecl-BEgZUVRK.js                                         5.20 kB │ gzip:     2.19 kB
+apps/web build: dist/assets/vb-Db0cS2oM.js                                          5.65 kB │ gzip:     2.02 kB
+apps/web build: dist/assets/twig-Csy3S7wG.js                                        5.84 kB │ gzip:     1.49 kB
+apps/web build: dist/assets/scss-CBJaRo0y.js                                        6.27 kB │ gzip:     1.71 kB
+apps/web build: dist/assets/handlebars-D-Bzbb3T.js                                  6.32 kB │ gzip:     1.39 kB
+apps/web build: dist/assets/julia-cl7-CwDS.js                                       7.01 kB │ gzip:     2.62 kB
+apps/web build: 
+apps/web build: (!) Some chunks are larger than 500 kB after minification. Consider:
+apps/web build: - Using dynamic import() to code-split the application
+apps/web build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+apps/web build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+apps/web build: dist/assets/scala-D9hQfWCl.js                                       7.18 kB │ gzip:     2.06 kB
+apps/web build: dist/assets/wgsl-BTesnYfV.js                                        7.21 kB │ gzip:     2.72 kB
+apps/web build: dist/assets/st-CHwy0fLd.js                                          7.26 kB │ gzip:     2.21 kB
+apps/web build: dist/assets/systemverilog-Bs9z6M-B.js                               7.47 kB │ gzip:     2.72 kB
+apps/web build: dist/assets/postiats-CocnycG-.js                                    7.72 kB │ gzip:     2.40 kB
+apps/web build: dist/assets/php-BBUBE1dy.js                                         7.89 kB │ gzip:     2.04 kB
+apps/web build: dist/assets/perl-Ub6l9XKa.js                                        8.12 kB │ gzip:     3.10 kB
+apps/web build: dist/assets/razor-e2I_YWL2.js                                       8.32 kB │ gzip:     2.08 kB
+apps/web build: dist/assets/ruby-zBfavPgS.js                                        8.37 kB │ gzip:     2.54 kB
+apps/web build: dist/assets/protobuf-Brw8urJB.js                                    8.91 kB │ gzip:     2.04 kB
+apps/web build: dist/assets/clojure-Dnu-v4kV.js                                     9.51 kB │ gzip:     3.57 kB
+apps/web build: dist/assets/elixir-BkW5O-1t.js                                     10.12 kB │ gzip:     2.50 kB
+apps/web build: dist/assets/sql-ClhHkBeG.js                                        10.16 kB │ gzip:     3.79 kB
+apps/web build: dist/assets/mysql-C_tMU-Nz.js                                      11.14 kB │ gzip:     4.01 kB
+apps/web build: dist/assets/redshift-Bs9aos_-.js                                   11.66 kB │ gzip:     4.30 kB
+apps/web build: dist/assets/jsonMode-C3oYuUPF.js                                   12.45 kB │ gzip:     4.58 kB
+apps/web build: dist/assets/pgsql-BlNEE0v7.js                                      13.33 kB │ gzip:     4.46 kB
+apps/web build: dist/assets/abap-DLDM7-KI.js                                       14.03 kB │ gzip:     5.27 kB
+apps/web build: dist/assets/freemarker2-DvBPoBGd.js                                15.62 kB │ gzip:     3.92 kB
+apps/web build: dist/assets/powerquery-tScXyioY.js                                 16.80 kB │ gzip:     4.81 kB
+apps/web build: dist/assets/solidity-Db0IVjzk.js                                   18.46 kB │ gzip:     4.41 kB
+apps/web build: dist/assets/tsMode-DHhW4bIu.js                                     22.02 kB │ gzip:     6.25 kB
+apps/web build: dist/assets/lspLanguageFeatures-MMsozhqO.js                        28.68 kB │ gzip:     7.74 kB
+apps/web build: dist/assets/BuilderPage-DHxMVPsg.js                               263.75 kB │ gzip:    86.62 kB
+apps/web build: dist/assets/xterm-B-qIQCd3.js                                     329.31 kB │ gzip:    83.04 kB
+apps/web build: dist/assets/index-CK9G06H5.js                                     692.05 kB │ gzip:   216.77 kB
+apps/web build: dist/assets/index-C4A6UJ2T.js                                   4,075.31 kB │ gzip: 1,052.42 kB
+apps/web build: ✓ built in 1m 29s
+apps/web build: Done
+packages/plugins-core/verifiers/ladder build$ tsc -p tsconfig.json
+packages/plugins-core/attachments build: Done
+packages/plugins-core/mcp-host build$ tsc -p tsconfig.json
+packages/plugins-core/verifiers/ladder build: Done
+packages/plugins-core/permission-gate build$ tsc -p tsconfig.json
+packages/plugins-core/mcp-host build: Done
+packages/plugins-core/agent-builder build$ tsc -p tsconfig.json
+packages/plugins-core/permission-gate build: Done
+packages/plugins-core/installer build$ tsc -p tsconfig.json
+packages/plugins-core/agent-builder build: Done
+packages/plugins-core/forge build$ tsc -p tsconfig.json
+packages/plugins-core/installer build: Done
+packages/plugins-core/tool-finder build$ tsc -p tsconfig.json
+packages/plugins-core/forge build: Done
+packages/plugins-core/tool-finder build: Done

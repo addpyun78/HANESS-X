@@ -1,0 +1,20 @@
+{
+  "engine": "agy",
+  "prompt": "README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.",
+  "at": "2026-11-12T18:51:59.893Z",
+  "installed": true,
+  "version": "1.4.12",
+  "success": true,
+  "ms": 35813,
+  "eventKinds": [
+    "tool_call",
+    "tool_result",
+    "assistant_text",
+    "usage",
+    "turn_end"
+  ],
+  "eventCount": 29,
+  "textHead": "[README.md](file:///mnt/c/agentCli/harness-x/README.md#L1-L3)의 첫 줄(`# HARNESS-X`)은 **TypeScript·Node 22·pnpm 모노레포 기반의 엔진 중립 에이전트 하네스 프로젝트인 'HARNESS-X'를 소개하는 문서의 제목**입니다.\n\n(`/plan` 모드 요청에 맞춰 [implement",
+  "error": null,
+  "aborted": false
+}

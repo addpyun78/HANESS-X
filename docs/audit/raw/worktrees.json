@@ -1,0 +1,353 @@
+[
+  {
+    "path": ".claude/worktrees/agent-a03839709f0de5e8d",
+    "branch": "worktree-agent-a03839709f0de5e8d",
+    "head": "db38969ad187d624866d59910b93309e823f42a7",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a077558261a798a7d",
+    "branch": "worktree-agent-a077558261a798a7d",
+    "head": "db5f204614ddbdef1b91b13512592cbd9e57016e",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a077fc08ec2909913",
+    "branch": "worktree-agent-a077fc08ec2909913",
+    "head": "3efd0eb82232ae9221167ea0cd7a9996847851b3",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a2615c722f092e3b5",
+    "branch": "worktree-agent-a2615c722f092e3b5",
+    "head": "745728bea3dcf223fc85acef70e298ee9436c5c8",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a2657eab99763e3ab",
+    "branch": "worktree-agent-a2657eab99763e3ab",
+    "head": "4079c7679207161efe63813eac1d5b39599b9484",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a28d07bfc997a539b",
+    "branch": "worktree-agent-a28d07bfc997a539b",
+    "head": "17280be1bab7243696b70e56a74b2f84794ab380",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a2ad2a32cd8489cdc",
+    "branch": "worktree-agent-a2ad2a32cd8489cdc",
+    "head": "b3e749a6bf5b4545c81b34bbedfddf619396960d",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a2f0c1ad9534e3158",
+    "branch": "worktree-agent-a2f0c1ad9534e3158",
+    "head": "a1ddd81d899b83d34aa43cd51b57606e16dfcf68",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a32d20f3eeae6b087",
+    "branch": "worktree-agent-a32d20f3eeae6b087",
+    "head": "24870e8b00a91ca19cb0783fe050798dfcaaffb3",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a33d607b6bfc699ca",
+    "branch": "worktree-agent-a33d607b6bfc699ca",
+    "head": "b57f40c53319ca16e9086b7a7401540b8a75f821",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a3a0d39ae83c4740b",
+    "branch": "worktree-agent-a3a0d39ae83c4740b",
+    "head": "2a9645518ce2463bafade9168494c0fe7ae2696f",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a3e92c1ce171acecd",
+    "branch": "worktree-agent-a3e92c1ce171acecd",
+    "head": "75fd2913783237a1bed632f3a0b3a96801227a1e",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a3f7e75ac6db1ed09",
+    "branch": "worktree-agent-a3f7e75ac6db1ed09",
+    "head": "1e5beff1e251e7fd74cc7dc742975d6481953263",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a40517588a588b284",
+    "branch": "worktree-agent-a40517588a588b284",
+    "head": "85ad9c480b9b8c7ce76cd7558474191118dc4e2b",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a4592244a3f8ec900",
+    "branch": "worktree-agent-a4592244a3f8ec900",
+    "head": "fe48ef4074b96ad450bc294b2927de0f8c4e8a2e",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a45d9b7f153d06ca3",
+    "branch": "worktree-agent-a45d9b7f153d06ca3",
+    "head": "4413ca0da2b8e4436c1634539ac728b09ed81fd4",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a47a70ff62be5abb3",
+    "branch": "worktree-agent-a47a70ff62be5abb3",
+    "head": "906184b11db43d992555740352593f9ab0654699",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a4a74ba1896fb4f52",
+    "branch": "worktree-agent-a4a74ba1896fb4f52",
+    "head": "dc24781f14d0892ed768265d092b2428edeacf46",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a5490664f8609c6bb",
+    "branch": "worktree-agent-a5490664f8609c6bb",
+    "head": "2f8c601809dd459060037eab7e41bb4c2bb8b49f",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a5b653ac0433e7b69",
+    "branch": "worktree-agent-a5b653ac0433e7b69",
+    "head": "d442bf58f748094236306a88e8ed323eb9655f53",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a6fae8937f0f967e2",
+    "branch": "worktree-agent-a6fae8937f0f967e2",
+    "head": "38af6c598c70962af934a892fdcbdf2fa4da15a6",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a7da80c3405459d0c",
+    "branch": "worktree-agent-a7da80c3405459d0c",
+    "head": "837380cd166d6aa937c16d4e011425c6ffc7bb51",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a8231bad5e172920e",
+    "branch": "worktree-agent-a8231bad5e172920e",
+    "head": "5b685b5cabcc80d136de24d24648c1df8508aa6c",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a841b26f259562ee2",
+    "branch": "worktree-agent-a841b26f259562ee2",
+    "head": "8e818a8b462526e29970e0c75e626bb119377968",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a8e6e3890ef153731",
+    "branch": "worktree-agent-a8e6e3890ef153731",
+    "head": "4eac09a7307df7ef329bdd9c31ccc35bd4e26b7b",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a8f227f57f8be363b",
+    "branch": "worktree-agent-a8f227f57f8be363b",
+    "head": "ff632869d02756f4fac982d106aa385b63495bec",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a94198199ab30c567",
+    "branch": "worktree-agent-a94198199ab30c567",
+    "head": "9df1786071acfe43796e574fb003ef470453e2d5",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-a945c1f97aa15fff0",
+    "branch": "worktree-agent-a945c1f97aa15fff0",
+    "head": "a8d08524a64e875c98c07375371a5d70e0a5a6de",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-aa107eb21a16d96a1",
+    "branch": "worktree-agent-aa107eb21a16d96a1",
+    "head": "a8712577fde0be4f76063532e6aee2434a4329dc",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-ab11250a062fa8ec4",
+    "branch": "worktree-agent-ab11250a062fa8ec4",
+    "head": "25ed11ac10e52df26fb7492a338ba5a15c8879ba",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-ab7c1b32fe04b737f",
+    "branch": "worktree-agent-ab7c1b32fe04b737f",
+    "head": "cb6fd81fde45f131937aeb6fad410d3da08b3db1",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-abb0220736fa9f560",
+    "branch": "worktree-agent-abb0220736fa9f560",
+    "head": "311d70a0bc5c88eb700d5918f1f4d4aef8091161",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-abd38f23616e62ad8",
+    "branch": "worktree-agent-abd38f23616e62ad8",
+    "head": "8d437fc7c3a5aefc7f5d17f688c9bf8174a51561",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-ac7521f22092d40e6",
+    "branch": "worktree-agent-ac7521f22092d40e6",
+    "head": "533901387ad9f00fe365529259c2d6ac12d926c3",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-aca146ea0690dcad6",
+    "branch": "worktree-agent-aca146ea0690dcad6",
+    "head": "5cc3309862b56522385c454bb3cbd32ee3d9389d",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-ace9c5acce3e77e19",
+    "branch": "worktree-agent-ace9c5acce3e77e19",
+    "head": "3f5e2aa3c614eb3285e3107b359ddb57869be244",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-acf2e85e4054e854f",
+    "branch": "worktree-agent-acf2e85e4054e854f",
+    "head": "a1ff428faa85a60a4ecbd03add9e9d31b050f1e1",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-adb966f0bb6bd5bae",
+    "branch": "worktree-agent-adb966f0bb6bd5bae",
+    "head": "413e9a1b019d88123b91f6a59a2d6a8cf17bc529",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  },
+  {
+    "path": ".claude/worktrees/agent-af81d57175bb4151d",
+    "branch": "worktree-agent-af81d57175bb4151d",
+    "head": "31ecc1ad160d75c5d9b9b3b5ef5818002f37bcf0",
+    "clean": true,
+    "mergedIntoMaster": true,
+    "action": "remove",
+    "why": ""
+  }
+]

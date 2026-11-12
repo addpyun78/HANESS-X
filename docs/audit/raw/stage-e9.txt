@@ -1,0 +1,15 @@
+build exit=0 sec=182
+tests exit=0 sec=4850
+tests total 4416 passed 4412 failed 0 skipped 4
+features exit=0 sec=589
+ Test Files  56 passed (56)
+      Tests  246 passed (246)
+e2e exit=0 sec=125
+crawler exit=0 sec=251
+ Test Files  2 passed (2)
+      Tests  37 passed (37)
+{"engine":"claude","success":true,"ms":18868,"kinds":["tool_call","tool_result","assistant_text","usage","turn_end"],"error":null}
+{"engine":"codex","success":false,"ms":3691,"kinds":["error","turn_end"],"error":{"code":"auth_required","message":"Your access token could not be refreshed. Please log out and sign in again."}}
+{"engine":"agy","success":true,"ms":35813,"kinds":["tool_call","tool_result","assistant_text","usage","turn_end"],"error":null}
+{"engine":"local","prompt":"README.md 파일의 첫 줄을 읽고 한 문장으로 요약해 줘. 파일은 고치지 마.","at":"2026-11-12T18:52:50.255Z","installed":false,"result":"없음","success":false}
+done 2026-11-13T03:52:50+09:00
