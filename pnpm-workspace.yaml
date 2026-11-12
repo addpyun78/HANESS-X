@@ -6,3 +6,7 @@ packages:
 
 allowBuilds:
   esbuild: true
+
+# T-102 C1-008 보안 수정: monaco-editor가 dompurify 3.4.15를 고정해 두어 같은 큰 판의 수정판(3.4.17)으로 덮어씀
+overrides:
+  dompurify: ^3.4.17
