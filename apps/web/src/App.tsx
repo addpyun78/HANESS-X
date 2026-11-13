@@ -314,8 +314,9 @@ export function App() {
       const token = resolveToken();
       if (token) {
         // T-102 I.2 바로가기로 켜면 화면이 서버보다 먼저 열린다 → 서버가 답할 때까지 기다렸다가 목록을 불러온다
+        // 연결(client)은 서버가 답한 뒤에 넘긴다: 먼저 넘기면 프로젝트·세션 목록이 서버보다 먼저 요청돼 실패한 채 남거나
+        // 에이전트 목록과 순서가 어긋난다(F.6에서 0B.18·0B.37 실패로 드러남). 기다리는 동안은 "켜는 중 N초" 안내만 보인다
         const c = new HarnessApiClient({ token });
-        setClient(c); // 버튼 동작은 바로 쓸 수 있게(요청은 서버가 켜지면 성공)
         void waitForServer(c, {
           isStopped: () => stopped,
           onWaiting: (s) => setWsError(SERVER_STARTING(s)),

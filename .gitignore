@@ -2,3 +2,15 @@ node_modules
 dist
 .harness-x-dev
 .claude/worktrees/
+
+# --- upload safety ---
+node_modules/
+dist/
+target/
+coverage/
+.turbo/
+*.log
+.env
+.env.*
+!.env.example
+docs/audit/raw/
