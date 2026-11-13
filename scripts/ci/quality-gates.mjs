@@ -16,6 +16,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // 검사 결과는 점검 증거(docs/audit/raw)가 아니라 임시 폴더에 쓴다
 const raw = join(root, '.harness-x-dev', 'ci-raw');
 process.env.AUDIT_RAW_DIR = raw;
+// 측정 스크립트(m-*.mjs)가 수치를 점검 기준 파일(docs/audit/baseline.json)에 덮어쓰지 않게 임시 파일로 돌린다
+process.env.AUDIT_OUT = join('..', '..', '.harness-x-dev', 'ci-raw', 'ci-measure.json');
 const limits = JSON.parse(readFileSync(join(root, 'scripts', 'ci', 'quality-limits.json'), 'utf8'));
 const node = (script, ...args) =>
   spawnSync(process.execPath, ['--no-warnings', join(root, script), ...args], {
