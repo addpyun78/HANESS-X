@@ -64,6 +64,11 @@ if [ ! -s "$RUN/token" ] || [ "$(wc -c <"$RUN/token")" -lt 33 ]; then
   chmod 600 "$RUN/token"
 fi
 TOKEN=$(cat "$RUN/token")
+# T-102 I.2.launch-feedback 바로가기(VBS)가 다음번에 "켜는 중" 화면에서 바로 하네스 화면으로 넘어가도록 토큰 사본을 Windows 쪽에 둔다
+# (HX_WIN_TOKEN = %LOCALAPPDATA%\harness-x\token, 그 사용자만 읽을 수 있는 폴더)
+if [ -n "${HX_WIN_TOKEN:-}" ] && [ "$(cat "$HX_WIN_TOKEN" 2>/dev/null)" != "$TOKEN" ]; then
+  printf '%s' "$TOKEN" >"$HX_WIN_TOKEN" 2>/dev/null || true
+fi
 
 # 3) 웹 화면(2~3초) — 먼저 켜서 바로 보이게
 if [ ! -f apps/web/package.json ]; then

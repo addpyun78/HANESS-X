@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HARNESS-X 켜는 중</title>
+    <!--
+      T-102 I.2.launch-feedback 바탕화면 아이콘을 누르자마자 보이는 "켜는 중" 화면.
+      start-harness.vbs가 이 파일을 임시 폴더로 복사하면서 __HX_TOKEN__ 자리에 토큰을 넣고 브라우저로 연다.
+      1초마다 화면 서버(127.0.0.1:5173)가 답하는지 보고, 답하면 하네스 화면으로 넘어간다.
+    -->
+    <style>
+      :root {
+        --paper: #f6f7f9;
+        --ink: #171a22;
+        --muted: #4f5566;
+        --line: #dfe2e8;
+        --teal: #0f766e;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #171a22;
+          --ink: #f6f7f9;
+          --muted: #c4c9d4;
+          --line: #2e3340;
+          --teal: #5fb3a8;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'Pretendard Variable', Pretendard, 'Malgun Gothic', system-ui, sans-serif;
+      }
+      main {
+        width: min(420px, 100%);
+        text-align: center;
+      }
+      .ring {
+        width: 44px;
+        height: 44px;
+        margin: 0 auto 24px;
+        border: 3px solid var(--line);
+        border-top-color: var(--teal);
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ring {
+          animation-duration: 2.4s;
+        }
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .time {
+        margin-top: 16px;
+        font-variant-numeric: tabular-nums;
+      }
+      .bar {
+        height: 4px;
+        margin-top: 20px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--line);
+      }
+      .bar span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--teal);
+        transition: width 0.8s ease-out;
+      }
+      .fail .ring {
+        border-top-color: #c62828;
+        animation: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="box" aria-live="polite">
+      <div class="ring" aria-hidden="true"></div>
+      <h1 id="title">HARNESS-X를 켜는 중이에요</h1>
+      <p id="step">컴퓨터 안 작업 공간(WSL)을 깨우고 있어요.</p>
+      <p class="time" id="time">0초</p>
+      <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+    </main>
+    <script>
+      (function () {
+        var WEB = 'http://127.0.0.1:5173/';
+        var token = '__HX_TOKEN__';
+        var hasToken = /^[A-Za-z0-9_-]{32,}$/.test(token);
+        var t0 = Date.now();
+        var done = false;
+        var steps = [
+          [0, '컴퓨터 안 작업 공간(WSL)을 깨우고 있어요.'],
+          [6, '화면을 준비하고 있어요.'],
+          [25, '조금만 더 기다려 주세요. 처음 켤 때는 더 걸려요.'],
+          [90, '평소보다 오래 걸리고 있어요. 그래도 계속 기다리는 중이에요.'],
+        ];
+        var $ = function (id) {
+          return document.getElementById(id);
+        };
+        function tick() {
+          if (done) return;
+          var s = Math.floor((Date.now() - t0) / 1000);
+          $('time').textContent = s + '초';
+          // 진행 막대: 처음 30초에 70%까지, 그 뒤로 천천히 95%까지(실제 끝은 화면이 넘어가는 순간)
+          var pct = s < 30 ? (s / 30) * 70 : Math.min(95, 70 + (s - 30) / 6);
+          $('bar').style.width = pct + '%';
+          for (var i = steps.length - 1; i >= 0; i--)
+            if (s >= steps[i][0]) {
+              $('step').textContent = steps[i][1];
+              break;
+            }
+          if (s >= 300) fail();
+        }
+        function fail() {
+          done = true;
+          document.body.className = 'fail';
+          $('title').textContent = 'HARNESS-X를 켜지 못했어요';
+          $('step').textContent =
+            "바탕화면 아이콘을 한 번 더 눌러 보세요. 그래도 안 되면 'HARNESS-X (troubleshoot)' 아이콘으로 켜서 창 내용을 알려 주세요.";
+        }
+        function ready() {
+          if (done) return;
+          done = true;
+          $('bar').style.width = '100%';
+          $('title').textContent = '준비됐어요';
+          if (hasToken) {
+            $('step').textContent = '하네스 화면으로 넘어가요.';
+            location.replace(WEB + '?token=' + encodeURIComponent(token));
+          } else {
+            // 토큰을 아직 몰라(처음 켤 때) 실행기가 새 탭으로 화면을 열어요
+            $('step').textContent = '새 탭에 하네스 화면이 열렸어요. 이 탭은 닫아도 돼요.';
+          }
+        }
+        function probe() {
+          if (done) return;
+          // 화면 서버가 답하면(내용은 못 읽어도) 켜진 것
+          fetch(WEB, { mode: 'no-cors', cache: 'no-store' }).then(ready, function () {
+            setTimeout(probe, 1000);
+          });
+        }
+        setInterval(tick, 250);
+        tick();
+        probe();
+      })();
+    </script>
+  </body>
+</html>

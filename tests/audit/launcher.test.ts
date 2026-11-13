@@ -10,6 +10,7 @@ const vbs = readFileSync(dir + 'start-harness.vbs')
   .subarray(2)
   .toString('utf16le');
 const ps = readFileSync(dir + 'make-shortcut.ps1', 'utf8');
+const loading = readFileSync(dir + 'loading.html', 'utf8');
 
 describe('바로가기 실행기 (T-102 I.2)', () => {
   it('브라우저는 하네스 서버를 켜기 전에 연다(화면이 먼저 보이고 "켜는 중"을 보여 줌)', () => {
@@ -26,6 +27,15 @@ describe('바로가기 실행기 (T-102 I.2)', () => {
   });
   it('지난 서버 로그를 남긴다(server.log.1)', () => {
     expect(sh).toMatch(/server\.log\.1/);
+  });
+  it('누르자마자 "켜는 중" 화면을 연다(WSL을 기다리기 전) — 토큰을 알면 준비되는 순간 하네스 화면으로 넘어간다', () => {
+    expect(vbs.indexOf('loading.html')).toBeGreaterThan(0);
+    expect(vbs.indexOf('loading.html')).toBeLessThan(vbs.indexOf('wsl.exe'));
+    expect(vbs).toMatch(/HX_NO_BROWSER/);
+    expect(loading).toMatch(/켜는 중이에요/);
+    expect(loading).toMatch(/fetch\(WEB, \{ mode: 'no-cors'/);
+    expect(loading).toMatch(/location\.replace\(WEB \+ '\?token='/);
+    expect(sh).toMatch(/HX_WIN_TOKEN/);
   });
   it('바로가기는 창 없이(VBS Run 창 0) 실행하고, 실패하면 알림만', () => {
     expect(vbs).toMatch(/sh\.Run\(cmd, 0, True\)/);
